@@ -11,6 +11,7 @@ from __future__ import annotations
 
 import argparse
 import fcntl
+from contextlib import contextmanager
 import json
 import os
 import sys
@@ -19,6 +20,15 @@ from pathlib import Path
 
 from .config import IndexerSettings, get_settings
 from .models import Chunk
+
+
+@contextmanager
+def writer_lock(path: str):
+    lock_path = Path(path)
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    with lock_path.open("a") as lock:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        yield
 
 
 def log(msg: str, **fields: object) -> None:
@@ -118,11 +128,8 @@ def main() -> int:
         pod=os.environ.get("HOSTNAME", "-"),
     )
     started = time.perf_counter()
-    lock_path = Path(settings.index_lock_path)
-    lock_path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        with lock_path.open("a") as lock:
-            fcntl.flock(lock, fcntl.LOCK_EX)
+        with writer_lock(settings.index_lock_path):
             if args.dummy:
                 from .dummy import write_dummy_index
                 from .store import get_client

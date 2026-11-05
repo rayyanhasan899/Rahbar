@@ -89,6 +89,21 @@ def test_pdf_ocr_only_when_text_layer_missing(monkeypatch, tmp_path):
     assert render.call_args.kwargs["first_page"] == 2
 
 
+def test_ruled_pdf_table_preserves_column_associations(monkeypatch, tmp_path):
+    import pdfplumber
+
+    pdf = MagicMock()
+    page = MagicMock()
+    page.extract_text.return_value = "Grade points in a real table"
+    page.edges = [1, 2, 3, 4]
+    page.extract_tables.return_value = [[["Grade", "Points"], ["A+", "4.00"]]]
+    pdf.__enter__.return_value.pages = [page]
+    monkeypatch.setattr(pdfplumber, "open", lambda _: pdf)
+    result = extract(str(tmp_path / "table.pdf"), "2026", False)
+    assert "Grade | Points\nA+ | 4.00" in result.pages[0].text
+    assert result.pages[0].ocr is False
+
+
 def test_staging_failure_never_publishes(monkeypatch):
     from pipeline import store as module
 
@@ -135,3 +150,21 @@ def test_embedding_batches_and_validation(monkeypatch):
     assert len(embed(["a", "b", "c"], settings)) == 3
     assert [len(c["input"]) for c in calls] == [2, 1]
     assert all(c["model"] == settings.embed_model and c["truncate"] is False for c in calls)
+
+
+def test_writer_lock_excludes_another_process_and_releases(tmp_path):
+    import subprocess
+    import sys
+    from pipeline.run import writer_lock
+
+    lock_path = str(tmp_path / "shared.lock")
+    code = """import fcntl,sys
+with open(sys.argv[1], 'a') as handle:
+    try:
+        fcntl.flock(handle, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        sys.exit(75)
+"""
+    with writer_lock(lock_path):
+        assert subprocess.run([sys.executable, "-c", code, lock_path]).returncode == 75
+    assert subprocess.run([sys.executable, "-c", code, lock_path]).returncode == 0

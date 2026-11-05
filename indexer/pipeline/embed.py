@@ -6,7 +6,9 @@ import httpx
 from .config import IndexerSettings
 
 
-def embed(texts: list[str], settings: IndexerSettings, purpose: str = "document") -> list[list[float]]:
+def embed(
+    texts: list[str], settings: IndexerSettings, purpose: str = "document"
+) -> list[list[float]]:
     vectors: list[list[float]] = []
     dimension = 0
     with httpx.Client(timeout=httpx.Timeout(120, connect=10)) as client:

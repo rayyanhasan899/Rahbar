@@ -53,9 +53,18 @@ class ChromaRetriever:
         with httpx.Client(timeout=120) as client:
             response = client.post(
                 f"{self.settings.ollama_url.rstrip('/')}/api/embed",
-                json={"model": self.settings.embed_model,
-                      "input": [("search_query: " if self.settings.embed_model.startswith(
-                          "nomic-embed-text") else "") + question], "truncate": False},
+                json={
+                    "model": self.settings.embed_model,
+                    "input": [
+                        (
+                            "search_query: "
+                            if self.settings.embed_model.startswith("nomic-embed-text")
+                            else ""
+                        )
+                        + question
+                    ],
+                    "truncate": False,
+                },
             )
             response.raise_for_status()
             vector = response.json()["embeddings"][0]

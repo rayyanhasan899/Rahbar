@@ -47,8 +47,11 @@ def extract(path: str, doc_version: str, superseded: bool) -> Document:
                 if len(page.edges) >= 4:
                     tables = page.extract_tables()
                     for table in tables:
-                        rows = [" | ".join((cell or "").replace("\n", " ") for cell in row)
-                                for row in table if any(cell for cell in row)]
+                        rows = [
+                            " | ".join((cell or "").replace("\n", " ") for cell in row)
+                            for row in table
+                            if any(cell for cell in row)
+                        ]
                         if rows:
                             text += f"\n\n## Table on page {number}\n" + "\n".join(rows)
                 ocr = len(re.sub(r"\W", "", text)) < 10
