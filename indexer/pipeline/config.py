@@ -8,14 +8,16 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class IndexerSettings:
-    embed_model: str        # EMBED_MODEL: must equal the API's value (section 4.4)
+    embed_model: str  # EMBED_MODEL: must equal the API's value (section 4.4)
     chroma_host: str
     chroma_port: int
     collection: str
-    corpus_dir: str         # where the documents and _index.json sit inside the Job's pod
+    corpus_dir: str  # where the documents and _index.json sit inside the Job's pod
     chunk_size: int
     chunk_overlap: int
     ollama_url: str
+    embed_batch_size: int = 16
+    index_lock_path: str = "/tmp/rahbar-index.lock"
 
 
 def get_settings() -> IndexerSettings:
@@ -28,4 +30,6 @@ def get_settings() -> IndexerSettings:
         chunk_size=int(os.environ.get("CHUNK_SIZE", 400)),
         chunk_overlap=int(os.environ.get("CHUNK_OVERLAP", 50)),
         ollama_url=os.environ.get("OLLAMA_URL", "http://host.minikube.internal:11434"),
+        embed_batch_size=max(1, int(os.environ.get("EMBED_BATCH_SIZE", "16"))),
+        index_lock_path=os.environ.get("INDEX_LOCK_PATH", "/tmp/rahbar-index.lock"),
     )

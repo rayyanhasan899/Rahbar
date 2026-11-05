@@ -10,6 +10,7 @@ Kubernetes retries it up to the Job's backoffLimit.
 from __future__ import annotations
 
 import argparse
+import fcntl
 import json
 import os
 import sys
@@ -21,8 +22,17 @@ from .models import Chunk
 
 
 def log(msg: str, **fields: object) -> None:
-    print(json.dumps({"ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-                      "logger": "rahbar.indexer", "msg": msg, **fields}), flush=True)
+    print(
+        json.dumps(
+            {
+                "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+                "logger": "rahbar.indexer",
+                "msg": msg,
+                **fields,
+            }
+        ),
+        flush=True,
+    )
 
 
 def _front_matter(path: Path) -> dict[str, str]:
@@ -49,8 +59,14 @@ def discover(corpus_dir: str) -> list[tuple[Path, str, bool]]:
     index = root / "_index.json"
     if index.exists():
         entries = json.loads(index.read_text(encoding="utf-8"))
-        return [(root / e["file"], str(e.get("doc_version", "unknown")),
-                 bool(e.get("superseded", False))) for e in entries]
+        return [
+            (
+                root / e["file"],
+                str(e.get("doc_version", "unknown")),
+                bool(e.get("superseded", False)),
+            )
+            for e in entries
+        ]
     found = []
     for path in sorted(root.glob("*")):
         if path.suffix.lower() not in {".pdf", ".md", ".html", ".txt"}:
@@ -58,8 +74,13 @@ def discover(corpus_dir: str) -> list[tuple[Path, str, bool]]:
         if path.name.lower().startswith("readme"):
             continue
         meta = _front_matter(path) if path.suffix.lower() == ".md" else {}
-        found.append((path, meta.get("doc_version", "unknown"),
-                      meta.get("superseded", "false").lower() == "true"))
+        found.append(
+            (
+                path,
+                meta.get("doc_version", "unknown"),
+                meta.get("superseded", "false").lower() == "true",
+            )
+        )
     return found
 
 
@@ -88,21 +109,30 @@ def main() -> int:
     parser.add_argument("--dummy", action="store_true", help="write three fake chunks")
     args = parser.parse_args()
     settings = get_settings()
-    log("indexer starting", dummy=args.dummy, embed_model=settings.embed_model,
-        collection=settings.collection, chroma=f"{settings.chroma_host}:{settings.chroma_port}",
-        pod=os.environ.get("HOSTNAME", "-"))
+    log(
+        "indexer starting",
+        dummy=args.dummy,
+        embed_model=settings.embed_model,
+        collection=settings.collection,
+        chroma=f"{settings.chroma_host}:{settings.chroma_port}",
+        pod=os.environ.get("HOSTNAME", "-"),
+    )
     started = time.perf_counter()
+    lock_path = Path(settings.index_lock_path)
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        if args.dummy:
-            from .dummy import write_dummy_index
-            from .store import get_client
+        with lock_path.open("a") as lock:
+            fcntl.flock(lock, fcntl.LOCK_EX)
+            if args.dummy:
+                from .dummy import write_dummy_index
+                from .store import get_client
 
-            count = write_dummy_index(settings, get_client(settings))
-        else:
-            count = run_pipeline(settings)
-    except NotImplementedError as exc:
-        log("indexer stage not implemented yet", error=str(exc))
-        return 2
+                count = write_dummy_index(settings, get_client(settings))
+            else:
+                count = run_pipeline(settings)
+    except Exception as exc:
+        log("indexer failed; previous active index retained", error=str(exc))
+        return 1
     log("indexer finished", chunks=count, seconds=round(time.perf_counter() - started, 1))
     return 0
 
