@@ -30,6 +30,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     settings = get_settings()
     configure_logging(settings.log_level)
     app.state.settings = settings
+    app.state.readiness_chroma = None
     app.state.retriever = get_retriever(settings)
     app.state.provider = get_provider(settings)
     if settings.retriever == "chroma":
@@ -51,6 +52,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         },
     )
     yield
+    if app.state.readiness_chroma is not None:
+        app.state.readiness_chroma.close()
 
 
 app = FastAPI(title="RAHBAR API", lifespan=lifespan)

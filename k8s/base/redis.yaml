@@ -57,6 +57,7 @@ spec:
             command:
             - redis-cli
             - ping
+          timeoutSeconds: 5
       volumes:
       - name: tmp
         emptyDir: {}
