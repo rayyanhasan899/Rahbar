@@ -1,0 +1,89 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: reindex
+spec:
+  schedule: 0 2 * * 0
+  timeZone: Asia/Karachi
+  concurrencyPolicy: Forbid
+  suspend: true
+  jobTemplate:
+    spec:
+      backoffLimit: 2
+      activeDeadlineSeconds: 1800
+      template:
+        metadata:
+          labels:
+            app: indexer
+        spec:
+          serviceAccountName: indexer
+          automountServiceAccountToken: false
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 10001
+            runAsGroup: 10001
+            fsGroup: 10001
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+          - name: indexer
+            image: rahbar-indexer:dev
+            imagePullPolicy: IfNotPresent
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                - ALL
+            resources:
+              requests:
+                cpu: 100m
+                memory: 256Mi
+              limits:
+                cpu: '1'
+                memory: 1Gi
+            volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+            - name: indexer-lock
+              mountPath: /locks
+            args:
+            - --dummy
+            command:
+            - python
+            - -m
+            - pipeline.run
+            envFrom:
+            - configMapRef:
+                name: rahbar-config
+          volumes:
+          - name: tmp
+            emptyDir: {}
+          - name: indexer-lock
+            persistentVolumeClaim:
+              claimName: indexer-lock
+          restartPolicy: OnFailure
+          initContainers:
+          - name: wait-chroma
+            image: rahbar-indexer:dev
+            imagePullPolicy: IfNotPresent
+            command:
+            - python
+            - -m
+            - pipeline.wait
+            envFrom:
+            - configMapRef:
+                name: rahbar-config
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                - ALL
+            resources:
+              requests:
+                cpu: 10m
+                memory: 32Mi
+              limits:
+                cpu: 100m
+                memory: 64Mi
