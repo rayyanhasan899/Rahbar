@@ -20,6 +20,7 @@ sys.path.insert(0, str(ROOT / "api"))
 sys.path.insert(0, str(ROOT / "eval"))
 
 import yaml  # noqa: E402
+import httpx  # noqa: E402
 from pipeline.chunk import chunk, token_count  # noqa: E402
 from pipeline.config import get_settings  # noqa: E402
 from pipeline.embed import embed  # noqa: E402
@@ -40,8 +41,19 @@ def main() -> None:
     golden = yaml.safe_load(golden_path.read_text())["questions"]
     manifest = json.loads((ROOT / "corpus/raw/_index.json").read_text())
     documents = []
+    inputs = []
     for entry in manifest:
-        data = json.loads((args.cache / (entry["file"] + ".json")).read_text())
+        cache_path = args.cache / (entry["file"] + ".json")
+        data = json.loads(cache_path.read_text())
+        inputs.append(
+            {
+                "file": entry["file"],
+                "source_sha256": entry["sha256"],
+                "cleaned_cache_sha256": hashlib.sha256(
+                    cache_path.read_bytes()
+                ).hexdigest(),
+            }
+        )
         documents.append(
             Document(
                 data["source"],
@@ -55,12 +67,22 @@ def main() -> None:
         )
     original = sum(token_count(p.text) for d in documents for p in d.pages)
     query_vectors = embed([q["question"] for q in golden], settings, purpose="query")
+    tags = httpx.get(settings.ollama_url.rstrip("/") + "/api/tags", timeout=10)
+    tags.raise_for_status()
+    model_digest = next(
+        m["digest"]
+        for m in tags.json()["models"]
+        if m["name"] in {settings.embed_model, settings.embed_model + ":latest"}
+    )
     output = {
         "kind": "retrieval-only; not generation evaluation",
         "golden_sha256": hashlib.sha256(golden_path.read_bytes()).hexdigest(),
         "embed_model": settings.embed_model,
         "dimension": len(query_vectors[0]),
         "runs": [],
+        "inputs": inputs,
+        "model_digest": model_digest,
+        "embedding_protocol": "nomic search_document/search_query; truncate=false",
     }
     lock = Path(settings.index_lock_path)
     lock.parent.mkdir(parents=True, exist_ok=True)
@@ -75,7 +97,13 @@ def main() -> None:
             cache.mkdir(exist_ok=True)
             for text in texts:
                 key = hashlib.sha256(
-                    (settings.embed_model + "\0" + text).encode()
+                    (
+                        settings.embed_model
+                        + "\0"
+                        + model_digest
+                        + "\0search_document-v1\0"
+                        + text
+                    ).encode()
                 ).hexdigest()
                 cached.append(cache / (key + ".json"))
             missing = [i for i, p in enumerate(cached) if not p.exists()]

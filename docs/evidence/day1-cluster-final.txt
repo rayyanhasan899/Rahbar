@@ -1,0 +1,25 @@
+NAME                        READY   STATUS      RESTARTS      AGE
+pod/api-5c46d9bcf7-dx972    1/1     Running     0             2m49s
+pod/api-5c46d9bcf7-gbngk    1/1     Running     0             2m44s
+pod/api-5c46d9bcf7-qftzj    1/1     Running     0             2m58s
+pod/chroma-0                1/1     Running     0             41m
+pod/indexer-zknnq           0/1     Completed   1             58m
+pod/redis-9c8f6cd5d-89ljp   1/1     Running     0             12m
+pod/ui-5699f88478-nqfcm     1/1     Running     1 (12m ago)   13m
+
+NAME                STATUS     COMPLETIONS   DURATION   AGE
+job.batch/indexer   Complete   1/1           17m        58m
+
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+persistentvolumeclaim/chroma-data-chroma-0   Bound    pvc-8214236a-83c6-4526-ac1b-53dec5dd5a18   2Gi        RWO            standard       <unset>                 58m
+persistentvolumeclaim/indexer-lock           Bound    pvc-8a07bde9-9bf6-437f-9ccf-9babe7056a09   16Mi       RWO            standard       <unset>                 58m
+persistentvolumeclaim/redis-data             Bound    pvc-6caf50c4-5a60-41f6-991f-9ac27cea10a1   256Mi      RWO            standard       <unset>                 58m
+
+NAME                                      REFERENCE        TARGETS       MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/api   Deployment/api   cpu: 2%/70%   3         8         3          58m
+
+NAME               ENDPOINTS                                                     AGE
+endpoints/api      10.244.120.113:8000,10.244.120.114:8000,10.244.120.115:8000   58m
+endpoints/chroma   10.244.120.90:8000                                            58m
+endpoints/redis    10.244.120.107:6379                                           58m
+endpoints/ui       10.244.120.105:8080                                           58m

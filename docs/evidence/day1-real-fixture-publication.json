@@ -1,0 +1,12 @@
+{
+  "publication": {
+    "active_collection": "rahbar-fixtures-a6a50988b2ed43d78b3c966ae0b15008",
+    "versions": "2023|2026",
+    "chunks": 12,
+    "generation": "a6a50988b2ed43d78b3c966ae0b15008",
+    "embed_model": "nomic-embed-text",
+    "content_sha256": "41b468201d638e29f11ca28d12ca856342c2eb873167e249938e0400564d486d",
+    "dimension": 768
+  },
+  "verified_count": 12
+}

@@ -8,17 +8,20 @@
       56,
       57,
       58
-    ]
+    ],
+    "selected": true
   },
   {
     "file": "annual-report-2019-20.pdf",
     "pages": 33,
-    "no_text_pages": []
+    "no_text_pages": [],
+    "selected": true
   },
   {
     "file": "annual-report-2023-24.pdf",
     "pages": 85,
-    "no_text_pages": []
+    "no_text_pages": [],
+    "selected": false
   },
   {
     "file": "faculty-entrepreneurship-and-technical-start-ups-policy.pdf",
@@ -32,12 +35,14 @@
       6,
       7,
       8
-    ]
+    ],
+    "selected": true
   },
   {
     "file": "prospectus-2026-academic-rules-and-regulations.pdf",
     "pages": 5,
-    "no_text_pages": []
+    "no_text_pages": [],
+    "selected": true
   },
   {
     "file": "student-handbook-jun-2026.pdf",
@@ -47,7 +52,8 @@
       2,
       63,
       64
-    ]
+    ],
+    "selected": true
   },
   {
     "file": "undergraduate-academic-rules-aug-2023.pdf",
@@ -77,6 +83,7 @@
       23,
       24,
       25
-    ]
+    ],
+    "selected": true
   }
 ]

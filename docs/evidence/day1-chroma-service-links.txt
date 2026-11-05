@@ -1,0 +1,9 @@
+
+==========
+persist_path: "/data"
+
+==========
+
+thread 'main' panicked at rust/frontend/src/config.rs:182:23:
+Error loading config: invalid type: found string "tcp://10.99.49.12:8000", expected u16 for key "PORT" in `CHROMA_` environment variable(s)
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

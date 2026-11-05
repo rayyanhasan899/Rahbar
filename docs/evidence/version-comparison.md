@@ -9,8 +9,8 @@ are ignored; download URLs and SHA-256 hashes are in corpus/MANIFEST.md.
 | Academic Rules Handbook, June 2026 | 23 | 4.25 | Last day of the makeup week of every semester |
 
 The older source is scanned: pages 2–25 have no useful text layer and were
-OCRed locally at 200 DPI. Inspect the physical page against the OCR before
-using this comparison as final submission evidence. The current policy states
+OCRed locally at 200 DPI. The physical page was rendered and visually checked against its OCR on
+5 November 2026. The current policy states
 the newer deadline explicitly; these are not relabelled identical documents.
 
 The golden set contains both a current-policy question and an explicit 2023

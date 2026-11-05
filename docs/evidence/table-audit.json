@@ -1,0 +1,33 @@
+{
+  "source": "academic-rules-handbook-jun-2026.pdf",
+  "physical_page": 12,
+  "tables_detected": 2,
+  "text_excerpt": " Points Grade Points\nA+ 4.00 C+ 2.33\nA 4.00 C 2.00\nA- 3.67 C- 1.67\nB+ 3.33 D+ 1.33\nB 3.00 D 1.00\nB- 2.67 F 0.00\nGPA Calculation\n2.4 SGPA is calculated as follows:\nSGPA = (P1*C1 + P2*C2 + P3*C3 + P4*C4)/C\n2.5 Where P1, P2, P3 and P4 are the grade points earned in\ncourses, while C1, C2, C3, C4 are the credit hours of respective\ncourse studied in the semester and C is the number of total\ncredits attempted in the semester, that is, C= C1+C2+C3+C4.\n2.6 CGPA is calculated as the weighted average for all semesters\ncumulatively using grade points of all the courses taken by a\nstudent.\n2.7 In CGPA calculation for the courses that have been repeated,\n6\nUndergraduate Academic Rules and Regulations 2026",
+  "table_sample": [
+    [
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "Grade",
+      "Points",
+      "Grade",
+      "Points"
+    ],
+    [
+      "",
+      "",
+      "",
+      ""
+    ],
+    [
+      "A+",
+      "4.00",
+      "C+",
+      "2.33"
+    ]
+  ],
+  "limitation": "Text-linearization is not a guaranteed table reconstruction. Verify associations manually."
+}

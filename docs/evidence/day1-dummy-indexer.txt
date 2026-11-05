@@ -1,0 +1,2 @@
+{"ts": "2026-11-05T05:35:28Z", "logger": "rahbar.indexer", "msg": "indexer starting", "dummy": true, "embed_model": "dummy-768", "collection": "rahbar", "chroma": "chroma:8000", "pod": "indexer-zknnq"}
+{"ts": "2026-11-05T05:35:35Z", "logger": "rahbar.indexer", "msg": "indexer finished", "chunks": 3, "seconds": 6.2}

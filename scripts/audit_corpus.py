@@ -24,15 +24,20 @@ def main() -> None:
             raise ValueError(f"checksum mismatch: {path.name}")
         dest = cache / (entry["file"] + ".json")
         fingerprint = cache / (entry["file"] + ".sha256")
+        extraction_key = hashlib.sha256(
+            actual.encode()
+            + (ROOT / "indexer/pipeline/extract.py").read_bytes()
+            + (ROOT / "indexer/pipeline/clean.py").read_bytes()
+        ).hexdigest()
         if (
             not dest.exists()
             or not fingerprint.exists()
-            or fingerprint.read_text() != actual
+            or fingerprint.read_text() != extraction_key
         ):
             print("Extracting", path.name, flush=True)
             doc = clean(extract(str(path), entry["doc_version"], entry["superseded"]))
             dest.write_text(json.dumps(asdict(doc), ensure_ascii=False))
-            fingerprint.write_text(actual)
+            fingerprint.write_text(extraction_key)
         data = json.loads(dest.read_text())
         rows.append(
             {
