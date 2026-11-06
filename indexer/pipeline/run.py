@@ -28,8 +28,9 @@ def writer_lock(path: str):
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open("a") as lock:
         log("writer waiting", lock=str(lock_path))
+        waiting = time.monotonic()
         fcntl.flock(lock, fcntl.LOCK_EX)
-        log("writer acquired", lock=str(lock_path))
+        log("writer acquired", lock=str(lock_path), wait_seconds=round(time.monotonic() - waiting, 3))
         try:
             yield
         finally:

@@ -30,6 +30,7 @@ from typing import Any
 
 from ..config import Settings
 from ..schemas import AskResponse
+from ..providers.llm.prompt import SYSTEM, ANSWER_SCHEMA
 
 log = logging.getLogger("rahbar.cache")
 
@@ -72,8 +73,9 @@ def intent(question: str) -> tuple[bool, tuple[tuple[str, str], ...]]:
 
 def namespace(generation: str, settings: Settings) -> str:
     parts = (
-        f"v2|{generation}|{settings.embed_model}|{settings.llm_provider}|{settings.llm_model}"
+        f"v3|{generation}|{settings.embed_model}|{settings.llm_provider}|{settings.llm_model}"
         f"|{settings.relevance_floor}|{settings.temperature}|{settings.top_k}"
+        f"|{hashlib.sha256((SYSTEM + json.dumps(ANSWER_SCHEMA, sort_keys=True)).encode()).hexdigest()}"
     )
     return "rahbar:cache:" + hashlib.sha256(parts.encode()).hexdigest()[:16]
 

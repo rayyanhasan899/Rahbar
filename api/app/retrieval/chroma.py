@@ -12,6 +12,14 @@ import re
 from typing import Any
 
 
+def version_filter(question: str, versions: str) -> dict[str, Any] | None:
+    years = re.findall(r"\b(20\d{2})\b", question)
+    if not years:
+        return {"superseded": False}
+    matching = [v for v in versions.split("|") if v.startswith(years[-1])]
+    return {"doc_version": {"$in": matching}} if matching else None
+
+
 class ChromaRetriever:
     name = "chroma"
 
@@ -69,6 +77,11 @@ class ChromaRetriever:
                 f"api={self.settings.embed_model}"
             )
         col = self.client.get_collection(meta["active_collection"])
+        if col.metadata["embed_model"] != self.settings.embed_model:
+            raise ValueError(
+                f"embedding model mismatch: collection={col.metadata['embed_model']} "
+                f"api={self.settings.embed_model}"
+            )
         if col.metadata["dimension"] != meta["dimension"] or col.count() == 0:
             raise ValueError("empty index or dimension mismatch")
         return col, meta
@@ -104,15 +117,9 @@ class ChromaRetriever:
             vector = self.embed(question)
         if len(vector) != meta["dimension"]:
             raise ValueError("query embedding dimension mismatch")
-        years = re.findall(r"\b(20\d{2})\b", question)
-        where: Any = {"superseded": False}
-        if years:
-            versions = [
-                v for v in str(meta.get("versions", "")).split("|") if v.startswith(years[-1])
-            ]
-            if not versions:
-                return []
-            where = {"doc_version": {"$in": versions}}
+        where = version_filter(question, str(meta.get("versions", "")))
+        if where is None:
+            return []
         hits = collection.query(
             query_embeddings=[vector],
             n_results=k,
