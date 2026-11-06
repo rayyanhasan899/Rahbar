@@ -26,7 +26,7 @@ def render(tag: str, registry: str, fixture: bool, ollama: str | None, cidr: str
             if ollama:
                 obj["data"]["OLLAMA_URL"] = ollama
             if fixture:
-                obj["data"].update(LLM_PROVIDER="stub", RELEVANCE_FLOOR="0.65", CHUNK_SIZE="400", CHUNK_OVERLAP="50")
+                obj["data"].update(LLM_PROVIDER="stub", RELEVANCE_FLOOR="0.45", CHUNK_SIZE="400", CHUNK_OVERLAP="50")
         if kind == "NetworkPolicy" and cidr:
             for rule in obj["spec"].get("egress", []):
                 for target in rule.get("to", []):
