@@ -1,6 +1,7 @@
-# Requirement traceability — Day 1
+# Requirement traceability — Day 1, updated for Day 2 code
 
-Status is scoped to observed evidence, not file existence. The assignment PDF
+Status is scoped to observed evidence, not file existence. Day 2 entries say
+"offline-tested" until a run on the real stack is recorded. The assignment PDF
 controls the requirements; the submission checker is only a mechanical lint.
 Deadline: 8 November 2026, 23:59 PKT. No weighted rubric table was supplied.
 
@@ -17,12 +18,12 @@ Deadline: 8 November 2026, 23:59 PKT. No weighted rubric table was supplied.
 | §3.1 three measured configurations/amplification | scripts/chunk_experiment.py, eval/chunk-experiments.json | Three runs verified: 84.6154% recall@5 each | 647/565/536 chunks; retune augmented table extraction before final shipping |
 | §3.2 validation 3–500 | schemas.py, starter tests | Tested | Preserve response compatibility |
 | §3.2 real retrieval/current-historical filtering | retrieval/chroma.py | Implemented initial reader | Broader version-language tests Day 2 |
-| §3.2 turns/follow-ups | services and request contract | Not implemented | Day 2 compatible conversation design |
-| §3.3 semantic cache/threshold tests/exclusions | Redis resource; PIPELINE notes | Infrastructure only | Day 2 algorithm, measured thresholds and tests |
-| §3.3 reindex cache invalidation | Published generation metadata | Mechanism supplied | Day 2 cache hit integration and invalidation demo |
-| §3.4 schema/retry/fallback/relevance/citations | Answer schema/stub supplied | Not production-complete | Day 2 real provider and negative tests |
-| §3.4 poison chunk and untrusted output | Fixture already poisoned; safe textContent UI | Test pending | Index poisoned fixture and assert refusal to obey |
-| §3.5 pluggable fully supported provider/temperature | Existing interface; model installed | Stub only | Day 2 real constrained provider; temperature justification |
+| §3.2 turns/follow-ups | schemas.Turn, AskRequest.history, services/answer.py, UI follow-up box, ADR 0003 | Offline-tested (Day 2) | Real follow-up answer through Ingress |
+| §3.3 semantic cache/threshold tests/exclusions | services/cache.py, cache tests, eval/cache-pairs.yaml, scripts/cache_threshold_experiment.py | Offline-tested (Day 2) | Measure thresholds, record false hit, X-Cache HIT evidence on cluster |
+| §3.3 reindex cache invalidation | Cache namespace includes published generation | Offline-tested (Day 2) | Reindex on cluster and show MISS for a previously cached question |
+| §3.4 schema/retry/fallback/relevance/citations | services/answer.py, citations.py, prompt.py | Offline-tested (Day 2) | Measure RELEVANCE_FLOOR with scripts/score_margins.py on real run |
+| §3.4 poison chunk and untrusted output | services/guard.py, prompt markers, textContent UI | Offline-tested (Day 2) | Ask fixture f06 on real model; keep evidence |
+| §3.5 pluggable fully supported provider/temperature | providers/llm/ollama.py, hosted.py, ADR 0003 | Offline-tested against mocked HTTP (Day 2) | Real Ollama answers; compare temperature 0.0 vs 0.2 |
 | §4.1 namespace/API x3/UI | k8s/base and cluster evidence | Running dummy stack | Final SHA images Day 3 |
 | §4.1 Chroma StatefulSet/PVC, Redis/PVC | StatefulSet, Deployment, bound claims | Running | Data deletion/persistence demo still pending |
 | §4.1 Job/CronJob, retries, weekly schedule | Job completed; weekly CronJob suspended | Dummy bootstrap verified | Supply real corpus, remove dummy, enable weekly schedule |
@@ -37,13 +38,13 @@ Deadline: 8 November 2026, 23:59 PKT. No weighted rubric table was supplied.
 | §4.7 ServiceAccounts/nonroot/readonly/drop/token | all workload manifests | Applied | Runtime/security audit before final submission |
 | §4.7 deny-by-default, UI cannot reach Chroma | networkpolicy.yaml, Calico, day1-network-final.txt | UI to API allowed; UI to Chroma blocked with DNS resolving | Selected real-model egress remains Day 2 |
 | §4.7 no secrets/history/untrusted eval | ignore rules, placeholder, UI | No real secret added | Final history scan; never weaken policies |
-| §4.8 JSON IDs/request logging/basic metrics | existing middleware; answer logs | Partial | Retrieval/generation/cache/token counters Day 2 |
+| §4.8 JSON IDs/request logging/basic metrics | routes/metrics.py: retrieval/generation latency, cache, abstentions, fallbacks, retries, tokens, injection flags | Exported; route test (Day 2) | Capture /metrics after a real eval run |
 | §5.1 golden 8/2/2/2/1 before tuning | golden.yaml, commit d7b5e88 | Verified | Human correctness review of final answers |
 | §§5.2–5.4 recall/citations/abstention/gates | run_eval.py, eight evaluator tests | Unit-tested | Real generation results/baseline not yet established |
 | §5.5 four deliberate failures | FAILURE-ANALYSIS template | Pending | Controlled observed experiments Day 3 |
 | §6 dev/main PR/one approval/checks | dev pushed, draft PR #1 | Partial | Settings approval and genuine partner review |
 | §6 CI lint/test/60%/manifests/build | ci.yml, local tests and validator | Seven Day 1 jobs passed in run 41976761836 | Final checkpoint CI linked from PR; bootstrap is not real e2e evaluation |
-| §6 Trivy/e2e-eval regression gate | bootstrap job only | Pending Day 2 | Bootstrap is not the real quality gate |
+| §6 Trivy/e2e-eval regression gate | ci.yml build (Trivy) and e2e-eval jobs | Written, not yet run in CI | Commit eval/fixtures/baseline.json from a passing local run; fix CRITICAL findings |
 | §6 CD needs/SHA/Docker Hub/ephemeral deployment | Not yet implemented | Pending Day 3 | Secure registry secrets and real successful run |
 | §7 seven evidence-based engineering answers | ENGINEERING-NOTES template | Pending | Real metrics/line refs/debugging history |
 | §10 README/architecture/four ADRs/AI/evidence/LICENSE | README/architecture/two ADRs/AI notes | Day 1 subset | Remaining ADRs, notes, license, screenshot |

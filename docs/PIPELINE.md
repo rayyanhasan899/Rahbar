@@ -80,14 +80,52 @@ baseline updates still must pass the absolute quality checks. Unit tests cover
 boundaries, duplicate hits, invalid citations, empty sets and absent baselines.
 Do not compare the tiny fixture corpus to the real-corpus baseline.
 
-## Semantic cache — Day 2 dependency
-Redis will be shared by API replicas. The configured 0.95 threshold and 0.45
-relevance floor are initial candidates, not measured shipped values. Try 2–3
-cache thresholds, record a false hit and select the lowest zero-false-hit value.
-Never cache follow-ups, abstentions, out-of-scope or invalid answers. Namespace
-entries by published index generation; indexer never contacts Redis. Cache and
-grounded generation are not complete on Day 1 and no scores are invented here.
+## Query pipeline — Day 2
+Implemented in api/app/services/ (ADR 0003): injection flag on the question,
+follow-up query building, semantic cache, retrieval, removal of instruction-like
+sentences from passages, relevance floor, generation with one validated retry,
+safe fallback, cache store. Offline tests: api/tests/test_answer_pipeline.py,
+test_providers.py, test_guard_and_cache.py, test_ask_route.py.
 
+### Relevance floor
+Candidate 0.45 from the Day 1 ConfigMap, not yet measured. Procedure: run
+eval/golden.yaml through the real stack, then `python scripts/score_margins.py
+eval/results.json`. The floor must sit above every must-abstain question's top
+score and below every answerable one. Record both numbers and the chosen floor here.
+
+| Run | Lowest answerable top score | Highest must-abstain top score | Floor shipped |
+|---|---:|---:|---:|
+| (pending) | | | |
+
+### Semantic cache
+Redis, shared by all replicas, namespaced by index generation plus embedding
+model, provider and LLM model, so a reindex invalidates old entries without the
+indexer touching Redis. A hit needs cosine >= CACHE_THRESHOLD and identical
+numbers (years, clause numbers) in both questions. Never stored: follow-ups,
+declined answers, fallbacks, instruction-like questions. Bounded at
+CACHE_MAX_ENTRIES per namespace (oldest evicted) with CACHE_TTL expiry.
+
+Threshold procedure: `python scripts/cache_threshold_experiment.py` over
+eval/cache-pairs.yaml (five paraphrase pairs, five different-answer pairs,
+written before measuring). Ship the lowest threshold with zero false hits.
+
+| Threshold | Paraphrase hits (of 5) | False hits (of 5) | Example false hit |
+|---:|---:|---:|---|
+| (pending) | | | |
+
+### Prompt injection
+Two layers: the prompt marks passages and question as data, and guard.py replaces
+instruction-like sentences in passages before generation. The fixture's planted
+line (academic-rules-2026.md, 3.2) is replaced; see
+test_poisoned_passage_never_reaches_the_model. Questions containing such text are
+answered from evidence but never cached. Counter: rahbar_injection_flags_total.
+
+### CI evaluation gate
+Job e2e-eval indexes eval/fixtures with the real pipeline (nomic-embed-text in a
+pinned Ollama container, Chroma 1.0.12), runs the API with the stub LLM and gates
+on eval/run_eval.py against eval/fixtures/baseline.json. The fixture baseline must
+be created once from a passing local run (`--update-baseline`); until then the
+gate fails closed by design.
 
 ## Actual Day 1 measurements
 All three configurations measured recall@3 = recall@5 = 11/13 (84.6154%).
