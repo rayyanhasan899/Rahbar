@@ -48,8 +48,7 @@ class ChromaRetriever:
             raise ValueError("empty index or dimension mismatch")
         return col, meta
 
-    def retrieve(self, question: str, k: int) -> list[Passage]:
-        collection, meta = self.active()
+    def embed(self, question: str) -> list[float]:
         with httpx.Client(timeout=120) as client:
             response = client.post(
                 f"{self.settings.ollama_url.rstrip('/')}/api/embed",
@@ -67,7 +66,17 @@ class ChromaRetriever:
                 },
             )
             response.raise_for_status()
-            vector = response.json()["embeddings"][0]
+            return [float(x) for x in response.json()["embeddings"][0]]
+
+    def query_context(self, question: str) -> tuple[list[float], str]:
+        """The question's embedding and the published index generation, for the cache."""
+        _, meta = self.active()
+        return self.embed(question), str(meta["generation"])
+
+    def retrieve(self, question: str, k: int, vector: list[float] | None = None) -> list[Passage]:
+        collection, meta = self.active()
+        if vector is None:
+            vector = self.embed(question)
         if len(vector) != meta["dimension"]:
             raise ValueError("query embedding dimension mismatch")
         historical = re.search(

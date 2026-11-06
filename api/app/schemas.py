@@ -13,8 +13,16 @@ from typing import Literal
 from pydantic import BaseModel, Field
 
 
+class Turn(BaseModel):
+    """One earlier exchange, sent back by the client so a follow-up has context."""
+
+    question: str = Field(min_length=1, max_length=500)
+    answer: str = Field(max_length=4000)
+
+
 class AskRequest(BaseModel):
     question: str = Field(min_length=3, max_length=500)
+    history: list[Turn] = Field(default_factory=list, max_length=10)
 
 
 class Passage(BaseModel):

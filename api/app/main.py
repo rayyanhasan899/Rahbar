@@ -33,6 +33,11 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.readiness_chroma = None
     app.state.retriever = get_retriever(settings)
     app.state.provider = get_provider(settings)
+    app.state.cache = None
+    if settings.cache_enabled and settings.retriever != "stub":
+        from .services.cache import SemanticCache
+
+        app.state.cache = SemanticCache(settings)
     if settings.retriever == "chroma":
         from .retrieval.chroma import ChromaRetriever
 
@@ -49,6 +54,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             "llm_provider": settings.llm_provider,
             "embed_model": settings.embed_model,
             "top_k": settings.top_k,
+            "relevance_floor": settings.relevance_floor,
+            "cache_threshold": settings.cache_threshold if app.state.cache else None,
         },
     )
     yield
