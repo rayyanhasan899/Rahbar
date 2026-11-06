@@ -3,7 +3,7 @@ on:
   push:
     branches: [dev]
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 permissions:
   contents: read
 concurrency:
@@ -49,6 +49,71 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: docker build -t rahbar-${{ matrix.component }}:${{ github.sha }} ${{ matrix.component }}
+      - name: Trivy scan (report HIGH, fail on fixable CRITICAL)
+        run: |
+          scan() {
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+              -v "$HOME/.cache/trivy:/root/.cache/trivy" aquasec/trivy:0.58.1 image \
+              --scanners vuln --ignore-unfixed "$@" rahbar-${{ matrix.component }}:${{ github.sha }}
+          }
+          scan --severity HIGH,CRITICAL --exit-code 0
+          scan --severity CRITICAL --exit-code 1
+  e2e-eval:
+    # Real embeddings and a real Chroma on the three fixture documents, scored by
+    # eval/run_eval.py and gated on its exit code (section 5.4). The LLM is the stub:
+    # CI checks retrieval, citation and abstention mechanics; answer quality is
+    # measured with the real model on the real corpus (eval/results.json).
+    runs-on: ubuntu-24.04
+    needs: [lint, test]
+    env:
+      EMBED_MODEL: nomic-embed-text
+      CHROMA_HOST: localhost
+      CHROMA_PORT: '8001'
+      CHROMA_COLLECTION: rahbar
+      OLLAMA_URL: http://localhost:11434
+      REDIS_HOST: localhost
+      REDIS_PORT: '6379'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r api/requirements.txt -r indexer/requirements.txt
+      - name: Start Chroma, Redis and Ollama
+        run: |
+          docker run -d --name chroma -p 8001:8000 chromadb/chroma:1.0.12
+          docker run -d --name redis -p 6379:6379 redis:7.4.5-alpine
+          docker run -d --name ollama -p 11434:11434 ollama/ollama:0.6.5
+          for i in $(seq 1 60); do curl -fsS localhost:11434/api/version && break; sleep 2; done
+          docker exec ollama ollama pull nomic-embed-text
+          for i in $(seq 1 60); do curl -fsS localhost:8001/api/v2/heartbeat && break; sleep 2; done
+      - name: Index the fixture corpus with the real pipeline
+        env:
+          CORPUS_DIR: ${{ github.workspace }}/eval/fixtures
+          INDEX_LOCK_PATH: /tmp/rahbar-index.lock
+        run: cd indexer && python -m pipeline.run
+      - name: Start the API against the fixture index
+        env:
+          RETRIEVER: chroma
+          LLM_PROVIDER: stub
+        run: |
+          cd api && nohup uvicorn app.main:app --port 8000 > /tmp/api.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS localhost:8000/readyz && break; sleep 2; done
+          curl -fsS localhost:8000/readyz
+      - name: Evaluate and gate
+        run: >
+          python eval/run_eval.py --api http://localhost:8000
+          --golden eval/fixtures/golden.fixture.yaml
+          --baseline eval/fixtures/baseline.json
+          --out /tmp/fixture-results.json
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixture-eval
+          path: |
+            /tmp/fixture-results.json
+            /tmp/api.log
   fixture-bootstrap:
     # Day 1 proves object wiring using dummy indexing. Real retrieval + evaluation
     # is a separate Day 2 gate; this job must never be presented as that gate.
