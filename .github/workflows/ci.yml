@@ -15,7 +15,7 @@ jobs:
         python-version: '3.12'
         cache: pip
     - run: pip install -r api/requirements-dev.txt -r indexer/requirements-dev.txt
-    - run: ruff check api indexer eval corpus
+    - run: ruff check api indexer eval corpus scripts
     - run: cd api && mypy app
     - run: cd indexer && mypy pipeline
   test:

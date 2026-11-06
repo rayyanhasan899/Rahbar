@@ -48,7 +48,7 @@ class Settings:
 
     # Semantic cache (section 3.3)
     cache_enabled: bool = True
-    cache_threshold: float = 0.95  # cosine similarity needed for a hit
+    cache_threshold: float = 0.75  # measured with numeric/directional/injection guards
     cache_ttl: int = 86400  # seconds
     cache_max_entries: int = 500  # per index generation
     redis_host: str = "redis"
@@ -75,7 +75,7 @@ def get_settings() -> Settings:
         llm_timeout=_float("LLM_TIMEOUT", 60.0),
         max_history_turns=_int("MAX_HISTORY_TURNS", 3),
         cache_enabled=os.environ.get("CACHE_ENABLED", "true").lower() in ("1", "true", "yes"),
-        cache_threshold=_float("CACHE_THRESHOLD", 0.95),
+        cache_threshold=_float("CACHE_THRESHOLD", 0.75),
         cache_ttl=_int("CACHE_TTL", 86400),
         cache_max_entries=_int("CACHE_MAX_ENTRIES", 500),
         redis_host=os.environ.get("REDIS_HOST", "redis"),

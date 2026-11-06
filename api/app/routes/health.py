@@ -49,7 +49,8 @@ def readyz(request: Request, response: Response) -> dict[str, object]:
             collection = get(collections + "/" + settings.collection)
         if collection["metadata"]["embed_model"] != settings.embed_model:
             raise ValueError(
-                f"embedding model mismatch: index={collection['metadata']['embed_model']} api={settings.embed_model}"
+                f"embedding model mismatch: index={collection['metadata']['embed_model']} "
+                f"api={settings.embed_model}"
             )
         if not get(collections + f"/{collection['id']}/count"):
             raise ValueError("collection is empty")
