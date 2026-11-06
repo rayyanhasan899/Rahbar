@@ -1,0 +1,35 @@
+# Question pairs for choosing CACHE_THRESHOLD (section 3.3).
+# same: true  - the second question should reuse the first one's answer (a hit is correct).
+# same: false - the answers differ, so a hit would be a false hit.
+# Written before measuring; do not relabel a pair after seeing its score.
+pairs:
+  - a: "What minimum cumulative GPA is required for graduation?"
+    b: "What CGPA do I need to graduate?"
+    same: true
+  - a: "Can I register for a course before passing its prerequisite?"
+    b: "Am I allowed to take a course without clearing its prerequisite first?"
+    same: true
+  - a: "What is the medium of instruction?"
+    b: "Which language are courses taught in?"
+    same: true
+  - a: "What are the minimum and maximum durations of a bachelor's degree?"
+    b: "How long can a bachelor's degree take at most and at least?"
+    same: true
+  - a: "When must a request to add or drop a course be made?"
+    b: "What is the deadline for adding or dropping a course?"
+    same: true
+  - a: "Under the 2026 academic rules, what is the deadline to withdraw from a course?"
+    b: "Under the 2023 academic rules, what was the deadline to withdraw from a course?"
+    same: false
+  - a: "What minimum cumulative GPA is required for graduation?"
+    b: "What CGPA threshold avoids academic warning?"
+    same: false
+  - a: "If I fail Theory but pass its Lab, which parts must I repeat?"
+    b: "If I pass Theory but fail its Lab, which parts must I repeat?"
+    same: false
+  - a: "What is the maximum number of courses with labs I may repeat in summer?"
+    b: "What is the maximum number of courses I may take in summer?"
+    same: false
+  - a: "What attendance does clause 1.21 require?"
+    b: "What attendance does clause 1.12 require?"
+    same: false
