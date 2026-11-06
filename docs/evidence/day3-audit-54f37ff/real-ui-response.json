@@ -1,0 +1,51 @@
+{
+  "request_id": "da8b6363a1257d06fd691df8582ea854",
+  "answer": "English (except language courses, other than English, and Islamic Studies) [academic-rules-handbook-jun-2026.pdf / 1.1]",
+  "citations": [
+    {
+      "source": "academic-rules-handbook-jun-2026.pdf",
+      "section": "1.1",
+      "page": 7
+    }
+  ],
+  "answered_from_context": true,
+  "confidence": "high",
+  "retrieved": [
+    {
+      "chunk_id": "9e8994d339e20376a0a7b807fbe089bd",
+      "source": "academic-rules-handbook-jun-2026.pdf",
+      "section": "1.1",
+      "page": 6,
+      "score": 0.7545023
+    },
+    {
+      "chunk_id": "81f67608fd8962af723167e0b40a0d7d",
+      "source": "academic-rules-handbook-jun-2026.pdf",
+      "section": "1.1",
+      "page": 7,
+      "score": 0.7545023
+    },
+    {
+      "chunk_id": "e691ad7c1d531ad0feb3ab362239298e",
+      "source": "academic-rules-handbook-jun-2026.pdf",
+      "section": "5.1",
+      "page": 24,
+      "score": 0.7180506
+    },
+    {
+      "chunk_id": "7f5912555effb6c0ec70c984f94a72eb",
+      "source": "academic-rules-handbook-jun-2026.pdf",
+      "section": "3.6",
+      "page": 14,
+      "score": 0.71386087
+    },
+    {
+      "chunk_id": "34343daeda22e67b633308326547f8d4",
+      "source": "academic-rules-handbook-jun-2026.pdf",
+      "section": "5.1",
+      "page": 25,
+      "score": 0.7097165
+    }
+  ],
+  "provider": "ollama"
+}

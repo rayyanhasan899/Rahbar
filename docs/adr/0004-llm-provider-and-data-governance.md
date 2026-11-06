@@ -20,7 +20,12 @@ ConfigMap in the ephemeral CI/CD cluster. They are explicitly a different corpus
 Ollama receives fenced evidence, the constrained Answer schema and temperature
 0.2. Validation and a single feedback retry reject malformed responses and
 citations outside the retrieved passages. Exhaustion returns a safe decline.
-The laptop bounds each generation to a 4096-token context and 512 output tokens.
+Generation is bounded to an 8192-token context and 512 output tokens. A response
+whose prompt count reaches the 7680-token safety margin is rejected, since prior
+evidence or instructions may have been truncated. The first real audit exposed
+uncited confident refusals; the response path now retries contradictions and
+canonicalizes valid refusals. Context truncation remains a suspected cause until
+the retest and token logs establish it.
 These limits reduce memory pressure; long answers may be truncated and rejected
 rather than returned as unverified text. A configured timeout also bounds calls.
 

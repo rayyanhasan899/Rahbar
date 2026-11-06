@@ -1,0 +1,34 @@
+{
+  "api->chroma": {
+    "allowed": true,
+    "expected": true,
+    "dns": "resolved by socket.create_connection",
+    "output": "connected\n"
+  },
+  "api->redis": {
+    "allowed": true,
+    "expected": true,
+    "dns": "resolved by socket.create_connection",
+    "output": "connected\n"
+  },
+  "api->host-provider": {
+    "allowed": true,
+    "expected": true,
+    "dns": "resolved by socket.create_connection",
+    "output": "connected\n"
+  },
+  "ui->api": {
+    "allowed": true,
+    "expected": true,
+    "dns": "Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n\nName:\tapi.rahbar.svc.cluster.local\nAddress: 10.96.164.252\n\n",
+    "output": "{\"status\":\"alive\"}"
+  },
+  "ui->chroma": {
+    "allowed": false,
+    "expected": false,
+    "dns": "Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n\nName:\tchroma.rahbar.svc.cluster.local\nAddress: 10.96.41.144\n\n",
+    "output": "wget: download timed out\ncommand terminated with exit code 1\n"
+  },
+  "Ingress->UI": 200,
+  "Ingress->API": 200
+}

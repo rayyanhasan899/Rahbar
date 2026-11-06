@@ -1,0 +1,66 @@
+[
+  {
+    "key": "AaGyi4dzasJetAH6DSaq",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:scripts/real_cluster_checks.py",
+    "line": 325,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  },
+  {
+    "key": "AaGyi4dzasJetAH6DSar",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:scripts/real_cluster_checks.py",
+    "line": 325,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  },
+  {
+    "key": "AaGyY7ww35f8DfObN5wY",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:scripts/capture_ui.py",
+    "line": 17,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  },
+  {
+    "key": "AaGyY7wx35f8DfObN5wb",
+    "rule": "shell:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:scripts/e2e_cluster.sh",
+    "line": 21,
+    "message": "Make sure that using clear-text protocols is safe here."
+  },
+  {
+    "key": "AaGyY7w035f8DfObN5wh",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:scripts/real_cluster_checks.py",
+    "line": 118,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  },
+  {
+    "key": "AaGyY7w035f8DfObN5wi",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:scripts/real_cluster_checks.py",
+    "line": 118,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  },
+  {
+    "key": "AaGyTiOYchSi4o7OYoy7",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:api/app/retrieval/chroma.py",
+    "line": 37,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  },
+  {
+    "key": "AaGyTiOYchSi4o7OYoy8",
+    "rule": "python:S5332",
+    "severity": "MINOR",
+    "component": "rayyanhasan899_Rahbar:api/app/retrieval/chroma.py",
+    "line": 37,
+    "message": "Using HTTP protocol is insecure. Use HTTPS instead."
+  }
+]

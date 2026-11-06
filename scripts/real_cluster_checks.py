@@ -188,29 +188,33 @@ def pin_conflict() -> dict:
 
 
 def rollout() -> dict:
+    def page(*, demo: bool, digest: str | None = None) -> str:
+        for _ in range(30):
+            response = httpx.get(API + "/", headers=HEADERS)
+            html = response.text
+            if (response.status_code == 200 and "RAHBAR" in html
+                    and ("RAHBAR Rollout Demo" in html) == demo
+                    and (digest is None or hashlib.sha256(html.encode()).hexdigest() == digest)):
+                return html
+            time.sleep(2)
+        raise AssertionError("Ingress did not serve the expected UI with HTTP 200")
+
     original = j("get", "deployment", "ui")["spec"]["template"]["spec"]["containers"][0]["image"]
+    original_html = page(demo=False)
+    original_digest = hashlib.sha256(original_html.encode()).hexdigest()
+    save("rollout-original.html", original_html)
     image = "rahbar-ui:" + os.environ["IMAGE_TAG"] + "-demo"
     command("docker", "build", "--build-arg", "ROLLOUT_DEMO=true", "--build-arg", "VCS_REF=" + os.environ["IMAGE_TAG"], "-t", image, "ui")
     command("kind", "load", "docker-image", image, "--name", os.environ["CLUSTER_NAME"])
     try:
         k("set", "image", "deployment/ui", "ui=" + image)
         k("rollout", "status", "deployment/ui", "--timeout=180s")
-        for _ in range(30):
-            html = httpx.get(API + "/", headers=HEADERS).text
-            if "RAHBAR Rollout Demo" in html:
-                break
-            time.sleep(2)
-        assert "RAHBAR Rollout Demo" in html
+        html = page(demo=True)
         save("rollout-visible.html", html)
     finally:
         k("rollout", "undo", "deployment/ui")
         k("rollout", "status", "deployment/ui", "--timeout=180s")
-    for _ in range(30):
-        html = httpx.get(API + "/", headers=HEADERS).text
-        if "RAHBAR Rollout Demo" not in html:
-            break
-        time.sleep(2)
-    assert "RAHBAR Rollout Demo" not in html
+    html = page(demo=False, digest=original_digest)
     assert j("get", "deployment", "ui")["spec"]["template"]["spec"]["containers"][0]["image"] == original
     save("rollout-restored.html", html)
     return {"original": original, "demo": image, "restored_sha256": hashlib.sha256(html.encode()).hexdigest()}
@@ -220,7 +224,7 @@ def reindex() -> dict:
     before = publication()
     warm = ask("What is the medium of instruction and examinations for most courses?")
     hit = ask("What is the medium of instruction and examinations for most courses?")
-    assert hit.headers.get("X-Cache") == "hit", hit.text
+    assert hit.headers.get("X-Cache") == "HIT", hit.text
     deployment = j("get", "deployment", "api")["spec"]["template"]
     name = "acceptance-reindex"
     k("create", "job", "--from=cronjob/reindex", name)
@@ -258,8 +262,8 @@ def reindex() -> dict:
     # A probe may already have crossed publication and filled the new namespace.
     first_after = ask("What is the medium of instruction and examinations for most courses?")
     new_hit = ask("What is the medium of instruction and examinations for most courses?")
-    assert new_hit.headers.get("X-Cache") == "hit"
-    assert first_after.headers.get("X-Cache") == "miss" or any(p["cache"] == "miss" for p in probes), probes
+    assert new_hit.headers.get("X-Cache") == "HIT"
+    assert first_after.headers.get("X-Cache") == "MISS" or any(p["cache"] == "MISS" for p in probes), probes
     save("reindex.json", {"before": before, "after": after, "probes": probes, "warm_cache": warm.headers.get("X-Cache"), "first_after_cache": first_after.headers.get("X-Cache"), "second_after_cache": new_hit.headers.get("X-Cache")})
     save("reindex-writer.log", k("logs", "job/" + name))
     lock_log = k("logs", "job/manual-lock-probe")

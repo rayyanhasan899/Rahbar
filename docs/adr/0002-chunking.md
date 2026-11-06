@@ -19,7 +19,7 @@ remain stable.
 The budget uses Unicode lexical tokens: words plus individual punctuation,
 not the Ollama model's subword tokenizer. This is reproducible without an
 additional tokenizer/model dependency. We report that distinction explicitly.
-Ollama truncation is disabled so overlong model inputs fail visibly rather
+Embedding truncation is disabled so overlong embedding inputs fail visibly rather
 than silently dropping evidence. Chunk IDs hash source/version/section/page/
 offset/text. Preserve original document names in metadata.
 

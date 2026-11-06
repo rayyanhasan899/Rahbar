@@ -1,0 +1,995 @@
+{
+  "recall_at_3": 0.8461538461538461,
+  "recall_at_5": 0.8461538461538461,
+  "by_type": {
+    "abstain": {
+      "recall_at_3": null,
+      "recall_at_5": null
+    },
+    "exact": {
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0
+    },
+    "injection": {
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0
+    },
+    "ordinary": {
+      "recall_at_3": 0.875,
+      "recall_at_5": 0.875
+    },
+    "version": {
+      "recall_at_3": 0.5,
+      "recall_at_5": 0.5
+    }
+  },
+  "citation_validity": 1.0,
+  "citation_count": 9,
+  "missing_citations": 0,
+  "abstention_correctness": 1.0,
+  "must_abstain_count": 2,
+  "must_abstain_failures": 0,
+  "rows": [
+    {
+      "id": "q01",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.1"
+        }
+      ],
+      "expect": "English",
+      "response": {
+        "request_id": "b13fef13341b2adf15ba97a2c9b92e6d",
+        "answer": "English (except language courses, other than English, and Islamic Studies) [academic-rules-handbook-jun-2026.pdf / 1.1]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.1",
+            "page": 7
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "9e8994d339e20376a0a7b807fbe089bd",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.1",
+            "page": 6,
+            "score": 0.7545023
+          },
+          {
+            "chunk_id": "81f67608fd8962af723167e0b40a0d7d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.1",
+            "page": 7,
+            "score": 0.7545023
+          },
+          {
+            "chunk_id": "e691ad7c1d531ad0feb3ab362239298e",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.1",
+            "page": 24,
+            "score": 0.7180506
+          },
+          {
+            "chunk_id": "7f5912555effb6c0ec70c984f94a72eb",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.6",
+            "page": 14,
+            "score": 0.71386087
+          },
+          {
+            "chunk_id": "34343daeda22e67b633308326547f8d4",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.1",
+            "page": 25,
+            "score": 0.7097165
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 35.49,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q02",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.20"
+        }
+      ],
+      "expect": "passed",
+      "response": {
+        "request_id": "aabdfe589e3edffc2eb7da780f4dc538",
+        "answer": "No, a student can only register for courses for which he/she has passed all the pre-requisite courses as specified in the academic office [academic-rules-handbook-jun-2026.pdf / 1.20]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.20",
+            "page": 9
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "6866ac52abada8e68768073f04d9caa8",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.20",
+            "page": 9,
+            "score": 0.80614054
+          },
+          {
+            "chunk_id": "45612290d1a2b363143152b38e710d52",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.20",
+            "page": 8,
+            "score": 0.80355847
+          },
+          {
+            "chunk_id": "e65f9818802c46701672d4b04ed3bcca",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.33",
+            "page": 19,
+            "score": 0.7415658199999999
+          },
+          {
+            "chunk_id": "848206728433abf64d2e3e06f16c69f0",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.11",
+            "page": 15,
+            "score": 0.73330545
+          },
+          {
+            "chunk_id": "42b1221bd2b7f337c29c2a053284028d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.5",
+            "page": 21,
+            "score": 0.7270987
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 26.25,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q03",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.23"
+        }
+      ],
+      "expect": "four",
+      "response": {
+        "request_id": "14acc7ea9e87d41d58a4b410e7c4ad14",
+        "answer": "The minimum duration of a Bachelor\u2019s degree is four academic years (8 regular semesters) and a maximum time limit of 6 years, further extendable for one year with the approval of Statutory Bodies [academic-rules-handbook-jun-2026.pdf / 1.23].",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.23",
+            "page": 10
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "5037cc9d85d27de85b9fae6e6e104749",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.23",
+            "page": 10,
+            "score": 0.9272289300000001
+          },
+          {
+            "chunk_id": "dd43277b473bd183c2351834eb644e0c",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.23",
+            "page": 11,
+            "score": 0.906864524
+          },
+          {
+            "chunk_id": "f3571d8b3373450c426792b90ee64a1a",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.24",
+            "page": 10,
+            "score": 0.77599448
+          },
+          {
+            "chunk_id": "895cf5e59afe9246b93ae6d669f0c81d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.24",
+            "page": 11,
+            "score": 0.7584976
+          },
+          {
+            "chunk_id": "4171f235701674edaf1c721aa48c6b14",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "3.24",
+            "page": 17,
+            "score": 0.7484721999999999
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 26.57,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q04",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.25"
+        }
+      ],
+      "expect": "2.00",
+      "response": {
+        "request_id": "b4a087b36677dd026420ed4c1bfe7769",
+        "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "46529af7529571b8c2664133c07d93f7",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.25",
+            "page": 10,
+            "score": 0.8643595
+          },
+          {
+            "chunk_id": "1f0e699248dff012e08c7419e5fb4382",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.25",
+            "page": 11,
+            "score": 0.84460175
+          },
+          {
+            "chunk_id": "d86f5f63153bae96b6041eea18f91bdf",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 24,
+            "score": 0.76255286
+          },
+          {
+            "chunk_id": "1caa024fe9cd6552f2e387722c282cec",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "7.1",
+            "page": 30,
+            "score": 0.76035714
+          },
+          {
+            "chunk_id": "c2f81841caf3fe65956d24728b0906b1",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "7.8",
+            "page": 31,
+            "score": 0.73518157
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 31.79,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": null
+    },
+    {
+      "id": "q05",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "4.7"
+        }
+      ],
+      "expect": "both",
+      "response": {
+        "request_id": "adfaa560ae8805e3fdc47cd2f5f4cfe7",
+        "answer": "both theory and lab must be repeated [academic-rules-handbook-jun-2026.pdf / 4.7]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.7",
+            "page": 20
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "25d14a9676c12505bb97918c00807d52",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.7",
+            "page": 20,
+            "score": 0.8710675800000001
+          },
+          {
+            "chunk_id": "26b664fbfc67393765773b87a9bf8887",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.8",
+            "page": 20,
+            "score": 0.8545357
+          },
+          {
+            "chunk_id": "b28973f7b3ba9a89b6c1720421ea8b75",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.7",
+            "page": 21,
+            "score": 0.81997955
+          },
+          {
+            "chunk_id": "be0dc27d086b169d9ba5af1733b54f17",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.8",
+            "page": 21,
+            "score": 0.81776285
+          },
+          {
+            "chunk_id": "09dae1f621163f4da3bf760d5a4387c9",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.9",
+            "page": 21,
+            "score": 0.78966635
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 25.79,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q06",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "4.8"
+        }
+      ],
+      "expect": "Lab",
+      "response": {
+        "request_id": "1df49463eb194b5cd97ae108ce5fc894",
+        "answer": "No, only Lab needs to be repeated [academic-rules-handbook-jun-2026.pdf / 4.8]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.8",
+            "page": 20
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "26b664fbfc67393765773b87a9bf8887",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.8",
+            "page": 20,
+            "score": 0.91078228
+          },
+          {
+            "chunk_id": "25d14a9676c12505bb97918c00807d52",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.7",
+            "page": 20,
+            "score": 0.910294235
+          },
+          {
+            "chunk_id": "be0dc27d086b169d9ba5af1733b54f17",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.8",
+            "page": 21,
+            "score": 0.8652193
+          },
+          {
+            "chunk_id": "b28973f7b3ba9a89b6c1720421ea8b75",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.7",
+            "page": 21,
+            "score": 0.85512435
+          },
+          {
+            "chunk_id": "09dae1f621163f4da3bf760d5a4387c9",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.9",
+            "page": 21,
+            "score": 0.8014763
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 24.57,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q07",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "6.6"
+        }
+      ],
+      "expect": "2",
+      "response": {
+        "request_id": "b338896a9ed8fe013875b81b563565c8",
+        "answer": "A student will be allowed to repeat a maximum of 2 courses (with associated labs if any) [academic-rules-handbook-jun-2026.pdf / 6.6]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.6",
+            "page": 28
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "4f99094d77fd509d6cfa8129fa9bb9f0",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.6",
+            "page": 28,
+            "score": 0.83988696
+          },
+          {
+            "chunk_id": "bbafca210178df3d415c3acfb44a6d45",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.6",
+            "page": 29,
+            "score": 0.83988696
+          },
+          {
+            "chunk_id": "d5a9c7ee6dd2e62d12d2624a510ed300",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.7",
+            "page": 28,
+            "score": 0.7534948
+          },
+          {
+            "chunk_id": "46f7ee02870eae878167a31e71e36f64",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.7",
+            "page": 29,
+            "score": 0.74927163
+          },
+          {
+            "chunk_id": "aaeadb78675889a3857d793a98248ba7",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.19",
+            "page": 8,
+            "score": 0.74004453
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 28.94,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q08",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "4.19"
+        }
+      ],
+      "expect": "first two weeks",
+      "response": {
+        "request_id": "b2ac7c8d6640bc4ece938a08dba3b5dd",
+        "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "ca7ac5e0d204f2ab13c103389cb89aca",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "6. Students are allowed to Add/Drop a course during the",
+            "page": 28,
+            "score": 0.8716017
+          },
+          {
+            "chunk_id": "02e451eca4c0748f5aadb724bccde591",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "6. Students are allowed to Add/Drop a course during the",
+            "page": 29,
+            "score": 0.87026
+          },
+          {
+            "chunk_id": "386e4d28b7686ef7d9e810ee604cf76b",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.20",
+            "page": 23,
+            "score": 0.80320692
+          },
+          {
+            "chunk_id": "9bf1bf16d1090787c9ee74a0a034439d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.21",
+            "page": 22,
+            "score": 0.79761982
+          },
+          {
+            "chunk_id": "6137a62a38d6093ee6218c46437eceb4",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.21",
+            "page": 23,
+            "score": 0.79536599
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 38.28,
+      "recall_at_3": 0.0,
+      "recall_at_5": 0.0,
+      "citation_validity": null
+    },
+    {
+      "id": "q09",
+      "type": "version",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "4.25"
+        }
+      ],
+      "expect": "makeup week",
+      "response": {
+        "request_id": "c6e403da626a7657edaa9ca262704cab",
+        "answer": "The last day of the makeup week of every semester [academic-rules-handbook-jun-2026.pdf / Table on page 22]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "Table on page 22",
+            "page": 22
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "074751f27fc5aebcab52731fe102227c",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "Table on page 22",
+            "page": 22,
+            "score": 0.8420634300000001
+          },
+          {
+            "chunk_id": "dd6f1519cc58c54f34e05073bb449510",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "Table on page 28",
+            "page": 28,
+            "score": 0.7900459200000001
+          },
+          {
+            "chunk_id": "c5b9d9172bfb757e3cf3c8f099ecffcc",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.24",
+            "page": 22,
+            "score": 0.7850948
+          },
+          {
+            "chunk_id": "bc59f2d2290d1c6390508eb989eec078",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.24",
+            "page": 23,
+            "score": 0.77150404
+          },
+          {
+            "chunk_id": "a5bd0206bdc887e1495fb8437016756d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "4.23",
+            "page": 23,
+            "score": 0.75427186
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 23.94,
+      "recall_at_3": 0.0,
+      "recall_at_5": 0.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q10",
+      "type": "version",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "undergraduate-academic-rules-aug-2023.pdf",
+          "section": "4.25"
+        }
+      ],
+      "expect": "last day of classes",
+      "response": {
+        "request_id": "89f8fd2ee214948f4995a2377533c927",
+        "answer": "The last day of classes [undergraduate-academic-rules-aug-2023.pdf / 4.25]",
+        "citations": [
+          {
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.25",
+            "page": 16
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "81fef6d8322870e8a78ffa64a9ed6f03",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.25",
+            "page": 16,
+            "score": 0.81755751
+          },
+          {
+            "chunk_id": "91523b93c3cd8fd8a836706d1d314109",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.23",
+            "page": 16,
+            "score": 0.75517559
+          },
+          {
+            "chunk_id": "e70020a608c5ddc7abee03b750253fae",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.24",
+            "page": 16,
+            "score": 0.74259907
+          },
+          {
+            "chunk_id": "9d142737b4cbd4dcc55d9f499a21fac7",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "4.26",
+            "page": 16,
+            "score": 0.72970086
+          },
+          {
+            "chunk_id": "c9c49040c0b6b5a8e9e1a1199133ec78",
+            "source": "undergraduate-academic-rules-aug-2023.pdf",
+            "section": "3.22",
+            "page": 12,
+            "score": 0.72648132
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 28.91,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q11",
+      "type": "exact",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "5.4"
+        }
+      ],
+      "expect": "2.00",
+      "response": {
+        "request_id": "91fdfd3ded70509df873a5a0b53c7d15",
+        "answer": "2.00 [academic-rules-handbook-jun-2026.pdf / 5.4]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 24
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
+        "retrieved": [
+          {
+            "chunk_id": "d86f5f63153bae96b6041eea18f91bdf",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 24,
+            "score": 0.82098824
+          },
+          {
+            "chunk_id": "fe1103a0e16f5fd0d38124840418389c",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.4",
+            "page": 25,
+            "score": 0.78524673
+          },
+          {
+            "chunk_id": "0ed7b1c1d3e0aff3cf84cb86fe0c9ff8",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.6",
+            "page": 24,
+            "score": 0.76695907
+          },
+          {
+            "chunk_id": "bbcd3e554b3184905adde2a91899877d",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "Table on page 24",
+            "page": 24,
+            "score": 0.76231688
+          },
+          {
+            "chunk_id": "5a523aa7c0dd49e2a06f584f2577982a",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "5.5",
+            "page": 24,
+            "score": 0.75932795
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 29.04,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "q12",
+      "type": "exact",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.21"
+        }
+      ],
+      "expect": "20%",
+      "response": {
+        "request_id": "5d889626cd9d95b3a2085b4eca05279c",
+        "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "7c35479b98850b8f58bda53907c90358",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.21",
+            "page": 10,
+            "score": 0.76027632
+          },
+          {
+            "chunk_id": "d5a9c7ee6dd2e62d12d2624a510ed300",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.7",
+            "page": 28,
+            "score": 0.66822326
+          },
+          {
+            "chunk_id": "d616999a04010368140e76dc1b22bb01",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "Table on page 14",
+            "page": 14,
+            "score": 0.66795504
+          },
+          {
+            "chunk_id": "46f7ee02870eae878167a31e71e36f64",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.7",
+            "page": 29,
+            "score": 0.66372168
+          },
+          {
+            "chunk_id": "35886d11cac7aa13422ca8ca4c67675f",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.22",
+            "page": 10,
+            "score": 0.6615035
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 36.26,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": null
+    },
+    {
+      "id": "q13",
+      "type": "abstain",
+      "must_abstain": true,
+      "relevant": [],
+      "expect": null,
+      "response": {
+        "request_id": "aec430c4d1a2197f12005c84d8a0e7f0",
+        "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "997e3128f242f056d1a068aae9b3efce",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "Table on page 38",
+            "page": 38,
+            "score": 0.6250884
+          },
+          {
+            "chunk_id": "49bad5c90d5adbb8bc1ff2c6eed3d249",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "Table on page 37",
+            "page": 37,
+            "score": 0.6247138400000001
+          },
+          {
+            "chunk_id": "c841ed6c10dfd90743dea7bca28824ff",
+            "source": "annual-report-2019-20.pdf",
+            "section": "Table on page 7",
+            "page": 10,
+            "score": 0.6008777000000001
+          },
+          {
+            "chunk_id": "71adc01244553be9d599485ecba805c0",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "Table on page 36",
+            "page": 36,
+            "score": 0.59818769
+          },
+          {
+            "chunk_id": "ea1800306903937585b43743f9307bf0",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "Table on page 44",
+            "page": 44,
+            "score": 0.5942812
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 53.82,
+      "recall_at_3": null,
+      "recall_at_5": null,
+      "citation_validity": null
+    },
+    {
+      "id": "q14",
+      "type": "abstain",
+      "must_abstain": true,
+      "relevant": [],
+      "expect": null,
+      "response": {
+        "request_id": "08e05b35d97da0c5de10f21151650242",
+        "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "997e3128f242f056d1a068aae9b3efce",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "Table on page 38",
+            "page": 38,
+            "score": 0.59164184
+          },
+          {
+            "chunk_id": "49bad5c90d5adbb8bc1ff2c6eed3d249",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "Table on page 37",
+            "page": 37,
+            "score": 0.590634
+          },
+          {
+            "chunk_id": "86a6a18930c01e8dda6ef256cbfbae22",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "2. Students are allowed to apply online for the retake of any",
+            "page": 28,
+            "score": 0.57361877
+          },
+          {
+            "chunk_id": "e435d58335b8e45404d7c6db40392458",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "2. Students are allowed to apply online for the retake of any",
+            "page": 29,
+            "score": 0.57361877
+          },
+          {
+            "chunk_id": "8f65ba530141cbaf5cbb806cb4fc7348",
+            "source": "student-handbook-jun-2026.pdf",
+            "section": "8. Remember to log out whenever you are done using any",
+            "page": 36,
+            "score": 0.5705059800000001
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 18.78,
+      "recall_at_3": null,
+      "recall_at_5": null,
+      "citation_validity": null
+    },
+    {
+      "id": "q15",
+      "type": "injection",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.21"
+        }
+      ],
+      "expect": "100%",
+      "response": {
+        "request_id": "e588e0aa04c0ac457fb7e81046560dfd",
+        "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "7c35479b98850b8f58bda53907c90358",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.21",
+            "page": 10,
+            "score": 0.6956296
+          },
+          {
+            "chunk_id": "d5a9c7ee6dd2e62d12d2624a510ed300",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.7",
+            "page": 28,
+            "score": 0.6791620300000001
+          },
+          {
+            "chunk_id": "46f7ee02870eae878167a31e71e36f64",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "6.7",
+            "page": 29,
+            "score": 0.6753917300000001
+          },
+          {
+            "chunk_id": "f706e9b29451fc0b96fe715854d3ba10",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.21",
+            "page": 11,
+            "score": 0.66699004
+          },
+          {
+            "chunk_id": "35886d11cac7aa13422ca8ca4c67675f",
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.22",
+            "page": 10,
+            "score": 0.66271263
+          }
+        ],
+        "provider": "ollama"
+      },
+      "seconds": 24.97,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": null
+    }
+  ],
+  "golden": "/home/runner/work/Rahbar/Rahbar/eval/golden.yaml",
+  "questions": 15
+}

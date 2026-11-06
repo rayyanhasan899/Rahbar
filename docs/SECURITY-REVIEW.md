@@ -38,4 +38,15 @@ These are documented architecture limitations, not proof of Internet-safe
 unencrypted production hosting. A future external deployment needs TLS on
 Ingress and protected backend/provider transport. Do not suppress arbitrary
 HTTP findings or close issues without checking the destination and payload.
-No SonarCloud issue has been accepted or dismissed by Codex in this session.
+The eight explicitly authorized HTTP decisions below are the only accepted issues.
+
+## Approved scoped risk decisions — 7 November 2026
+
+The owner approved only the eight HTTP findings listed in
+`docs/evidence/day3-sonar-accepted-findings.json`. Codex applied Accept in the
+signed-in SonarCloud account with the exact private/loopback scope above and a
+three-day reopening date of **10 November 2026**. Optional analyzer-training
+sharing of the comment was unchecked. The original finding list and actual UI
+screenshot are retained. No other issue was accepted and no scan, policy or
+approval requirement was disabled. The automatic analysis must still rerun and
+pass; the acceptance operation alone is not a green CI claim.

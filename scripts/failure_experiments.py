@@ -66,11 +66,14 @@ def main() -> None:
     client = get_client(settings)
     meta = client.get_collection(settings.collection + "-control").get(ids=["active"])["metadatas"][0]
     reference = client.get_collection(meta["active_collection"])
-    vectors = embed([q["question"] for q in golden], settings, purpose="query")
+    probes = yaml.safe_load((ROOT / "eval/failure-probes.yaml").read_text())["questions"]
+    texts = [q["question"] for q in golden + probes]
+    vectors = dict(zip(texts, embed(texts, settings, purpose="query")))
 
-    def measure(collection, k=5, filtered=True):
+    def measure(collection, k=5, filtered=True, questions=golden):
         rows = []
-        for q, vector in zip(golden, vectors):
+        for q in questions:
+            vector = vectors[q["question"]]
             where = version_filter(q["question"], str(meta["versions"])) if filtered else None
             hits = collection.query(query_embeddings=[vector], n_results=k, where=where, include=["metadatas", "distances"])
             refs = [dict(m, chunk_id=cid, score=1 - distance) for m, cid, distance in zip(hits["metadatas"][0], hits["ids"][0], hits["distances"][0])]
@@ -81,6 +84,12 @@ def main() -> None:
     baseline = measure(reference)
     result["restored-reference"] = {"generation": meta["generation"], "measurement": baseline}
     result["C-top-k"] = {"broken": measure(reference, 1), "restored": baseline}
+    # The original golden labels mostly require one clause. Do not pretend k=1
+    # degraded their recall when it did not; measure a separate two-clause need.
+    result["C-top-k"]["additional_diagnostic"] = {
+        "broken": measure(reference, 1, questions=probes),
+        "restored": measure(reference, questions=probes),
+    }
     result["E-source-filter"] = {"broken_unfiltered": measure(reference, filtered=False), "restored": baseline}
     out.write_text(json.dumps(result, indent=2))
     pieces = [c for doc in docs for c in fixed_chunks(doc)]

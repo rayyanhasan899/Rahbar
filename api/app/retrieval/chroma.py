@@ -1,7 +1,4 @@
-"""The real retriever. Yours to build (sections 3.2 and 4.4).
-
-Connection details are already here; the query is not.
-"""
+"""Version-aware reader of independently published Chroma generations."""
 
 from __future__ import annotations
 
