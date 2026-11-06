@@ -49,6 +49,11 @@ def check(answer: Answer, passages: list[Passage]) -> tuple[Answer, str | None]:
     passage it matches, so the response always says where the text was.
     """
     if not answer.answered_from_context:
+        if answer.confidence != "low":
+            return answer, (
+                "a refusal must have low confidence. If evidence supports your factual "
+                "answer, set answered_from_context to true and supply exact citations."
+            )
         return answer.model_copy(update={"citations": []}), None
     if not answer.citations:
         return answer, "an answer from context must cite at least one passage."

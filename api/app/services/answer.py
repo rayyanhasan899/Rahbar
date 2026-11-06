@@ -84,6 +84,9 @@ def _generate(
             continue
         answer, problem = citations.check(answer, passages)
         if problem is None:
+            if not answer.answered_from_context:
+                # A model's false flag is not permission to expose uncited claims.
+                return _declined(NOT_COVERED), None
             return answer, None
         feedback = problem
         log.warning("rejected citations", extra={"attempt": attempt, "error": problem})

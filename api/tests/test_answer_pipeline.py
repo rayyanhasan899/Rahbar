@@ -96,10 +96,21 @@ def test_answer_without_citations_is_rejected():
 
 
 def test_declined_answer_drops_citations():
-    declined = good_answer().model_copy(update={"answered_from_context": False})
+    declined = good_answer().model_copy(update={"answered_from_context": False, "confidence": "low"})
     r = run("Q about it?", FakeRetriever([POLICY]), ScriptedProvider(declined)).response
     assert r.answered_from_context is False
     assert r.citations == []
+    assert r.answer == svc.NOT_COVERED
+    assert "80%" not in r.answer
+
+
+def test_confident_factual_refusal_is_retried_instead_of_leaking_uncited_text():
+    contradictory = good_answer().model_copy(update={"answered_from_context": False, "citations": []})
+    provider = ScriptedProvider(contradictory, good_answer())
+    response = run("What attendance is required?", FakeRetriever([POLICY]), provider).response
+    assert response.answered_from_context and response.citations
+    assert len(provider.seen) == 2
+    assert "refusal must have low confidence" in provider.seen[1]["feedback"]
 
 
 def test_missing_page_is_filled_from_the_passage():

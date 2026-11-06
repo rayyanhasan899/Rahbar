@@ -1,0 +1,251 @@
+Skip to content
+rayyanhasan899
+Rahbar
+Type / to search
+Repository navigation
+Code
+Issues
+Pull requests
+2
+ (2)
+Agents
+Actions
+Projects
+Wiki
+Security and quality
+Insights
+Settings
+CI
+fix(security): confine audit paths and enforce locked wheel integrity… #25
+Cancel workflow
+Summary
+All jobs
+lint
+test
+manifests
+build (api)
+build (indexer)
+build (ui)
+scan (api)
+scan (indexer)
+scan (ui)
+e2e-eval
+quality
+real-audit
+Run details
+Usage
+Workflow file
+Lockfile
+real-audit
+Started  ago
+1/1
+Set up job
+1s
+Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+1s
+Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+0s
+Run sudo apt-get update && sudo apt-get install -y tesseract-ocr poppler-utils
+21s
+Run helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3
+1m 27s
+Run kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.30.3/manifests/calico.yaml
+49s
+Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+4s
+Run for component in api indexer ui; do
+34s
+Run bash scripts/e2e_cluster.sh
+650
+          faculty-entrepreneurship-and-technical-start-ups-policy.pdf, 3,872,809 bytes
+
+651
+8 documents in corpus/raw, manifest written to corpus/MANIFEST.md
+
+652
+  ok        undergraduate-academic-rules-aug-2023.pdf
+
+653
+  ok        academic-rules-handbook-jun-2026.pdf
+
+654
+  ok        prospectus-2026-academic-rules-and-regulations.pdf
+
+655
+  ok        student-handbook-jun-2026.pdf
+
+656
+  ok        annual-report-2019-20.pdf
+
+657
+  ok        fee-structure-page.html
+
+658
+  ok        grading-page.html
+
+659
+  ok        faculty-entrepreneurship-and-technical-start-ups-policy.pdf
+
+660
+8 of 8 match the manifest
+
+661
+pod/corpus-transfer created
+
+662
+pod/corpus-transfer condition met
+
+663
+all PVC source hashes verified
+
+664
+pod "corpus-transfer" deleted
+
+665
+partitioned roll out complete: 1 new pods have been updated...
+
+666
+deployment "redis" successfully rolled out
+
+667
+job.batch/indexer created
+
+668
+job.batch/indexer condition met
+
+669
+Defaulted container "indexer" out of: indexer, wait-chroma (init)
+
+670
+namespace/rahbar unchanged
+
+671
+serviceaccount/api unchanged
+
+672
+serviceaccount/chroma unchanged
+
+673
+serviceaccount/indexer unchanged
+
+674
+serviceaccount/redis unchanged
+
+675
+serviceaccount/ui unchanged
+
+676
+configmap/rahbar-config unchanged
+
+677
+service/api unchanged
+
+678
+service/chroma unchanged
+
+679
+service/redis unchanged
+
+680
+service/ui unchanged
+
+681
+persistentvolumeclaim/corpus-data unchanged
+
+682
+persistentvolumeclaim/indexer-lock unchanged
+
+683
+persistentvolumeclaim/redis-data unchanged
+
+684
+deployment.apps/api created
+
+685
+deployment.apps/redis unchanged
+
+686
+deployment.apps/ui created
+
+687
+statefulset.apps/chroma configured
+
+688
+cronjob.batch/reindex created
+
+689
+horizontalpodautoscaler.autoscaling/api created
+
+690
+job.batch/indexer configured
+
+691
+ingress.networking.k8s.io/rahbar unchanged
+
+692
+networkpolicy.networking.k8s.io/allow-api configured
+
+693
+networkpolicy.networking.k8s.io/allow-chroma configured
+
+694
+networkpolicy.networking.k8s.io/allow-indexer configured
+
+695
+networkpolicy.networking.k8s.io/allow-redis configured
+
+696
+networkpolicy.networking.k8s.io/allow-ui configured
+
+697
+networkpolicy.networking.k8s.io/default-deny unchanged
+
+698
+Waiting for deployment "api" rollout to finish: 0 of 3 updated replicas are available...
+
+699
+Waiting for deployment "api" rollout to finish: 1 of 3 updated replicas are available...
+
+700
+Waiting for deployment "api" rollout to finish: 2 of 3 updated replicas are available...
+
+701
+deployment "api" successfully rolled out
+
+702
+deployment "ui" successfully rolled out
+
+703
+curl: (7) Failed to connect to 127.0.0.1 port 18080 after 0 ms: Couldn't connect to server
+
+706
+{"check": "real-golden-initial", "status": "FAIL", "error": "  q01    33.92s  What is the medium of instruction and examinations for most \n  q02    26.44s  Can I register for a course before passing its prerequisite \n  q03    27.75s  What are the minimum and maximum durations of a bachelor's d\n  q04    26.72s  What minimum cumulative GPA is required for graduation?\n  q05    24.25s  If I fail Theory but pass its associated Lab, which parts mu\n  q06    23.71s  If I pass Theory but fail its Lab, do I have to repeat the T\n  q07    18.79s  What is the maximum number of courses with associated labs I\n  q08    32.48s  When must a request to add or drop a course be made in a reg\n  q09    29.26s  Under the 2026 academic rules, what is the deadline to withd\n  q10    26.96s  Under the 2023 academic rules, what was the deadline to with\n  q11    26.96s  What CGPA threshold does clause 5.4 specify to avoid academi\n  q12    23.16s  What attendance does clause 1.21 require and how much absenc\n  q13    50.84s  Wha
+
+707
+{"check": "network", "status": "FAIL", "error": "kubectl -n rahbar exec deployment/ui -- nslookup api: Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n** server can't find api.cluster.local: NXDOMAIN\n\n** server can't find api.svc.cluster.local: NXDOMAIN\n\n\n** server can't find api.svc.cluster.local: NXDOMAIN\n\nName:\tapi.rahbar.svc.cluster.local\nAddress: 10.96.212.51\n\n** server can't find api.cluster.local: NXDOMAIN\n\n** server can't find api.leqdrhhc0d4engl4de5k0popge.gx.internal.cloudapp.net: NXDOMAIN\n\n** server can't find api.leqdrhhc0d4engl4de5k0popge.gx.internal.cloudapp.net: NXDOMAIN\n\n command terminated with exit code 1\n", "seconds": 0.56}
+
+708
+{"check": "truthful-dependency-probes", "status": "PASS", "evidence": {"outage_seconds_at_least": 90, "liveness": 200, "readiness": 503, "api_restarts": "unchanged", "recovered": true}, "seconds": 119.61}
+
+709
+{"check": "persistence", "status": "PASS", "evidence": {"generation": "cf0844646ca54cda81302dcc607d9cc4", "chunks": 646, "redis": "Redis AOF marker survived\n", "deleted_api": "api-55b7f8dbd5-6gzxq"}, "seconds": 25.43}
+
+710
+{"check": "embedding-pin-conflict", "status": "FAIL", "error": "kubectl -n rahbar logs api-66bf948796-b24c7:  Error from server (BadRequest): container \"api\" in pod \"api-66bf948796-b24c7\" is waiting to start: ContainerCreating\n", "seconds": 0.47}
+
+711
+{"check": "visible-rollout-and-undo", "status": "PASS", "evidence": {"original": "rahbar-ui:3dfbea9dd8564d7f7039c6d64d3150ee9db4c302", "demo": "rahbar-ui:3dfbea9dd8564d7f7039c6d64d3150ee9db4c302-demo", "restored_sha256": "61b30d408583991fd69f3dec694e154cb652471e663328ad9c8482c9021ab5db"}, "seconds": 11.53}
+
+712
+{"check": "reindex-cache-and-writer-serialization", "status": "FAIL", "error": "{\"request_id\":\"bbc03d6ec11c3e4e677fb913ba8c0494\",\"answer\":\"English (except language courses, other than English, and Islamic Studies)\",\"citations\":[],\"answered_from_context\":false,\"confidence\":\"high\",\"retrieved\":[{\"chunk_id\":\"9e8994d339e20376a0a7b807fbe089bd\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"1.1\",\"page\":6,\"score\":0.7545023},{\"chunk_id\":\"81f67608fd8962af723167e0b40a0d7d\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"1.1\",\"page\":7,\"score\":0.7545023},{\"chunk_id\":\"e691ad7c1d531ad0feb3ab362239298e\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"5.1\",\"page\":24,\"score\":0.7180506},{\"chunk_id\":\"7f5912555effb6c0ec70c984f94a72eb\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"3.6\",\"page\":14,\"score\":0.71386087},{\"chunk_id\":\"34343daeda22e67b633308326547f8d4\",\"source\":\"academic-rules-handbook-ju
+
+713
+{"check": "resources-and-endpoints", "status": "PASS", "evidence": {"endpoint_ips": ["192.168.167.146", "192.168.167.147", "192.168.167.153"], "hpa": [{"resource": {"current": {"averageUtilization": 2, "averageValue": "4m"}, "name": "cpu"}, "type": "Resource"}]}, "seconds": 22.33}
+
+714
+{"check": "real-ui-screenshot", "status": "FAIL", "error": "python scripts/capture_ui.py:  Traceback (most recent call last):\n  File \"/home/runner/work/Rahbar/Rahbar/scripts/capture_ui.py\", line 33, in <module>\n    main()\n  File \"/home/runner/work/Rahbar/Rahbar/scripts/capture_ui.py\", line 29, in main\n    assert data[\"answered_from_context\"] and data[\"citations\"], data\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: {'request_id': 'c3acafbb1ce298a5e9f478c878186022', 'answer': 'English (except language courses, other than English, and Islamic Studies)', 'citations': [], 'answered_from_context': False, 'confidence': 'high', 'retrieved': [{'chunk_id': '9e8994d339e20376a0a7b807fbe089bd', 'source': 'academic-rules-handbook-jun-2026.pdf', 'section': '1.1', 'page': 6, 'score': 0.7545023}, {'chunk_id': '81f67608fd8962af723167e0b40a0d7d', 'source': 'academic-rules-handbook-jun-2026.pdf', 'section': '1.1', 'page': 7, 'score': 0.7545023}, {'chunk_id': 'e691ad7c1d531ad0feb3ab3
+Run kubectl -n rahbar get pods,jobs,pvc,hpa; kubectl -n rahbar get events --sort-by=.lastTimestamp; kubectl -n rahbar logs deployment/api --tail=40 || true; kubectl -n rahbar logs job/indexer --tail=40 || true
+Run actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+Post Run helm/kind-action@a1b0e391336a6ee6713a0583f8c6240d70863de3
+Post Run actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+Post Run actions/checkout@11d5960a326750d5838078e36cf38b85af677262

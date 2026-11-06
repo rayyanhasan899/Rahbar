@@ -67,7 +67,7 @@ def test_ollama_sends_schema_and_temperature():
     assert seen["url"] == "http://ollama:11434/api/chat"
     assert seen["body"]["format"]["title"] == "Answer"
     assert seen["body"]["options"]["temperature"] == 0.1
-    assert seen["body"]["options"]["num_ctx"] == 4096
+    assert seen["body"]["options"]["num_ctx"] == 8192
     assert seen["body"]["options"]["num_predict"] == 512
     assert seen["body"]["stream"] is False
 
@@ -85,6 +85,14 @@ def test_ollama_timeout_is_unavailable():
 
     with pytest.raises(ProviderUnavailable):
         OllamaProvider(Settings(), client=client_for(handler)).generate("Q?", [POLICY])
+
+
+def test_ollama_rejects_output_when_prompt_reaches_context_safety_margin():
+    provider = OllamaProvider(Settings(), client=client_for(lambda r: httpx.Response(
+        200, json={"message": {"content": ANSWER_JSON}, "prompt_eval_count": 7680}
+    )))
+    with pytest.raises(ProviderOutputError, match="context safety margin"):
+        provider.generate("Q?", [POLICY])
 
 
 def test_hosted_uses_bearer_key_and_json_mode():

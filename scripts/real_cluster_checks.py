@@ -113,7 +113,7 @@ def network() -> dict:
     ]:
         if label == "ui":
             # Resolve DNS first; an invalid command or DNS failure is not proof of deny.
-            dns = k("exec", "deployment/ui", "--", "nslookup", target)
+            dns = k("exec", "deployment/ui", "--", "nslookup", target + ".rahbar.svc.cluster.local")
             path = "/healthz" if target == "api" else "/api/v2/heartbeat"
             result = subprocess.run(["kubectl", "-n", "rahbar", "exec", "deployment/ui", "--", "wget", "-T", "3", "-q", "-O", "-", f"http://{target}:{port}{path}"], capture_output=True, text=True)
             if not expected:
@@ -168,7 +168,7 @@ def pin_conflict() -> dict:
         k("rollout", "restart", "deployment/api")
         for _ in range(60):
             new = [p for p in j("get", "pods", "-l", "app=api")["items"] if p["metadata"]["uid"] not in previous]
-            if new:
+            if new and any(c.get("state", {}).get("running") for c in new[0]["status"].get("containerStatuses", [])):
                 p = new[0]
                 logs = k("logs", p["metadata"]["name"])
                 if "embedding model mismatch" in logs and "deliberately-wrong-model" in logs:
@@ -302,8 +302,20 @@ def evaluate(final: bool = False) -> dict:
         args += ["--update-baseline"]
     result = subprocess.run(args, capture_output=True, text=True, timeout=3600)
     save("evaluation-final.log" if final else "evaluation-initial.log", result.stdout + result.stderr)
+    if target.exists():
+        measured = json.loads(target.read_text())
+        answerable, absent = [], []
+        for row in measured["rows"]:
+            scores = [r["score"] for r in row["response"].get("retrieved", [])]
+            (absent if row["must_abstain"] else answerable).append(max(scores, default=0))
+        print(json.dumps({"evaluation": target.name,
+                          "recall_at_5": measured["recall_at_5"],
+                          "citation_validity": measured["citation_validity"],
+                          "must_abstain_failures": measured["must_abstain_failures"],
+                          "minimum_answerable_top": min(answerable),
+                          "maximum_absent_top": max(absent)}), flush=True)
     if result.returncode:
-        raise AssertionError(result.stdout[-2000:] + result.stderr[-1000:])
+        raise AssertionError(result.stdout[-700:] + result.stderr[-300:])
     data = json.loads(target.read_text())
     return {key: data[key] for key in ["recall_at_3", "recall_at_5", "citation_validity", "abstention_correctness", "questions"]}
 

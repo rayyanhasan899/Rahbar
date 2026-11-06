@@ -41,7 +41,7 @@ class OllamaProvider:
             "messages": build_messages(question, passages, history, feedback),
             "format": ANSWER_SCHEMA,
             "stream": False,
-            "options": {"temperature": self.settings.temperature, "num_ctx": 4096, "num_predict": 512},
+            "options": {"temperature": self.settings.temperature, "num_ctx": 8192, "num_predict": 512},
             "keep_alive": "1m",
         }
         start = time.perf_counter()
@@ -66,4 +66,6 @@ class OllamaProvider:
         TOKENS.labels(kind="prompt").inc(prompt_tokens)
         TOKENS.labels(kind="completion").inc(completion_tokens)
         log.info("model usage", extra={"provider": self.name, "tokens_in": prompt_tokens, "tokens_out": completion_tokens})
+        if prompt_tokens >= 8192 - 512:
+            raise ProviderOutputError("prompt reached context safety margin; evidence may have been truncated")
         return parse_answer(content)

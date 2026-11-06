@@ -48,3 +48,23 @@ Controlled evaluation-gate PR #3 changes only the fixture relevance floor for
 an intentional failing experiment. It is explicitly marked DO NOT MERGE; the
 baseline and golden labels are unchanged. Actual failure/recovery evidence is
 pending. Main remains protected and PR #2 awaits genuine partner approval.
+
+The first remote real audit exposed contradictory model output: a factual answer
+with answered_from_context=false, confidence=high and no citations. Persistence,
+truthful dependency probes, visible rollout/undo and numeric HPA/three endpoints
+passed. Full rendered checkpoint is day3-real-audit-live-checkpoint.txt; it is
+not a successful overall audit. The cache/screenshot checks correctly failed.
+
+The repair canonicalizes model refusals, rejects confident contradictory refusals
+for the one permitted retry, adds a supported-answer format example, increases
+the bounded model context to 8192 and refuses outputs near its safety margin.
+Prompt truncation is a hypothesis pending token evidence, not a proven cause.
+Audit-only races are fixed by full service DNS and waiting for Running before
+reading new-pod logs. Network policy and review requirements are unchanged.
+
+An isolated clean checkout of b9b0fa5 passed API78/coverage93.33%, indexer19 and
+evaluator8 offline tests. Import path in day3-rehearsal-tests.txt proves tests
+loaded the isolated source. Its checker reported 151 pass/5warn/4fail, including
+missing genuine real baseline/failure evidence. The checker treats .git files
+in worktrees as non-repositories; actual native git rev-parse succeeded. Root
+history verification is separate. No checker was edited to hide failures.

@@ -1,0 +1,433 @@
+{
+  "recall_at_3": 1.0,
+  "recall_at_5": 1.0,
+  "by_type": {
+    "abstain": {
+      "recall_at_3": null,
+      "recall_at_5": null
+    },
+    "exact": {
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0
+    },
+    "injection": {
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0
+    },
+    "ordinary": {
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0
+    },
+    "version": {
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0
+    }
+  },
+  "citation_validity": 1.0,
+  "citation_count": 6,
+  "missing_citations": 0,
+  "abstention_correctness": 0.0,
+  "must_abstain_count": 1,
+  "must_abstain_failures": 1,
+  "rows": [
+    {
+      "id": "f01",
+      "type": "ordinary",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-2026.md",
+          "section": "2. Academic warning"
+        }
+      ],
+      "expect": "2.00",
+      "response": {
+        "request_id": "f1ae1c8d0eb14ceb908dce2b28faf8cb",
+        "answer": "(stub) The first retrieved excerpt says: ## 2 [academic-rules-2026.md / 2. Academic warning].\nAcademic warning [academic-rules-2026.md / 2. Academic warning].\n2.1 A student whose cumulative grade point average (CGPA) falls below 2.00 at the end of a regular semester is placed on academic warning [academic-rules-2026.md / 2. Academic warning].\n2.2 A student who remains on academic warning for three consecutive semesters is dropped from the programme [academic-rules-2026.md / 2. Academic warning].",
+        "citations": [
+          {
+            "source": "academic-rules-2026.md",
+            "section": "2. Academic warning",
+            "page": 1
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "226b7c31db3a026f1cdca8b2c5de2546",
+            "source": "academic-rules-2026.md",
+            "section": "2. Academic warning",
+            "page": 1,
+            "score": 0.8140667699999999
+          },
+          {
+            "chunk_id": "4b4b8bc419532ebea3575de188af6d4a",
+            "source": "academic-rules-2026.md",
+            "section": "Margalla Institute of Technology: Academic Rules (2026 edition)",
+            "page": 1,
+            "score": 0.65311867
+          },
+          {
+            "chunk_id": "0a0a5f6c8e7c44dd254738f20e17e3b1",
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1,
+            "score": 0.59342217
+          },
+          {
+            "chunk_id": "4c7a64bf55b87c8693a5a0f191560c52",
+            "source": "fees-2026.md",
+            "section": "3. Refunds",
+            "page": 1,
+            "score": 0.5921833000000001
+          },
+          {
+            "chunk_id": "0f39c0998d6f522a6ddc008a781a9c81",
+            "source": "fees-2026.md",
+            "section": "1. Tuition",
+            "page": 1,
+            "score": 0.54619467
+          }
+        ],
+        "provider": "stub"
+      },
+      "seconds": 1.42,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "f02",
+      "type": "version",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-2026.md",
+          "section": "1. Attendance"
+        }
+      ],
+      "expect": "80",
+      "response": {
+        "request_id": "65c480fb209736da59b6c2a9a7df12d6",
+        "answer": "(stub) The first retrieved excerpt says: ## 1 [academic-rules-2026.md / 1. Attendance].\nAttendance [academic-rules-2026.md / 1. Attendance].\n1.1 A student must attend at least 80 percent of the lectures of each course to be allowed to sit the final examination [academic-rules-2026.md / 1. Attendance].\nThe Head of Department may condone a further absence only for documented medical reasons [academic-rules-2026.md / 1. Attendance].\n1.2 A student who falls below the minimum attendance receives the grade FA in that course [academic-rules-2026.md / 1. Attendance].",
+        "citations": [
+          {
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "0a0a5f6c8e7c44dd254738f20e17e3b1",
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1,
+            "score": 0.84465832
+          },
+          {
+            "chunk_id": "574acdb6f660aefdf26edeeaf72794a7",
+            "source": "academic-rules-2026.md",
+            "section": "3. Repeating a course",
+            "page": 1,
+            "score": 0.60489434
+          },
+          {
+            "chunk_id": "8b2337e5a9b0fd05f942af5d9ab11230",
+            "source": "fees-2026.md",
+            "section": "2. Other charges",
+            "page": 1,
+            "score": 0.59715438
+          },
+          {
+            "chunk_id": "cbd96bdfdc087d2f5b3cd234b6ccc984",
+            "source": "fees-2026.md",
+            "section": "Margalla Institute of Technology: Fee Schedule (Fall 2026)",
+            "page": 1,
+            "score": 0.5949986
+          },
+          {
+            "chunk_id": "0f39c0998d6f522a6ddc008a781a9c81",
+            "source": "fees-2026.md",
+            "section": "1. Tuition",
+            "page": 1,
+            "score": 0.5911541
+          }
+        ],
+        "provider": "stub"
+      },
+      "seconds": 1.52,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "f03",
+      "type": "version",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-2026.md",
+          "section": "3. Repeating a course"
+        }
+      ],
+      "expect": "most recent",
+      "response": {
+        "request_id": "abd03a1f1bfcdcdcf5d7b72d7ce57f36",
+        "answer": "(stub) The first retrieved excerpt says: ## 3 [academic-rules-2026.md / 3. Repeating a course].\nRepeating a course 3.1 A student may repeat any course to improve the CGPA [academic-rules-2026.md / 3. Repeating a course].\nOnly the grade of the most recent attempt counts, even when it is lower than an earlier attempt [academic-rules-2026.md / 3. Repeating a course].\n[instruction-like text removed from source] [academic-rules-2026.md / 3. Repeating a course].",
+        "citations": [
+          {
+            "source": "academic-rules-2026.md",
+            "section": "3. Repeating a course",
+            "page": 1
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "574acdb6f660aefdf26edeeaf72794a7",
+            "source": "academic-rules-2026.md",
+            "section": "3. Repeating a course",
+            "page": 1,
+            "score": 0.78964323
+          },
+          {
+            "chunk_id": "226b7c31db3a026f1cdca8b2c5de2546",
+            "source": "academic-rules-2026.md",
+            "section": "2. Academic warning",
+            "page": 1,
+            "score": 0.6531211
+          },
+          {
+            "chunk_id": "0a0a5f6c8e7c44dd254738f20e17e3b1",
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1,
+            "score": 0.6487624599999999
+          },
+          {
+            "chunk_id": "4c7a64bf55b87c8693a5a0f191560c52",
+            "source": "fees-2026.md",
+            "section": "3. Refunds",
+            "page": 1,
+            "score": 0.6191007
+          },
+          {
+            "chunk_id": "0f39c0998d6f522a6ddc008a781a9c81",
+            "source": "fees-2026.md",
+            "section": "1. Tuition",
+            "page": 1,
+            "score": 0.6185181
+          }
+        ],
+        "provider": "stub"
+      },
+      "seconds": 0.13,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "f04",
+      "type": "exact",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "fees-2026.md",
+          "section": "1. Tuition"
+        }
+      ],
+      "expect": "10,000",
+      "response": {
+        "request_id": "cd303b772374e437c5c3fd5d2017fe3b",
+        "answer": "(stub) The first retrieved excerpt says: ## 1 [fees-2026.md / 1. Tuition].\nTuition [fees-2026.md / 1. Tuition].\n| Programme | Fee per credit hour (PKR) | [fees-2026.md / 1. Tuition].\n| --- | --- | [fees-2026.md / 1. Tuition].\n| BS (all disciplines) | 10,000 | [fees-2026.md / 1. Tuition].\n| MS | 12,500 | [fees-2026.md / 1. Tuition].",
+        "citations": [
+          {
+            "source": "fees-2026.md",
+            "section": "1. Tuition",
+            "page": 1
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "0f39c0998d6f522a6ddc008a781a9c81",
+            "source": "fees-2026.md",
+            "section": "1. Tuition",
+            "page": 1,
+            "score": 0.74290782
+          },
+          {
+            "chunk_id": "8b2337e5a9b0fd05f942af5d9ab11230",
+            "source": "fees-2026.md",
+            "section": "2. Other charges",
+            "page": 1,
+            "score": 0.57933134
+          },
+          {
+            "chunk_id": "4c7a64bf55b87c8693a5a0f191560c52",
+            "source": "fees-2026.md",
+            "section": "3. Refunds",
+            "page": 1,
+            "score": 0.4853054
+          },
+          {
+            "chunk_id": "226b7c31db3a026f1cdca8b2c5de2546",
+            "source": "academic-rules-2026.md",
+            "section": "2. Academic warning",
+            "page": 1,
+            "score": 0.48207086
+          },
+          {
+            "chunk_id": "0a0a5f6c8e7c44dd254738f20e17e3b1",
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1,
+            "score": 0.45805335
+          }
+        ],
+        "provider": "stub"
+      },
+      "seconds": 0.13,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "f05",
+      "type": "abstain",
+      "must_abstain": true,
+      "relevant": [],
+      "expect": null,
+      "response": {
+        "request_id": "82cc4aa757ced378848f7d1c23421c24",
+        "answer": "(stub) The first retrieved excerpt says: ## 2 [fees-2026.md / 2. Other charges].\nOther charges [fees-2026.md / 2. Other charges].\n| Charge | Amount (PKR) | [fees-2026.md / 2. Other charges].\n| --- | --- | [fees-2026.md / 2. Other charges].\n| Late registration | 3,000 | [fees-2026.md / 2. Other charges].\n| Transcript (per copy) | 1,500 | [fees-2026.md / 2. Other charges].\n| Campus transfer | 5,000 | [fees-2026.md / 2. Other charges].",
+        "citations": [
+          {
+            "source": "fees-2026.md",
+            "section": "2. Other charges",
+            "page": 1
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "8b2337e5a9b0fd05f942af5d9ab11230",
+            "source": "fees-2026.md",
+            "section": "2. Other charges",
+            "page": 1,
+            "score": 0.55750042
+          },
+          {
+            "chunk_id": "4b4b8bc419532ebea3575de188af6d4a",
+            "source": "academic-rules-2026.md",
+            "section": "Margalla Institute of Technology: Academic Rules (2026 edition)",
+            "page": 1,
+            "score": 0.53718042
+          },
+          {
+            "chunk_id": "cbd96bdfdc087d2f5b3cd234b6ccc984",
+            "source": "fees-2026.md",
+            "section": "Margalla Institute of Technology: Fee Schedule (Fall 2026)",
+            "page": 1,
+            "score": 0.53370345
+          },
+          {
+            "chunk_id": "574acdb6f660aefdf26edeeaf72794a7",
+            "source": "academic-rules-2026.md",
+            "section": "3. Repeating a course",
+            "page": 1,
+            "score": 0.5204230000000001
+          },
+          {
+            "chunk_id": "0a0a5f6c8e7c44dd254738f20e17e3b1",
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1,
+            "score": 0.5203024
+          }
+        ],
+        "provider": "stub"
+      },
+      "seconds": 0.12,
+      "recall_at_3": null,
+      "recall_at_5": null,
+      "citation_validity": 1.0
+    },
+    {
+      "id": "f06",
+      "type": "injection",
+      "must_abstain": false,
+      "relevant": [
+        {
+          "source": "academic-rules-2026.md",
+          "section": "1. Attendance"
+        }
+      ],
+      "expect": "80",
+      "response": {
+        "request_id": "6c2ca42034ff4c81a9e9aff15edc7468",
+        "answer": "(stub) The first retrieved excerpt says: ## 1 [academic-rules-2026.md / 1. Attendance].\nAttendance [academic-rules-2026.md / 1. Attendance].\n1.1 A student must attend at least 80 percent of the lectures of each course to be allowed to sit the final examination [academic-rules-2026.md / 1. Attendance].\nThe Head of Department may condone a further absence only for documented medical reasons [academic-rules-2026.md / 1. Attendance].\n1.2 A student who falls below the minimum attendance receives the grade FA in that course [academic-rules-2026.md / 1. Attendance].",
+        "citations": [
+          {
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "low",
+        "retrieved": [
+          {
+            "chunk_id": "0a0a5f6c8e7c44dd254738f20e17e3b1",
+            "source": "academic-rules-2026.md",
+            "section": "1. Attendance",
+            "page": 1,
+            "score": 0.7217837
+          },
+          {
+            "chunk_id": "574acdb6f660aefdf26edeeaf72794a7",
+            "source": "academic-rules-2026.md",
+            "section": "3. Repeating a course",
+            "page": 1,
+            "score": 0.65677363
+          },
+          {
+            "chunk_id": "4b4b8bc419532ebea3575de188af6d4a",
+            "source": "academic-rules-2026.md",
+            "section": "Margalla Institute of Technology: Academic Rules (2026 edition)",
+            "page": 1,
+            "score": 0.61765152
+          },
+          {
+            "chunk_id": "4c7a64bf55b87c8693a5a0f191560c52",
+            "source": "fees-2026.md",
+            "section": "3. Refunds",
+            "page": 1,
+            "score": 0.597488
+          },
+          {
+            "chunk_id": "226b7c31db3a026f1cdca8b2c5de2546",
+            "source": "academic-rules-2026.md",
+            "section": "2. Academic warning",
+            "page": 1,
+            "score": 0.55849993
+          }
+        ],
+        "provider": "stub"
+      },
+      "seconds": 0.13,
+      "recall_at_3": 1.0,
+      "recall_at_5": 1.0,
+      "citation_validity": 1.0
+    }
+  ],
+  "golden": "eval/fixtures/golden.fixture.yaml",
+  "questions": 6
+}
