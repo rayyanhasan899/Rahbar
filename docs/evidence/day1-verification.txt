@@ -1,0 +1,40 @@
+2 files reformatted, 21 files left unchanged
+All checks passed!
+.............                                                            [100%]
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.12.3-final-0 ________________
+
+Name                            Stmts   Miss  Cover
+---------------------------------------------------
+app/__init__.py                     0      0   100%
+app/config.py                      24      0   100%
+app/logjson.py                     25      1    96%
+app/main.py                        60      7    88%
+app/providers/__init__.py           0      0   100%
+app/providers/llm/__init__.py      15      7    53%
+app/providers/llm/base.py           6      0   100%
+app/providers/llm/hosted.py         9      9     0%
+app/providers/llm/ollama.py         9      9     0%
+app/providers/llm/stub.py           9      1    89%
+app/retrieval/__init__.py          11      4    64%
+app/retrieval/base.py               6      0   100%
+app/retrieval/chroma.py            47     47     0%
+app/retrieval/stub.py               7      0   100%
+app/routes/__init__.py              0      0   100%
+app/routes/ask.py                   9      0   100%
+app/routes/health.py               55      2    96%
+app/routes/metrics.py               9      0   100%
+app/schemas.py                     36      0   100%
+app/services/__init__.py            0      0   100%
+app/services/answer.py             13      0   100%
+---------------------------------------------------
+TOTAL                             350     87    75%
+Required test coverage of 60% reached. Total coverage: 75.14%
+13 passed in 50.62s
+..................                                                       [100%]
+18 passed in 4.83s
+Success: no issues found in 11 source files
+........                                                                 [100%]
+8 passed in 3.04s
+Success: no issues found in 21 source files
+No broken requirements found.

@@ -10,7 +10,7 @@ class OllamaProvider:
     name = "ollama"
 
     def __init__(self, settings: Settings) -> None:
-        self.settings = settings   # ollama_url, llm_model, temperature
+        self.settings = settings  # ollama_url, llm_model, temperature
 
     def generate(self, question: str, passages: list[Passage]) -> Answer:
         # STARTER-TODO(3.4): build the augmented prompt (instructions, numbered evidence,

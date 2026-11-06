@@ -22,8 +22,8 @@ def _float(name: str, default: float) -> float:
 @dataclass(frozen=True)
 class Settings:
     # Which implementations to load. "stub" needs no cluster, no model, no network.
-    retriever: str = "stub"          # RETRIEVER: stub | chroma
-    llm_provider: str = "stub"       # LLM_PROVIDER: stub | ollama-host | ollama-incluster | hosted
+    retriever: str = "stub"  # RETRIEVER: stub | chroma
+    llm_provider: str = "stub"  # LLM_PROVIDER: stub | ollama-host | ollama-incluster | hosted
 
     # The embedding pin (section 4.4). The indexer reads the same ConfigMap key.
     embed_model: str = "nomic-embed-text"
@@ -38,8 +38,8 @@ class Settings:
     temperature: float = 0.2
     llm_model: str = "llama3.2:3b"
     ollama_url: str = "http://host.minikube.internal:11434"
-    hosted_base_url: str = ""        # e.g. an OpenAI-compatible endpoint
-    llm_api_key: str = field(default="", repr=False)   # from the Secret; never log it
+    hosted_base_url: str = ""  # e.g. an OpenAI-compatible endpoint
+    llm_api_key: str = field(default="", repr=False)  # from the Secret; never log it
 
     log_level: str = "INFO"
 

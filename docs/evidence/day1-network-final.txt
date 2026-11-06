@@ -1,0 +1,8 @@
+UI -> API /healthz (expected allowed)
+{"status":"alive"}
+Exit: 0
+UI -> Chroma (expected blocked; DNS resolves)
+Connecting to chroma:8000 (10.99.49.12:8000)
+wget: download timed out
+command terminated with exit code 1
+Exit: 1

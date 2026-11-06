@@ -1,0 +1,5 @@
+{"ts": "2026-11-05T06:05:55Z", "logger": "rahbar.indexer", "msg": "indexer starting", "dummy": false, "embed_model": "nomic-embed-text", "collection": "rahbar-fixtures", "chroma": "127.0.0.1:18004", "pod": "-"}
+{"ts": "2026-11-05T06:05:58Z", "logger": "rahbar.indexer", "msg": "chunked", "source": "academic-rules-2023.md", "chunks": 4}
+{"ts": "2026-11-05T06:05:58Z", "logger": "rahbar.indexer", "msg": "chunked", "source": "academic-rules-2026.md", "chunks": 4}
+{"ts": "2026-11-05T06:05:58Z", "logger": "rahbar.indexer", "msg": "chunked", "source": "fees-2026.md", "chunks": 4}
+{"ts": "2026-11-05T06:07:21Z", "logger": "rahbar.indexer", "msg": "indexer finished", "chunks": 12, "seconds": 88.5}

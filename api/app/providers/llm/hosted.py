@@ -14,7 +14,7 @@ class HostedProvider:
     name = "hosted"
 
     def __init__(self, settings: Settings) -> None:
-        self.settings = settings   # hosted_base_url, llm_model, llm_api_key, temperature
+        self.settings = settings  # hosted_base_url, llm_model, llm_api_key, temperature
 
     def generate(self, question: str, passages: list[Passage]) -> Answer:
         # STARTER-TODO(3.4): same contract as the Ollama provider, over the hosted API.
