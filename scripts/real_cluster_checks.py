@@ -11,11 +11,14 @@ import json
 import os
 import subprocess
 import time
+import re
+import tempfile
 from pathlib import Path
 import httpx
 
-OUT = Path("/tmp/real-audit")
-OUT.mkdir(exist_ok=True)
+ROOT = Path(__file__).resolve().parents[1]
+OUT = ROOT / ".venv" / "acceptance"
+OUT.mkdir(mode=0o700, parents=True, exist_ok=True)
 REPORT: dict = {"commit": os.environ["IMAGE_TAG"], "checks": {}}
 API = "http://127.0.0.1:18080"
 HEADERS = {"Host": "rahbar.local"}
@@ -69,8 +72,38 @@ def check(name, function):
 
 
 def ready() -> None:
-    k("wait", "--for=condition=ready", "pod", "-l", "app=api", "--timeout=300s")
     k("rollout", "status", "deployment/api", "--timeout=300s")
+    for _ in range(60):
+        pods = j("get", "pods", "-l", "app=api")["items"]
+        healthy = [p for p in pods if not p["metadata"].get("deletionTimestamp") and any(c["type"] == "Ready" and c["status"] == "True" for c in p["status"].get("conditions", []))]
+        if len(healthy) >= 3:
+            return
+        time.sleep(2)
+    raise AssertionError("fewer than three non-terminating API pods are ready")
+
+
+def dependency_probes() -> dict:
+    before = j("get", "pods", "-l", "app=api")["items"]
+    restarts = {p["metadata"]["uid"]: sum(c["restartCount"] for c in p["status"].get("containerStatuses", [])) for p in before}
+    observations = []
+    replicas = j("get", "statefulset", "chroma")["spec"]["replicas"]
+    try:
+        k("scale", "statefulset/chroma", "--replicas=0")
+        k("wait", "--for=delete", "pod/chroma-0", "--timeout=180s")
+        for _ in range(3):
+            data = json.loads(remote("import json,httpx;c=httpx.Client(timeout=10);print(json.dumps({p:{'code':r.status_code,'body':r.json()} for p in ['/healthz','/readyz'] for r in [c.get('http://127.0.0.1:8000'+p)]}))"))
+            assert data["/healthz"]["code"] == 200
+            assert data["/readyz"]["code"] == 503 and "chroma" in data["/readyz"]["body"]["checks"]
+            observations.append({"time": time.time(), "probes": data, "endpoints": j("get", "endpoints", "api")})
+            time.sleep(30)
+        after = j("get", "pods", "-l", "app=api")["items"]
+        assert restarts == {p["metadata"]["uid"]: sum(c["restartCount"] for c in p["status"].get("containerStatuses", [])) for p in after}
+    finally:
+        k("scale", "statefulset/chroma", f"--replicas={replicas}")
+        k("rollout", "status", "statefulset/chroma", "--timeout=300s")
+        ready()
+        save("dependency-probes.json", observations)
+    return {"outage_seconds_at_least": 90, "liveness": 200, "readiness": 503, "api_restarts": "unchanged", "recovered": True}
 
 
 def network() -> dict:
@@ -158,8 +191,9 @@ def pin_conflict() -> dict:
 
 def rollout() -> dict:
     original = j("get", "deployment", "ui")["spec"]["template"]["spec"]["containers"][0]["image"]
-    context = Path(".venv/rollout-demo")
-    context.mkdir(parents=True, exist_ok=True)
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._/:-]*", original):
+        raise ValueError("deployment image is not a safe OCI image reference")
+    context = Path(tempfile.mkdtemp(prefix="rollout-", dir=OUT))
     context.joinpath("index.html").write_text(Path("ui/index.html").read_text().replace("RAHBAR", "RAHBAR Rollout Demo"))
     context.joinpath("Dockerfile").write_text(f"FROM {original}\nUSER root\nCOPY index.html /usr/share/nginx/html/index.html\nUSER 101:101\n")
     image = "rahbar-ui:" + os.environ["IMAGE_TAG"] + "-demo"
@@ -266,23 +300,24 @@ def metrics() -> dict:
     return {"endpoint_ips": ips, "hpa": current}
 
 
-def evaluate() -> dict:
-    args = ["python", "eval/run_eval.py", "--api", API, "--host", "rahbar.local", "--out", str(OUT / "results.json")]
-    if Path("eval/baseline.json").exists():
-        args += ["--baseline", "eval/baseline.json"]
-    else:
-        args += ["--baseline", str(OUT / "baseline.json"), "--update-baseline"]
+def evaluate(final: bool = False) -> dict:
+    target = OUT / ("results.json" if final else "results-initial.json")
+    args = ["python", "eval/run_eval.py", "--api", API, "--host", "rahbar.local", "--out", str(target)]
+    baseline = ROOT / "eval/baseline.json" if (ROOT / "eval/baseline.json").exists() else OUT / "baseline.json"
+    args += ["--baseline", str(baseline)]
+    if not baseline.exists() and not final:
+        args += ["--update-baseline"]
     result = subprocess.run(args, capture_output=True, text=True, timeout=3600)
-    save("evaluation.log", result.stdout + result.stderr)
+    save("evaluation-final.log" if final else "evaluation-initial.log", result.stdout + result.stderr)
     if result.returncode:
         raise AssertionError(result.stdout[-2000:] + result.stderr[-1000:])
-    data = json.loads((OUT / "results.json").read_text())
+    data = json.loads(target.read_text())
     return {key: data[key] for key in ["recall_at_3", "recall_at_5", "citation_validity", "abstention_correctness", "questions"]}
 
 
 def component_experiments() -> dict:
     log = OUT / "component-experiments.log"
-    env = dict(os.environ, CHROMA_HOST="127.0.0.1", CHROMA_PORT="18004", CHROMA_COLLECTION="rahbar-experiment", OLLAMA_URL=f"http://{os.environ['MODEL_IP']}:11434", INDEX_LOCK_PATH="/tmp/rahbar-experiment.lock", PYTHONUNBUFFERED="1")
+    env = dict(os.environ, CHROMA_HOST="127.0.0.1", CHROMA_PORT="18004", CHROMA_COLLECTION="rahbar-experiment", OLLAMA_URL=f"http://{os.environ['MODEL_IP']}:11434", INDEX_LOCK_PATH=str(OUT / "experiment.lock"), PYTHONUNBUFFERED="1")
     with (OUT / "chroma-forward.log").open("w") as stream:
         forward = subprocess.Popen(["kubectl", "-n", "rahbar", "port-forward", "service/chroma", "18004:8000"], stdout=stream, stderr=subprocess.STDOUT)
         try:
@@ -294,7 +329,7 @@ def component_experiments() -> dict:
                     time.sleep(1)
             with log.open("w") as output:
                 for args in [
-                    ["python", "scripts/audit_corpus.py"],
+                    ["docker", "run", "--rm", "--user", f"{os.getuid()}:{os.getgid()}", "--read-only", "--tmpfs", "/tmp", "--memory", "1g", "--cpus", "2", "-v", f"{ROOT}:/work", "-w", "/work", "--entrypoint", "python", f"rahbar-indexer:{os.environ['IMAGE_TAG']}", "scripts/audit_corpus.py"],
                     ["python", "scripts/chunk_experiment.py", "--out", str(OUT / "chunk-experiments.json")],
                     ["python", "scripts/failure_experiments.py"],
                     ["python", "scripts/real_poison_probe.py"],
@@ -313,8 +348,9 @@ def component_experiments() -> dict:
 
 def main() -> None:
     save("initial-publication.json", publication())
-    check("real-golden", evaluate)
+    check("real-golden-initial", evaluate)
     check("network", network)
+    check("truthful-dependency-probes", dependency_probes)
     check("persistence", persistence)
     check("embedding-pin-conflict", pin_conflict)
     check("visible-rollout-and-undo", rollout)
@@ -322,6 +358,7 @@ def main() -> None:
     check("resources-and-endpoints", metrics)
     check("real-ui-screenshot", lambda: command("python", "scripts/capture_ui.py"))
     check("component-experiments", component_experiments)
+    check("real-golden-final", lambda: evaluate(final=True))
     save("final-resources.json", j("get", "pods,deployments,statefulsets,services,jobs,cronjobs,pvc,networkpolicies,hpa,endpoints,serviceaccounts,configmaps,ingresses"))
     if any(item["status"] != "PASS" for item in REPORT["checks"].values()):
         raise SystemExit(1)

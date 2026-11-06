@@ -11,6 +11,7 @@ itself travels in the system message and the reply is validated afterwards.
 from __future__ import annotations
 
 import time
+import logging
 from collections.abc import Sequence
 
 import httpx
@@ -18,7 +19,9 @@ import httpx
 from ...config import Settings
 from ...routes.metrics import GENERATION_SECONDS, TOKENS
 from ...schemas import Answer, Passage, Turn
-from .prompt import ProviderUnavailable, build_messages, parse_answer
+from .prompt import ProviderOutputError, ProviderUnavailable, build_messages, parse_answer
+
+log = logging.getLogger("rahbar.provider")
 
 
 class HostedProvider:
@@ -27,6 +30,8 @@ class HostedProvider:
     def __init__(self, settings: Settings, client: httpx.Client | None = None) -> None:
         if not settings.hosted_base_url:
             raise ValueError("LLM_PROVIDER=hosted needs HOSTED_BASE_URL")
+        if httpx.URL(settings.hosted_base_url).scheme != "https":
+            raise ValueError("hosted provider requires HTTPS")
         self.settings = settings  # hosted_base_url, llm_model, llm_api_key, temperature
         self.client = client or httpx.Client(
             timeout=httpx.Timeout(settings.llm_timeout, connect=5)
@@ -63,7 +68,13 @@ class HostedProvider:
             raise ProviderUnavailable(f"hosted: {type(exc).__name__}") from exc
         finally:
             GENERATION_SECONDS.labels(provider=self.name).observe(time.perf_counter() - start)
-        usage = data.get("usage") or {}
-        TOKENS.labels(kind="prompt").inc(int(usage.get("prompt_tokens") or 0))
-        TOKENS.labels(kind="completion").inc(int(usage.get("completion_tokens") or 0))
+        try:
+            usage = data.get("usage") or {}
+            prompt_tokens = max(0, int(usage.get("prompt_tokens") or 0))
+            completion_tokens = max(0, int(usage.get("completion_tokens") or 0))
+        except (AttributeError, TypeError, ValueError) as exc:
+            raise ProviderOutputError("invalid hosted usage envelope") from exc
+        TOKENS.labels(kind="prompt").inc(prompt_tokens)
+        TOKENS.labels(kind="completion").inc(completion_tokens)
+        log.info("model usage", extra={"provider": self.name, "tokens_in": prompt_tokens, "tokens_out": completion_tokens})
         return parse_answer(str(content or ""))

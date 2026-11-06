@@ -7,11 +7,17 @@ from __future__ import annotations
 import argparse
 import json
 import subprocess
+import re
+import ipaddress
 from pathlib import Path
 import yaml
 
 
 def render(tag: str, registry: str, fixture: bool, ollama: str | None, cidr: str | None) -> list[dict]:
+    if not re.fullmatch(r"(?:[a-f0-9]{40}|dev|day3)", tag):
+        raise ValueError("image tag must be a full commit SHA or an explicit local development tag")
+    if cidr and (ipaddress.ip_network(cidr).version != 4 or ipaddress.ip_network(cidr).prefixlen != 32):
+        raise ValueError("provider egress must select one IPv4 address (/32)")
     raw = subprocess.check_output(["kubectl", "kustomize", "k8s/overlays/prod"], text=True)
     items = list(yaml.safe_load_all(raw))
     for obj in items:
@@ -54,7 +60,14 @@ def main() -> None:
     p.add_argument("--out", type=Path, required=True)
     args = p.parse_args()
     items = render(args.tag, args.registry, args.fixture, args.ollama, args.provider_cidr)
-    args.out.write_text(json.dumps({"apiVersion": "v1", "kind": "List", "items": items}, indent=2))
+    output_root = Path(__file__).resolve().parents[1] / ".venv"
+    if not output_root.resolve().is_relative_to(Path(__file__).resolve().parents[1]):
+        raise ValueError("output directory must remain inside the project")
+    output_root.mkdir(mode=0o700, exist_ok=True)
+    filename = args.out.name
+    if args.out.resolve().parent != output_root.resolve() or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.json", filename):
+        raise ValueError("--out must be a plain JSON filename directly under project .venv/")
+    (output_root / filename).write_text(json.dumps({"apiVersion": "v1", "kind": "List", "items": items}, indent=2))
 
 
 if __name__ == "__main__":

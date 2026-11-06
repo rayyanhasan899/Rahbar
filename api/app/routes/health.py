@@ -9,6 +9,11 @@ from fastapi import APIRouter, Request, Response
 router = APIRouter()
 
 
+@router.get("/api/version")
+async def version() -> dict[str, str]:
+    return {"revision": os.environ.get("RAHBAR_REVISION", "development")}
+
+
 @router.get("/healthz")
 async def healthz() -> dict[str, str]:
     return {"status": "alive"}

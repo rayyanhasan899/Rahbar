@@ -6,7 +6,8 @@ from playwright.sync_api import sync_playwright
 
 
 def main() -> None:
-    out = Path("/tmp/real-audit")
+    out = Path(__file__).resolve().parents[1] / ".venv" / "acceptance"
+    out.mkdir(mode=0o700, parents=True, exist_ok=True)
     with sync_playwright() as p:
         executable = shutil.which("google-chrome") or shutil.which("chromium")
         if not executable:

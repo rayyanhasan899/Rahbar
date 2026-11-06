@@ -50,7 +50,7 @@ def fixed_chunks(doc: Document) -> list[Chunk]:
 def main() -> None:
     import pdfplumber
     settings = get_settings()
-    out = Path(os.environ.get("FAILURE_OUT", "/tmp/real-audit/failures.json"))
+    out = ROOT / ".venv" / "acceptance" / "failures.json"
     golden = yaml.safe_load((ROOT / "eval/golden.yaml").read_text())["questions"]
     docs = []
     for entry in json.loads((ROOT / "corpus/raw/_index.json").read_text()):

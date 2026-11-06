@@ -6,16 +6,25 @@ import os
 import subprocess
 import tarfile
 import tempfile
+import re
 from pathlib import Path
 
 
 def main() -> None:
-    root = Path("corpus/raw")
+    root = Path("corpus/raw").resolve()
     entries = json.loads((root / "_index.json").read_text())
     registry = os.environ.get("REGISTRY", "")
     image = f"{registry + '/' if registry else ''}rahbar-indexer:{os.environ.get('IMAGE_TAG', 'dev')}"
+    files = []
     for entry in entries:
-        actual = hashlib.sha256((root / entry["file"]).read_bytes()).hexdigest()
+        name = Path(str(entry["file"])).name
+        if name != entry["file"] or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*\.(?:pdf|html|md|txt)", name):
+            raise ValueError("corpus index must contain plain supported filenames")
+        source = (root / name).resolve()
+        if not source.is_relative_to(root):
+            raise ValueError("corpus file escapes the selected corpus directory")
+        files.append((name, source))
+        actual = hashlib.sha256(source.read_bytes()).hexdigest()
         if actual != entry["sha256"]:
             raise ValueError(f"source hash mismatch: {entry['file']}")
     pod = {
@@ -35,8 +44,9 @@ def main() -> None:
     subprocess.run(["kubectl", "-n", "rahbar", "wait", "--for=condition=ready", "pod/corpus-transfer", "--timeout=180s"], check=True)
     with tempfile.TemporaryFile() as stream:
         with tarfile.open(fileobj=stream, mode="w") as archive:
-            for name in ["_index.json"] + [e["file"] for e in entries]:
-                archive.add(root / name, arcname=name)
+            archive.add(root / "_index.json", arcname="_index.json")
+            for name, source in files:
+                archive.add(source, arcname=name)
         stream.seek(0)
         subprocess.run(["kubectl", "-n", "rahbar", "exec", "-i", "corpus-transfer", "--", "tar", "xf", "-", "-C", "/corpus"], stdin=stream, check=True)
     code = "import pathlib,json,hashlib; r=pathlib.Path('/corpus'); e=json.loads((r/'_index.json').read_text()); assert all(hashlib.sha256((r/x['file']).read_bytes()).hexdigest()==x['sha256'] for x in e); print('all PVC source hashes verified')"

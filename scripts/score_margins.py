@@ -17,7 +17,11 @@ from pathlib import Path
 
 
 def main(path: str) -> int:
-    rows = json.loads(Path(path).read_text(encoding="utf-8"))["rows"]
+    root = Path(__file__).resolve().parents[1]
+    source = Path(path).resolve()
+    if not source.is_relative_to(root) or source.suffix != ".json":
+        raise ValueError("measurement input must be a JSON file inside this project")
+    rows = json.loads(source.read_text(encoding="utf-8"))["rows"]
     answerable, abstain = [], []
     print(f"{'id':<6}{'type':<11}{'top':>8}  answered")
     for row in rows:

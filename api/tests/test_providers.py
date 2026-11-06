@@ -119,3 +119,18 @@ def test_hosted_error_message_does_not_echo_the_response_body():
 def test_hosted_needs_a_base_url():
     with pytest.raises(ValueError):
         HostedProvider(Settings(hosted_base_url=""))
+
+
+def test_hosted_will_not_send_a_key_over_cleartext_http():
+    with pytest.raises(ValueError, match="requires HTTPS"):
+        HostedProvider(Settings(hosted_base_url="http://api.example/v1", llm_api_key="not-a-real-key"))
+
+
+def test_malformed_usage_is_retriable_output_error_not_an_unhandled_exception():
+    client = client_for(lambda r: httpx.Response(200, json={
+        "choices": [{"message": {"content": ANSWER_JSON}}],
+        "usage": {"prompt_tokens": "invalid"},
+    }))
+    provider = HostedProvider(Settings(hosted_base_url="https://api.example/v1"), client=client)
+    with pytest.raises(ProviderOutputError, match="usage envelope"):
+        provider.generate("Q?", [POLICY])

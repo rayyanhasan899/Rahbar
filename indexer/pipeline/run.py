@@ -77,6 +77,10 @@ def discover(corpus_dir: str) -> list[tuple[Path, str, bool]]:
     index = root / "_index.json"
     if index.exists():
         entries = json.loads(index.read_text(encoding="utf-8"))
+        for entry in entries:
+            path = (root / entry["file"]).resolve()
+            if path.name != entry["file"] or not path.is_relative_to(root.resolve()):
+                raise ValueError("corpus manifest path escapes its directory")
         return [
             (
                 root / e["file"],
