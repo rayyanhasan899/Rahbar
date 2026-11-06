@@ -55,8 +55,26 @@ def numbers(question: str) -> list[str]:
     return re.findall(r"\d+(?:\.\d+)*", question)
 
 
+def intent(question: str) -> tuple[bool, tuple[tuple[str, str], ...]]:
+    """Protect direction-sensitive policies that embeddings often conflate.
+
+    A conservative mismatch costs a cache miss, never a different policy answer.
+    Numbers protect versions/clauses; this protects repeat versus take and which
+    component was passed/failed. It is a guard, not a semantic correctness proof.
+    """
+    text = question.casefold()
+    outcomes = re.findall(
+        r"\b(fail|pass)(?:ed|ing|es)?\s+(?:(?:its|the|associated)\s+)*(theory|lab)\b",
+        text,
+    )
+    return bool(re.search(r"\brepeat(?:ing|ed|s)?\b", text)), tuple(sorted(outcomes))
+
+
 def namespace(generation: str, settings: Settings) -> str:
-    parts = f"{generation}|{settings.embed_model}|{settings.llm_provider}|{settings.llm_model}"
+    parts = (
+        f"v2|{generation}|{settings.embed_model}|{settings.llm_provider}|{settings.llm_model}"
+        f"|{settings.relevance_floor}|{settings.temperature}|{settings.top_k}"
+    )
     return "rahbar:cache:" + hashlib.sha256(parts.encode()).hexdigest()[:16]
 
 
@@ -95,7 +113,11 @@ class SemanticCache:
                 if raw is None:
                     continue
                 entry = json.loads(raw)
+                if time.time() - entry.get("stored", 0) >= self.settings.cache_ttl:
+                    continue
                 if numbers(entry.get("question", "")) != numbers(question):
+                    continue
+                if intent(entry.get("question", "")) != intent(question):
                     continue
                 return AskResponse.model_validate(entry["response"]), score
             return None

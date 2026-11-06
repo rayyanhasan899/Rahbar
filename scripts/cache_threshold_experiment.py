@@ -22,6 +22,8 @@ import httpx
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "api"))
+from app.services.cache import intent, numbers  # noqa: E402
 THRESHOLDS = (0.85, 0.90, 0.93, 0.95, 0.97)
 
 
@@ -57,6 +59,8 @@ def main() -> int:
         true_hits = sum(r["similarity"] >= t for r in scored if r["same"])
         false = [r for r in scored if not r["same"] and r["similarity"] >= t]
         summary.append({"threshold": t, "true_hits": true_hits, "false_hits": len(false),
+                        "guarded_true_hits": sum(r["similarity"] >= t and numbers(r["a"]) == numbers(r["b"]) and intent(r["a"]) == intent(r["b"]) for r in scored if r["same"]),
+                        "guarded_false_hits": sum(r["similarity"] >= t and numbers(r["a"]) == numbers(r["b"]) and intent(r["a"]) == intent(r["b"]) for r in scored if not r["same"]),
                         "false_hit_pairs": [[r["a"], r["b"]] for r in false]})
         print(f"{t:<10} {true_hits:<10} {len(false)}")
     out = ROOT / "eval/cache-threshold-experiment.json"

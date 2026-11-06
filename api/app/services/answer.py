@@ -127,9 +127,10 @@ def answer_question(
     query_context = getattr(retriever, "query_context", None)
     start = time.perf_counter()
     try:
-        if cache is not None and not history and query_context is not None:
-            vector, generation = query_context(query)
-            found = cache.lookup(generation, vector, query)
+        if cache is not None and not history and not flagged and query_context is not None:
+            query_vector, generation = query_context(query)
+            vector = query_vector
+            found = cache.lookup(generation, query_vector, query)
             if found is not None:
                 cached, similarity = found
                 CACHE.labels(result="hit").inc()

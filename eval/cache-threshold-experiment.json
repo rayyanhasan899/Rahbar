@@ -1,0 +1,152 @@
+{
+  "embed_model": "nomic-embed-text",
+  "pairs": [
+    {
+      "a": "What minimum cumulative GPA is required for graduation?",
+      "b": "What CGPA do I need to graduate?",
+      "same": true,
+      "similarity": 0.8077
+    },
+    {
+      "a": "Can I register for a course before passing its prerequisite?",
+      "b": "Am I allowed to take a course without clearing its prerequisite first?",
+      "same": true,
+      "similarity": 0.8623
+    },
+    {
+      "a": "What is the medium of instruction?",
+      "b": "Which language are courses taught in?",
+      "same": true,
+      "similarity": 0.6925
+    },
+    {
+      "a": "What are the minimum and maximum durations of a bachelor's degree?",
+      "b": "How long can a bachelor's degree take at most and at least?",
+      "same": true,
+      "similarity": 0.8345
+    },
+    {
+      "a": "When must a request to add or drop a course be made?",
+      "b": "What is the deadline for adding or dropping a course?",
+      "same": true,
+      "similarity": 0.8982
+    },
+    {
+      "a": "Under the 2026 academic rules, what is the deadline to withdraw from a course?",
+      "b": "Under the 2023 academic rules, what was the deadline to withdraw from a course?",
+      "same": false,
+      "similarity": 0.9301
+    },
+    {
+      "a": "What minimum cumulative GPA is required for graduation?",
+      "b": "What CGPA threshold avoids academic warning?",
+      "same": false,
+      "similarity": 0.6839
+    },
+    {
+      "a": "If I fail Theory but pass its Lab, which parts must I repeat?",
+      "b": "If I pass Theory but fail its Lab, which parts must I repeat?",
+      "same": false,
+      "similarity": 0.9954
+    },
+    {
+      "a": "What is the maximum number of courses with labs I may repeat in summer?",
+      "b": "What is the maximum number of courses I may take in summer?",
+      "same": false,
+      "similarity": 0.8919
+    },
+    {
+      "a": "What attendance does clause 1.21 require?",
+      "b": "What attendance does clause 1.12 require?",
+      "same": false,
+      "similarity": 0.888
+    }
+  ],
+  "thresholds": [
+    {
+      "threshold": 0.85,
+      "true_hits": 2,
+      "false_hits": 4,
+      "guarded_true_hits": 2,
+      "guarded_false_hits": 0,
+      "false_hit_pairs": [
+        [
+          "Under the 2026 academic rules, what is the deadline to withdraw from a course?",
+          "Under the 2023 academic rules, what was the deadline to withdraw from a course?"
+        ],
+        [
+          "If I fail Theory but pass its Lab, which parts must I repeat?",
+          "If I pass Theory but fail its Lab, which parts must I repeat?"
+        ],
+        [
+          "What is the maximum number of courses with labs I may repeat in summer?",
+          "What is the maximum number of courses I may take in summer?"
+        ],
+        [
+          "What attendance does clause 1.21 require?",
+          "What attendance does clause 1.12 require?"
+        ]
+      ]
+    },
+    {
+      "threshold": 0.9,
+      "true_hits": 0,
+      "false_hits": 2,
+      "guarded_true_hits": 0,
+      "guarded_false_hits": 0,
+      "false_hit_pairs": [
+        [
+          "Under the 2026 academic rules, what is the deadline to withdraw from a course?",
+          "Under the 2023 academic rules, what was the deadline to withdraw from a course?"
+        ],
+        [
+          "If I fail Theory but pass its Lab, which parts must I repeat?",
+          "If I pass Theory but fail its Lab, which parts must I repeat?"
+        ]
+      ]
+    },
+    {
+      "threshold": 0.93,
+      "true_hits": 0,
+      "false_hits": 2,
+      "guarded_true_hits": 0,
+      "guarded_false_hits": 0,
+      "false_hit_pairs": [
+        [
+          "Under the 2026 academic rules, what is the deadline to withdraw from a course?",
+          "Under the 2023 academic rules, what was the deadline to withdraw from a course?"
+        ],
+        [
+          "If I fail Theory but pass its Lab, which parts must I repeat?",
+          "If I pass Theory but fail its Lab, which parts must I repeat?"
+        ]
+      ]
+    },
+    {
+      "threshold": 0.95,
+      "true_hits": 0,
+      "false_hits": 1,
+      "guarded_true_hits": 0,
+      "guarded_false_hits": 0,
+      "false_hit_pairs": [
+        [
+          "If I fail Theory but pass its Lab, which parts must I repeat?",
+          "If I pass Theory but fail its Lab, which parts must I repeat?"
+        ]
+      ]
+    },
+    {
+      "threshold": 0.97,
+      "true_hits": 0,
+      "false_hits": 1,
+      "guarded_true_hits": 0,
+      "guarded_false_hits": 0,
+      "false_hit_pairs": [
+        [
+          "If I fail Theory but pass its Lab, which parts must I repeat?",
+          "If I pass Theory but fail its Lab, which parts must I repeat?"
+        ]
+      ]
+    }
+  ]
+}
