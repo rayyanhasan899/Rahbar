@@ -19,6 +19,31 @@ class ChromaRetriever:
         self.settings = settings
         self._client: Any = None
 
+    def check_startup(self) -> None:
+        """Check the pin with bounded REST I/O before accepting traffic.
+
+        Do not construct the heavier SDK client on the event loop at boot.
+        Queries lazily construct it; no indexing happens in this process.
+        """
+        root = (
+            f"http://{self.settings.chroma_host}:{self.settings.chroma_port}/api/v2"
+            "/tenants/default_tenant/databases/default_database/collections"
+        )
+        with httpx.Client(timeout=httpx.Timeout(2, connect=2)) as client:
+            control = client.get(f"{root}/{self.settings.collection}-control")
+            control.raise_for_status()
+            pointer = client.post(
+                f"{root}/{control.json()['id']}/get",
+                json={"ids": ["active"], "include": ["metadatas"]},
+            )
+            pointer.raise_for_status()
+            meta = pointer.json()["metadatas"][0]
+            if meta["embed_model"] != self.settings.embed_model:
+                raise ValueError(
+                    f"embedding model mismatch: index={meta['embed_model']} "
+                    f"api={self.settings.embed_model}"
+                )
+
     @property
     def client(self) -> Any:
         import chromadb  # the thin client, from chromadb-client in requirements.txt

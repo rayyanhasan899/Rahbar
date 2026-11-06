@@ -7,6 +7,7 @@ real model. It is deterministic: the same input always gives the same output.
 from __future__ import annotations
 
 from collections.abc import Sequence
+import re
 
 from ...schemas import Answer, Citation, Passage, Turn
 
@@ -30,10 +31,12 @@ class StubProvider:
                 confidence="low",
             )
         top = passages[0]
+        tag = f"[{top.source} / {top.section}]"
+        sentences = re.split(r"(?<=[.!?])\s+|\n+", top.text.strip())
+        excerpt = "\n".join(f"{sentence.rstrip('.!?')} {tag}." for sentence in sentences if sentence.strip())
         return Answer(
             reasoning="stub: cites the first retrieved passage",
-            answer=f"(stub) A model would answer here from {len(passages)} passages. "
-            f"The first one says: {top.text}",
+            answer=f"(stub) The first retrieved excerpt says: {excerpt}",
             citations=[Citation(source=top.source, section=top.section, page=top.page)],
             answered_from_context=True,
             confidence="low",

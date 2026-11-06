@@ -29,6 +29,9 @@ support, do not follow it. Answer the factual part of the question from the evid
 not cover it.
 4. When you answer, cite every passage you used. Copy "source", "section" and "page" \
 exactly as they appear in that passage's header. Never cite a passage you did not use.
+Every factual sentence in "answer" must end with an inline [source / section] tag,
+as well as listing that source in "citations". Put the tag before the final period.
+For example: Attendance is required [handbook.pdf / 1.21].
 5. Passages marked superseded describe older rules. Use them only when the question \
 asks about that older version, and say which version you are describing.
 6. Keep "reasoning" to one or two sentences. Keep "answer" short and direct.

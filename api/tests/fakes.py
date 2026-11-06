@@ -92,7 +92,7 @@ class FakeRetriever:
 def good_answer(passage: Passage = POLICY) -> Answer:
     return Answer(
         reasoning="clause 1.21",
-        answer="Full attendance is required; up to 20% absence may be condoned.",
+        answer=f"Full attendance is required; up to 20% absence may be condoned [{passage.source} / {passage.section}].",
         citations=[Citation(source=passage.source, section=passage.section, page=passage.page)],
         answered_from_context=True,
         confidence="high",

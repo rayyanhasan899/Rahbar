@@ -43,7 +43,7 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
 
         try:
             if isinstance(app.state.retriever, ChromaRetriever):
-                app.state.retriever.active()
+                app.state.retriever.check_startup()
         except Exception as exc:
             # Keep the process alive; readiness withholds traffic until corrected.
             log.error("index readiness conflict: %s", exc)

@@ -27,3 +27,6 @@ htmlcov/
 # Local scratch
 *.log
 .DS_Store
+
+# Isolated clean-checkout rehearsal for this repository
+/rehearsal/
