@@ -11,8 +11,6 @@ import json
 import os
 import subprocess
 import time
-import re
-import tempfile
 from pathlib import Path
 import httpx
 
@@ -191,13 +189,8 @@ def pin_conflict() -> dict:
 
 def rollout() -> dict:
     original = j("get", "deployment", "ui")["spec"]["template"]["spec"]["containers"][0]["image"]
-    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._/:-]*", original):
-        raise ValueError("deployment image is not a safe OCI image reference")
-    context = Path(tempfile.mkdtemp(prefix="rollout-", dir=OUT))
-    context.joinpath("index.html").write_text(Path("ui/index.html").read_text().replace("RAHBAR", "RAHBAR Rollout Demo"))
-    context.joinpath("Dockerfile").write_text(f"FROM {original}\nUSER root\nCOPY index.html /usr/share/nginx/html/index.html\nUSER 101:101\n")
     image = "rahbar-ui:" + os.environ["IMAGE_TAG"] + "-demo"
-    command("docker", "build", "-t", image, str(context))
+    command("docker", "build", "--build-arg", "ROLLOUT_DEMO=true", "--build-arg", "VCS_REF=" + os.environ["IMAGE_TAG"], "-t", image, "ui")
     command("kind", "load", "docker-image", image, "--name", os.environ["CLUSTER_NAME"])
     try:
         k("set", "image", "deployment/ui", "ui=" + image)
@@ -329,7 +322,7 @@ def component_experiments() -> dict:
                     time.sleep(1)
             with log.open("w") as output:
                 for args in [
-                    ["docker", "run", "--rm", "--user", f"{os.getuid()}:{os.getgid()}", "--read-only", "--tmpfs", "/tmp", "--memory", "1g", "--cpus", "2", "-v", f"{ROOT}:/work", "-w", "/work", "--entrypoint", "python", f"rahbar-indexer:{os.environ['IMAGE_TAG']}", "scripts/audit_corpus.py"],
+                    ["docker", "run", "--rm", "--user", f"{os.getuid()}:{os.getgid()}", "--read-only", "--network", "none", "--tmpfs", f"/scratch:rw,noexec,nosuid,mode=0700,uid={os.getuid()},gid={os.getgid()}", "-e", "TMPDIR=/scratch", "-e", "HOME=/scratch", "--memory", "1g", "--cpus", "2", "-v", f"{ROOT}:/work", "-w", "/work", "--entrypoint", "python", f"rahbar-indexer:{os.environ['IMAGE_TAG']}", "scripts/audit_corpus.py"],
                     ["python", "scripts/chunk_experiment.py", "--out", str(OUT / "chunk-experiments.json")],
                     ["python", "scripts/failure_experiments.py"],
                     ["python", "scripts/real_poison_probe.py"],

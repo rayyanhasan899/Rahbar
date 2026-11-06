@@ -19,6 +19,8 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def inputs(path: Path) -> list[Requirement]:
+    if not path.resolve().is_relative_to(ROOT):
+        raise ValueError("requirements includes must remain inside the project")
     requirements = []
     for line in path.read_text().splitlines():
         line = line.split("#", 1)[0].strip()
