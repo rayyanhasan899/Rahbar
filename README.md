@@ -1,144 +1,151 @@
-# RAHBAR
+# RAHBAR — FAST-NUCES policy assistant
 
 ![CI](https://github.com/rayyanhasan899/Rahbar/actions/workflows/ci.yml/badge.svg)
 
-RAHBAR is a grounded question-answering service over public FAST-NUCES policies.
-An independent indexer prepares versioned Chroma collections; three FastAPI
-readers retrieve evidence and an nginx UI displays answers and citations.
-The goal is honest, cited answers and abstention when documents do not cover a
-question. **Day 1 status:** real extraction/indexing components and evaluation
-calculations are implemented; the running Kubernetes demo still uses dummy
-indexing and the supplied stub generator. Production grounding, semantic cache,
-real generation evaluation and CD are not complete. See docs/REQUIREMENTS.md.
+RAHBAR retrieves public university policies, generates cited answers and abstains
+when evidence is missing. Eight documents include six PDFs with 194 physical
+pages and genuinely changed 2023/2026 undergraduate policies. See
+[provenance](docs/CORPUS.md), [pipeline](docs/PIPELINE.md) and
+[requirement status](docs/REQUIREMENTS.md). Day 3 real-corpus acceptance is still
+running; a passing fixture deployment does not prove real-model quality.
 
 ## Architecture
 
 ```mermaid
 flowchart LR
  User --> Ingress
- Ingress -->|/|UI[nginx]
- Ingress -->|/api|API[FastAPI x3]
+ Ingress -->|/| UI[nginx UI]
+ Ingress -->|/api| API[FastAPI x3]
  API --> Redis[Redis + PVC]
- API -->|read|Chroma[Chroma StatefulSet + PVC]
- Job[Indexer Job / weekly CronJob] -->|write|Chroma
- Pin[Shared EMBED_MODEL ConfigMap] --> API
- Pin --> Job
+ API -->|read| Chroma[Chroma StatefulSet + PVC]
+ Job[Indexer Job / weekly CronJob] -->|staged write and publication| Chroma
+ Corpus[Verified corpus PVC] --> Job
+ Lock[Shared writer lock PVC] --> Job
+ API --> Model[Selected model host]
+ Job -->|embeddings| Model
 ```
 
-ARCHITECTURE.md and ADR 0001 explain the one-writer design, lock PVC and staged
-publication. Day 1 CronJob is deliberately suspended while configured as dummy.
-Do not enable it or describe stub output as a real grounded answer.
+[Architecture](ARCHITECTURE.md) and four [ADRs](docs/adr) explain publication,
+cache invalidation and providers. The API never indexes on startup.
 
-## Development environment
+## Clean clone and offline checks
 
-Use Linux/WSL 2 with Python 3.12, Git, Bash, Make and system Tesseract/Poppler.
-This Windows workspace already has a Linux virtual environment. From WSL in
-the project directory: `source .venv/rahbar-env.sh`. Do not activate that venv
-using Windows Python. A new clone can use `make install`; paths with spaces
-are supported by quoted Python executable paths in the Makefile.
+Use Linux/WSL 2, Python 3.12, Git, Bash, Make, Docker, kubectl, Minikube,
+Tesseract and Poppler. Real generation needs more memory than the laptop's
+4 GiB node; remote acceptance is separate evidence. Allow disk space for
+container layers, two Ollama models and OCR intermediates.
 
 ```bash
-make install
+git clone https://github.com/rayyanhasan899/Rahbar.git
+cd Rahbar
+git checkout dev # use the reviewed main release after merge
+make install PY=python3.12
+source .venv/bin/activate
 make test
+python -m pytest eval/tests -q
 make lint
-cd api && ../.venv/bin/pytest --cov=app --cov-fail-under=60
+python -m pip check
+cd api && python -m pytest --cov=app --cov-fail-under=60 && cd ..
+python scripts/check_submission.py
 ```
 
-Local `make dev` serves the UI and stub API on port 8000. Standalone stub asks
-work without a model, but /readyz correctly needs configured Chroma/Redis.
-Offline unit tests use fakes, including dependency-readiness and OCR paths.
+Installation uses a complete Python 3.12 wheel-hash lock. Install system OCR
+packages through your operating system's package manager. This existing laptop
+can instead source its inspected `.venv/rahbar-env.sh`; that machine-specific
+file is not required by a new clone. Unit tests use fakes/mocked HTTP, with no
+external services or models.
 
-## Corpus and reproducible indexing
+## Real corpus to first answer: exact apply order
 
-Commit only public source URLs/checksums and the fetcher, not downloaded
-third-party PDFs/HTML or extracted text. The selected eight documents contain
-six PDFs with 194 pages plus fee/grading HTML. CORPUS.md maps all properties.
+Start a reachable Ollama service; pull `nomic-embed-text` and `llama3.2:3b`.
+Use a trusted private listener accessible from the node. Host setting changes
+need the owner's authorization. Verify its actual IPv4 address: provider egress
+permits only that address on TCP 11434. The API and indexer share the model pin
+and 768-dimensional embeddings.
 
 ```bash
-python corpus/fetch.py
+make fetch
 python corpus/fetch.py --verify
-python scripts/audit_corpus.py
-# Set reachable OLLAMA_URL, CHROMA_HOST/PORT and the shared model pin.
-cd indexer
-CORPUS_DIR=../corpus/raw python -m pipeline.run
+make cluster MINIKUBE_MEMORY=4096 MINIKUBE_CPUS=2
+TAG=$(git rev-parse HEAD)
+make images TAG="$TAG"
+# Example for this Docker Desktop laptop; verify on a different host.
+MODEL_IP=192.168.65.254
+python scripts/deploy_local.py --tag "$TAG" \
+  --provider-cidr "$MODEL_IP/32" --ollama "http://$MODEL_IP:11434"
 ```
 
-Default real embeddings use nomic-embed-text with matching API/query prefixes;
-the local probe returns 768 dimensions. Chroma client/server both pin 1.0.12.
-Document chunks preserve source, section, starting physical page, version and
-superseded flag. Stable IDs are independent of random publication generations.
-The lock path must reside on the shared lock volume for every cluster writer.
+The helper issues `kubectl apply` in this order: namespace, storage, Services, policies and dependencies first;
+waits for Chroma/Redis; transfers hash-verified documents into the corpus PVC;
+waits for a uniquely named real indexer Job; then rolls out API/UI, HPA and the
+weekly CronJob. Do not wait for API readiness before first indexing. Existing
+published collections are preserved. Base manifests select real indexing, not
+dummy data. The Secret placeholder is deliberately excluded from Kustomize;
+local Ollama requires no hosted key.
 
-The 15 golden questions were committed before tuning. Run retrieval-only
-experiments with `python scripts/chunk_experiment.py` after extraction and
-reachable Ollama/Chroma setup. This does not establish a generation baseline.
-
-## Kubernetes dummy bootstrap — exact apply order
-
-Prerequisites: Docker Engine, kubectl, Minikube with enforcing Calico, ingress
-and metrics-server. The laptop uses a 4 GiB node; measure rather than assuming
-these initial requests/limits are final. The Makefile permits memory/CPU
-overrides. On Windows, execute native Minikube commands with its actual profile
-home; a stale MINIKUBE_HOME makes an existing cluster appear missing.
-
-```bash
-make cluster MINIKUBE_MEMORY=4096 MINIKUBE_CPUS=4
-make images TAG=dev
-kubectl apply -k k8s/overlays/dev
-kubectl -n rahbar rollout status statefulset/chroma --timeout=240s
-kubectl -n rahbar rollout status deployment/redis --timeout=180s
-kubectl -n rahbar wait --for=condition=complete job/indexer --timeout=300s
-kubectl -n rahbar rollout status deployment/api --timeout=180s
-kubectl -n rahbar rollout status deployment/ui --timeout=180s
-```
-
-The Job's bounded init container waits for Chroma before spending its ingestion
-retry budget. Bootstrap config is EMBED_MODEL=dummy-768, RETRIEVER=stub,
-LLM_PROVIDER=stub. Only after indexing completes should API readiness pass.
-The unapplied `secret.placeholder.yaml` must never overwrite a real Secret.
-
-On Windows, use Minikube tunnel or forward the Ingress controller in another
-terminal. The latter was verified for the Day 1 smoke:
+In a second terminal forward the Ingress:
 
 ```bash
 kubectl -n ingress-nginx port-forward service/ingress-nginx-controller 18080:80
 curl -H 'Host: rahbar.local' http://127.0.0.1:18080/
+curl -H 'Host: rahbar.local' http://127.0.0.1:18080/api/version
 curl -H 'Host: rahbar.local' -H 'Content-Type: application/json' \
-  -d '{"question":"Show the stub contract"}' http://127.0.0.1:18080/api/ask
+  -d '{"question":"What is the maximum duration of a BS degree?"}' \
+  http://127.0.0.1:18080/api/ask
 ```
 
-Day 2 must mount the real corpus, remove --dummy from both Job templates,
-configure tested model egress and set the shared real embedding pin. API
-readiness rejects an empty/mismatched real publication. To reindex later:
-`kubectl create job --from=cronjob/reindex manual-reindex-1 -n rahbar`.
-The real writer stages a replacement before changing the active pointer.
+For the browser, resolve `rahbar.local` to the forwarded address through approved
+local DNS/hosts configuration, then visit `http://rahbar.local:18080`. Internal
+HTTP is a [documented limitation](docs/SECURITY-REVIEW.md).
 
-## API contract
+| Method | Endpoint | Purpose | Access |
+|---|---|---|---|
+| POST | /api/ask | Question and optional history | Ingress |
+| GET | /api/version | Source revision | Ingress |
+| GET | /healthz | Process liveness | API Service |
+| GET | /readyz | Dependency and index readiness | API Service |
+| GET | /metrics | Prometheus metrics | API Service |
 
-| Method | Endpoint | Purpose |
-|---|---|---|
-| GET | /healthz | Process liveness; no dependencies |
-| GET | /readyz | Chroma/index/pin and Redis readiness; 503 on failure |
-| GET | /metrics | Prometheus metrics; basic request metrics currently supplied |
-| POST | /api/ask | JSON question, 3–500 characters; answer/citations/retrieved references |
+`POST /api/ask` accepts `question` and optional `history`; `GET /api/version`
+identifies the build. `/healthz`, `/readyz` and `/metrics` are API Service
+endpoints, outside the `/api` Ingress route. Health has no dependency; readiness
+checks published model/dimension and dependencies.
 
-Model reasoning is stripped from the API response. The UI uses textContent,
-not untrusted innerHTML. Required extended metrics and real generation
-guardrails remain tracked Day 2 tasks, not implied by these endpoint names.
+## Reindex and evaluation
 
-## CI and evidence
+```bash
+make index
+kubectl -n rahbar get jobs,pods,hpa
+python eval/run_eval.py --api http://127.0.0.1:18080 --host rahbar.local
+```
 
-ci.yml runs lint, types, offline tests with >=60% app coverage, strict production
-Kustomize validation, gated image builds and a kind/Calico dummy bootstrap.
-The fixture ConfigMap delivery groundwork is included; the bootstrap job is
-explicitly not the Day 2 real retrieval/evaluation gate. No PR image publishing.
-Trivy, real e2e quality gating and cd.yml remain required follow-up work.
+All index writers share a lock. Each builds a collection, validates it, then
+publishes a generation pointer. Cache keys include generation; the indexer needs
+no Redis access. The weekly Job reindexes the curated PVC snapshot rather than
+silently downloading new policy versions. Update provenance and transfer a
+verified snapshot before indexing changed documents. Do not overlap an
+administrative corpus transfer with indexing.
 
-docs/evidence contains real corpus audits, dummy indexer/Ingress output,
-cluster resources, endpoints and resource samples. These are not fabricated
-screenshots or final deployment claims. Required final screenshot, failure
-experiments, rollback and successful CD links are still pending.
+Golden questions predate tuning. Recall is macro-averaged over nonempty labelled
+relevance sets; empty relevance is excluded. Citation validity is micro-averaged
+over supplied citations; no citations overall yields null validity, which fails the gate. Must-abstain
+cases are evaluated separately. The gate fails for recall drop greater than
+0.05, validity below 0.95, or any answered must-abstain case. Evaluator tests
+cover boundaries and empty sets.
 
-Run `python scripts/check_submission.py` from the repository root. Expected
-Day 1 failures are tracked; a clean checker alone is never proof of quality.
-See docs/AI-USAGE.md for actual AI assistance and human actions.
+## CI and release
+
+CI runs lint/types, offline coverage, strict production validation, three builds,
+fixable HIGH/CRITICAL Trivy gates and an indexed fixture stack through Ingress.
+Fixture generation is explicitly stubbed. Optional `[real-audit]` runs exercise
+real corpus/model, network isolation, persistence, model conflicts, reindex and
+rollback. Actual results, not the presence of scripts, establish verification.
+
+Main requires one partner approval and passing `quality`, with stale reviews
+dismissed. CD tests the actual merged main SHA, publishes three SHA-tagged Docker
+Hub images, then deploys those images into an ephemeral cluster through Ingress.
+A pre-merge image is not release evidence. Final CD links and a genuine real UI
+screenshot remain pending verification.
+
+MIT covers our code; public documents retain their original rights and are not
+committed. See [LICENSE](LICENSE) and [AI disclosure](docs/AI-USAGE.md).

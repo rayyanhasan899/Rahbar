@@ -1,4 +1,4 @@
-# Indexing and evaluation pipeline — Day 1
+# Indexing and evaluation pipeline
 
 ## Extraction and cleaning
 PDF pages are processed individually. Pages with fewer than ten word characters
@@ -57,11 +57,11 @@ See ADR 0001 for shared-PVC locking, publication and old-generation retention.
 The API reads the pointer and refuses readiness for mismatch/empty data. It
 never runs ingestion at startup.
 
-Real-corpus delivery to the cluster is not yet configured: Day 1 uses the
-explicitly labelled dummy Job for infrastructure proof. Local extraction and
-real embedding/retrieval experiments are separate. Day 2 must supply a corpus
-volume and remove --dummy only after model egress/pins are configured. The
-weekly CronJob stays suspended while its template is a dummy bootstrap.
+Day 3 supplies the real corpus through a hash-verified PVC transfer. The Job
+and weekly CronJob use real indexing, the same model pin and a common writer
+lock. Staging publication changes the cache generation without Redis access.
+The dependency-first bootstrap waits for completed indexing before API readiness.
+The prior Day 1 dummy evidence remains labelled as historical infrastructure proof.
 
 ## Evaluation method and gates
 Recall matches exact (source, section) pairs after converting section values
@@ -95,7 +95,7 @@ score and below every answerable one. Record both numbers and the chosen floor h
 
 | Run | Lowest answerable top score | Highest must-abstain top score | Floor shipped |
 |---|---:|---:|---:|
-| (pending) | | | |
+| Real run pending | NOT VERIFIED | NOT VERIFIED | 0.45 candidate |
 
 ### Semantic cache
 Redis, shared by all replicas, namespaced by index generation plus embedding
@@ -105,13 +105,31 @@ numbers (years, clause numbers) in both questions. Never stored: follow-ups,
 declined answers, fallbacks, instruction-like questions. Bounded at
 CACHE_MAX_ENTRIES per namespace (oldest evicted) with CACHE_TTL expiry.
 
-Threshold procedure: `python scripts/cache_threshold_experiment.py` over
-eval/cache-pairs.yaml (five paraphrase pairs, five different-answer pairs,
-written before measuring). Ship the lowest threshold with zero false hits.
+Threshold experiment: five predeclared paraphrases, five predeclared negatives,
+and 103 further negatives derived from unequal pre-existing golden relevance
+sets, for 113 comparisons. Labels are independent of retrieved results. The
+expanded local run used the real nomic model and records every similarity and
+guard result in eval/cache-threshold-experiment.json. A fresh remote rerun also
+records model digest, dimension and input hashes.
 
-| Threshold | Paraphrase hits (of 5) | False hits (of 5) | Example false hit |
-|---:|---:|---:|---|
-| (pending) | | | |
+| Threshold | Guarded paraphrase hits / 5 | Guarded false hits / 108 |
+|---:|---:|---:|
+| 0.65 | 5 | 3 |
+| 0.70 | 4 | 1 |
+| 0.75 | 4 | 0 |
+| 0.80 | 4 | 0 |
+| 0.85 | 2 | 0 |
+| 0.90 | 0 | 0 |
+| 0.95 | 0 | 0 |
+
+The shipped 0.75 is the lowest tested threshold with zero false hits on this
+set, not a proof of zero production errors. At 0.70, degree duration versus
+minimum graduation CGPA passes the guards at cosine 0.718278 despite different
+answers. Theory-pass/Lab-fail versus Lab-pass/Theory-fail measured 0.9954: no
+practical similarity threshold alone fixes that error, so directional intent
+is an additional eligibility check. Per-entry timestamps enforce expiry even
+when other entries renew a Redis hash TTL. Namespace v3 also includes generation,
+provider/model, retrieval settings and prompt/schema digest.
 
 ### Prompt injection
 Two layers: the prompt marks passages and question as data, and guard.py replaces
@@ -123,9 +141,9 @@ answered from evidence but never cached. Counter: rahbar_injection_flags_total.
 ### CI evaluation gate
 Job e2e-eval indexes eval/fixtures with the real pipeline (nomic-embed-text in a
 pinned Ollama container, Chroma 1.0.12), runs the API with the stub LLM and gates
-on eval/run_eval.py against eval/fixtures/baseline.json. The fixture baseline must
-be created once from a passing local run (`--update-baseline`); until then the
-gate fails closed by design.
+on eval/run_eval.py against eval/fixtures/baseline.json. The committed fixture baseline/results came from a genuine indexed local run.
+The real-corpus baseline is a separate explicit first passing measurement; it
+must never be replaced by fixture scores or relabelled to flatter a regression.
 
 ## Actual Day 1 measurements
 All three configurations measured recall@3 = recall@5 = 11/13 (84.6154%).
@@ -154,5 +172,5 @@ lexical/hybrid reranking without changing labels to flatter the score.
 
 The real indexer CLI also ran all five stages on the owned Markdown fixtures,
 published 12 chunks using real 768-dimensional embeddings, and exited zero.
-See docs/evidence/day1-real-fixture-indexer.txt. The Kubernetes bootstrap Job
-remains explicitly dummy; those two evidence sets are intentionally labelled.
+See docs/evidence/day1-real-fixture-indexer.txt. That Day 1 Kubernetes bootstrap Job was explicitly dummy. Day 3 manifests
+select real indexing; current cluster acceptance status is recorded separately.

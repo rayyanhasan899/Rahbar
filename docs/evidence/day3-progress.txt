@@ -30,3 +30,21 @@ A separate real-audit run is being prepared for the exact committed source SHA.
 It uses public sources only, verifies downloaded bytes against the committed
 manifest, runs real generation, and records reversible Kubernetes experiments.
 Until actual artifacts are examined, those requirements remain NOT VERIFIED.
+
+Day 3 checkpoint: PR CI runs 42288450794 (3dfbea9) and 42289780312 (b1affb1)
+completed successfully: lint/types, offline tests, strict manifests, all three
+image builds/scans and actual fixture Ingress evaluation. The real audit is
+running under 42288443541 and remains NOT VERIFIED until artifacts are read.
+The admission initialization fix now retries validated dependency application;
+it does not wait for TTL-zero admission Job objects that may already be deleted.
+
+The latest local API suite passed 78 tests with 93.33% app coverage. Local
+indexer/evaluator/type checks are still finishing under constrained WSL;
+no final aggregate pass is claimed yet. Root submission checker found substantive
+missing real baseline/results/failure evidence and two documentation formatting
+omissions. The latter are corrected; the checker itself is unchanged.
+
+Controlled evaluation-gate PR #3 changes only the fixture relevance floor for
+an intentional failing experiment. It is explicitly marked DO NOT MERGE; the
+baseline and golden labels are unchanged. Actual failure/recovery evidence is
+pending. Main remains protected and PR #2 awaits genuine partner approval.
