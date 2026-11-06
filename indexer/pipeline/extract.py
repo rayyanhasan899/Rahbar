@@ -3,6 +3,7 @@
 from __future__ import annotations
 import re
 import os
+import json
 from html.parser import HTMLParser
 from pathlib import Path
 from .models import Document, Page
@@ -66,6 +67,11 @@ def extract(path: str, doc_version: str, superseded: bool) -> Document:
                         for image in images:
                             image.close()
                 doc.pages.append(Page(file.name, number, text, ocr))
+                page.close()  # release pdfplumber's per-page layout cache before the next page
+                print(json.dumps({
+                    "logger": "rahbar.extract", "request_id": "-", "source": file.name,
+                    "page": number, "ocr": ocr, "characters": len(text),
+                }), flush=True)
     elif file.suffix.lower() in {".html", ".htm"}:
         parser = TextHTML()
         parser.feed(file.read_text(encoding="utf-8"))

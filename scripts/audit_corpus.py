@@ -28,6 +28,7 @@ def main() -> None:
             actual.encode()
             + (ROOT / "indexer/pipeline/extract.py").read_bytes()
             + (ROOT / "indexer/pipeline/clean.py").read_bytes()
+            + (ROOT / "indexer/requirements.txt").read_bytes()
         ).hexdigest()
         if (
             not dest.exists()

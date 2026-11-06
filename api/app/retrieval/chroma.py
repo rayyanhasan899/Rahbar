@@ -79,15 +79,11 @@ class ChromaRetriever:
             vector = self.embed(question)
         if len(vector) != meta["dimension"]:
             raise ValueError("query embedding dimension mismatch")
-        historical = re.search(
-            r"\b(?:in|from|under|edition|version|rules of)\s+(?:the\s+)?(20\d{2})\b",
-            question,
-            flags=re.I,
-        )
+        years = re.findall(r"\b(20\d{2})\b", question)
         where: Any = {"superseded": False}
-        if historical:
+        if years:
             versions = [
-                v for v in str(meta.get("versions", "")).split("|") if v.startswith(historical[1])
+                v for v in str(meta.get("versions", "")).split("|") if v.startswith(years[-1])
             ]
             if not versions:
                 return []
@@ -106,6 +102,8 @@ class ChromaRetriever:
                 source=m["source"],
                 section=m["section"],
                 page=m["page"],
+                doc_version=m.get("doc_version", "unknown"),
+                superseded=m.get("superseded", False),
             )
             for cid, text, m, distance in zip(
                 hits["ids"][0], hits["documents"][0], hits["metadatas"][0], hits["distances"][0]

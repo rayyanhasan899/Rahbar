@@ -39,7 +39,10 @@ Reply with one JSON object that matches this schema, and nothing else:
 
 def _header(n: int, p: Passage) -> str:
     page = "null" if p.page is None else str(p.page)
-    return f'[{n}] source: "{p.source}" | section: "{p.section}" | page: {page}'
+    return (
+        f'[{n}] source: "{p.source}" | section: "{p.section}" | page: {page}'
+        f' | doc_version: "{p.doc_version}" | superseded: {str(p.superseded).lower()}'
+    )
 
 
 def build_messages(

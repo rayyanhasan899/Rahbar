@@ -66,7 +66,9 @@ def test_ollama_sends_schema_and_temperature():
     assert answer.citations[0].section == "1.21"
     assert seen["url"] == "http://ollama:11434/api/chat"
     assert seen["body"]["format"]["title"] == "Answer"
-    assert seen["body"]["options"] == {"temperature": 0.1}
+    assert seen["body"]["options"]["temperature"] == 0.1
+    assert seen["body"]["options"]["num_ctx"] == 4096
+    assert seen["body"]["options"]["num_predict"] == 512
     assert seen["body"]["stream"] is False
 
 

@@ -134,7 +134,13 @@ def answer_question(
             if found is not None:
                 cached, similarity = found
                 CACHE.labels(result="hit").inc()
-                log.info("cache hit", extra={"similarity": round(similarity, 4)})
+                log.info("cache hit", extra={
+                    "similarity": round(similarity, 4), "top_k": settings.top_k,
+                    "chunk_ids": [r.chunk_id for r in cached.retrieved],
+                    "scores": [r.score for r in cached.retrieved],
+                    "answered_from_context": cached.answered_from_context,
+                    "generation": generation,
+                })
                 response = cached.model_copy(update={"request_id": request_id_var.get()})
                 return Result(response, "hit")
             CACHE.labels(result="miss").inc()
