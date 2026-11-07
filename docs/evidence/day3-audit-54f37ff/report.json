@@ -1,0 +1,152 @@
+{
+  "commit": "54f37ff2ee954d70ac76ad8fd7716695654e0610",
+  "checks": {
+    "real-golden-initial": {
+      "status": "PASS",
+      "evidence": {
+        "recall_at_3": 0.8461538461538461,
+        "recall_at_5": 0.8461538461538461,
+        "citation_validity": 1.0,
+        "abstention_correctness": 1.0,
+        "questions": 15
+      },
+      "seconds": 453.54
+    },
+    "network": {
+      "status": "PASS",
+      "evidence": {
+        "api->chroma": {
+          "allowed": true,
+          "expected": true,
+          "dns": "resolved by socket.create_connection",
+          "output": "connected\n"
+        },
+        "api->redis": {
+          "allowed": true,
+          "expected": true,
+          "dns": "resolved by socket.create_connection",
+          "output": "connected\n"
+        },
+        "api->host-provider": {
+          "allowed": true,
+          "expected": true,
+          "dns": "resolved by socket.create_connection",
+          "output": "connected\n"
+        },
+        "ui->api": {
+          "allowed": true,
+          "expected": true,
+          "dns": "Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n\nName:\tapi.rahbar.svc.cluster.local\nAddress: 10.96.164.252\n\n",
+          "output": "{\"status\":\"alive\"}"
+        },
+        "ui->chroma": {
+          "allowed": false,
+          "expected": false,
+          "dns": "Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n\nName:\tchroma.rahbar.svc.cluster.local\nAddress: 10.96.41.144\n\n",
+          "output": "wget: download timed out\ncommand terminated with exit code 1\n"
+        },
+        "Ingress->UI": 200,
+        "Ingress->API": 200
+      },
+      "seconds": 3.92
+    },
+    "truthful-dependency-probes": {
+      "status": "PASS",
+      "evidence": {
+        "outage_seconds_at_least": 90,
+        "liveness": 200,
+        "readiness": 503,
+        "api_restarts": "unchanged",
+        "recovered": true
+      },
+      "seconds": 118.16
+    },
+    "persistence": {
+      "status": "PASS",
+      "evidence": {
+        "generation": "6ee5048bead74ad8a50335d506e51a5d",
+        "chunks": 646,
+        "redis": "Redis AOF marker survived\n",
+        "deleted_api": "api-545995f76c-dm98z"
+      },
+      "seconds": 25.7
+    },
+    "embedding-pin-conflict": {
+      "status": "PASS",
+      "evidence": {
+        "bad_pod": "api-7545dfdb7d-b8242",
+        "bad_ready": false,
+        "restored_model": "nomic-embed-text"
+      },
+      "seconds": 4.8
+    },
+    "visible-rollout-and-undo": {
+      "status": "PASS",
+      "evidence": {
+        "original": "rahbar-ui:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+        "demo": "rahbar-ui:54f37ff2ee954d70ac76ad8fd7716695654e0610-demo",
+        "restored_sha256": "61b30d408583991fd69f3dec694e154cb652471e663328ad9c8482c9021ab5db"
+      },
+      "seconds": 14.23
+    },
+    "reindex-cache-and-writer-serialization": {
+      "status": "FAIL",
+      "error": "{\"request_id\":\"7bbb46c0260b4f24a468f7f091d0da21\",\"answer\":\"English (except language courses, other than English, and Islamic Studies) [academic-rules-handbook-jun-2026.pdf / 1.1]\",\"citations\":[{\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"1.1\",\"page\":7}],\"answered_from_context\":true,\"confidence\":\"high\",\"retrieved\":[{\"chunk_id\":\"9e8994d339e20376a0a7b807fbe089bd\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"1.1\",\"page\":6,\"score\":0.7545023},{\"chunk_id\":\"81f67608fd8962af723167e0b40a0d7d\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"1.1\",\"page\":7,\"score\":0.7545023},{\"chunk_id\":\"e691ad7c1d531ad0feb3ab362239298e\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"5.1\",\"page\":24,\"score\":0.7180506},{\"chunk_id\":\"7f5912555effb6c0ec70c984f94a72eb\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"3.6\",\"page\":14,\"score\":0.71386087},{\"chunk_id\":\"34343daeda22e67b633308326547f8d4\",\"source\":\"academic-rules-handbook-jun-2026.pdf\",\"section\":\"5.1\",\"page\":25,\"score\":0.7097165}],\"provider\":\"ollama\"}",
+      "seconds": 2.44
+    },
+    "resources-and-endpoints": {
+      "status": "PASS",
+      "evidence": {
+        "endpoint_ips": [
+          "192.168.167.147",
+          "192.168.167.148",
+          "192.168.167.153"
+        ],
+        "hpa": [
+          {
+            "resource": {
+              "current": {
+                "averageUtilization": 1,
+                "averageValue": "3m"
+              },
+              "name": "cpu"
+            },
+            "type": "Resource"
+          }
+        ]
+      },
+      "seconds": 50.94
+    },
+    "real-ui-screenshot": {
+      "status": "PASS",
+      "evidence": "",
+      "seconds": 1.96
+    },
+    "component-experiments": {
+      "status": "PASS",
+      "evidence": {
+        "fresh_extraction": true,
+        "measured_chunk_configurations": 3,
+        "failure_stages": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ],
+        "real_poison_fixture": true
+      },
+      "seconds": 553.82
+    },
+    "real-golden-final": {
+      "status": "PASS",
+      "evidence": {
+        "recall_at_3": 0.8461538461538461,
+        "recall_at_5": 0.8461538461538461,
+        "citation_validity": 1.0,
+        "abstention_correctness": 1.0,
+        "questions": 15
+      },
+      "seconds": 203.81
+    }
+  }
+}

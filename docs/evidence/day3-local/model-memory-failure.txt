@@ -1,0 +1,16 @@
+llama_context: n_rs_seq              = 0
+llama_context: n_outputs_max         = 1
+llama_context: n_outputs_max_per_seq = 1
+llama_context: n_ctx_seq (8192) < n_ctx_train (131072) -- the full capacity of the model will not be utilized
+llama_context:        CPU  output buffer size =     0.49 MiB
+ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 939524096
+ggml_backend_buft_alloc_buffer_n_default: failed to allocate CPU buffer of size 939524096
+llama_init_from_model: failed to initialize the context: failed to allocate buffer for kv cache
+cmn  common_init_: failed to create context with model 'D:\AI\Ollama\models\blobs\sha256-dde5aa3fc5ffc17176b5e8bdc82f587b24b2678c6c66101bf7da77af9f7ccdff'
+cmn  common_init_: failed to create context with model 'D:\AI\Ollama\models\blobs\sha256-dde5aa3fc5ffc17176b5e8bdc82f587b24b2678c6c66101bf7da77af9f7ccdff'
+srv    load_model: failed to create_context with model 'D:\AI\Ollama\models\blobs\sha256-dde5aa3fc5ffc17176b5e8bdc82f587b24b2678c6c66101bf7da77af9f7ccdff'
+srv    operator(): operator(): cleaning up before exit...
+srv  server_run_i: exiting due to model loading error
+time=2026-11-07T07:20:45.961+05:00 level=INFO source=llama_server.go:1406 msg="waiting for llama-server to become available" status="llm server error"
+time=2026-11-07T07:20:45.968+05:00 level=INFO source=sched.go:686 msg="Load failed" model=D:\AI\Ollama\models\blobs\sha256-dde5aa3fc5ffc17176b5e8bdc82f587b24b2678c6c66101bf7da77af9f7ccdff error="llama-server reported out-of-memory during startup: ggml_backend_cpu_buffer_type_alloc_buffer: failed to allocate buffer of size 939524096\nggml_backend_buft_alloc_buffer_n_default: failed to allocate CPU buffer of size 939524096\nllama_init_from_model: failed to initialize the context: failed to allocate buffer for kv cache"
+time=2026-11-07T07:20:45.998+05:00 level=ERROR source=llama_server.go:1073 msg="llama-server terminated" error="exit status 1" exit=1

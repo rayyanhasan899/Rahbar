@@ -41,6 +41,19 @@ class Settings:
     hosted_base_url: str = ""  # e.g. an OpenAI-compatible endpoint
     llm_api_key: str = field(default="", repr=False)  # from the Secret; never log it
 
+    # Answer pipeline (sections 3.2 to 3.4). Measured values go in docs/PIPELINE.md.
+    relevance_floor: float = 0.65  # measured absent max .62509 < .65 < answerable min .69563
+    llm_timeout: float = 60.0  # seconds for one model call
+    max_history_turns: int = 3  # earlier turns sent with a follow-up
+
+    # Semantic cache (section 3.3)
+    cache_enabled: bool = True
+    cache_threshold: float = 0.75  # measured with numeric/directional/injection guards
+    cache_ttl: int = 86400  # seconds
+    cache_max_entries: int = 500  # per index generation
+    redis_host: str = "redis"
+    redis_port: int = 6379
+
     log_level: str = "INFO"
 
 
@@ -58,5 +71,14 @@ def get_settings() -> Settings:
         ollama_url=os.environ.get("OLLAMA_URL", "http://host.minikube.internal:11434"),
         hosted_base_url=os.environ.get("HOSTED_BASE_URL", ""),
         llm_api_key=os.environ.get("LLM_API_KEY", ""),
+        relevance_floor=_float("RELEVANCE_FLOOR", 0.65),
+        llm_timeout=_float("LLM_TIMEOUT", 60.0),
+        max_history_turns=_int("MAX_HISTORY_TURNS", 3),
+        cache_enabled=os.environ.get("CACHE_ENABLED", "true").lower() in ("1", "true", "yes"),
+        cache_threshold=_float("CACHE_THRESHOLD", 0.75),
+        cache_ttl=_int("CACHE_TTL", 86400),
+        cache_max_entries=_int("CACHE_MAX_ENTRIES", 500),
+        redis_host=os.environ.get("REDIS_HOST", "redis"),
+        redis_port=_int("REDIS_PORT", 6379),
         log_level=os.environ.get("LOG_LEVEL", "INFO"),
     )

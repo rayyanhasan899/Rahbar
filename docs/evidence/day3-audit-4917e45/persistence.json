@@ -1,0 +1,24 @@
+{
+  "before": {
+    "chunks": 646,
+    "embed_model": "nomic-embed-text",
+    "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27",
+    "generation": "743f76853de446cd874f8e4c5a537610",
+    "content_sha256": "6797a52afc6a6479d12004a3372b1da0e2fd0f1cd21c6af12837d9dd487b1f80",
+    "active_collection": "rahbar-743f76853de446cd874f8e4c5a537610",
+    "dimension": 768,
+    "count": 646
+  },
+  "after": {
+    "generation": "743f76853de446cd874f8e4c5a537610",
+    "chunks": 646,
+    "active_collection": "rahbar-743f76853de446cd874f8e4c5a537610",
+    "embed_model": "nomic-embed-text",
+    "dimension": 768,
+    "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27",
+    "content_sha256": "6797a52afc6a6479d12004a3372b1da0e2fd0f1cd21c6af12837d9dd487b1f80",
+    "count": 646
+  },
+  "redis": "Redis AOF marker survived\n",
+  "deleted_api": "api-7574b8ddbb-9578p"
+}

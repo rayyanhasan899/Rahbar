@@ -1,0 +1,58 @@
+[
+  {
+    "key": "AaGyi4dzasJetAH6DSaq",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyi4dzasJetAH6DSar",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyY7ww35f8DfObN5wY",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyY7wx35f8DfObN5wb",
+    "rule": "shell:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyY7w035f8DfObN5wh",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyY7w035f8DfObN5wi",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyTiOYchSi4o7OYoy7",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  },
+  {
+    "key": "AaGyTiOYchSi4o7OYoy8",
+    "rule": "python:S5332",
+    "status": "RESOLVED",
+    "resolution": "WONTFIX",
+    "updateDate": "2026-11-07T03:45:36+05:00"
+  }
+]

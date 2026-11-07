@@ -33,12 +33,17 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
     app.state.readiness_chroma = None
     app.state.retriever = get_retriever(settings)
     app.state.provider = get_provider(settings)
+    app.state.cache = None
+    if settings.cache_enabled and settings.retriever != "stub":
+        from .services.cache import SemanticCache
+
+        app.state.cache = SemanticCache(settings)
     if settings.retriever == "chroma":
         from .retrieval.chroma import ChromaRetriever
 
         try:
             if isinstance(app.state.retriever, ChromaRetriever):
-                app.state.retriever.active()
+                app.state.retriever.check_startup()
         except Exception as exc:
             # Keep the process alive; readiness withholds traffic until corrected.
             log.error("index readiness conflict: %s", exc)
@@ -49,6 +54,8 @@ async def lifespan(app: FastAPI) -> AsyncIterator[None]:
             "llm_provider": settings.llm_provider,
             "embed_model": settings.embed_model,
             "top_k": settings.top_k,
+            "relevance_floor": settings.relevance_floor,
+            "cache_threshold": settings.cache_threshold if app.state.cache else None,
         },
     )
     yield

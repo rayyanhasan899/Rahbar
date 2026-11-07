@@ -9,6 +9,11 @@ from fastapi import APIRouter, Request, Response
 router = APIRouter()
 
 
+@router.get("/api/version")
+async def version() -> dict[str, str]:
+    return {"revision": os.environ.get("RAHBAR_REVISION", "development")}
+
+
 @router.get("/healthz")
 async def healthz() -> dict[str, str]:
     return {"status": "alive"}
@@ -49,7 +54,8 @@ def readyz(request: Request, response: Response) -> dict[str, object]:
             collection = get(collections + "/" + settings.collection)
         if collection["metadata"]["embed_model"] != settings.embed_model:
             raise ValueError(
-                f"embedding model mismatch: index={collection['metadata']['embed_model']} api={settings.embed_model}"
+                f"embedding model mismatch: index={collection['metadata']['embed_model']} "
+                f"api={settings.embed_model}"
             )
         if not get(collections + f"/{collection['id']}/count"):
             raise ValueError("collection is empty")

@@ -1,0 +1,4239 @@
+{
+  "apiVersion": "v1",
+  "items": [
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "864785fe073623e5b3bcacc35345ad67801c1269184a9b87ebef8b985c26b344",
+          "cni.projectcalico.org/podIP": "192.168.167.148/32",
+          "cni.projectcalico.org/podIPs": "192.168.167.148/32"
+        },
+        "creationTimestamp": "2026-11-06T21:25:25Z",
+        "generateName": "api-545995f76c-",
+        "generation": 1,
+        "labels": {
+          "app": "api",
+          "pod-template-hash": "545995f76c"
+        },
+        "name": "api-545995f76c-k5ht8",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "ReplicaSet",
+            "name": "api-545995f76c",
+            "uid": "71d32056-461d-4576-9914-3722ed57bd8d"
+          }
+        ],
+        "resourceVersion": "3031",
+        "uid": "2eb5fe15-1cdb-4273-8f60-1c2272260391"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "envFrom": [
+              {
+                "configMapRef": {
+                  "name": "rahbar-config"
+                }
+              },
+              {
+                "secretRef": {
+                  "name": "rahbar-secret",
+                  "optional": true
+                }
+              }
+            ],
+            "image": "rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imagePullPolicy": "IfNotPresent",
+            "lifecycle": {
+              "preStop": {
+                "exec": {
+                  "command": [
+                    "sh",
+                    "-c",
+                    "sleep 5"
+                  ]
+                }
+              }
+            },
+            "livenessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 20,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "name": "api",
+            "ports": [
+              {
+                "containerPort": 8000,
+                "name": "http",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/readyz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "startupProbe": {
+              "failureThreshold": 30,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 2,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 10001,
+          "runAsGroup": 10001,
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "api",
+        "serviceAccountName": "api",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:26Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:00Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:00Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "200m",
+              "memory": "128Mi"
+            },
+            "containerID": "containerd://564f3ffb7b90eb619ee2572f43183cc59e7dd652c392f91bbcc9e8a5734f2a8e",
+            "image": "docker.io/library/rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imageID": "sha256:ddc8720edac7574392a6924c1c8e64e11548304e213e6792a19f34a610f68779",
+            "lastState": {},
+            "name": "api",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": true,
+            "state": {
+              "running": {
+                "startedAt": "2026-11-06T21:25:26Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 10001,
+                "supplementalGroups": [
+                  10001
+                ],
+                "uid": 10001
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Running",
+        "podIP": "192.168.167.148",
+        "podIPs": [
+          {
+            "ip": "192.168.167.148"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:25:25Z"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "ab20127808875299cc5a8ad61188b674c1c0ce11559183e5da9aabf9f053fb7d",
+          "cni.projectcalico.org/podIP": "192.168.167.153/32",
+          "cni.projectcalico.org/podIPs": "192.168.167.153/32"
+        },
+        "creationTimestamp": "2026-11-06T21:36:26Z",
+        "generateName": "api-545995f76c-",
+        "generation": 1,
+        "labels": {
+          "app": "api",
+          "pod-template-hash": "545995f76c"
+        },
+        "name": "api-545995f76c-mlhjj",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "ReplicaSet",
+            "name": "api-545995f76c",
+            "uid": "71d32056-461d-4576-9914-3722ed57bd8d"
+          }
+        ],
+        "resourceVersion": "3188",
+        "uid": "399c1439-076c-4618-8ba2-6577ed8e904d"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "envFrom": [
+              {
+                "configMapRef": {
+                  "name": "rahbar-config"
+                }
+              },
+              {
+                "secretRef": {
+                  "name": "rahbar-secret",
+                  "optional": true
+                }
+              }
+            ],
+            "image": "rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imagePullPolicy": "IfNotPresent",
+            "lifecycle": {
+              "preStop": {
+                "exec": {
+                  "command": [
+                    "sh",
+                    "-c",
+                    "sleep 5"
+                  ]
+                }
+              }
+            },
+            "livenessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 20,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "name": "api",
+            "ports": [
+              {
+                "containerPort": 8000,
+                "name": "http",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/readyz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "startupProbe": {
+              "failureThreshold": 30,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 2,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 10001,
+          "runAsGroup": 10001,
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "api",
+        "serviceAccountName": "api",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:27Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:26Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:30Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:30Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:26Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "200m",
+              "memory": "128Mi"
+            },
+            "containerID": "containerd://71552473bee3020ee0cdc291d6ef5f34a7225c4dec4c352b75fd39bcdad2c6b8",
+            "image": "docker.io/library/rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imageID": "sha256:ddc8720edac7574392a6924c1c8e64e11548304e213e6792a19f34a610f68779",
+            "lastState": {},
+            "name": "api",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": true,
+            "state": {
+              "running": {
+                "startedAt": "2026-11-06T21:36:27Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 10001,
+                "supplementalGroups": [
+                  10001
+                ],
+                "uid": 10001
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Running",
+        "podIP": "192.168.167.153",
+        "podIPs": [
+          {
+            "ip": "192.168.167.153"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:36:26Z"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "d70edd6cd8eb334de81ba6eb105ca9d7d0e121c3ad54056e13b3d341cc735563",
+          "cni.projectcalico.org/podIP": "192.168.167.147/32",
+          "cni.projectcalico.org/podIPs": "192.168.167.147/32"
+        },
+        "creationTimestamp": "2026-11-06T21:25:25Z",
+        "generateName": "api-545995f76c-",
+        "generation": 1,
+        "labels": {
+          "app": "api",
+          "pod-template-hash": "545995f76c"
+        },
+        "name": "api-545995f76c-wmjll",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "ReplicaSet",
+            "name": "api-545995f76c",
+            "uid": "71d32056-461d-4576-9914-3722ed57bd8d"
+          }
+        ],
+        "resourceVersion": "3043",
+        "uid": "eb146f18-fccc-41dd-a3e2-17555873e1de"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "envFrom": [
+              {
+                "configMapRef": {
+                  "name": "rahbar-config"
+                }
+              },
+              {
+                "secretRef": {
+                  "name": "rahbar-secret",
+                  "optional": true
+                }
+              }
+            ],
+            "image": "rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imagePullPolicy": "IfNotPresent",
+            "lifecycle": {
+              "preStop": {
+                "exec": {
+                  "command": [
+                    "sh",
+                    "-c",
+                    "sleep 5"
+                  ]
+                }
+              }
+            },
+            "livenessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 20,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "name": "api",
+            "ports": [
+              {
+                "containerPort": 8000,
+                "name": "http",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/readyz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "startupProbe": {
+              "failureThreshold": 30,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 2,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 10001,
+          "runAsGroup": 10001,
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "api",
+        "serviceAccountName": "api",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:26Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:06Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:06Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "200m",
+              "memory": "128Mi"
+            },
+            "containerID": "containerd://d8b1d00bc71654693b7abc2cdef9b4c85bfc0e115cd70da2ada8291cd87220d6",
+            "image": "docker.io/library/rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imageID": "sha256:ddc8720edac7574392a6924c1c8e64e11548304e213e6792a19f34a610f68779",
+            "lastState": {},
+            "name": "api",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "200m",
+                "memory": "128Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": true,
+            "state": {
+              "running": {
+                "startedAt": "2026-11-06T21:25:25Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 10001,
+                "supplementalGroups": [
+                  10001
+                ],
+                "uid": 10001
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Running",
+        "podIP": "192.168.167.147",
+        "podIPs": [
+          {
+            "ip": "192.168.167.147"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:25:25Z"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "d3896cc2f081101f7d82f15cc44729d646c9b4262ecac920689378310d1250d4",
+          "cni.projectcalico.org/podIP": "192.168.167.151/32",
+          "cni.projectcalico.org/podIPs": "192.168.167.151/32"
+        },
+        "creationTimestamp": "2026-11-06T21:36:10Z",
+        "generateName": "chroma-",
+        "generation": 1,
+        "labels": {
+          "app": "chroma",
+          "apps.kubernetes.io/pod-index": "0",
+          "controller-revision-hash": "chroma-bc6f89b55",
+          "statefulset.kubernetes.io/pod-name": "chroma-0"
+        },
+        "name": "chroma-0",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "StatefulSet",
+            "name": "chroma",
+            "uid": "9be1e7c1-c7ca-4815-bcb1-3fb62d0296ff"
+          }
+        ],
+        "resourceVersion": "3113",
+        "uid": "6d134c7b-051c-4e3e-8c61-c69f4b19c8ab"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "env": [
+              {
+                "name": "ANONYMIZED_TELEMETRY",
+                "value": "False"
+              },
+              {
+                "name": "CHROMA_PERSIST_PATH",
+                "value": "/data"
+              }
+            ],
+            "image": "chromadb/chroma:1.0.12",
+            "imagePullPolicy": "IfNotPresent",
+            "name": "chroma",
+            "ports": [
+              {
+                "containerPort": 8000,
+                "name": "http",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/api/v2/heartbeat",
+                "port": 8000,
+                "scheme": "HTTP"
+              },
+              "initialDelaySeconds": 5,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "768Mi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "256Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              },
+              {
+                "mountPath": "/data",
+                "name": "chroma-data"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": false,
+        "hostname": "chroma-0",
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 1000,
+          "runAsGroup": 1000,
+          "runAsNonRoot": true,
+          "runAsUser": 1000,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "chroma",
+        "serviceAccountName": "chroma",
+        "subdomain": "chroma",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "name": "chroma-data",
+            "persistentVolumeClaim": {
+              "claimName": "chroma-data-chroma-0"
+            }
+          },
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:11Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:10Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:22Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:22Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:10Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "100m",
+              "memory": "256Mi"
+            },
+            "containerID": "containerd://657ef7c99cb401d0441310071ae5efb0583eb7bc8271a8a1bb5d29f41c8b7bf0",
+            "image": "docker.io/chromadb/chroma:1.0.12",
+            "imageID": "docker.io/chromadb/chroma@sha256:28a3b2c05c74c83686c2273d4d0994b80c481805d0f47887f289c53a4616e592",
+            "lastState": {},
+            "name": "chroma",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "768Mi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "256Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": true,
+            "state": {
+              "running": {
+                "startedAt": "2026-11-06T21:36:11Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 1000,
+                "supplementalGroups": [
+                  1000
+                ],
+                "uid": 1000
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              },
+              {
+                "mountPath": "/data",
+                "name": "chroma-data"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Running",
+        "podIP": "192.168.167.151",
+        "podIPs": [
+          {
+            "ip": "192.168.167.151"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:36:10Z"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "90d3e8f676da0283163f07ac3f184ff81be1f98d989c97178a23a1236259afae",
+          "cni.projectcalico.org/podIP": "",
+          "cni.projectcalico.org/podIPs": ""
+        },
+        "creationTimestamp": "2026-11-06T21:21:51Z",
+        "generateName": "indexer-",
+        "generation": 1,
+        "labels": {
+          "app": "indexer",
+          "batch.kubernetes.io/controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496",
+          "batch.kubernetes.io/job-name": "indexer",
+          "controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496",
+          "job-name": "indexer"
+        },
+        "name": "indexer-7prq8",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "batch/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "Job",
+            "name": "indexer",
+            "uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496"
+          }
+        ],
+        "resourceVersion": "1879",
+        "uid": "74e0f452-4765-453a-98d5-89e5551c2e23"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "command": [
+              "python",
+              "-m",
+              "pipeline.run"
+            ],
+            "envFrom": [
+              {
+                "configMapRef": {
+                  "name": "rahbar-config"
+                }
+              }
+            ],
+            "image": "rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imagePullPolicy": "IfNotPresent",
+            "name": "indexer",
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "1Gi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "256Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              },
+              {
+                "mountPath": "/locks",
+                "name": "indexer-lock"
+              },
+              {
+                "mountPath": "/corpus",
+                "name": "corpus",
+                "readOnly": true
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "initContainers": [
+          {
+            "command": [
+              "python",
+              "-m",
+              "pipeline.wait"
+            ],
+            "envFrom": [
+              {
+                "configMapRef": {
+                  "name": "rahbar-config"
+                }
+              }
+            ],
+            "image": "rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imagePullPolicy": "IfNotPresent",
+            "name": "wait-chroma",
+            "resources": {
+              "limits": {
+                "cpu": "100m",
+                "memory": "64Mi"
+              },
+              "requests": {
+                "cpu": "10m",
+                "memory": "32Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File"
+          }
+        ],
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "OnFailure",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 10001,
+          "runAsGroup": 10001,
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "indexer",
+        "serviceAccountName": "indexer",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          },
+          {
+            "name": "indexer-lock",
+            "persistentVolumeClaim": {
+              "claimName": "indexer-lock"
+            }
+          },
+          {
+            "name": "corpus",
+            "persistentVolumeClaim": {
+              "claimName": "corpus-data"
+            }
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:23Z",
+            "observedGeneration": 1,
+            "status": "False",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:21:57Z",
+            "observedGeneration": 1,
+            "reason": "PodCompleted",
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:22Z",
+            "observedGeneration": 1,
+            "reason": "PodCompleted",
+            "status": "False",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:25:22Z",
+            "observedGeneration": 1,
+            "reason": "PodCompleted",
+            "status": "False",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:21:54Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "100m",
+              "memory": "256Mi"
+            },
+            "containerID": "containerd://6d52c8a20273b03b9b91f9302bfddf9f8e08ac73147538de0e812ce1f03b7c81",
+            "image": "docker.io/library/rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imageID": "sha256:3b16f3b5a247e52acdc78ab09afea488c53aae69463c7455a54347d8861597b2",
+            "lastState": {},
+            "name": "indexer",
+            "ready": false,
+            "resources": {
+              "limits": {
+                "cpu": "1",
+                "memory": "1Gi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "256Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": false,
+            "state": {
+              "terminated": {
+                "containerID": "containerd://6d52c8a20273b03b9b91f9302bfddf9f8e08ac73147538de0e812ce1f03b7c81",
+                "exitCode": 0,
+                "finishedAt": "2026-11-06T21:25:21Z",
+                "reason": "Completed",
+                "startedAt": "2026-11-06T21:21:57Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 10001,
+                "supplementalGroups": [
+                  10001
+                ],
+                "uid": 10001
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              },
+              {
+                "mountPath": "/locks",
+                "name": "indexer-lock"
+              },
+              {
+                "mountPath": "/corpus",
+                "name": "corpus",
+                "readOnly": true,
+                "recursiveReadOnly": "Disabled"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "initContainerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "10m",
+              "memory": "32Mi"
+            },
+            "containerID": "containerd://b8c2d9edc309c2bad5e93827b58a67bedda2f2977018375ebf03e3b018588f9e",
+            "image": "docker.io/library/rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imageID": "sha256:3b16f3b5a247e52acdc78ab09afea488c53aae69463c7455a54347d8861597b2",
+            "lastState": {},
+            "name": "wait-chroma",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "100m",
+                "memory": "64Mi"
+              },
+              "requests": {
+                "cpu": "10m",
+                "memory": "32Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": false,
+            "state": {
+              "terminated": {
+                "containerID": "containerd://b8c2d9edc309c2bad5e93827b58a67bedda2f2977018375ebf03e3b018588f9e",
+                "exitCode": 0,
+                "finishedAt": "2026-11-06T21:21:56Z",
+                "reason": "Completed",
+                "startedAt": "2026-11-06T21:21:54Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 10001,
+                "supplementalGroups": [
+                  10001
+                ],
+                "uid": 10001
+              }
+            }
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Succeeded",
+        "podIP": "192.168.167.145",
+        "podIPs": [
+          {
+            "ip": "192.168.167.145"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:21:54Z"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "5858d2075e50ac5c13cfb924d9ab12eeb4f47bb83515ec8a1e727103399e4268",
+          "cni.projectcalico.org/podIP": "192.168.167.152/32",
+          "cni.projectcalico.org/podIPs": "192.168.167.152/32"
+        },
+        "creationTimestamp": "2026-11-06T21:36:25Z",
+        "generateName": "redis-9c8f6cd5d-",
+        "generation": 1,
+        "labels": {
+          "app": "redis",
+          "pod-template-hash": "9c8f6cd5d"
+        },
+        "name": "redis-9c8f6cd5d-hh7t2",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "ReplicaSet",
+            "name": "redis-9c8f6cd5d",
+            "uid": "c4a5adf8-e22a-49e9-84e8-5096c2d197da"
+          }
+        ],
+        "resourceVersion": "3153",
+        "uid": "a112b394-c122-4571-898b-66814fd496a5"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "command": [
+              "redis-server",
+              "--appendonly",
+              "yes",
+              "--dir",
+              "/data"
+            ],
+            "image": "redis:7.4.5-alpine",
+            "imagePullPolicy": "IfNotPresent",
+            "name": "redis",
+            "ports": [
+              {
+                "containerPort": 6379,
+                "name": "redis",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "exec": {
+                "command": [
+                  "redis-cli",
+                  "ping"
+                ]
+              },
+              "failureThreshold": 3,
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "50m",
+                "memory": "128Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              },
+              {
+                "mountPath": "/data",
+                "name": "redis-data"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 10001,
+          "runAsGroup": 10001,
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "redis",
+        "serviceAccountName": "redis",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          },
+          {
+            "name": "redis-data",
+            "persistentVolumeClaim": {
+              "claimName": "redis-data"
+            }
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:26Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:26Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:25Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "50m",
+              "memory": "128Mi"
+            },
+            "containerID": "containerd://7c7b036b7db68914ca1f6b91c9215911f95069aa38d7572689878cd0805d75d4",
+            "image": "docker.io/library/redis:7.4.5-alpine",
+            "imageID": "docker.io/library/redis@sha256:bb186d083732f669da90be8b0f975a37812b15e913465bb14d845db72a4e3e08",
+            "lastState": {},
+            "name": "redis",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "50m",
+                "memory": "128Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": true,
+            "state": {
+              "running": {
+                "startedAt": "2026-11-06T21:36:25Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 10001,
+                "supplementalGroups": [
+                  10001
+                ],
+                "uid": 10001
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              },
+              {
+                "mountPath": "/data",
+                "name": "redis-data"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Running",
+        "podIP": "192.168.167.152",
+        "podIPs": [
+          {
+            "ip": "192.168.167.152"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:36:25Z"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Pod",
+      "metadata": {
+        "annotations": {
+          "cni.projectcalico.org/containerID": "31e12ff5a2456db5076b0525b3e97496052a7d5c2321f94a98913c99f6b3c02b",
+          "cni.projectcalico.org/podIP": "192.168.167.156/32",
+          "cni.projectcalico.org/podIPs": "192.168.167.156/32"
+        },
+        "creationTimestamp": "2026-11-06T21:36:51Z",
+        "generateName": "ui-6f66455c7f-",
+        "generation": 1,
+        "labels": {
+          "app": "ui",
+          "pod-template-hash": "6f66455c7f"
+        },
+        "name": "ui-6f66455c7f-gj2jp",
+        "namespace": "rahbar",
+        "ownerReferences": [
+          {
+            "apiVersion": "apps/v1",
+            "blockOwnerDeletion": true,
+            "controller": true,
+            "kind": "ReplicaSet",
+            "name": "ui-6f66455c7f",
+            "uid": "41bb959d-f0fe-451c-bcf6-95cc5e58105c"
+          }
+        ],
+        "resourceVersion": "3350",
+        "uid": "86f53956-1c7c-4b98-abff-ab37534249c1"
+      },
+      "spec": {
+        "automountServiceAccountToken": false,
+        "containers": [
+          {
+            "image": "rahbar-ui:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imagePullPolicy": "IfNotPresent",
+            "livenessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8080,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "name": "ui",
+            "ports": [
+              {
+                "containerPort": 8080,
+                "name": "http",
+                "protocol": "TCP"
+              }
+            ],
+            "readinessProbe": {
+              "failureThreshold": 3,
+              "httpGet": {
+                "path": "/healthz",
+                "port": 8080,
+                "scheme": "HTTP"
+              },
+              "periodSeconds": 10,
+              "successThreshold": 1,
+              "timeoutSeconds": 5
+            },
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "50m",
+                "memory": "128Mi"
+              }
+            },
+            "securityContext": {
+              "allowPrivilegeEscalation": false,
+              "capabilities": {
+                "drop": [
+                  "ALL"
+                ]
+              },
+              "readOnlyRootFilesystem": true,
+              "runAsGroup": 101,
+              "runAsUser": 101
+            },
+            "terminationMessagePath": "/dev/termination-log",
+            "terminationMessagePolicy": "File",
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "dnsPolicy": "ClusterFirst",
+        "enableServiceLinks": true,
+        "nodeName": "rahbar-real-control-plane",
+        "preemptionPolicy": "PreemptLowerPriority",
+        "priority": 0,
+        "restartPolicy": "Always",
+        "schedulerName": "default-scheduler",
+        "securityContext": {
+          "fsGroup": 10001,
+          "runAsGroup": 10001,
+          "runAsNonRoot": true,
+          "runAsUser": 10001,
+          "seccompProfile": {
+            "type": "RuntimeDefault"
+          }
+        },
+        "serviceAccount": "ui",
+        "serviceAccountName": "ui",
+        "terminationGracePeriodSeconds": 30,
+        "tolerations": [
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/not-ready",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          },
+          {
+            "effect": "NoExecute",
+            "key": "node.kubernetes.io/unreachable",
+            "operator": "Exists",
+            "tolerationSeconds": 300
+          }
+        ],
+        "volumes": [
+          {
+            "emptyDir": {},
+            "name": "tmp"
+          }
+        ]
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:52Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodReadyToStartContainers"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:51Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Initialized"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:52Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "Ready"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:52Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "ContainersReady"
+          },
+          {
+            "lastProbeTime": null,
+            "lastTransitionTime": "2026-11-06T21:36:51Z",
+            "observedGeneration": 1,
+            "status": "True",
+            "type": "PodScheduled"
+          }
+        ],
+        "containerStatuses": [
+          {
+            "allocatedResources": {
+              "cpu": "50m",
+              "memory": "128Mi"
+            },
+            "containerID": "containerd://57f336232f0c755ed4c037d1aee40855ad24413f861230194146c5e685c79890",
+            "image": "docker.io/library/rahbar-ui:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+            "imageID": "sha256:f3a79760fe83997d4a06bdef0c20d22b617d4e9a497bd9cc3abfef46f1674120",
+            "lastState": {},
+            "name": "ui",
+            "ready": true,
+            "resources": {
+              "limits": {
+                "cpu": "500m",
+                "memory": "512Mi"
+              },
+              "requests": {
+                "cpu": "50m",
+                "memory": "128Mi"
+              }
+            },
+            "restartCount": 0,
+            "started": true,
+            "state": {
+              "running": {
+                "startedAt": "2026-11-06T21:36:51Z"
+              }
+            },
+            "user": {
+              "linux": {
+                "gid": 101,
+                "supplementalGroups": [
+                  101,
+                  10001
+                ],
+                "uid": 101
+              }
+            },
+            "volumeMounts": [
+              {
+                "mountPath": "/tmp",
+                "name": "tmp"
+              }
+            ]
+          }
+        ],
+        "hostIP": "172.18.0.2",
+        "hostIPs": [
+          {
+            "ip": "172.18.0.2"
+          }
+        ],
+        "observedGeneration": 1,
+        "phase": "Running",
+        "podIP": "192.168.167.156",
+        "podIPs": [
+          {
+            "ip": "192.168.167.156"
+          }
+        ],
+        "qosClass": "Burstable",
+        "startTime": "2026-11-06T21:36:51Z"
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "annotations": {
+          "deployment.kubernetes.io/revision": "3",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"replicas\":3,\"selector\":{\"matchLabels\":{\"app\":\"api\"}},\"strategy\":{\"rollingUpdate\":{\"maxSurge\":1,\"maxUnavailable\":0},\"type\":\"RollingUpdate\"},\"template\":{\"metadata\":{\"labels\":{\"app\":\"api\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"envFrom\":[{\"configMapRef\":{\"name\":\"rahbar-config\"}},{\"secretRef\":{\"name\":\"rahbar-secret\",\"optional\":true}}],\"image\":\"rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610\",\"imagePullPolicy\":\"IfNotPresent\",\"lifecycle\":{\"preStop\":{\"exec\":{\"command\":[\"sh\",\"-c\",\"sleep 5\"]}}},\"livenessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/healthz\",\"port\":8000},\"periodSeconds\":20,\"timeoutSeconds\":5},\"name\":\"api\",\"ports\":[{\"containerPort\":8000,\"name\":\"http\"}],\"readinessProbe\":{\"failureThreshold\":3,\"httpGet\":{\"path\":\"/readyz\",\"port\":8000},\"periodSeconds\":10,\"timeoutSeconds\":5},\"resources\":{\"limits\":{\"cpu\":\"500m\",\"memory\":\"512Mi\"},\"requests\":{\"cpu\":\"200m\",\"memory\":\"128Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true},\"startupProbe\":{\"failureThreshold\":30,\"httpGet\":{\"path\":\"/healthz\",\"port\":8000},\"periodSeconds\":2,\"timeoutSeconds\":5},\"volumeMounts\":[{\"mountPath\":\"/tmp\",\"name\":\"tmp\"}]}],\"securityContext\":{\"fsGroup\":10001,\"runAsGroup\":10001,\"runAsNonRoot\":true,\"runAsUser\":10001,\"seccompProfile\":{\"type\":\"RuntimeDefault\"}},\"serviceAccountName\":\"api\",\"terminationGracePeriodSeconds\":30,\"volumes\":[{\"emptyDir\":{},\"name\":\"tmp\"}]}}}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:25:25Z",
+        "generation": 3,
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "3244",
+        "uid": "28b70b50-1fbd-4ef1-871f-83c1380eb1e4"
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 3,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "api"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": 1,
+            "maxUnavailable": 0
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "api"
+            }
+          },
+          "spec": {
+            "automountServiceAccountToken": false,
+            "containers": [
+              {
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "rahbar-config"
+                    }
+                  },
+                  {
+                    "secretRef": {
+                      "name": "rahbar-secret",
+                      "optional": true
+                    }
+                  }
+                ],
+                "image": "rahbar-api:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+                "imagePullPolicy": "IfNotPresent",
+                "lifecycle": {
+                  "preStop": {
+                    "exec": {
+                      "command": [
+                        "sh",
+                        "-c",
+                        "sleep 5"
+                      ]
+                    }
+                  }
+                },
+                "livenessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/healthz",
+                    "port": 8000,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 20,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "name": "api",
+                "ports": [
+                  {
+                    "containerPort": 8000,
+                    "name": "http",
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/readyz",
+                    "port": 8000,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "resources": {
+                  "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi"
+                  },
+                  "requests": {
+                    "cpu": "200m",
+                    "memory": "128Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true
+                },
+                "startupProbe": {
+                  "failureThreshold": 30,
+                  "httpGet": {
+                    "path": "/healthz",
+                    "port": 8000,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 2,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/tmp",
+                    "name": "tmp"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 10001,
+              "runAsGroup": 10001,
+              "runAsNonRoot": true,
+              "runAsUser": 10001,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "serviceAccount": "api",
+            "serviceAccountName": "api",
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "emptyDir": {},
+                "name": "tmp"
+              }
+            ]
+          }
+        }
+      },
+      "status": {
+        "availableReplicas": 3,
+        "conditions": [
+          {
+            "lastTransitionTime": "2026-11-06T21:36:30Z",
+            "lastUpdateTime": "2026-11-06T21:36:30Z",
+            "message": "Deployment has minimum availability.",
+            "reason": "MinimumReplicasAvailable",
+            "status": "True",
+            "type": "Available"
+          },
+          {
+            "lastTransitionTime": "2026-11-06T21:25:25Z",
+            "lastUpdateTime": "2026-11-06T21:36:35Z",
+            "message": "ReplicaSet \"api-545995f76c\" has successfully progressed.",
+            "reason": "NewReplicaSetAvailable",
+            "status": "True",
+            "type": "Progressing"
+          }
+        ],
+        "observedGeneration": 3,
+        "readyReplicas": 3,
+        "replicas": 3,
+        "updatedReplicas": 3
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "annotations": {
+          "deployment.kubernetes.io/revision": "1",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"redis\",\"namespace\":\"rahbar\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"redis\"}},\"strategy\":{\"type\":\"Recreate\"},\"template\":{\"metadata\":{\"labels\":{\"app\":\"redis\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"command\":[\"redis-server\",\"--appendonly\",\"yes\",\"--dir\",\"/data\"],\"image\":\"redis:7.4.5-alpine\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"redis\",\"ports\":[{\"containerPort\":6379,\"name\":\"redis\"}],\"readinessProbe\":{\"exec\":{\"command\":[\"redis-cli\",\"ping\"]},\"timeoutSeconds\":5},\"resources\":{\"limits\":{\"cpu\":\"500m\",\"memory\":\"512Mi\"},\"requests\":{\"cpu\":\"50m\",\"memory\":\"128Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/tmp\",\"name\":\"tmp\"},{\"mountPath\":\"/data\",\"name\":\"redis-data\"}]}],\"securityContext\":{\"fsGroup\":10001,\"runAsGroup\":10001,\"runAsNonRoot\":true,\"runAsUser\":10001,\"seccompProfile\":{\"type\":\"RuntimeDefault\"}},\"serviceAccountName\":\"redis\",\"volumes\":[{\"emptyDir\":{},\"name\":\"tmp\"},{\"name\":\"redis-data\",\"persistentVolumeClaim\":{\"claimName\":\"redis-data\"}}]}}}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "redis",
+        "namespace": "rahbar",
+        "resourceVersion": "3158",
+        "uid": "c1ef37e3-9045-414e-a788-e24d3e8abf6e"
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "redis"
+          }
+        },
+        "strategy": {
+          "type": "Recreate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "redis"
+            }
+          },
+          "spec": {
+            "automountServiceAccountToken": false,
+            "containers": [
+              {
+                "command": [
+                  "redis-server",
+                  "--appendonly",
+                  "yes",
+                  "--dir",
+                  "/data"
+                ],
+                "image": "redis:7.4.5-alpine",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "redis",
+                "ports": [
+                  {
+                    "containerPort": 6379,
+                    "name": "redis",
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "exec": {
+                    "command": [
+                      "redis-cli",
+                      "ping"
+                    ]
+                  },
+                  "failureThreshold": 3,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "resources": {
+                  "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi"
+                  },
+                  "requests": {
+                    "cpu": "50m",
+                    "memory": "128Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/tmp",
+                    "name": "tmp"
+                  },
+                  {
+                    "mountPath": "/data",
+                    "name": "redis-data"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 10001,
+              "runAsGroup": 10001,
+              "runAsNonRoot": true,
+              "runAsUser": 10001,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "serviceAccount": "redis",
+            "serviceAccountName": "redis",
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "emptyDir": {},
+                "name": "tmp"
+              },
+              {
+                "name": "redis-data",
+                "persistentVolumeClaim": {
+                  "claimName": "redis-data"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "status": {
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "lastTransitionTime": "2026-11-06T21:19:42Z",
+            "lastUpdateTime": "2026-11-06T21:19:48Z",
+            "message": "ReplicaSet \"redis-9c8f6cd5d\" has successfully progressed.",
+            "reason": "NewReplicaSetAvailable",
+            "status": "True",
+            "type": "Progressing"
+          },
+          {
+            "lastTransitionTime": "2026-11-06T21:36:26Z",
+            "lastUpdateTime": "2026-11-06T21:36:26Z",
+            "message": "Deployment has minimum availability.",
+            "reason": "MinimumReplicasAvailable",
+            "status": "True",
+            "type": "Available"
+          }
+        ],
+        "observedGeneration": 1,
+        "readyReplicas": 1,
+        "replicas": 1,
+        "updatedReplicas": 1
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "Deployment",
+      "metadata": {
+        "annotations": {
+          "deployment.kubernetes.io/revision": "3",
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"annotations\":{},\"name\":\"ui\",\"namespace\":\"rahbar\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"ui\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"ui\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"image\":\"rahbar-ui:54f37ff2ee954d70ac76ad8fd7716695654e0610\",\"imagePullPolicy\":\"IfNotPresent\",\"livenessProbe\":{\"httpGet\":{\"path\":\"/healthz\",\"port\":8080},\"timeoutSeconds\":5},\"name\":\"ui\",\"ports\":[{\"containerPort\":8080,\"name\":\"http\"}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/healthz\",\"port\":8080},\"timeoutSeconds\":5},\"resources\":{\"limits\":{\"cpu\":\"500m\",\"memory\":\"512Mi\"},\"requests\":{\"cpu\":\"50m\",\"memory\":\"128Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true,\"runAsGroup\":101,\"runAsUser\":101},\"volumeMounts\":[{\"mountPath\":\"/tmp\",\"name\":\"tmp\"}]}],\"securityContext\":{\"fsGroup\":10001,\"runAsGroup\":10001,\"runAsNonRoot\":true,\"runAsUser\":10001,\"seccompProfile\":{\"type\":\"RuntimeDefault\"}},\"serviceAccountName\":\"ui\",\"volumes\":[{\"emptyDir\":{},\"name\":\"tmp\"}]}}}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:25:25Z",
+        "generation": 3,
+        "name": "ui",
+        "namespace": "rahbar",
+        "resourceVersion": "3366",
+        "uid": "7941334e-d853-43f1-9045-f772eb336621"
+      },
+      "spec": {
+        "progressDeadlineSeconds": 600,
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "ui"
+          }
+        },
+        "strategy": {
+          "rollingUpdate": {
+            "maxSurge": "25%",
+            "maxUnavailable": "25%"
+          },
+          "type": "RollingUpdate"
+        },
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "ui"
+            }
+          },
+          "spec": {
+            "automountServiceAccountToken": false,
+            "containers": [
+              {
+                "image": "rahbar-ui:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+                "imagePullPolicy": "IfNotPresent",
+                "livenessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/healthz",
+                    "port": 8080,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "name": "ui",
+                "ports": [
+                  {
+                    "containerPort": 8080,
+                    "name": "http",
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/healthz",
+                    "port": 8080,
+                    "scheme": "HTTP"
+                  },
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "resources": {
+                  "limits": {
+                    "cpu": "500m",
+                    "memory": "512Mi"
+                  },
+                  "requests": {
+                    "cpu": "50m",
+                    "memory": "128Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true,
+                  "runAsGroup": 101,
+                  "runAsUser": 101
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/tmp",
+                    "name": "tmp"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 10001,
+              "runAsGroup": 10001,
+              "runAsNonRoot": true,
+              "runAsUser": 10001,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "serviceAccount": "ui",
+            "serviceAccountName": "ui",
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "emptyDir": {},
+                "name": "tmp"
+              }
+            ]
+          }
+        }
+      },
+      "status": {
+        "availableReplicas": 1,
+        "conditions": [
+          {
+            "lastTransitionTime": "2026-11-06T21:25:26Z",
+            "lastUpdateTime": "2026-11-06T21:25:26Z",
+            "message": "Deployment has minimum availability.",
+            "reason": "MinimumReplicasAvailable",
+            "status": "True",
+            "type": "Available"
+          },
+          {
+            "lastTransitionTime": "2026-11-06T21:25:25Z",
+            "lastUpdateTime": "2026-11-06T21:36:52Z",
+            "message": "ReplicaSet \"ui-6f66455c7f\" has successfully progressed.",
+            "reason": "NewReplicaSetAvailable",
+            "status": "True",
+            "type": "Progressing"
+          }
+        ],
+        "observedGeneration": 3,
+        "readyReplicas": 1,
+        "replicas": 1,
+        "updatedReplicas": 1
+      }
+    },
+    {
+      "apiVersion": "apps/v1",
+      "kind": "StatefulSet",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"apps/v1\",\"kind\":\"StatefulSet\",\"metadata\":{\"annotations\":{},\"name\":\"chroma\",\"namespace\":\"rahbar\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"chroma\"}},\"serviceName\":\"chroma\",\"template\":{\"metadata\":{\"labels\":{\"app\":\"chroma\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"env\":[{\"name\":\"ANONYMIZED_TELEMETRY\",\"value\":\"False\"},{\"name\":\"CHROMA_PERSIST_PATH\",\"value\":\"/data\"}],\"image\":\"chromadb/chroma:1.0.12\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"chroma\",\"ports\":[{\"containerPort\":8000,\"name\":\"http\"}],\"readinessProbe\":{\"httpGet\":{\"path\":\"/api/v2/heartbeat\",\"port\":8000},\"initialDelaySeconds\":5,\"timeoutSeconds\":5},\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"768Mi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"256Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/tmp\",\"name\":\"tmp\"},{\"mountPath\":\"/data\",\"name\":\"chroma-data\"}]}],\"enableServiceLinks\":false,\"securityContext\":{\"fsGroup\":1000,\"runAsGroup\":1000,\"runAsNonRoot\":true,\"runAsUser\":1000,\"seccompProfile\":{\"type\":\"RuntimeDefault\"}},\"serviceAccountName\":\"chroma\",\"volumes\":[{\"emptyDir\":{},\"name\":\"tmp\"}]}},\"volumeClaimTemplates\":[{\"metadata\":{\"name\":\"chroma-data\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"2Gi\"}}}}]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 3,
+        "name": "chroma",
+        "namespace": "rahbar",
+        "resourceVersion": "3116",
+        "uid": "9be1e7c1-c7ca-4815-bcb1-3fb62d0296ff"
+      },
+      "spec": {
+        "persistentVolumeClaimRetentionPolicy": {
+          "whenDeleted": "Retain",
+          "whenScaled": "Retain"
+        },
+        "podManagementPolicy": "OrderedReady",
+        "replicas": 1,
+        "revisionHistoryLimit": 10,
+        "selector": {
+          "matchLabels": {
+            "app": "chroma"
+          }
+        },
+        "serviceName": "chroma",
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "chroma"
+            }
+          },
+          "spec": {
+            "automountServiceAccountToken": false,
+            "containers": [
+              {
+                "env": [
+                  {
+                    "name": "ANONYMIZED_TELEMETRY",
+                    "value": "False"
+                  },
+                  {
+                    "name": "CHROMA_PERSIST_PATH",
+                    "value": "/data"
+                  }
+                ],
+                "image": "chromadb/chroma:1.0.12",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "chroma",
+                "ports": [
+                  {
+                    "containerPort": 8000,
+                    "name": "http",
+                    "protocol": "TCP"
+                  }
+                ],
+                "readinessProbe": {
+                  "failureThreshold": 3,
+                  "httpGet": {
+                    "path": "/api/v2/heartbeat",
+                    "port": 8000,
+                    "scheme": "HTTP"
+                  },
+                  "initialDelaySeconds": 5,
+                  "periodSeconds": 10,
+                  "successThreshold": 1,
+                  "timeoutSeconds": 5
+                },
+                "resources": {
+                  "limits": {
+                    "cpu": "1",
+                    "memory": "768Mi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "256Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/tmp",
+                    "name": "tmp"
+                  },
+                  {
+                    "mountPath": "/data",
+                    "name": "chroma-data"
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "enableServiceLinks": false,
+            "restartPolicy": "Always",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 1000,
+              "runAsGroup": 1000,
+              "runAsNonRoot": true,
+              "runAsUser": 1000,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "serviceAccount": "chroma",
+            "serviceAccountName": "chroma",
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "emptyDir": {},
+                "name": "tmp"
+              }
+            ]
+          }
+        },
+        "updateStrategy": {
+          "rollingUpdate": {
+            "partition": 0
+          },
+          "type": "RollingUpdate"
+        },
+        "volumeClaimTemplates": [
+          {
+            "apiVersion": "v1",
+            "kind": "PersistentVolumeClaim",
+            "metadata": {
+              "name": "chroma-data"
+            },
+            "spec": {
+              "accessModes": [
+                "ReadWriteOnce"
+              ],
+              "resources": {
+                "requests": {
+                  "storage": "2Gi"
+                }
+              },
+              "volumeMode": "Filesystem"
+            },
+            "status": {
+              "phase": "Pending"
+            }
+          }
+        ]
+      },
+      "status": {
+        "availableReplicas": 1,
+        "collisionCount": 0,
+        "currentReplicas": 1,
+        "currentRevision": "chroma-bc6f89b55",
+        "observedGeneration": 3,
+        "readyReplicas": 1,
+        "replicas": 1,
+        "updateRevision": "chroma-bc6f89b55",
+        "updatedReplicas": 1
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"ports\":[{\"port\":8000,\"targetPort\":8000}],\"selector\":{\"app\":\"api\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "1126",
+        "uid": "612d6c3a-f348-4ec5-8d69-846d4a415a4b"
+      },
+      "spec": {
+        "clusterIP": "10.96.164.252",
+        "clusterIPs": [
+          "10.96.164.252"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "port": 8000,
+            "protocol": "TCP",
+            "targetPort": 8000
+          }
+        ],
+        "selector": {
+          "app": "api"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"chroma\",\"namespace\":\"rahbar\"},\"spec\":{\"ports\":[{\"port\":8000,\"targetPort\":8000}],\"selector\":{\"app\":\"chroma\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "chroma",
+        "namespace": "rahbar",
+        "resourceVersion": "1130",
+        "uid": "e6357b82-9401-4f1c-9a39-26b60399ed55"
+      },
+      "spec": {
+        "clusterIP": "10.96.41.144",
+        "clusterIPs": [
+          "10.96.41.144"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "port": 8000,
+            "protocol": "TCP",
+            "targetPort": 8000
+          }
+        ],
+        "selector": {
+          "app": "chroma"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"redis\",\"namespace\":\"rahbar\"},\"spec\":{\"ports\":[{\"port\":6379,\"targetPort\":6379}],\"selector\":{\"app\":\"redis\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "redis",
+        "namespace": "rahbar",
+        "resourceVersion": "1134",
+        "uid": "45394d70-2eff-4b45-8c2b-ecf00d447b54"
+      },
+      "spec": {
+        "clusterIP": "10.96.155.156",
+        "clusterIPs": [
+          "10.96.155.156"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "port": 6379,
+            "protocol": "TCP",
+            "targetPort": 6379
+          }
+        ],
+        "selector": {
+          "app": "redis"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Service",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"annotations\":{},\"name\":\"ui\",\"namespace\":\"rahbar\"},\"spec\":{\"ports\":[{\"port\":8080,\"targetPort\":8080}],\"selector\":{\"app\":\"ui\"},\"type\":\"ClusterIP\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "ui",
+        "namespace": "rahbar",
+        "resourceVersion": "1138",
+        "uid": "3dc4f206-09cb-4384-9499-95d314258430"
+      },
+      "spec": {
+        "clusterIP": "10.96.208.119",
+        "clusterIPs": [
+          "10.96.208.119"
+        ],
+        "internalTrafficPolicy": "Cluster",
+        "ipFamilies": [
+          "IPv4"
+        ],
+        "ipFamilyPolicy": "SingleStack",
+        "ports": [
+          {
+            "port": 8080,
+            "protocol": "TCP",
+            "targetPort": 8080
+          }
+        ],
+        "selector": {
+          "app": "ui"
+        },
+        "sessionAffinity": "None",
+        "type": "ClusterIP"
+      },
+      "status": {
+        "loadBalancer": {}
+      }
+    },
+    {
+      "apiVersion": "batch/v1",
+      "kind": "Job",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"Job\",\"metadata\":{\"annotations\":{},\"name\":\"indexer\",\"namespace\":\"rahbar\"},\"spec\":{\"activeDeadlineSeconds\":1800,\"backoffLimit\":2,\"template\":{\"metadata\":{\"labels\":{\"app\":\"indexer\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"args\":[],\"command\":[\"python\",\"-m\",\"pipeline.run\"],\"envFrom\":[{\"configMapRef\":{\"name\":\"rahbar-config\"}}],\"image\":\"rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"indexer\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"1Gi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"256Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/tmp\",\"name\":\"tmp\"},{\"mountPath\":\"/locks\",\"name\":\"indexer-lock\"},{\"mountPath\":\"/corpus\",\"name\":\"corpus\",\"readOnly\":true}]}],\"initContainers\":[{\"command\":[\"python\",\"-m\",\"pipeline.wait\"],\"envFrom\":[{\"configMapRef\":{\"name\":\"rahbar-config\"}}],\"image\":\"rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"wait-chroma\",\"resources\":{\"limits\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"10m\",\"memory\":\"32Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true}}],\"restartPolicy\":\"OnFailure\",\"securityContext\":{\"fsGroup\":10001,\"runAsGroup\":10001,\"runAsNonRoot\":true,\"runAsUser\":10001,\"seccompProfile\":{\"type\":\"RuntimeDefault\"}},\"serviceAccountName\":\"indexer\",\"volumes\":[{\"emptyDir\":{},\"name\":\"tmp\"},{\"name\":\"indexer-lock\",\"persistentVolumeClaim\":{\"claimName\":\"indexer-lock\"}},{\"name\":\"corpus\",\"persistentVolumeClaim\":{\"claimName\":\"corpus-data\"}}]}}}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:21:51Z",
+        "generation": 1,
+        "labels": {
+          "app": "indexer",
+          "batch.kubernetes.io/controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496",
+          "batch.kubernetes.io/job-name": "indexer",
+          "controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496",
+          "job-name": "indexer"
+        },
+        "name": "indexer",
+        "namespace": "rahbar",
+        "resourceVersion": "1880",
+        "uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496"
+      },
+      "spec": {
+        "activeDeadlineSeconds": 1800,
+        "backoffLimit": 2,
+        "completionMode": "NonIndexed",
+        "completions": 1,
+        "manualSelector": false,
+        "parallelism": 1,
+        "podReplacementPolicy": "TerminatingOrFailed",
+        "selector": {
+          "matchLabels": {
+            "batch.kubernetes.io/controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496"
+          }
+        },
+        "suspend": false,
+        "template": {
+          "metadata": {
+            "labels": {
+              "app": "indexer",
+              "batch.kubernetes.io/controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496",
+              "batch.kubernetes.io/job-name": "indexer",
+              "controller-uid": "39a53fbb-7696-47d8-9f82-ce7feda8a496",
+              "job-name": "indexer"
+            }
+          },
+          "spec": {
+            "automountServiceAccountToken": false,
+            "containers": [
+              {
+                "command": [
+                  "python",
+                  "-m",
+                  "pipeline.run"
+                ],
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "rahbar-config"
+                    }
+                  }
+                ],
+                "image": "rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "indexer",
+                "resources": {
+                  "limits": {
+                    "cpu": "1",
+                    "memory": "1Gi"
+                  },
+                  "requests": {
+                    "cpu": "100m",
+                    "memory": "256Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File",
+                "volumeMounts": [
+                  {
+                    "mountPath": "/tmp",
+                    "name": "tmp"
+                  },
+                  {
+                    "mountPath": "/locks",
+                    "name": "indexer-lock"
+                  },
+                  {
+                    "mountPath": "/corpus",
+                    "name": "corpus",
+                    "readOnly": true
+                  }
+                ]
+              }
+            ],
+            "dnsPolicy": "ClusterFirst",
+            "initContainers": [
+              {
+                "command": [
+                  "python",
+                  "-m",
+                  "pipeline.wait"
+                ],
+                "envFrom": [
+                  {
+                    "configMapRef": {
+                      "name": "rahbar-config"
+                    }
+                  }
+                ],
+                "image": "rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+                "imagePullPolicy": "IfNotPresent",
+                "name": "wait-chroma",
+                "resources": {
+                  "limits": {
+                    "cpu": "100m",
+                    "memory": "64Mi"
+                  },
+                  "requests": {
+                    "cpu": "10m",
+                    "memory": "32Mi"
+                  }
+                },
+                "securityContext": {
+                  "allowPrivilegeEscalation": false,
+                  "capabilities": {
+                    "drop": [
+                      "ALL"
+                    ]
+                  },
+                  "readOnlyRootFilesystem": true
+                },
+                "terminationMessagePath": "/dev/termination-log",
+                "terminationMessagePolicy": "File"
+              }
+            ],
+            "restartPolicy": "OnFailure",
+            "schedulerName": "default-scheduler",
+            "securityContext": {
+              "fsGroup": 10001,
+              "runAsGroup": 10001,
+              "runAsNonRoot": true,
+              "runAsUser": 10001,
+              "seccompProfile": {
+                "type": "RuntimeDefault"
+              }
+            },
+            "serviceAccount": "indexer",
+            "serviceAccountName": "indexer",
+            "terminationGracePeriodSeconds": 30,
+            "volumes": [
+              {
+                "emptyDir": {},
+                "name": "tmp"
+              },
+              {
+                "name": "indexer-lock",
+                "persistentVolumeClaim": {
+                  "claimName": "indexer-lock"
+                }
+              },
+              {
+                "name": "corpus",
+                "persistentVolumeClaim": {
+                  "claimName": "corpus-data"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "status": {
+        "completionTime": "2026-11-06T21:25:24Z",
+        "conditions": [
+          {
+            "lastProbeTime": "2026-11-06T21:25:24Z",
+            "lastTransitionTime": "2026-11-06T21:25:24Z",
+            "message": "Reached expected number of succeeded pods",
+            "reason": "CompletionsReached",
+            "status": "True",
+            "type": "SuccessCriteriaMet"
+          },
+          {
+            "lastProbeTime": "2026-11-06T21:25:24Z",
+            "lastTransitionTime": "2026-11-06T21:25:24Z",
+            "message": "Reached expected number of succeeded pods",
+            "reason": "CompletionsReached",
+            "status": "True",
+            "type": "Complete"
+          }
+        ],
+        "ready": 0,
+        "startTime": "2026-11-06T21:21:51Z",
+        "succeeded": 1,
+        "terminating": 0,
+        "uncountedTerminatedPods": {}
+      }
+    },
+    {
+      "apiVersion": "batch/v1",
+      "kind": "CronJob",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"batch/v1\",\"kind\":\"CronJob\",\"metadata\":{\"annotations\":{},\"name\":\"reindex\",\"namespace\":\"rahbar\"},\"spec\":{\"concurrencyPolicy\":\"Forbid\",\"jobTemplate\":{\"spec\":{\"activeDeadlineSeconds\":1800,\"backoffLimit\":2,\"template\":{\"metadata\":{\"labels\":{\"app\":\"indexer\"}},\"spec\":{\"automountServiceAccountToken\":false,\"containers\":[{\"args\":[],\"command\":[\"python\",\"-m\",\"pipeline.run\"],\"envFrom\":[{\"configMapRef\":{\"name\":\"rahbar-config\"}}],\"image\":\"rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"indexer\",\"resources\":{\"limits\":{\"cpu\":\"1\",\"memory\":\"1Gi\"},\"requests\":{\"cpu\":\"100m\",\"memory\":\"256Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true},\"volumeMounts\":[{\"mountPath\":\"/tmp\",\"name\":\"tmp\"},{\"mountPath\":\"/locks\",\"name\":\"indexer-lock\"},{\"mountPath\":\"/corpus\",\"name\":\"corpus\",\"readOnly\":true}]}],\"initContainers\":[{\"command\":[\"python\",\"-m\",\"pipeline.wait\"],\"envFrom\":[{\"configMapRef\":{\"name\":\"rahbar-config\"}}],\"image\":\"rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610\",\"imagePullPolicy\":\"IfNotPresent\",\"name\":\"wait-chroma\",\"resources\":{\"limits\":{\"cpu\":\"100m\",\"memory\":\"64Mi\"},\"requests\":{\"cpu\":\"10m\",\"memory\":\"32Mi\"}},\"securityContext\":{\"allowPrivilegeEscalation\":false,\"capabilities\":{\"drop\":[\"ALL\"]},\"readOnlyRootFilesystem\":true}}],\"restartPolicy\":\"OnFailure\",\"securityContext\":{\"fsGroup\":10001,\"runAsGroup\":10001,\"runAsNonRoot\":true,\"runAsUser\":10001,\"seccompProfile\":{\"type\":\"RuntimeDefault\"}},\"serviceAccountName\":\"indexer\",\"volumes\":[{\"emptyDir\":{},\"name\":\"tmp\"},{\"name\":\"indexer-lock\",\"persistentVolumeClaim\":{\"claimName\":\"indexer-lock\"}},{\"name\":\"corpus\",\"persistentVolumeClaim\":{\"claimName\":\"corpus-data\"}}]}}}},\"schedule\":\"0 2 * * 0\",\"suspend\":false,\"timeZone\":\"Asia/Karachi\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:25:25Z",
+        "generation": 1,
+        "name": "reindex",
+        "namespace": "rahbar",
+        "resourceVersion": "1920",
+        "uid": "d6bf4509-2930-475e-93f3-85f078be54c1"
+      },
+      "spec": {
+        "concurrencyPolicy": "Forbid",
+        "failedJobsHistoryLimit": 1,
+        "jobTemplate": {
+          "metadata": {},
+          "spec": {
+            "activeDeadlineSeconds": 1800,
+            "backoffLimit": 2,
+            "template": {
+              "metadata": {
+                "labels": {
+                  "app": "indexer"
+                }
+              },
+              "spec": {
+                "automountServiceAccountToken": false,
+                "containers": [
+                  {
+                    "command": [
+                      "python",
+                      "-m",
+                      "pipeline.run"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "rahbar-config"
+                        }
+                      }
+                    ],
+                    "image": "rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+                    "imagePullPolicy": "IfNotPresent",
+                    "name": "indexer",
+                    "resources": {
+                      "limits": {
+                        "cpu": "1",
+                        "memory": "1Gi"
+                      },
+                      "requests": {
+                        "cpu": "100m",
+                        "memory": "256Mi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      },
+                      "readOnlyRootFilesystem": true
+                    },
+                    "terminationMessagePath": "/dev/termination-log",
+                    "terminationMessagePolicy": "File",
+                    "volumeMounts": [
+                      {
+                        "mountPath": "/tmp",
+                        "name": "tmp"
+                      },
+                      {
+                        "mountPath": "/locks",
+                        "name": "indexer-lock"
+                      },
+                      {
+                        "mountPath": "/corpus",
+                        "name": "corpus",
+                        "readOnly": true
+                      }
+                    ]
+                  }
+                ],
+                "dnsPolicy": "ClusterFirst",
+                "initContainers": [
+                  {
+                    "command": [
+                      "python",
+                      "-m",
+                      "pipeline.wait"
+                    ],
+                    "envFrom": [
+                      {
+                        "configMapRef": {
+                          "name": "rahbar-config"
+                        }
+                      }
+                    ],
+                    "image": "rahbar-indexer:54f37ff2ee954d70ac76ad8fd7716695654e0610",
+                    "imagePullPolicy": "IfNotPresent",
+                    "name": "wait-chroma",
+                    "resources": {
+                      "limits": {
+                        "cpu": "100m",
+                        "memory": "64Mi"
+                      },
+                      "requests": {
+                        "cpu": "10m",
+                        "memory": "32Mi"
+                      }
+                    },
+                    "securityContext": {
+                      "allowPrivilegeEscalation": false,
+                      "capabilities": {
+                        "drop": [
+                          "ALL"
+                        ]
+                      },
+                      "readOnlyRootFilesystem": true
+                    },
+                    "terminationMessagePath": "/dev/termination-log",
+                    "terminationMessagePolicy": "File"
+                  }
+                ],
+                "restartPolicy": "OnFailure",
+                "schedulerName": "default-scheduler",
+                "securityContext": {
+                  "fsGroup": 10001,
+                  "runAsGroup": 10001,
+                  "runAsNonRoot": true,
+                  "runAsUser": 10001,
+                  "seccompProfile": {
+                    "type": "RuntimeDefault"
+                  }
+                },
+                "serviceAccount": "indexer",
+                "serviceAccountName": "indexer",
+                "terminationGracePeriodSeconds": 30,
+                "volumes": [
+                  {
+                    "emptyDir": {},
+                    "name": "tmp"
+                  },
+                  {
+                    "name": "indexer-lock",
+                    "persistentVolumeClaim": {
+                      "claimName": "indexer-lock"
+                    }
+                  },
+                  {
+                    "name": "corpus",
+                    "persistentVolumeClaim": {
+                      "claimName": "corpus-data"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "schedule": "0 2 * * 0",
+        "successfulJobsHistoryLimit": 3,
+        "suspend": false,
+        "timeZone": "Asia/Karachi"
+      },
+      "status": {}
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "metadata": {
+        "annotations": {
+          "pv.kubernetes.io/bind-completed": "yes",
+          "pv.kubernetes.io/bound-by-controller": "yes",
+          "volume.beta.kubernetes.io/storage-provisioner": "rancher.io/local-path",
+          "volume.kubernetes.io/selected-node": "rahbar-real-control-plane",
+          "volume.kubernetes.io/storage-provisioner": "rancher.io/local-path"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "finalizers": [
+          "kubernetes.io/pvc-protection"
+        ],
+        "labels": {
+          "app": "chroma"
+        },
+        "name": "chroma-data-chroma-0",
+        "namespace": "rahbar",
+        "resourceVersion": "1229",
+        "uid": "2b237995-2156-401a-ae6a-04368b695e98"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "2Gi"
+          }
+        },
+        "storageClassName": "standard",
+        "volumeMode": "Filesystem",
+        "volumeName": "pvc-2b237995-2156-401a-ae6a-04368b695e98"
+      },
+      "status": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "2Gi"
+        },
+        "phase": "Bound"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"PersistentVolumeClaim\",\"metadata\":{\"annotations\":{},\"name\":\"corpus-data\",\"namespace\":\"rahbar\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"128Mi\"}}}}\n",
+          "pv.kubernetes.io/bind-completed": "yes",
+          "pv.kubernetes.io/bound-by-controller": "yes",
+          "volume.beta.kubernetes.io/storage-provisioner": "rancher.io/local-path",
+          "volume.kubernetes.io/selected-node": "rahbar-real-control-plane",
+          "volume.kubernetes.io/storage-provisioner": "rancher.io/local-path"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "finalizers": [
+          "kubernetes.io/pvc-protection"
+        ],
+        "name": "corpus-data",
+        "namespace": "rahbar",
+        "resourceVersion": "1437",
+        "uid": "0f46b76a-dded-4a5a-be1e-c1e5c1f716ad"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "128Mi"
+          }
+        },
+        "storageClassName": "standard",
+        "volumeMode": "Filesystem",
+        "volumeName": "pvc-0f46b76a-dded-4a5a-be1e-c1e5c1f716ad"
+      },
+      "status": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "128Mi"
+        },
+        "phase": "Bound"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"PersistentVolumeClaim\",\"metadata\":{\"annotations\":{},\"name\":\"indexer-lock\",\"namespace\":\"rahbar\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"16Mi\"}}}}\n",
+          "pv.kubernetes.io/bind-completed": "yes",
+          "pv.kubernetes.io/bound-by-controller": "yes",
+          "volume.beta.kubernetes.io/storage-provisioner": "rancher.io/local-path",
+          "volume.kubernetes.io/selected-node": "rahbar-real-control-plane",
+          "volume.kubernetes.io/storage-provisioner": "rancher.io/local-path"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "finalizers": [
+          "kubernetes.io/pvc-protection"
+        ],
+        "name": "indexer-lock",
+        "namespace": "rahbar",
+        "resourceVersion": "1545",
+        "uid": "bd9d4a94-a2ef-45e7-8f8c-109de1b07f19"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "16Mi"
+          }
+        },
+        "storageClassName": "standard",
+        "volumeMode": "Filesystem",
+        "volumeName": "pvc-bd9d4a94-a2ef-45e7-8f8c-109de1b07f19"
+      },
+      "status": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "16Mi"
+        },
+        "phase": "Bound"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "PersistentVolumeClaim",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"kind\":\"PersistentVolumeClaim\",\"metadata\":{\"annotations\":{},\"name\":\"redis-data\",\"namespace\":\"rahbar\"},\"spec\":{\"accessModes\":[\"ReadWriteOnce\"],\"resources\":{\"requests\":{\"storage\":\"256Mi\"}}}}\n",
+          "pv.kubernetes.io/bind-completed": "yes",
+          "pv.kubernetes.io/bound-by-controller": "yes",
+          "volume.beta.kubernetes.io/storage-provisioner": "rancher.io/local-path",
+          "volume.kubernetes.io/selected-node": "rahbar-real-control-plane",
+          "volume.kubernetes.io/storage-provisioner": "rancher.io/local-path"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "finalizers": [
+          "kubernetes.io/pvc-protection"
+        ],
+        "name": "redis-data",
+        "namespace": "rahbar",
+        "resourceVersion": "1226",
+        "uid": "84aad80f-bca0-4b9e-b172-2e659a00e0b1"
+      },
+      "spec": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "resources": {
+          "requests": {
+            "storage": "256Mi"
+          }
+        },
+        "storageClassName": "standard",
+        "volumeMode": "Filesystem",
+        "volumeName": "pvc-84aad80f-bca0-4b9e-b172-2e659a00e0b1"
+      },
+      "status": {
+        "accessModes": [
+          "ReadWriteOnce"
+        ],
+        "capacity": {
+          "storage": "256Mi"
+        },
+        "phase": "Bound"
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"NetworkPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"allow-api\",\"namespace\":\"rahbar\"},\"spec\":{\"egress\":[{\"ports\":[{\"port\":53,\"protocol\":\"UDP\"},{\"port\":53,\"protocol\":\"TCP\"}],\"to\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"kube-system\"}},\"podSelector\":{\"matchLabels\":{\"k8s-app\":\"kube-dns\"}}}]},{\"ports\":[{\"port\":8000}],\"to\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"chroma\"}}}]},{\"ports\":[{\"port\":6379}],\"to\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"redis\"}}}]},{\"ports\":[{\"port\":11434,\"protocol\":\"TCP\"}],\"to\":[{\"ipBlock\":{\"cidr\":\"172.18.0.3/32\"}}]}],\"ingress\":[{\"from\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"ingress-nginx\"}}}],\"ports\":[{\"port\":8000}]},{\"from\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"ui\"}}}],\"ports\":[{\"port\":8000}]}],\"podSelector\":{\"matchLabels\":{\"app\":\"api\"}},\"policyTypes\":[\"Ingress\",\"Egress\"]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "allow-api",
+        "namespace": "rahbar",
+        "resourceVersion": "1177",
+        "uid": "480421ec-1e3a-4fad-9356-721696333cca"
+      },
+      "spec": {
+        "egress": [
+          {
+            "ports": [
+              {
+                "port": 53,
+                "protocol": "UDP"
+              },
+              {
+                "port": 53,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "kube-system"
+                  }
+                },
+                "podSelector": {
+                  "matchLabels": {
+                    "k8s-app": "kube-dns"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "ports": [
+              {
+                "port": 8000,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "chroma"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "ports": [
+              {
+                "port": 6379,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "redis"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "ports": [
+              {
+                "port": 11434,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "ipBlock": {
+                  "cidr": "172.18.0.3/32"
+                }
+              }
+            ]
+          }
+        ],
+        "ingress": [
+          {
+            "from": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "ingress-nginx"
+                  }
+                }
+              }
+            ],
+            "ports": [
+              {
+                "port": 8000,
+                "protocol": "TCP"
+              }
+            ]
+          },
+          {
+            "from": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "ui"
+                  }
+                }
+              }
+            ],
+            "ports": [
+              {
+                "port": 8000,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ],
+        "podSelector": {
+          "matchLabels": {
+            "app": "api"
+          }
+        },
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"NetworkPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"allow-chroma\",\"namespace\":\"rahbar\"},\"spec\":{\"egress\":[{\"ports\":[{\"port\":53,\"protocol\":\"UDP\"},{\"port\":53,\"protocol\":\"TCP\"}],\"to\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"kube-system\"}},\"podSelector\":{\"matchLabels\":{\"k8s-app\":\"kube-dns\"}}}]}],\"ingress\":[{\"from\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"api\"}}},{\"podSelector\":{\"matchLabels\":{\"app\":\"indexer\"}}}],\"ports\":[{\"port\":8000}]}],\"podSelector\":{\"matchLabels\":{\"app\":\"chroma\"}},\"policyTypes\":[\"Ingress\",\"Egress\"]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "allow-chroma",
+        "namespace": "rahbar",
+        "resourceVersion": "1178",
+        "uid": "0cd46a89-444f-45f4-bbc9-0d54a17ed884"
+      },
+      "spec": {
+        "egress": [
+          {
+            "ports": [
+              {
+                "port": 53,
+                "protocol": "UDP"
+              },
+              {
+                "port": 53,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "kube-system"
+                  }
+                },
+                "podSelector": {
+                  "matchLabels": {
+                    "k8s-app": "kube-dns"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "ingress": [
+          {
+            "from": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "api"
+                  }
+                }
+              },
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "indexer"
+                  }
+                }
+              }
+            ],
+            "ports": [
+              {
+                "port": 8000,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ],
+        "podSelector": {
+          "matchLabels": {
+            "app": "chroma"
+          }
+        },
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"NetworkPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"allow-indexer\",\"namespace\":\"rahbar\"},\"spec\":{\"egress\":[{\"ports\":[{\"port\":53,\"protocol\":\"UDP\"},{\"port\":53,\"protocol\":\"TCP\"}],\"to\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"kube-system\"}},\"podSelector\":{\"matchLabels\":{\"k8s-app\":\"kube-dns\"}}}]},{\"ports\":[{\"port\":8000}],\"to\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"chroma\"}}}]},{\"ports\":[{\"port\":11434,\"protocol\":\"TCP\"}],\"to\":[{\"ipBlock\":{\"cidr\":\"172.18.0.3/32\"}}]}],\"ingress\":[],\"podSelector\":{\"matchLabels\":{\"app\":\"indexer\"}},\"policyTypes\":[\"Ingress\",\"Egress\"]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 2,
+        "name": "allow-indexer",
+        "namespace": "rahbar",
+        "resourceVersion": "1922",
+        "uid": "f18b5c42-00e9-4bd1-9bbd-e40143c56aaf"
+      },
+      "spec": {
+        "egress": [
+          {
+            "ports": [
+              {
+                "port": 53,
+                "protocol": "UDP"
+              },
+              {
+                "port": 53,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "kube-system"
+                  }
+                },
+                "podSelector": {
+                  "matchLabels": {
+                    "k8s-app": "kube-dns"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "ports": [
+              {
+                "port": 8000,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "chroma"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "ports": [
+              {
+                "port": 11434,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "ipBlock": {
+                  "cidr": "172.18.0.3/32"
+                }
+              }
+            ]
+          }
+        ],
+        "podSelector": {
+          "matchLabels": {
+            "app": "indexer"
+          }
+        },
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"NetworkPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"allow-redis\",\"namespace\":\"rahbar\"},\"spec\":{\"egress\":[{\"ports\":[{\"port\":53,\"protocol\":\"UDP\"},{\"port\":53,\"protocol\":\"TCP\"}],\"to\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"kube-system\"}},\"podSelector\":{\"matchLabels\":{\"k8s-app\":\"kube-dns\"}}}]}],\"ingress\":[{\"from\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"api\"}}}],\"ports\":[{\"port\":6379}]}],\"podSelector\":{\"matchLabels\":{\"app\":\"redis\"}},\"policyTypes\":[\"Ingress\",\"Egress\"]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "allow-redis",
+        "namespace": "rahbar",
+        "resourceVersion": "1180",
+        "uid": "a0d56bc7-3505-4698-9a1b-7b47d6d91d49"
+      },
+      "spec": {
+        "egress": [
+          {
+            "ports": [
+              {
+                "port": 53,
+                "protocol": "UDP"
+              },
+              {
+                "port": 53,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "kube-system"
+                  }
+                },
+                "podSelector": {
+                  "matchLabels": {
+                    "k8s-app": "kube-dns"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "ingress": [
+          {
+            "from": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "api"
+                  }
+                }
+              }
+            ],
+            "ports": [
+              {
+                "port": 6379,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ],
+        "podSelector": {
+          "matchLabels": {
+            "app": "redis"
+          }
+        },
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"NetworkPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"allow-ui\",\"namespace\":\"rahbar\"},\"spec\":{\"egress\":[{\"ports\":[{\"port\":53,\"protocol\":\"UDP\"},{\"port\":53,\"protocol\":\"TCP\"}],\"to\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"kube-system\"}},\"podSelector\":{\"matchLabels\":{\"k8s-app\":\"kube-dns\"}}}]},{\"ports\":[{\"port\":8000}],\"to\":[{\"podSelector\":{\"matchLabels\":{\"app\":\"api\"}}}]}],\"ingress\":[{\"from\":[{\"namespaceSelector\":{\"matchLabels\":{\"kubernetes.io/metadata.name\":\"ingress-nginx\"}}}],\"ports\":[{\"port\":8080}]}],\"podSelector\":{\"matchLabels\":{\"app\":\"ui\"}},\"policyTypes\":[\"Ingress\",\"Egress\"]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "allow-ui",
+        "namespace": "rahbar",
+        "resourceVersion": "1181",
+        "uid": "5ae80440-1cdd-4fd5-98f6-f05ba2e9d177"
+      },
+      "spec": {
+        "egress": [
+          {
+            "ports": [
+              {
+                "port": 53,
+                "protocol": "UDP"
+              },
+              {
+                "port": 53,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "kube-system"
+                  }
+                },
+                "podSelector": {
+                  "matchLabels": {
+                    "k8s-app": "kube-dns"
+                  }
+                }
+              }
+            ]
+          },
+          {
+            "ports": [
+              {
+                "port": 8000,
+                "protocol": "TCP"
+              }
+            ],
+            "to": [
+              {
+                "podSelector": {
+                  "matchLabels": {
+                    "app": "api"
+                  }
+                }
+              }
+            ]
+          }
+        ],
+        "ingress": [
+          {
+            "from": [
+              {
+                "namespaceSelector": {
+                  "matchLabels": {
+                    "kubernetes.io/metadata.name": "ingress-nginx"
+                  }
+                }
+              }
+            ],
+            "ports": [
+              {
+                "port": 8080,
+                "protocol": "TCP"
+              }
+            ]
+          }
+        ],
+        "podSelector": {
+          "matchLabels": {
+            "app": "ui"
+          }
+        },
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "NetworkPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"NetworkPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"default-deny\",\"namespace\":\"rahbar\"},\"spec\":{\"podSelector\":{},\"policyTypes\":[\"Ingress\",\"Egress\"]}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "default-deny",
+        "namespace": "rahbar",
+        "resourceVersion": "1182",
+        "uid": "cb19e92a-0037-445f-a983-66ce840dc3bb"
+      },
+      "spec": {
+        "podSelector": {},
+        "policyTypes": [
+          "Ingress",
+          "Egress"
+        ]
+      }
+    },
+    {
+      "apiVersion": "autoscaling/v2",
+      "kind": "HorizontalPodAutoscaler",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"autoscaling/v2\",\"kind\":\"HorizontalPodAutoscaler\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"maxReplicas\":8,\"metrics\":[{\"resource\":{\"name\":\"cpu\",\"target\":{\"averageUtilization\":70,\"type\":\"Utilization\"}},\"type\":\"Resource\"}],\"minReplicas\":3,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"api\"}}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:25:25Z",
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "4447",
+        "uid": "ee17ef83-5c8a-49bc-b6f1-e3c531d0b0b9"
+      },
+      "spec": {
+        "maxReplicas": 8,
+        "metrics": [
+          {
+            "resource": {
+              "name": "cpu",
+              "target": {
+                "averageUtilization": 70,
+                "type": "Utilization"
+              }
+            },
+            "type": "Resource"
+          }
+        ],
+        "minReplicas": 3,
+        "scaleTargetRef": {
+          "apiVersion": "apps/v1",
+          "kind": "Deployment",
+          "name": "api"
+        }
+      },
+      "status": {
+        "conditions": [
+          {
+            "lastTransitionTime": "2026-11-06T21:25:40Z",
+            "message": "recommended size matches current size",
+            "reason": "ReadyForNewScale",
+            "status": "True",
+            "type": "AbleToScale"
+          },
+          {
+            "lastTransitionTime": "2026-11-06T21:25:55Z",
+            "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+            "reason": "ValidMetricFound",
+            "status": "True",
+            "type": "ScalingActive"
+          },
+          {
+            "lastTransitionTime": "2026-11-06T21:30:40Z",
+            "message": "the desired replica count is less than the minimum replica count",
+            "reason": "TooFewReplicas",
+            "status": "True",
+            "type": "ScalingLimited"
+          }
+        ],
+        "currentMetrics": [
+          {
+            "resource": {
+              "current": {
+                "averageUtilization": 1,
+                "averageValue": "3m"
+              },
+              "name": "cpu"
+            },
+            "type": "Resource"
+          }
+        ],
+        "currentReplicas": 3,
+        "desiredReplicas": 3
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "3240",
+        "uid": "a79cd00e-210a-43f6-b099-796664332103"
+      },
+      "subsets": [
+        {
+          "addresses": [
+            {
+              "ip": "192.168.167.147",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-545995f76c-wmjll",
+                "namespace": "rahbar",
+                "uid": "eb146f18-fccc-41dd-a3e2-17555873e1de"
+              }
+            },
+            {
+              "ip": "192.168.167.148",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-545995f76c-k5ht8",
+                "namespace": "rahbar",
+                "uid": "2eb5fe15-1cdb-4273-8f60-1c2272260391"
+              }
+            },
+            {
+              "ip": "192.168.167.153",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-545995f76c-mlhjj",
+                "namespace": "rahbar",
+                "uid": "399c1439-076c-4618-8ba2-6577ed8e904d"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 8000,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "annotations": {
+          "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-06T21:36:22Z"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "chroma",
+        "namespace": "rahbar",
+        "resourceVersion": "3114",
+        "uid": "32ad7849-914b-445f-9f8b-f44d2545c3cf"
+      },
+      "subsets": [
+        {
+          "addresses": [
+            {
+              "hostname": "chroma-0",
+              "ip": "192.168.167.151",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "chroma-0",
+                "namespace": "rahbar",
+                "uid": "6d134c7b-051c-4e3e-8c61-c69f4b19c8ab"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 8000,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "annotations": {
+          "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-06T21:36:26Z"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "redis",
+        "namespace": "rahbar",
+        "resourceVersion": "3155",
+        "uid": "d1250ea6-e07b-42d0-b831-4bb2d5b81c98"
+      },
+      "subsets": [
+        {
+          "addresses": [
+            {
+              "ip": "192.168.167.152",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "redis-9c8f6cd5d-hh7t2",
+                "namespace": "rahbar",
+                "uid": "a112b394-c122-4571-898b-66814fd496a5"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 6379,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "ui",
+        "namespace": "rahbar",
+        "resourceVersion": "3359",
+        "uid": "36a61c37-b47d-4ad7-8f4c-d9f9dda6a1f1"
+      },
+      "subsets": [
+        {
+          "addresses": [
+            {
+              "ip": "192.168.167.156",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "ui-6f66455c7f-gj2jp",
+                "namespace": "rahbar",
+                "uid": "86f53956-1c7c-4b98-abff-ab37534249c1"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 8080,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "apiVersion": "v1",
+      "automountServiceAccountToken": false,
+      "kind": "ServiceAccount",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"automountServiceAccountToken\":false,\"kind\":\"ServiceAccount\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "1119",
+        "uid": "209c9f20-7a52-48d5-a182-6770a9427456"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "automountServiceAccountToken": false,
+      "kind": "ServiceAccount",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"automountServiceAccountToken\":false,\"kind\":\"ServiceAccount\",\"metadata\":{\"annotations\":{},\"name\":\"chroma\",\"namespace\":\"rahbar\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "chroma",
+        "namespace": "rahbar",
+        "resourceVersion": "1120",
+        "uid": "cffeb82e-7120-449a-bcd7-7fc6ec386514"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "kind": "ServiceAccount",
+      "metadata": {
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "default",
+        "namespace": "rahbar",
+        "resourceVersion": "1117",
+        "uid": "da41f8a9-58ed-4f74-9a0f-46efa8d2df1f"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "automountServiceAccountToken": false,
+      "kind": "ServiceAccount",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"automountServiceAccountToken\":false,\"kind\":\"ServiceAccount\",\"metadata\":{\"annotations\":{},\"name\":\"indexer\",\"namespace\":\"rahbar\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "indexer",
+        "namespace": "rahbar",
+        "resourceVersion": "1121",
+        "uid": "8ed651cb-2731-4306-bb36-647bdcc5e1f8"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "automountServiceAccountToken": false,
+      "kind": "ServiceAccount",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"automountServiceAccountToken\":false,\"kind\":\"ServiceAccount\",\"metadata\":{\"annotations\":{},\"name\":\"redis\",\"namespace\":\"rahbar\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "redis",
+        "namespace": "rahbar",
+        "resourceVersion": "1122",
+        "uid": "b297cefc-818e-43c7-b609-00f39ba6ea17"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "automountServiceAccountToken": false,
+      "kind": "ServiceAccount",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"automountServiceAccountToken\":false,\"kind\":\"ServiceAccount\",\"metadata\":{\"annotations\":{},\"name\":\"ui\",\"namespace\":\"rahbar\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "ui",
+        "namespace": "rahbar",
+        "resourceVersion": "1123",
+        "uid": "8689aba0-6806-4bfd-841b-2bac624d2757"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "data": {
+        "ca.crt": "-----BEGIN CERTIFICATE-----\nMIIDBTCCAe2gAwIBAgIIOVv1UCQwNY8wDQYJKoZIhvcNAQELBQAwFTETMBEGA1UE\nAxMKa3ViZXJuZXRlczAeFw0yNjExMDYyMTEwNDZaFw0zNjExMDMyMTE1NDZaMBUx\nEzARBgNVBAMTCmt1YmVybmV0ZXMwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEK\nAoIBAQDugvjiIkaMEUgH29X0gKMmyRNhAdd5Be7P8MfTreBVGozYO9WGMysVOlfx\nLTH8VdsVQma1cMCl9DM5BxlptXsKgrsNRSwsFws2RY+Am05e9TSOmAJTxCmEfUW4\nXL0FuJCgAvSLVcHDJDVRc+td2+0y/Kf9pEeAUGjen700kKCP2BFcNMZEFhxlspY0\nuNqPdsgVWO6DljZy1WJJblrhzf1AGh5SE16nPs9334nb7ZI91i++c/gGBxNtdZQC\nm7EUssaxLd5bwGmDaMm1HxXYng5XDjwbdyT3yBcDRp+BIux9qqghk0bVY3JZjMv1\niGsrv+drsmiJ6t7Xp/1zYE/BnOaxAgMBAAGjWTBXMA4GA1UdDwEB/wQEAwICpDAP\nBgNVHRMBAf8EBTADAQH/MB0GA1UdDgQWBBT/LslDiRW4ADUFIP2XBXa0BkJLlzAV\nBgNVHREEDjAMggprdWJlcm5ldGVzMA0GCSqGSIb3DQEBCwUAA4IBAQCzD3u5Ghyw\n50gNAm2w0kddVQON6BRo9odvDn/pIkNcY0hBPayUdO7OjPcK0FLWlaCSyRt6Iwsj\n/WkgM7gB/64YyIhBZaVhU4B8IojHbpJ9y8oAyIgTibBBfHsrxWDX9RYyXyt3+55k\nI3ukUpebl4cN9212NqE93ADSOQW5TPL2QvMhfgNwEkNO6PAGljmxHqwoAZRcaO9J\ncGjddJwF8zhp5DR8AyHzqFlAZES9ZOJuXe82lomjOzZnAgWmxRxZo6/bYcAKHhH8\nI0UW+ikmg4OvlRfV+TCI0FHtbmKRodLLfiMeZicEUJorvHLqgLCp/O/uh/S69Cga\nccn175Cpv+13\n-----END CERTIFICATE-----\n"
+      },
+      "kind": "ConfigMap",
+      "metadata": {
+        "annotations": {
+          "kubernetes.io/description": "Contains a CA bundle that can be used to verify the kube-apiserver when using internal endpoints such as the internal service IP or kubernetes.default.svc. No other usage is guaranteed across distributions of Kubernetes clusters."
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "kube-root-ca.crt",
+        "namespace": "rahbar",
+        "resourceVersion": "1118",
+        "uid": "541d2635-d3e4-45c5-a9cd-8be50f56bc9a"
+      }
+    },
+    {
+      "apiVersion": "v1",
+      "data": {
+        "ANONYMIZED_TELEMETRY": "False",
+        "CACHE_ENABLED": "true",
+        "CACHE_MAX_ENTRIES": "500",
+        "CACHE_THRESHOLD": "0.75",
+        "CACHE_TTL": "86400",
+        "CHROMA_COLLECTION": "rahbar",
+        "CHROMA_HOST": "chroma",
+        "CHROMA_PORT": "8000",
+        "CHUNK_OVERLAP": "100",
+        "CHUNK_SIZE": "700",
+        "CORPUS_DIR": "/corpus",
+        "EMBED_BATCH_SIZE": "16",
+        "EMBED_MODEL": "nomic-embed-text",
+        "INDEX_LOCK_PATH": "/locks/index.lock",
+        "LLM_MODEL": "llama3.2:3b",
+        "LLM_PROVIDER": "ollama-host",
+        "LLM_TIMEOUT": "110",
+        "MAX_HISTORY_TURNS": "3",
+        "OLLAMA_URL": "http://172.18.0.3:11434",
+        "REDIS_HOST": "redis",
+        "REDIS_PORT": "6379",
+        "RELEVANCE_FLOOR": "0.45",
+        "RETRIEVER": "chroma",
+        "TEMPERATURE": "0.2",
+        "TOP_K": "5"
+      },
+      "kind": "ConfigMap",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"v1\",\"data\":{\"ANONYMIZED_TELEMETRY\":\"False\",\"CACHE_ENABLED\":\"true\",\"CACHE_MAX_ENTRIES\":\"500\",\"CACHE_THRESHOLD\":\"0.75\",\"CACHE_TTL\":\"86400\",\"CHROMA_COLLECTION\":\"rahbar\",\"CHROMA_HOST\":\"chroma\",\"CHROMA_PORT\":\"8000\",\"CHUNK_OVERLAP\":\"100\",\"CHUNK_SIZE\":\"700\",\"CORPUS_DIR\":\"/corpus\",\"EMBED_BATCH_SIZE\":\"16\",\"EMBED_MODEL\":\"nomic-embed-text\",\"INDEX_LOCK_PATH\":\"/locks/index.lock\",\"LLM_MODEL\":\"llama3.2:3b\",\"LLM_PROVIDER\":\"ollama-host\",\"LLM_TIMEOUT\":\"110\",\"MAX_HISTORY_TURNS\":\"3\",\"OLLAMA_URL\":\"http://172.18.0.3:11434\",\"REDIS_HOST\":\"redis\",\"REDIS_PORT\":\"6379\",\"RELEVANCE_FLOOR\":\"0.45\",\"RETRIEVER\":\"chroma\",\"TEMPERATURE\":\"0.2\",\"TOP_K\":\"5\"},\"kind\":\"ConfigMap\",\"metadata\":{\"annotations\":{},\"name\":\"rahbar-config\",\"namespace\":\"rahbar\"}}\n"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "name": "rahbar-config",
+        "namespace": "rahbar",
+        "resourceVersion": "3231",
+        "uid": "323424f9-04a9-41ea-8d86-9338d62dc92e"
+      }
+    },
+    {
+      "apiVersion": "networking.k8s.io/v1",
+      "kind": "Ingress",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"networking.k8s.io/v1\",\"kind\":\"Ingress\",\"metadata\":{\"annotations\":{\"nginx.ingress.kubernetes.io/proxy-connect-timeout\":\"5\",\"nginx.ingress.kubernetes.io/proxy-read-timeout\":\"240\",\"nginx.ingress.kubernetes.io/proxy-send-timeout\":\"240\"},\"name\":\"rahbar\",\"namespace\":\"rahbar\"},\"spec\":{\"ingressClassName\":\"nginx\",\"rules\":[{\"host\":\"rahbar.local\",\"http\":{\"paths\":[{\"backend\":{\"service\":{\"name\":\"api\",\"port\":{\"number\":8000}}},\"path\":\"/api\",\"pathType\":\"Prefix\"},{\"backend\":{\"service\":{\"name\":\"ui\",\"port\":{\"number\":8080}}},\"path\":\"/\",\"pathType\":\"Prefix\"}]}}]}}\n",
+          "nginx.ingress.kubernetes.io/proxy-connect-timeout": "5",
+          "nginx.ingress.kubernetes.io/proxy-read-timeout": "240",
+          "nginx.ingress.kubernetes.io/proxy-send-timeout": "240"
+        },
+        "creationTimestamp": "2026-11-06T21:19:42Z",
+        "generation": 1,
+        "name": "rahbar",
+        "namespace": "rahbar",
+        "resourceVersion": "1341",
+        "uid": "bf6a744a-f920-4264-bc11-4a428a377653"
+      },
+      "spec": {
+        "ingressClassName": "nginx",
+        "rules": [
+          {
+            "host": "rahbar.local",
+            "http": {
+              "paths": [
+                {
+                  "backend": {
+                    "service": {
+                      "name": "api",
+                      "port": {
+                        "number": 8000
+                      }
+                    }
+                  },
+                  "path": "/api",
+                  "pathType": "Prefix"
+                },
+                {
+                  "backend": {
+                    "service": {
+                      "name": "ui",
+                      "port": {
+                        "number": 8080
+                      }
+                    }
+                  },
+                  "path": "/",
+                  "pathType": "Prefix"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "status": {
+        "loadBalancer": {
+          "ingress": [
+            {
+              "hostname": "localhost"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "kind": "List",
+  "metadata": {
+    "resourceVersion": ""
+  }
+}

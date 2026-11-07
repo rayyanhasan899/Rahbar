@@ -10,6 +10,7 @@ from ..schemas import Passage
 class Retriever(Protocol):
     name: str
 
-    def retrieve(self, question: str, k: int) -> list[Passage]:
-        """Return up to k passages, best first."""
+    def retrieve(self, question: str, k: int, vector: list[float] | None = None) -> list[Passage]:
+        """Return up to k passages, best first. `vector` is the question's embedding
+        when the caller already has it (the semantic cache computes it first)."""
         ...

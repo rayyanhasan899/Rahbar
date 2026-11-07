@@ -27,8 +27,15 @@ def writer_lock(path: str):
     lock_path = Path(path)
     lock_path.parent.mkdir(parents=True, exist_ok=True)
     with lock_path.open("a") as lock:
+        log("writer waiting", lock=str(lock_path))
+        waiting = time.monotonic()
         fcntl.flock(lock, fcntl.LOCK_EX)
-        yield
+        log("writer acquired", lock=str(lock_path), wait_seconds=round(time.monotonic() - waiting, 3))
+        try:
+            yield
+        finally:
+            fcntl.flock(lock, fcntl.LOCK_UN)
+            log("writer released", lock=str(lock_path))
 
 
 def log(msg: str, **fields: object) -> None:
@@ -37,6 +44,7 @@ def log(msg: str, **fields: object) -> None:
             {
                 "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                 "logger": "rahbar.indexer",
+                "request_id": "-",
                 "msg": msg,
                 **fields,
             }
@@ -69,6 +77,10 @@ def discover(corpus_dir: str) -> list[tuple[Path, str, bool]]:
     index = root / "_index.json"
     if index.exists():
         entries = json.loads(index.read_text(encoding="utf-8"))
+        for entry in entries:
+            path = (root / entry["file"]).resolve()
+            if path.name != entry["file"] or not path.is_relative_to(root.resolve()):
+                raise ValueError("corpus manifest path escapes its directory")
         return [
             (
                 root / e["file"],

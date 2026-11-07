@@ -6,7 +6,7 @@ spec:
   schedule: 0 2 * * 0
   timeZone: Asia/Karachi
   concurrencyPolicy: Forbid
-  suspend: true
+  suspend: false
   jobTemplate:
     spec:
       backoffLimit: 2
@@ -47,8 +47,10 @@ spec:
               mountPath: /tmp
             - name: indexer-lock
               mountPath: /locks
-            args:
-            - --dummy
+            - name: corpus
+              mountPath: /corpus
+              readOnly: true
+            args: []
             command:
             - python
             - -m
@@ -62,6 +64,9 @@ spec:
           - name: indexer-lock
             persistentVolumeClaim:
               claimName: indexer-lock
+          - name: corpus
+            persistentVolumeClaim:
+              claimName: corpus-data
           restartPolicy: OnFailure
           initContainers:
           - name: wait-chroma

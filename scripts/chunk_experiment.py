@@ -27,6 +27,7 @@ from pipeline.embed import embed  # noqa: E402
 from pipeline.models import Document, Page  # noqa: E402
 from pipeline.store import store  # noqa: E402
 from run_eval import recall_at_k  # noqa: E402
+from app.retrieval.chroma import version_filter  # noqa: E402
 
 
 def main() -> None:
@@ -127,8 +128,9 @@ def main() -> None:
             collection = client.get_collection(meta["active_collection"])
             rows = []
             for q, vector in zip(golden, query_vectors):
-                version = "2023-08" if "2023" in q["question"] else None
-                where = {"doc_version": version} if version else {"superseded": False}
+                where = version_filter(q["question"], str(meta.get("versions", "")))
+                if where is None:
+                    raise ValueError("golden requests a version absent from the experiment")
                 hits = collection.query(
                     query_embeddings=[vector],
                     n_results=5,

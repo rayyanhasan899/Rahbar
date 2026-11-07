@@ -55,6 +55,7 @@
            border: 0; border-radius: 10px; cursor: pointer; }
   button:disabled { opacity: 0.5; cursor: progress; }
   .hint { max-width: 760px; margin: 6px auto 0; font-size: 12px; color: var(--muted); }
+  .hint label { margin-right: 12px; cursor: pointer; }
 </style>
 </head>
 <body>
@@ -71,7 +72,7 @@
     <textarea id="question" aria-label="Your question" placeholder="Ask about the documents, e.g. What CGPA puts a student on academic warning?" maxlength="500" required></textarea>
     <button id="send" type="submit">Ask</button>
   </div>
-  <div class="hint">Enter to send, Shift+Enter for a new line. 3 to 500 characters.</div>
+  <div class="hint"><label><input type="checkbox" id="followup"> Follow-up to the previous answer</label>Enter to send, Shift+Enter for a new line. 3 to 500 characters.</div>
 </form>
 
 <script>
@@ -83,6 +84,8 @@ const thread = document.getElementById("thread");
 const form = document.getElementById("ask");
 const input = document.getElementById("question");
 const send = document.getElementById("send");
+const followup = document.getElementById("followup");
+const turns = [];  // earlier exchanges, sent only when the follow-up box is ticked
 
 // Model output and retrieved text are untrusted. Everything below is built with
 // textContent and createElement, never innerHTML, so a document or an answer
@@ -169,7 +172,7 @@ async function ask(question) {
     const res = await fetch(`${API_BASE}/api/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify(followup.checked ? { question, history: turns.slice(-3) } : { question }),
     });
     let body = null;
     try { body = await res.json(); } catch { /* non-JSON error page */ }
@@ -178,6 +181,7 @@ async function ask(question) {
       thread.append(el("div", { class: "err" }, errorMessage(res.status, body)));
     } else {
       thread.append(renderAnswer(body, res.headers.get("X-Cache")));
+      turns.push({ question, answer: String(body.answer ?? "").slice(0, 4000) });
     }
   } catch (err) {
     pending.remove();

@@ -1,0 +1,69 @@
+namespace/rahbar unchanged
+serviceaccount/api unchanged
+serviceaccount/chroma unchanged
+serviceaccount/indexer unchanged
+serviceaccount/redis unchanged
+serviceaccount/ui unchanged
+configmap/rahbar-config configured
+service/api unchanged
+service/chroma unchanged
+service/redis unchanged
+service/ui unchanged
+persistentvolumeclaim/corpus-data unchanged
+persistentvolumeclaim/indexer-lock unchanged
+persistentvolumeclaim/redis-data unchanged
+deployment.apps/redis unchanged
+statefulset.apps/chroma configured
+ingress.networking.k8s.io/rahbar configured
+networkpolicy.networking.k8s.io/allow-api configured
+networkpolicy.networking.k8s.io/allow-chroma configured
+networkpolicy.networking.k8s.io/allow-indexer configured
+networkpolicy.networking.k8s.io/allow-redis configured
+networkpolicy.networking.k8s.io/allow-ui configured
+networkpolicy.networking.k8s.io/default-deny unchanged
+partitioned roll out complete: 1 new pods have been updated...
+deployment "redis" successfully rolled out
+pod/corpus-transfer created
+pod/corpus-transfer condition met
+all PVC source hashes verified
+pod "corpus-transfer" deleted from rahbar namespace
+job.batch/indexer-54f37ff-1794016688 created
+job.batch/indexer-54f37ff-1794016688 condition met
+namespace/rahbar unchanged
+serviceaccount/api unchanged
+serviceaccount/chroma unchanged
+serviceaccount/indexer unchanged
+serviceaccount/redis unchanged
+serviceaccount/ui unchanged
+configmap/rahbar-config unchanged
+service/api unchanged
+service/chroma unchanged
+service/redis unchanged
+service/ui unchanged
+persistentvolumeclaim/corpus-data unchanged
+persistentvolumeclaim/indexer-lock unchanged
+persistentvolumeclaim/redis-data unchanged
+deployment.apps/api configured
+deployment.apps/redis unchanged
+deployment.apps/ui configured
+statefulset.apps/chroma configured
+cronjob.batch/reindex configured
+horizontalpodautoscaler.autoscaling/api unchanged
+ingress.networking.k8s.io/rahbar unchanged
+networkpolicy.networking.k8s.io/allow-api configured
+networkpolicy.networking.k8s.io/allow-chroma configured
+networkpolicy.networking.k8s.io/allow-indexer configured
+networkpolicy.networking.k8s.io/allow-redis configured
+networkpolicy.networking.k8s.io/allow-ui configured
+networkpolicy.networking.k8s.io/default-deny unchanged
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 2 out of 3 new replicas have been updated...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "api" rollout to finish: 1 old replicas are pending termination...
+deployment "api" successfully rolled out
+deployment "ui" successfully rolled out
+Published by indexer-54f37ff-1794016688; API reads it without ingesting at startup.

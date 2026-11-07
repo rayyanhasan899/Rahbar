@@ -47,6 +47,9 @@ spec:
         envFrom:
         - configMapRef:
             name: rahbar-config
+        - secretRef:
+            name: rahbar-secret
+            optional: true
         startupProbe:
           httpGet:
             path: /healthz

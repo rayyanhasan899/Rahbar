@@ -1,0 +1,146 @@
+[
+  {
+    "pod": "acceptance-reindex-clxbf",
+    "service_account": "indexer",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "indexer",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      },
+      {
+        "name": "wait-chroma",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "api-7574b8ddbb-5xgrv",
+    "service_account": "api",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "api",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "api-7574b8ddbb-nfsh5",
+    "service_account": "api",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "api",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "api-7574b8ddbb-z9fpn",
+    "service_account": "api",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "api",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "chroma-0",
+    "service_account": "chroma",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "chroma",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "indexer-pc8hv",
+    "service_account": "indexer",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "indexer",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      },
+      {
+        "name": "wait-chroma",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "manual-lock-probe-f8hq7",
+    "service_account": "indexer",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "indexer",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      },
+      {
+        "name": "wait-chroma",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "redis-9c8f6cd5d-tdwlz",
+    "service_account": "redis",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "redis",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  },
+  {
+    "pod": "ui-6fc4877b88-m4bt8",
+    "service_account": "ui",
+    "token_disabled": true,
+    "nonroot": true,
+    "containers": [
+      {
+        "name": "ui",
+        "readonly": true,
+        "drop_all": true,
+        "resources": true
+      }
+    ]
+  }
+]

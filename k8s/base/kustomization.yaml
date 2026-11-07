@@ -24,3 +24,4 @@ resources:
 - reindex-cronjob.yaml
 - hpa.yaml
 - networkpolicy.yaml
+- corpus-data.yaml

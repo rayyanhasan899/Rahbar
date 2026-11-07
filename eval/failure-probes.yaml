@@ -1,0 +1,10 @@
+# Additional source-derived diagnostic, separate from the unchanged golden gate.
+# Academic Rules June 2026, physical p20, clauses 4.7 and 4.8: opposite Theory/Lab
+# outcomes require different repeat decisions. Both clauses are needed to answer.
+questions:
+  - id: diagnostic-theory-lab-both
+    type: diagnostic-multiple-clauses
+    question: "If I fail Theory but pass Lab, versus pass Theory but fail Lab, what must I repeat in each case?"
+    relevant:
+      - {source: academic-rules-handbook-jun-2026.pdf, section: '4.7'}
+      - {source: academic-rules-handbook-jun-2026.pdf, section: '4.8'}

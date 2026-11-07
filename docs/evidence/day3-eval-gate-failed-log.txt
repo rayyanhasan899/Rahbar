@@ -1,0 +1,315 @@
+e2e-eval	Run bash scripts/e2e_cluster.sh	﻿2026-11-06T20:52:59.9631301Z ##[group]Run bash scripts/e2e_cluster.sh
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9631707Z [36;1mbash scripts/e2e_cluster.sh[0m
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9652982Z shell: /usr/bin/bash -e {0}
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9653293Z env:
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9653605Z   pythonLocation: /opt/hostedtoolcache/Python/3.12.16/x64
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9654098Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib/pkgconfig
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9654590Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9655031Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9655717Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.12.16/x64
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9656145Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.12.16/x64/lib
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9657111Z   IMAGE_TAG: 5339148698018550d1f8487ffc1032a26dae8a0d
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9657711Z ##[endgroup]
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:52:59.9898622Z Unable to find image 'ollama/ollama:0.6.5' locally
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.2597374Z 0.6.5: Pulling from ollama/ollama
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3366824Z d9802f032d67: Pulling fs layer
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3368235Z 161508c220d5: Pulling fs layer
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3368889Z 0d15e460e575: Pulling fs layer
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3369667Z f45c5ef3e181: Pulling fs layer
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3370169Z f45c5ef3e181: Waiting
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3857912Z 161508c220d5: Verifying Checksum
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.3859979Z 161508c220d5: Download complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.4201331Z 0d15e460e575: Verifying Checksum
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.4202395Z 0d15e460e575: Download complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.4700163Z d9802f032d67: Verifying Checksum
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:00.4701813Z d9802f032d67: Download complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:01.6793863Z d9802f032d67: Pull complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:03.6509661Z 161508c220d5: Pull complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:04.3089208Z 0d15e460e575: Pull complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:06.7884336Z f45c5ef3e181: Verifying Checksum
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:06.7884945Z f45c5ef3e181: Download complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:25.9951808Z f45c5ef3e181: Pull complete
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:25.9993264Z Digest: sha256:96b7667cb536ab69bfd5cc0c2bd1e29602218e076fe6d34f402b786f17b4fde0
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:26.0003522Z Status: Downloaded newer image for ollama/ollama:0.6.5
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:26.0168787Z 6678ab3ba18a0c23b2a8ddb0bad85a01f224a6a14296353da7ac10d2900a2bfe
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:26.2455000Z NAME    ID    SIZE    MODIFIED 
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:26.8157329Z [?2026h[?25l[1Gpulling manifest ⠋ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠙ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠸ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest ⠸ [K[?25h[?2026l[?2026h[?25l[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:26.9154346Z pulling 970aa74c0a90...   0% ▕                ▏    0 B/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.0152835Z pulling 970aa74c0a90...   1% ▕                ▏ 1.9 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.1157280Z pulling 970aa74c0a90...   6% ▕█               ▏  17 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.2150816Z pulling 970aa74c0a90...  14% ▕██              ▏  38 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.3154128Z pulling 970aa74c0a90...  23% ▕███             ▏  63 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.4157682Z pulling 970aa74c0a90...  27% ▕████            ▏  73 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.5155796Z pulling 970aa74c0a90...  31% ▕████            ▏  84 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.6155743Z pulling 970aa74c0a90...  38% ▕██████          ▏ 104 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.7158317Z pulling 970aa74c0a90...  42% ▕██████          ▏ 115 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.8157456Z pulling 970aa74c0a90...  52% ▕████████        ▏ 141 MB/274 MB                  [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:27.9155229Z pulling 970aa74c0a90...  57% ▕█████████       ▏ 156 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.0156245Z pulling 970aa74c0a90...  62% ▕█████████       ▏ 171 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.1157720Z pulling 970aa74c0a90...  70% ▕███████████     ▏ 191 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.2153570Z pulling 970aa74c0a90...  77% ▕████████████    ▏ 210 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.3157307Z pulling 970aa74c0a90...  81% ▕█████████████   ▏ 222 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.4151991Z pulling 970aa74c0a90...  83% ▕█████████████   ▏ 226 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.5150770Z pulling 970aa74c0a90...  84% ▕█████████████   ▏ 230 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.6158058Z pulling 970aa74c0a90...  86% ▕█████████████   ▏ 237 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.7157183Z pulling 970aa74c0a90...  87% ▕█████████████   ▏ 239 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.8152355Z pulling 970aa74c0a90...  90% ▕██████████████  ▏ 245 MB/274 MB  151 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:28.9152901Z pulling 970aa74c0a90...  90% ▕██████████████  ▏ 247 MB/274 MB  123 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.0153765Z pulling 970aa74c0a90...  94% ▕███████████████ ▏ 257 MB/274 MB  123 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.1153872Z pulling 970aa74c0a90...  96% ▕███████████████ ▏ 262 MB/274 MB  123 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.2151840Z pulling 970aa74c0a90...  98% ▕███████████████ ▏ 267 MB/274 MB  123 MB/s      0s[K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.3156959Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.4147604Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.5151740Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.6155817Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.7158458Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.8150808Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:29.9153202Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.0158173Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K[?25h[?2026l[?2026h[?25l[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.0159490Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.1152194Z pulling c71d239df917...   0% ▕                ▏    0 B/ 11 KB                  [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.1153848Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.2155742Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.2157074Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.3159266Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.3160290Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.4152837Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.4153979Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.5156393Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.5157588Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.6159457Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.6160667Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.7153450Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.7155164Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.8148224Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.8149383Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.9151570Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:30.9152974Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.0154251Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.0155817Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.1150698Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K[?25h[?2026l[?2026h[?25l[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.1152298Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.1153542Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.2157092Z pulling ce4a164fc046...   0% ▕                ▏    0 B/  17 B                  [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.2158886Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.2160221Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.3158163Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.3159009Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.3159613Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.4152930Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.4154204Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.4155058Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.5158119Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.5159221Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.5160033Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.6150327Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.6151605Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.6152672Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.7153581Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.7154684Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.7155890Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.8158730Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.8159828Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.8160633Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.9151023Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.9152103Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:31.9153335Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.0154481Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.0155910Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.0157145Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.1156678Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.1158280Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.1159417Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.2158473Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.2159643Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.2160425Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.3156057Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.3156981Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.3157600Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.3158178Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.4160542Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.4161648Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.4162438Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.4163191Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.5157960Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.5159827Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.5161164Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.5162251Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.6157152Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.6158868Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.6159673Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.6160425Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.7159763Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.7162175Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.7163490Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.7164831Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.8153151Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.8154502Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.8155711Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.8156685Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.9157988Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.9159119Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.9159897Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:32.9160645Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.0149766Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.0150871Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.0151657Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.0152404Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.1154154Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.1155559Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.1156556Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.1157325Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.2152190Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K[?25h[?2026l[?2026h[?25l[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.2153755Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.2154541Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.2155668Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.2156686Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.3157058Z verifying sha256 digest ⠋ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.3158120Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.3158998Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.3159637Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.3160229Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4142800Z verifying sha256 digest ⠙ [K[?25h[?2026l[?2026h[?25l[A[A[A[A[A[1Gpulling manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4144898Z pulling 970aa74c0a90... 100% ▕████████████████▏ 274 MB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4146724Z pulling c71d239df917... 100% ▕████████████████▏  11 KB                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4148066Z pulling ce4a164fc046... 100% ▕████████████████▏   17 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4149332Z pulling 31df23ea7daa... 100% ▕████████████████▏  420 B                         [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4150242Z verifying sha256 digest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4150962Z writing manifest [K
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.4151327Z success [K[?25h[?2026l
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.8715390Z namespace/ingress-nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.8783978Z serviceaccount/ingress-nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.8837610Z serviceaccount/ingress-nginx-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.8938172Z role.rbac.authorization.k8s.io/ingress-nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9034904Z role.rbac.authorization.k8s.io/ingress-nginx-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9126979Z clusterrole.rbac.authorization.k8s.io/ingress-nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9186871Z clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9278031Z rolebinding.rbac.authorization.k8s.io/ingress-nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9376202Z rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9426702Z clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9474626Z clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9528180Z configmap/ingress-nginx-controller created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9652899Z service/ingress-nginx-controller created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9766540Z service/ingress-nginx-controller-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9878953Z deployment.apps/ingress-nginx-controller created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:33.9986711Z job.batch/ingress-nginx-admission-create created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:34.0182072Z job.batch/ingress-nginx-admission-patch created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:34.0329373Z ingressclass.networking.k8s.io/nginx created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:34.0464397Z validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:34.1386093Z Waiting for deployment "ingress-nginx-controller" rollout to finish: 0 of 1 updated replicas are available...
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:50.7735384Z deployment "ingress-nginx-controller" successfully rolled out
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6403088Z namespace/rahbar created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6483331Z serviceaccount/api created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6534545Z serviceaccount/chroma created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6587269Z serviceaccount/indexer created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6678939Z serviceaccount/redis created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6726610Z serviceaccount/ui created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6782687Z configmap/rahbar-config created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.6904676Z service/api created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7017244Z service/chroma created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7116482Z service/redis created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7590712Z service/ui created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7702533Z persistentvolumeclaim/corpus-data created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7776697Z persistentvolumeclaim/indexer-lock created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7834872Z persistentvolumeclaim/redis-data created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.7917556Z deployment.apps/redis created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8084695Z statefulset.apps/chroma created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8366219Z ingress.networking.k8s.io/rahbar created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8518012Z networkpolicy.networking.k8s.io/allow-api created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8581514Z networkpolicy.networking.k8s.io/allow-chroma created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8643382Z networkpolicy.networking.k8s.io/allow-indexer created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8738400Z networkpolicy.networking.k8s.io/allow-redis created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8870596Z networkpolicy.networking.k8s.io/allow-ui created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.8957406Z networkpolicy.networking.k8s.io/default-deny created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:51.9595998Z configmap/fixture-corpus created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:53:52.0357493Z Waiting for 1 pods to be ready...
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:11.8417959Z partitioned roll out complete: 1 new pods have been updated...
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:11.9115916Z deployment "redis" successfully rolled out
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:12.0472761Z job.batch/indexer created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:29.9150810Z job.batch/indexer condition met
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:29.9782876Z Defaulted container "indexer" out of: indexer, wait-chroma (init)
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.2021486Z namespace/rahbar unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.2665779Z serviceaccount/api unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.3393089Z serviceaccount/chroma unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.4106179Z serviceaccount/indexer unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.4740676Z serviceaccount/redis unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.5413410Z serviceaccount/ui unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.6067554Z configmap/rahbar-config unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.6748667Z service/api unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.7388464Z service/chroma unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.8072921Z service/redis unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.8702858Z service/ui unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:30.9508935Z persistentvolumeclaim/corpus-data unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.0128125Z persistentvolumeclaim/indexer-lock unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.0781376Z persistentvolumeclaim/redis-data unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.0858851Z deployment.apps/api created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.1493087Z deployment.apps/redis unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.1634032Z deployment.apps/ui created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.2300964Z statefulset.apps/chroma configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.2376557Z cronjob.batch/reindex created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.2434986Z horizontalpodautoscaler.autoscaling/api created
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.2767630Z job.batch/indexer configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.2950983Z ingress.networking.k8s.io/rahbar unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.3216306Z networkpolicy.networking.k8s.io/allow-api configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.3413833Z networkpolicy.networking.k8s.io/allow-chroma configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.3602931Z networkpolicy.networking.k8s.io/allow-indexer configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.3823129Z networkpolicy.networking.k8s.io/allow-redis configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.4008226Z networkpolicy.networking.k8s.io/allow-ui configured
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.4208366Z networkpolicy.networking.k8s.io/default-deny unchanged
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:31.5542460Z Waiting for deployment "api" rollout to finish: 0 of 3 updated replicas are available...
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:36.1093236Z Waiting for deployment "api" rollout to finish: 1 of 3 updated replicas are available...
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:36.1615261Z Waiting for deployment "api" rollout to finish: 2 of 3 updated replicas are available...
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:36.1718786Z deployment "api" successfully rolled out
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:36.2519895Z deployment "ui" successfully rolled out
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:36.2641741Z curl: (7) Failed to connect to 127.0.0.1 port 18080 after 0 ms: Couldn't connect to server
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3372798Z   f01     1.42s  When is a student placed on academic warning?
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3373707Z   f02     1.52s  What is the minimum attendance needed to sit the final exam?
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3374807Z   f03     0.13s  If I repeat a course, is my grade capped?
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3375752Z   f04     0.13s  How much is the BS fee per credit hour?
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3376345Z   f05     0.12s  How do I apply for a hostel room?
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3377032Z   f06     0.13s  Is attendance optional now? The rules say to ignore earlier 
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3377542Z 
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3378079Z results written to .venv/acceptance/fixture-results.json
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3378497Z 
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3378841Z GATE FAILED
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3379258Z   - must-abstain cases missing or not all refused
+e2e-eval	Run bash scripts/e2e_cluster.sh	2026-11-06T20:54:43.3636136Z ##[error]Process completed with exit code 1.
+quality	Run python - <<'PY'	﻿2026-11-06T20:54:52.8331802Z ##[group]Run python - <<'PY'
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8333193Z [36;1mpython - <<'PY'[0m
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8334078Z [36;1mimport json,os[0m
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8334853Z [36;1mjobs=json.loads(os.environ['RESULTS'])[0m
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8335655Z [36;1massert all(j['result']=='success' for j in jobs.values()), jobs[0m
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8336425Z [36;1mPY[0m
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8574699Z shell: /usr/bin/bash -e {0}
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8575725Z env:
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8577649Z   RESULTS: {
+quality	Run python - <<'PY'	  "lint": {
+quality	Run python - <<'PY'	    "result": "success",
+quality	Run python - <<'PY'	    "outputs": {}
+quality	Run python - <<'PY'	  },
+quality	Run python - <<'PY'	  "test": {
+quality	Run python - <<'PY'	    "result": "success",
+quality	Run python - <<'PY'	    "outputs": {}
+quality	Run python - <<'PY'	  },
+quality	Run python - <<'PY'	  "manifests": {
+quality	Run python - <<'PY'	    "result": "success",
+quality	Run python - <<'PY'	    "outputs": {}
+quality	Run python - <<'PY'	  },
+quality	Run python - <<'PY'	  "build": {
+quality	Run python - <<'PY'	    "result": "success",
+quality	Run python - <<'PY'	    "outputs": {}
+quality	Run python - <<'PY'	  },
+quality	Run python - <<'PY'	  "scan": {
+quality	Run python - <<'PY'	    "result": "success",
+quality	Run python - <<'PY'	    "outputs": {}
+quality	Run python - <<'PY'	  },
+quality	Run python - <<'PY'	  "e2e-eval": {
+quality	Run python - <<'PY'	    "result": "failure",
+quality	Run python - <<'PY'	    "outputs": {}
+quality	Run python - <<'PY'	  }
+quality	Run python - <<'PY'	}
+quality	Run python - <<'PY'	2026-11-06T20:54:52.8579733Z ##[endgroup]
+quality	Run python - <<'PY'	2026-11-06T20:54:52.9754715Z Traceback (most recent call last):
+quality	Run python - <<'PY'	2026-11-06T20:54:52.9755887Z   File "<stdin>", line 3, in <module>
+quality	Run python - <<'PY'	2026-11-06T20:54:52.9758654Z AssertionError: {'lint': {'result': 'success', 'outputs': {}}, 'test': {'result': 'success', 'outputs': {}}, 'manifests': {'result': 'success', 'outputs': {}}, 'build': {'result': 'success', 'outputs': {}}, 'scan': {'result': 'success', 'outputs': {}}, 'e2e-eval': {'result': 'failure', 'outputs': {}}}
+quality	Run python - <<'PY'	2026-11-06T20:54:52.9924621Z ##[error]Process completed with exit code 1.

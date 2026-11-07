@@ -3,7 +3,8 @@
 
 SHELL := /bin/bash
 NS ?= rahbar
-TAG ?= dev
+TAG ?= $(shell git rev-parse HEAD)
+PROVIDER_CIDR ?=
 PY ?= python3
 VENV ?= .venv
 MINIKUBE_MEMORY ?= 4096
@@ -23,7 +24,7 @@ help: ## list the targets
 install: ## create .venv and install the api, indexer and tool dependencies
 	$(PY) -m venv $(VENV)
 	"$(BIN)/pip" install -q --upgrade pip
-	"$(BIN)/pip" install -q -r api/requirements-dev.txt -r indexer/requirements-dev.txt
+	"$(BIN)/pip" install -q --require-hashes --only-binary=:all: -r requirements-dev.lock
 
 test: ## run the api and indexer tests (stubs only: no cluster, no model, no network)
 	cd api && "$(BIN)/pytest" -q
@@ -43,15 +44,15 @@ cluster: ## start minikube with Calico, then enable metrics-server and ingress
 	minikube addons enable ingress
 
 images: ## build the three images and load them into minikube (needs yours: Dockerfiles)
-	docker build -t rahbar-api:$(TAG) api
-	docker build -t rahbar-indexer:$(TAG) indexer
-	docker build -t rahbar-ui:$(TAG) ui
+	docker build --build-arg VCS_REF=$(TAG) -t rahbar-api:$(TAG) api
+	docker build --build-arg VCS_REF=$(TAG) -t rahbar-indexer:$(TAG) indexer
+	docker build --build-arg VCS_REF=$(TAG) -t rahbar-ui:$(TAG) ui
 	minikube image load rahbar-api:$(TAG)
 	minikube image load rahbar-indexer:$(TAG)
 	minikube image load rahbar-ui:$(TAG)
 
-apply: ## apply the dev overlay (needs yours: manifests)
-	kubectl apply -k k8s/overlays/dev
+apply: ## bootstrap real dependencies, transfer corpus, index, then roll out API/UI
+	"$(BIN)/python" scripts/deploy_local.py --tag $(TAG) $(if $(PROVIDER_CIDR),--provider-cidr $(PROVIDER_CIDR),)
 
 secret: ## create the LLM key Secret from the LLM_API_KEY variable; never from a file
 	@test -n "$$LLM_API_KEY" || { echo "export LLM_API_KEY=... first"; exit 1; }

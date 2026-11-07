@@ -4,6 +4,8 @@ from __future__ import annotations
 import hashlib
 import json
 import sys
+import subprocess
+import importlib.metadata
 from dataclasses import asdict
 from pathlib import Path
 
@@ -14,6 +16,9 @@ from pipeline.clean import clean  # noqa: E402
 
 
 def main() -> None:
+    tesseract = subprocess.run(["tesseract", "--version"], capture_output=True, text=True, check=True).stdout.splitlines()[0]
+    poppler = subprocess.run(["pdftoppm", "-v"], capture_output=True, text=True, check=True).stderr.splitlines()[0]
+    profile = {"tesseract": tesseract, "poppler": poppler, "pdfplumber": importlib.metadata.version("pdfplumber")}
     cache = ROOT / ".venv/extracted"
     cache.mkdir(parents=True, exist_ok=True)
     rows = []
@@ -28,6 +33,9 @@ def main() -> None:
             actual.encode()
             + (ROOT / "indexer/pipeline/extract.py").read_bytes()
             + (ROOT / "indexer/pipeline/clean.py").read_bytes()
+            + (ROOT / "indexer/requirements.txt").read_bytes()
+            + (ROOT / "indexer/requirements.lock").read_bytes()
+            + json.dumps(profile, sort_keys=True).encode()
         ).hexdigest()
         if (
             not dest.exists()
@@ -43,6 +51,8 @@ def main() -> None:
             {
                 "file": path.name,
                 "sha256": actual,
+                "extraction_fingerprint": extraction_key,
+                "profile": profile,
                 "pages": len(data["pages"]),
                 "ocr_pages": [p["page"] for p in data["pages"] if p["ocr"]],
                 "empty_after_extraction": [

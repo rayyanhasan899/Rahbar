@@ -1,0 +1,262 @@
+{
+  "before": {
+    "chunks": 646,
+    "content_sha256": "6797a52afc6a6479d12004a3372b1da0e2fd0f1cd21c6af12837d9dd487b1f80",
+    "dimension": 768,
+    "generation": "743f76853de446cd874f8e4c5a537610",
+    "embed_model": "nomic-embed-text",
+    "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27",
+    "active_collection": "rahbar-743f76853de446cd874f8e4c5a537610",
+    "count": 646
+  },
+  "after": {
+    "content_sha256": "6797a52afc6a6479d12004a3372b1da0e2fd0f1cd21c6af12837d9dd487b1f80",
+    "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27",
+    "active_collection": "rahbar-190bdfa34aaf4a2981d8c7b7824f9222",
+    "dimension": 768,
+    "embed_model": "nomic-embed-text",
+    "generation": "190bdfa34aaf4a2981d8c7b7824f9222",
+    "chunks": 646,
+    "count": 646
+  },
+  "probes": [
+    {
+      "time": 1794007471.4899206,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007474.662916,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007477.8553696,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007481.0426862,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007484.2103086,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007487.3478088,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007490.5093868,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007493.6702769,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007496.808613,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007499.9667177,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007503.1322978,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007506.2967155,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007509.4548187,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007512.6236298,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007515.7685003,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007518.9304876,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007522.0841649,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007525.2322617,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007528.4080117,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007531.5487227,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007534.706035,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007538.9595912,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007542.7859175,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007546.4234781,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007551.5057328,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007555.7823198,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007559.6096818,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007563.600925,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007567.5012193,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007570.8832445,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007574.7192576,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007580.2844803,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007585.7977388,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007594.762388,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007608.3429067,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007616.1576567,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007623.7643528,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007629.2460313,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007633.5464447,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007639.6256433,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007646.9258466,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007653.680611,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007666.0726836,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007675.2693868,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007683.7526793,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007687.0935163,
+      "status": 200,
+      "cache": "HIT"
+    },
+    {
+      "time": 1794007748.7290218,
+      "status": 200,
+      "cache": "MISS"
+    }
+  ],
+  "warm_cache": "HIT",
+  "first_after_cache": "HIT",
+  "second_after_cache": "HIT"
+}

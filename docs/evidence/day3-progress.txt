@@ -1,0 +1,70 @@
+Day 3 verification in progress — 7 November 2026 PKT.
+
+The source corpus has been re-hashed and freshly extracted using pdfplumber 0.11.10,
+pdfminer.six 20260107, and Tesseract. All eight selected source files on the laptop's
+actual corpus PVC match the pinned manifest. See day3-corpus-pvc-hashes.json and
+day3-extraction-run.txt. These do not claim that the laptop already serves real answers.
+
+The cache experiment was expanded before the final selection to include negative
+pairs derived from the original golden document/section labels. There are 113 pairs:
+five positive paraphrases and 108 negative pairs. No relevance labels were changed.
+With the implemented numeric, directional and injection guards, thresholds
+0.65/0.70/0.75/0.80/0.85/0.90/0.95 yield respectively 3/1/0/0/0/0/0 false hits.
+0.75 is the lowest tested threshold with zero false hits and accepts four of five
+paraphrases. At 0.70, degree duration can hit the answer about graduation CGPA
+(similarity 0.71828). This is a small calibration set, not a general correctness proof.
+
+The laptop's existing two-CPU cluster intermittently times out during verification.
+The real local model probe returned a safe fallback after the host model request
+failed; the subsequent Chroma port-forward request also failed. No successful
+local real-generation evaluation is claimed. The temporary CPU increase remains
+subject to the user's separate pending approval.
+
+GitHub run 42279493761 passed the complete fixture CI including actual kind/Calico,
+real embedding/indexer Job, all three image builds and fixable HIGH/CRITICAL scans.
+The parallel PR run exposed an Ingress admission-webhook initialization race;
+the bootstrap now waits for admission Jobs and retries dependency application
+without disabling the webhook. Final verification will cite the final runs.
+
+A separate real-audit run is being prepared for the exact committed source SHA.
+It uses public sources only, verifies downloaded bytes against the committed
+manifest, runs real generation, and records reversible Kubernetes experiments.
+Until actual artifacts are examined, those requirements remain NOT VERIFIED.
+
+Day 3 checkpoint: PR CI runs 42288450794 (3dfbea9) and 42289780312 (b1affb1)
+completed successfully: lint/types, offline tests, strict manifests, all three
+image builds/scans and actual fixture Ingress evaluation. The real audit is
+running under 42288443541 and remains NOT VERIFIED until artifacts are read.
+The admission initialization fix now retries validated dependency application;
+it does not wait for TTL-zero admission Job objects that may already be deleted.
+
+The latest local API suite passed 78 tests with 93.33% app coverage. Local
+indexer/evaluator/type checks are still finishing under constrained WSL;
+no final aggregate pass is claimed yet. Root submission checker found substantive
+missing real baseline/results/failure evidence and two documentation formatting
+omissions. The latter are corrected; the checker itself is unchanged.
+
+Controlled evaluation-gate PR #3 changes only the fixture relevance floor for
+an intentional failing experiment. It is explicitly marked DO NOT MERGE; the
+baseline and golden labels are unchanged. Actual failure/recovery evidence is
+pending. Main remains protected and PR #2 awaits genuine partner approval.
+
+The first remote real audit exposed contradictory model output: a factual answer
+with answered_from_context=false, confidence=high and no citations. Persistence,
+truthful dependency probes, visible rollout/undo and numeric HPA/three endpoints
+passed. Full rendered checkpoint is day3-real-audit-live-checkpoint.txt; it is
+not a successful overall audit. The cache/screenshot checks correctly failed.
+
+The repair canonicalizes model refusals, rejects confident contradictory refusals
+for the one permitted retry, adds a supported-answer format example, increases
+the bounded model context to 8192 and refuses outputs near its safety margin.
+Prompt truncation is a hypothesis pending token evidence, not a proven cause.
+Audit-only races are fixed by full service DNS and waiting for Running before
+reading new-pod logs. Network policy and review requirements are unchanged.
+
+An isolated clean checkout of b9b0fa5 passed API78/coverage93.33%, indexer19 and
+evaluator8 offline tests. Import path in day3-rehearsal-tests.txt proves tests
+loaded the isolated source. Its checker reported 151 pass/5warn/4fail, including
+missing genuine real baseline/failure evidence. The checker treats .git files
+in worktrees as non-repositories; actual native git rev-parse succeeded. Root
+history verification is separate. No checker was edited to hide failures.

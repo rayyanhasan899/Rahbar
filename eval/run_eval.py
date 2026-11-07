@@ -188,6 +188,7 @@ def main() -> int:
     parser.add_argument("--golden", type=Path, default=HERE / "golden.yaml")
     parser.add_argument("--baseline", type=Path, default=HERE / "baseline.json")
     parser.add_argument("--out", type=Path, default=HERE / "results.json")
+    parser.add_argument("--timeout", type=float, default=300.0, help="bounded per-request timeout in seconds")
     parser.add_argument(
         "--update-baseline",
         action="store_true",
@@ -198,7 +199,7 @@ def main() -> int:
     questions = load_golden(args.golden)
     rows = []
     headers = {"Host": args.host} if args.host else {}
-    with httpx.Client(timeout=120.0, headers=headers) as client:
+    with httpx.Client(timeout=args.timeout, headers=headers) as client:
         for q in questions:
             started = time.perf_counter()
             response = ask(client, args.api, q["question"])

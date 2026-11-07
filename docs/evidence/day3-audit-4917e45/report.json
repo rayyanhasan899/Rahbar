@@ -1,0 +1,157 @@
+{
+  "commit": "4917e45e331307c323a06653397e6d5193faab8f",
+  "checks": {
+    "real-golden-initial": {
+      "status": "PASS",
+      "evidence": {
+        "recall_at_3": 0.8461538461538461,
+        "recall_at_5": 0.8461538461538461,
+        "citation_validity": 1.0,
+        "abstention_correctness": 1.0,
+        "questions": 15
+      },
+      "seconds": 408.72
+    },
+    "network": {
+      "status": "PASS",
+      "evidence": {
+        "api->chroma": {
+          "allowed": true,
+          "expected": true,
+          "dns": "resolved by socket.create_connection",
+          "output": "connected\n"
+        },
+        "api->redis": {
+          "allowed": true,
+          "expected": true,
+          "dns": "resolved by socket.create_connection",
+          "output": "connected\n"
+        },
+        "api->host-provider": {
+          "allowed": true,
+          "expected": true,
+          "dns": "resolved by socket.create_connection",
+          "output": "connected\n"
+        },
+        "ui->api": {
+          "allowed": true,
+          "expected": true,
+          "dns": "Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n\nName:\tapi.rahbar.svc.cluster.local\nAddress: 10.96.243.198\n\n",
+          "output": "{\"status\":\"alive\"}"
+        },
+        "ui->chroma": {
+          "allowed": false,
+          "expected": false,
+          "dns": "Server:\t\t10.96.0.10\nAddress:\t10.96.0.10:53\n\n\nName:\tchroma.rahbar.svc.cluster.local\nAddress: 10.96.242.68\n\n",
+          "output": "wget: download timed out\ncommand terminated with exit code 1\n"
+        },
+        "Ingress->UI": 200,
+        "Ingress->API": 200
+      },
+      "seconds": 4.05
+    },
+    "truthful-dependency-probes": {
+      "status": "PASS",
+      "evidence": {
+        "outage_seconds_at_least": 90,
+        "liveness": 200,
+        "readiness": 503,
+        "api_restarts": "unchanged",
+        "recovered": true
+      },
+      "seconds": 119.13
+    },
+    "persistence": {
+      "status": "PASS",
+      "evidence": {
+        "generation": "743f76853de446cd874f8e4c5a537610",
+        "chunks": 646,
+        "redis": "Redis AOF marker survived\n",
+        "deleted_api": "api-7574b8ddbb-9578p"
+      },
+      "seconds": 27.01
+    },
+    "embedding-pin-conflict": {
+      "status": "PASS",
+      "evidence": {
+        "bad_pod": "api-764f4dc8f-pxjbs",
+        "bad_ready": false,
+        "restored_model": "nomic-embed-text"
+      },
+      "seconds": 4.88
+    },
+    "visible-rollout-and-undo": {
+      "status": "PASS",
+      "evidence": {
+        "original": "rahbar-ui:4917e45e331307c323a06653397e6d5193faab8f",
+        "demo": "rahbar-ui:4917e45e331307c323a06653397e6d5193faab8f-demo",
+        "restored_sha256": "0a2f935de30a4dd1f617f2e3c06f14292016318e82eb7950b17efd11700e35bb"
+      },
+      "seconds": 21.15
+    },
+    "reindex-cache-and-writer-serialization": {
+      "status": "PASS",
+      "evidence": {
+        "before": "743f76853de446cd874f8e4c5a537610",
+        "after": "190bdfa34aaf4a2981d8c7b7824f9222",
+        "successful_probes": 47,
+        "deployment_unchanged": true
+      },
+      "seconds": 288.49
+    },
+    "resources-and-endpoints": {
+      "status": "PASS",
+      "evidence": {
+        "endpoint_ips": [
+          "192.168.167.146",
+          "192.168.167.147",
+          "192.168.167.153"
+        ],
+        "hpa": [
+          {
+            "resource": {
+              "current": {
+                "averageUtilization": 12,
+                "averageValue": "25m"
+              },
+              "name": "cpu"
+            },
+            "type": "Resource"
+          }
+        ]
+      },
+      "seconds": 24.29
+    },
+    "real-ui-screenshot": {
+      "status": "PASS",
+      "evidence": "",
+      "seconds": 2.85
+    },
+    "component-experiments": {
+      "status": "PASS",
+      "evidence": {
+        "fresh_extraction": true,
+        "measured_chunk_configurations": 3,
+        "failure_stages": [
+          "A",
+          "B",
+          "C",
+          "E"
+        ],
+        "real_poison_fixture": true
+      },
+      "seconds": 587.76
+    },
+    "real-golden-final": {
+      "status": "PASS",
+      "evidence": {
+        "recall_at_3": 0.8461538461538461,
+        "recall_at_5": 0.8461538461538461,
+        "citation_validity": 1.0,
+        "abstention_correctness": 1.0,
+        "questions": 15
+      },
+      "seconds": 340.84
+    }
+  }
+}

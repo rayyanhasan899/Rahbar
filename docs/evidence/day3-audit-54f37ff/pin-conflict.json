@@ -1,0 +1,15 @@
+{
+  "pod": "api-7545dfdb7d-b8242",
+  "ready": false,
+  "logs": "{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Started server process [1]\", \"request_id\": \"-\", \"color_message\": \"Started server process [\\u001b[36m%d\\u001b[0m]\"}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Waiting for application startup.\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"httpx\", \"msg\": \"HTTP Request: GET http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/rahbar-control \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"httpx\", \"msg\": \"HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/339a770c-6967-41c9-addb-4ac4c734cae6/get \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"ERROR\", \"logger\": \"rahbar.api\", \"msg\": \"index readiness conflict: embedding model mismatch: index=nomic-embed-text api=deliberately-wrong-model\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"rahbar.api\", \"msg\": \"api started\", \"request_id\": \"-\", \"retriever\": \"chroma\", \"llm_provider\": \"ollama-host\", \"embed_model\": \"deliberately-wrong-model\", \"top_k\": 5, \"relevance_floor\": 0.45, \"cache_threshold\": 0.75}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Application startup complete.\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T21:36:35Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)\", \"request_id\": \"-\", \"color_message\": \"Uvicorn running on \\u001b[1m%s://%s:%d\\u001b[0m (Press CTRL+C to quit)\"}\n",
+  "restored_publication": {
+    "embed_model": "nomic-embed-text",
+    "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27",
+    "dimension": 768,
+    "generation": "6ee5048bead74ad8a50335d506e51a5d",
+    "active_collection": "rahbar-6ee5048bead74ad8a50335d506e51a5d",
+    "content_sha256": "6797a52afc6a6479d12004a3372b1da0e2fd0f1cd21c6af12837d9dd487b1f80",
+    "chunks": 646,
+    "count": 646
+  }
+}
