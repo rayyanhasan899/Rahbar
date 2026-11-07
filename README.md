@@ -68,6 +68,7 @@ and 768-dimensional embeddings.
 make fetch
 python corpus/fetch.py --verify
 make cluster MINIKUBE_MEMORY=4096 MINIKUBE_CPUS=2
+kubectl -n ingress-nginx rollout status deployment/ingress-nginx-controller --timeout=240s
 TAG=$(git rev-parse HEAD)
 make images TAG="$TAG"
 # Example for this Docker Desktop laptop; verify on a different host.
@@ -153,3 +154,11 @@ hit), from source 4917e45 and run 42308165966:
 
 MIT covers our code; public documents retain their original rights and are not
 committed. See [LICENSE](LICENSE) and [AI disclosure](docs/AI-USAGE.md).
+
+On the prepared Windows laptop, a development-only localhost Ingress alias and
+loopback forward also expose the real UI at http://localhost:18080. No hosts file
+was edited. It currently uses the explicitly recorded pre-merge verification
+images and a real646-chunk index. API/readiness work, but the host model has hit
+a measured memory allocation failure; it returns safe fallbacks. The passing
+real-generation gate is from the separate larger-memory audit cluster, not a
+claim that this8GB laptop passed generation. See docs/DAY3-REPORT.md.

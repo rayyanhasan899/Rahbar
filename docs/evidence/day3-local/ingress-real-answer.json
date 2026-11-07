@@ -1,0 +1,102 @@
+[
+  {
+    "status": 200,
+    "cache": "MISS",
+    "seconds": 26.07,
+    "response": {
+      "request_id": "c32b85c2f0420c66306601a9f5787aed",
+      "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
+      "citations": [],
+      "answered_from_context": false,
+      "confidence": "low",
+      "retrieved": [
+        {
+          "chunk_id": "9e8994d339e20376a0a7b807fbe089bd",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.1",
+          "page": 6,
+          "score": 0.75447643
+        },
+        {
+          "chunk_id": "81f67608fd8962af723167e0b40a0d7d",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.1",
+          "page": 7,
+          "score": 0.75447643
+        },
+        {
+          "chunk_id": "e691ad7c1d531ad0feb3ab362239298e",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "5.1",
+          "page": 24,
+          "score": 0.71803474
+        },
+        {
+          "chunk_id": "7f5912555effb6c0ec70c984f94a72eb",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "3.6",
+          "page": 14,
+          "score": 0.71383655
+        },
+        {
+          "chunk_id": "34343daeda22e67b633308326547f8d4",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "5.1",
+          "page": 25,
+          "score": 0.7097305
+        }
+      ],
+      "provider": "ollama"
+    }
+  },
+  {
+    "status": 200,
+    "cache": "MISS",
+    "seconds": 14.71,
+    "response": {
+      "request_id": "380f9f2bdb91220dca4b2bf0bfe802e5",
+      "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
+      "citations": [],
+      "answered_from_context": false,
+      "confidence": "low",
+      "retrieved": [
+        {
+          "chunk_id": "9e8994d339e20376a0a7b807fbe089bd",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.1",
+          "page": 6,
+          "score": 0.75447643
+        },
+        {
+          "chunk_id": "81f67608fd8962af723167e0b40a0d7d",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "1.1",
+          "page": 7,
+          "score": 0.75447643
+        },
+        {
+          "chunk_id": "e691ad7c1d531ad0feb3ab362239298e",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "5.1",
+          "page": 24,
+          "score": 0.71803474
+        },
+        {
+          "chunk_id": "7f5912555effb6c0ec70c984f94a72eb",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "3.6",
+          "page": 14,
+          "score": 0.71383655
+        },
+        {
+          "chunk_id": "34343daeda22e67b633308326547f8d4",
+          "source": "academic-rules-handbook-jun-2026.pdf",
+          "section": "5.1",
+          "page": 25,
+          "score": 0.7097305
+        }
+      ],
+      "provider": "ollama"
+    }
+  }
+]

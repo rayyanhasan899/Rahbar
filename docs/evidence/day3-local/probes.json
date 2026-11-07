@@ -1,0 +1,1 @@
+{"/healthz": {"status": 200, "body": {"status": "alive"}}, "/readyz": {"status": 200, "body": {"status": "ready", "checks": {"chroma": "reachable, nonempty, embedding pin matches", "redis": "reachable"}}}, "/api/version": {"status": 200, "body": {"revision": "54f37ff2ee954d70ac76ad8fd7716695654e0610"}}}

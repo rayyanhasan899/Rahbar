@@ -33,14 +33,14 @@ bootstrap/audit races were diagnosed and fixed; actual public-corpus generation,
 network/persistence/pin/rollout/reindex experiments and a poisoned owned index were
 run in clean ephemeral clusters. Failed runs, including a false-positive rollback
 check exposed by its saved 502 HTML, were retained and corrected. The final full
-real audit passed at source4917e45. No missing observation was filled with an
+real audit passed at source 4917e45. No missing observation was filled with an
 invented score, screenshot or human story.
 
 The owner subsequently approved temporarily raising the existing laptop node
 from two CPUs to four for verification and accepted eight specifically reviewed
 private/loopback HTTP findings. The owner completed SonarCloud sign-in; Codex
 applied only those eight Accept decisions with a three-day review reopening date
-of10November2026 and the scoped rationale. Scans and branch protection stayed on.
-The controlled gate-demonstration PR3 was closed without merging. Genuine partner
-review of PR2 remains a human action; Codex has not approved its own work or
-impersonated Person2. Classroom has not been submitted.
+of 10November2026 and the scoped rationale. Scans and branch protection stayed on.
+The controlled gate-demonstration PR #3 was closed without merging. Genuine partner
+review of PR #2 remains a human action; Codex has not approved its own work or
+impersonated Person 2. Classroom has not been submitted.

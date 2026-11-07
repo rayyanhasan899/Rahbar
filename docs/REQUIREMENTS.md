@@ -19,15 +19,15 @@ reports, evidence and a corrected physical-page comment in a diagnostic YAML.
 | Golden 8ordinary/2version/2exact/2abstain/1injection before tuning | PASS | Original d7b5e88 labels unchanged; golden SHA in experiments/provenance | Additional failure diagnostic kept separate |
 | Five indexing stages, PDF/OCR, HTML/text, aligned Markdown fixture headings | PASS | Real image ingestion completed; 19 offline tests; fresh image-matched extraction profile | Six empty pages disclosed |
 | Structure-aware lexical-token chunking/overlap/metadata | PASS | Source, section, starting physical page, version, superseded and stable IDs; tests and real queries | Lexical tokens differ from model tokens |
-| Three real chunk configurations/storage amplification | PASS | 300/40:738chunks/1.061133; 500/75:671/1.047257; 700/100:646/1.029494; each recall5=11/13 | 700/100 chosen at equal recall |
+| Three real chunk configurations/storage amplification | PASS | 300/40:738 chunks/1.061133; 500/75:671/1.047257; 700/100:646/1.029494; each recall5=11/13 | 700/100 chosen at equal recall |
 | Same model/dimension, cosine, Chroma client/server1.0.12 | PASS | nomic768, recorded digest, collection/pointer pins and query prefixes | Model tags alone are not immutable bytes |
-| Safe repeat indexing, staged publication, serialized manual/weekly writers | PASS | Same646chunks/newgeneration; manual writer waited208.441s; writer/reindex logs | Old generations retained intentionally |
+| Safe repeat indexing, staged publication, serialized manual/weekly writers | PASS | Same646 chunks/newgeneration; manual writer waited208.441s; writer/reindex logs | Old generations retained intentionally |
 | No API-startup ingestion and generation invalidation without indexer Redis | PASS | Read-only startup check; unchanged API template through cutover; MISS then HIT; policies unchanged | None |
 | Current and explicitly historical retrieval; turns | PASS | Version predicate tests, q09/q10 real answers, cited real follow-up in resources.json | Benchmark misses remain honest |
 | Shared semantic cache, exclusions, expiry and measured threshold | PASS | 113 real pairs, guarded falsehits3/1/0 at .65/.70/.75; .75 selected; entryTTL/intent tests | Small calibration set is not universal proof |
 | Schema/retry/fallback/relevance/grounding/citations/abstention | PASS | 80 API tests; canonical refusals; real golden validity100%, both absent topics refused | Five non-mandatory final questions declined/fell back |
 | Injection defense with actually indexed poisoned chunk | PASS | poison-probe.json records stored poison ID and real model refusal/fallback, no planted claim obeyed | Does not prove useful answer to every poisoned question |
-| Pluggable provider and deliberate low temperature | PASS | Real Ollama3B at0.2; optional HTTPS hosted adapter mocked; timeout/context safety | Hosted mode not independently live-tested |
+| Pluggable provider and deliberate low temperature | PASS | Real Ollama3B at 0.2; optional HTTPS hosted adapter mocked; timeout/context safety | Hosted mode not independently live-tested |
 | Request/JSON logging, metrics, cache/retry/abstention/tokens | PASS | Runtime metrics.txt, JSON indexer/provider logs and tests | Logs do not establish semantic entailment |
 | Namespace, APIx3/UI, Chroma STS volumeClaimTemplates, RedisPVC | PASS | final-resources.json; persistence tests and actual three endpoints | None |
 | Four ClusterIP Services, / and /api Ingress, ConfigMap/Secret placeholder | PASS | Real network/Ingress200 and manifests; placeholder excluded, no actual secret values read | None |
@@ -40,28 +40,34 @@ reports, evidence and a corrected physical-page comment in a diagnostic YAML.
 | Reindex without API rollout/outage, cache invalidation/serialization | PASS | 47 successfulHTTP200 probes, unchanged deploymenttemplate, newgeneration and writer wait | None |
 | Changed embedding model => new0/1, explicit logs, restored recovery | PASS | pin-conflict.json with deliberatewrongmodel and recovered646chunk publication | None |
 | maxSurge1/maxUnavailable0/preStop/grace, visible image set/undo | PASS | Corrected check requires HTTP200 and exact original hash; original/demo/restored HTML | Earlier502 false-positive retained as negative evidence |
-| Repeated top, indexer memory/limit/margin | PASS | Earlier64samples peak203Mi; final66samples peak160Mi; limit1024Mi, minimum observed margin821Mi | Sampling may miss brief peak |
+| Repeated top, indexer memory/limit/margin | PASS | Earlier64 samples peak203Mi; final66 samples peak160Mi; limit 1024Mi, minimum observed margin 821Mi | Sampling may miss brief peak |
 | Four separately broken and restored stages | PASS | A eightpages0chars->OCR; B recall84.62->23.08->84.62; C two-clause50->100%; E mixed versions->validfilter | Original golden top1/unfiltered recall unchanged, disclosed |
 | Offline lint/types/dependency/tests/coverage>=60 | PASS | API80/93.39%, indexer19, evaluator8; Ruff/mypy/pip check, source-isolated tests | Final report notes verification revision |
-| Strict production manifests, all3image builds/Trivy gates | PASS | All28strictvalid; fullCI42308165966 success, fixableHIGH/CRITICAL gate | Scan intentionally uses --ignore-unfixed, not a claim of zero total CVEs |
-| Real golden baseline/results and regression gate | PASS | Genuine54f37ffbaseline preserved; final4917e45recall.846154/drop0, validity1, abstain1 | Eight of15 final responses cited; other safe refusals disclosed |
-| Actual failed-then-fixed evaluation gate evidence | PASS | PR3 abea020/run42291331805 failedmust-abstain; 6698f78/run42293007228 passed; paired screenshots/results; closedunmerged | Separate Sonar finding on demoPR not hidden |
-| Protected main with one genuine partner approval | BLOCKED | Strict quality +oneapproval/dismissstale/adminenforced; protectionJSON | AbdulMoez-24i-3048-SE-B must review final PR2 head |
-| SonarCloud check | NOT VERIFIED | Eight owner-approved private/loopbackHTTP findings accepted until10Nov; securityA | Final reanalysis must pass after raw502artifact renamed .html.txt; scan remains on |
+| Strict production manifests, all 3image builds/Trivy gates | PASS | All28strictvalid; fullCI42308165966 success, fixableHIGH/CRITICAL gate | Scan intentionally uses --ignore-unfixed, not a claim of zero total CVEs |
+| Real golden baseline/results and regression gate | PASS | Genuine54f37ffbaseline preserved; final4917e45recall.846154/drop0, validity1, abstain1 | Eight of 15 final responses cited; other safe refusals disclosed |
+| Actual failed-then-fixed evaluation gate evidence | PASS | PR #3 abea020/run 42291331805 failedmust-abstain; 6698f78/run 42293007228 passed; paired screenshots/results; closedunmerged | Separate Sonar finding on demoPR not hidden |
+| Protected main with one genuine partner approval | BLOCKED | Strict quality +oneapproval/dismissstale/adminenforced; protectionJSON | AbdulMoez-24i-3048-SE-B must review final PR #2 head |
+| SonarCloud check | PASS | Eight owner-approved private/loopbackHTTP findings accepted until10Nov; securityA | Actual reanalysis passed A ratings after raw502artifact was labelled .html.txt; scan remains on |
 | Reviewed merge and actual main-SHA CD/Hub release | BLOCKED | needs-gated least-privilege cd.yml; no direct main push | Requires genuine approval/passingmerge, then actualCD/registry verification |
 | README, architecture, corpus/pipeline/failure/seven answers/fourADRs/AI/LICENSE | PASS | Actual screenshot and measurements, code/line refs, accurate human/AI disclosure | Release links require actual CD |
-| Root submission checker | PASS | Current root:162pass/5warnings/0fail; checker unchanged | Rerun final checkpoint; warnings explained in Day3report |
+| Root submission checker | PASS | Current root:162pass/5 warnings/0fail; checker unchanged | Rerun final checkpoint; warnings explained in Day3report |
 | Clean checkout rehearsal | PASS | Isolated source imports/tests; real audit uses clean GitHub checkout +hashlockedinstall and actual deployment | No stale working-directory cache dependency claimed |
 | Classroom contents | BLOCKED | Repo and committed real results/baseline ready | Need actual successfulCD and three mainSHA-tag links; form not submitted |
 
-Local laptop: Docker/minikube data and earlier dummy evidence were preserved.
-The two-CPU node timed out; the owner approved a temporary increase to four,
-which must be restored after local verification. Local image loading has failed
-or stalled, so the laptop is not claimed to be the passing real-corpus cluster.
-The remote ephemeral cluster supplies the verified runtime evidence above.
-No rejected Docker socket repair was retried. Current local restoration/deployment
-outcome is recorded in the Day3 report, independently of the successful audit.
+Local laptop: its real Job completed in6m46s, published646chunks and the same
+content fingerprint as the remote audit. All three API pods passed health and
+readiness. The approved temporary CPU increase was restored to two and verified.
+Local model generation is BLOCKED by an observed896MiB Ollama KV-cache allocation
+failure; safe fallback was observed. The successful larger-memory remote gate
+is not presented as a laptop result. A development-only localhost Ingress alias
+serves the UI through a loopback forward without changing the hosts file. The
+prior rejected Docker socket repair was not retried; no global RAM settings changed.
 
-Git: original remote retained; dev safely fast-forwarded to all five Person2
-commits with original authorship, meaningful Day3 milestones pushed via dev/PR2.
+Git: original remote retained; dev safely fast-forwarded to all five Person 2
+commits with original authorship, meaningful Day3 milestones pushed via dev/PR #2.
 No reset/clean/init/force/directmain push or invented partner approval.
+
+Current supported UI14b2333 builds, all three scans and fixture deployment pass;
+its full real audit is pending. SonarCloud reanalysis passes with A ratings. The
+raw checker output is preserved as .out, so its quoted marker is not mistaken
+for an unfinished source stub; the checker itself remains unchanged.
