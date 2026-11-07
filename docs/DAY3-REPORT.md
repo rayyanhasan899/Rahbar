@@ -1,8 +1,8 @@
 # Day 3 execution report
 
 7 November 2026, Asia/Karachi. Deadline: 8 November 2026, 23:59 PKT.
-This is a verification checkpoint, not a claim that the reviewed release has
-already shipped. The complete per-requirement record is REQUIREMENTS.md.
+The reviewed release has shipped: PR #2 merged as f6c702b and CD run
+42341465116 passed. The complete per-requirement record is REQUIREMENTS.md.
 
 ## Outcome and remaining release dependency
 
@@ -16,10 +16,10 @@ already shipped. The complete per-requirement record is REQUIREMENTS.md.
 | Pipeline ablations | PASS | Actual A/B/C/E failures and restored reference, including separate two-clause C diagnostic |
 | Root checker | PASS |162 passed,5 warnings,0 failures; checker unchanged |
 | Three builds/scans | PASS at 4917e45 | All three passed the fixableHIGH/CRITICAL scan gate; UI EOL warning found in detailed review |
-| Supported final UI base | PASS for build/scan/fixture | Updated in14b2333 to digest-pinned nginx1.30.6/Alpine3.24; full real audit still running |
+| Supported final UI base | PASS | Digest-pinned nginx1.30.6/Alpine3.24; all eleven checks passed in [real audit 42326871487](https://github.com/rayyanhasan899/Rahbar/actions/runs/42326871487) |
 | SonarCloud | PASS | Security/reliability/maintainabilityA after scoped owner-approved decisions and correct raw-evidence labelling |
-| Genuine partner approval | BLOCKED | PR #2 still needs an approving review from AbdulMoez-24i-3048-SE-B |
-| Main merge, successful CD and Hub SHA images | BLOCKED | Must follow passing reviewed merge; no pre-merge SHA is presented as a release |
+| Genuine partner approval | PASS | AbdulMoez-24i-3048-SE-B approved PR #2 at 1a39dac on 7 November |
+| Main merge, successful CD and Hub SHA images | PASS | Merged as f6c702b; [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116) passed; api/indexer/ui images tagged f6c702b on Docker Hub |
 | Classroom submission | NOT VERIFIED | Not submitted; user did not request form submission |
 
 The final measured run answered eight of fifteen questions with citations.
@@ -68,7 +68,7 @@ WSL used the inspected existing Python3.12 environment via
 | pytest -q eval/tests |8 passed |
 | python -m pip check |No broken requirements |
 | kubectl kustomize k8s/overlays/prod with kubeconform -strict -summary -kubernetes-version 1.34.0 |28valid,0 invalid,0 errors,0 skipped |
-| Three docker build jobs using exact github.sha/VCS_REF |All succeeded at 4917e45; new UI base rebuild pending at 14b2333 |
+| Three docker build jobs using exact github.sha/VCS_REF |All succeeded, including supported UI14b2333 and main f6c702b in CD42341465116 |
 | Pinned Trivy image --scanners vuln --ignore-unfixed --severity HIGH,CRITICAL --exit-code 1 |All3 gates passed; raw scan logs retained; this excludes unfixed/lower severity findings |
 | bash scripts/e2e_cluster.sh in a clean kind/Calico cluster |Real fixtures indexed before API readiness; Ingress fixture gate passed |
 | Same bootstrap with CORPUS_MODE=real and real_cluster_checks.py |Corrected source 4917e45: all 11checks passed |
@@ -181,27 +181,25 @@ areA; the final source reanalysis must also pass.
 
 ## Exact remaining actions and submission contents
 
-1. Inspect the supported-UI full real audit42326871487. Builds, scans and fixture
-   deployment passed; the laptop bootstrap and CPU restoration are complete.
-   Local real generation remains memory-blocked; no larger-memory result is
-   substituted as a laptop result.
-2. Finish the final reviewable documentation/evidence commit; require passing
-   checks on that head. Person 2 (AbdulMoez-24i-3048-SE-B) must genuinely review and
-   approve PR #2. Rayyan/Codex cannot supply that approval.
-3. Merge only that passing reviewed PR through GitHub. Then verify cd.yml on the
-   actual merged main SHA: reusableCI, three Hub publications, registry pull/load,
-   fixture indexing, rollout and smoke through Ingress. Inspect deployed revision
-   and image references. Do not use a pre-merge SHA as release proof.
+1. Completed: supported-UI real audit42326871487 passed all eleven checks.
+   The laptop bootstrap and CPU restoration passed; its documented model-memory
+   failure is separate from the successful larger-memory remote gate.
+2. Completed: AbdulMoez-24i-3048-SE-B genuinely approved PR #2 at1a39dac.
+   GitHub merged the passing reviewed work as f6c702b.
+3. Completed for that release: CD42341465116 reran tests, published all three
+   f6c702b images, pulled them into a fresh cluster, indexed fixtures and verified
+   rollout and the served revision through Ingress. Later documentation merges
+   create new main SHAs and must have their own CD checked before using those
+   new tags as release evidence.
 4. Put these four exact items in the team's one Classroom entry: repository URL;
    direct successful cd.yml run URL; three Docker Hub image links showing that
    main SHA tag; committed eval/results.json and eval/baseline.json. Their final
-   release URLs are NOT VERIFIED until step3 actually succeeds. No form is submitted
-   by this task.
+   release URLs are recorded in README and PR #2. The form itself remains
+   NOT VERIFIED and has not been submitted by this task.
 
-The next engineering work is release verification and genuine review, not another
-implementation plan. If approval or publishing credentials block release, report
-BLOCKED with the exact failed run/action; do not weaken protection or fabricate
-external evidence.
+The remaining user action is Classroom submission. For any subsequent release,
+report failed or blocked checks honestly; do not weaken protection or reuse an
+older SHA as proof that a new main commit was published.
 
 ## Evidence-file and checker scope
 

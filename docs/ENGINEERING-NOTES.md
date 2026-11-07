@@ -1,8 +1,7 @@
 # Engineering notes
 
 These answers describe the inspected implementation and observed evidence.
-Remaining cluster results are explicitly marked NOT VERIFIED; code locations
-refer to the Day 3 dev tree. This is agent-assisted work, not a claim of personal
+Code locations refer to the Day 3 dev tree. This is agent-assisted work, not a claim of personal
 human debugging time.
 
 ## 1. Indexing during API startup
@@ -69,17 +68,19 @@ exit 137 had OOMKilled=false and is not indexer OOM evidence.
 
 ## 5. Recall by type
 
-The fresh real-corpus final measurement (eval/results.json, source 54f37ff)
+The committed real-corpus measurement (eval/results.json, committed in 14b2333)
 reports version questions worst at **50%**, ordinary **87.5%**, exact and
 injection **100%** recall@5. Overall is **11/13 = 84.6154%**, with absent-topic
 questions excluded from recall. The fresh three-configuration experiment agrees.
 q09's designated clause 4.25 loses its slot to nearby clauses/table sections;
 q08 retrieves equivalent handbook material outside its designated reference.
-For q09 the model can still answer from a table, but recall correctly does not
-rewrite the predeclared clause label to count that as a hit. The JSON retains
+Recall does not rewrite the predeclared clause label to count nearby material
+as a hit. The JSON retains
 per-question references for inspection. Exact terms were not worst in this small
-set. Nine questions received cited model answers; four non-mandatory cases safely
-refused/fell back. Retrieval recall and answer availability measure different
+set. Eight questions received cited model answers (q01-q03, q05, q07, q10-q12);
+q04, q06, q08 and q09 safely declined, and the injection question q15 was refused.
+An earlier run at 4917e45 answered nine, including q09; answer availability varies
+between model runs while recall@5 stayed at 11/13. Retrieval recall and answer availability measure different
 things; 100% citation validity is not a claim of complete factual correctness.
 
 ## 6. Changed embedding pin with old index

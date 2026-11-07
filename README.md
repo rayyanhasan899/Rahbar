@@ -7,8 +7,8 @@ when evidence is missing. Eight documents include six PDFs with 194 physical
 pages and genuinely changed 2023/2026 undergraduate policies. See
 [provenance](docs/CORPUS.md), [pipeline](docs/PIPELINE.md) and
 [requirement status](docs/REQUIREMENTS.md). The real golden evaluation passed (84.62% recall@5, 100% citation validity,
-both must-abstain cases refused). The full corrected real-corpus cluster audit passed; the reviewed main release
-is still pending. See the requirement record.
+both must-abstain cases refused). The full corrected real-corpus cluster audit passed. The reviewed main release
+shipped as f6c702b through [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116). See the requirement record.
 
 ## Architecture
 
@@ -146,7 +146,8 @@ rollback. Actual results, not the presence of scripts, establish verification.
 Main requires one partner approval and passing `quality`, with stale reviews
 dismissed. CD tests the actual merged main SHA, publishes three SHA-tagged Docker
 Hub images, then deploys those images into an ephemeral cluster through Ingress.
-A pre-merge image is not release evidence. Final CD links remain pending a passing, reviewed main merge. The following
+A pre-merge image is not release evidence. PR #2 was approved by AbdulMoez-24i-3048-SE-B on 1a39dac and merged as
+f6c702b; [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116) tested, published and deployed it. Release images: Docker Hub images [rahbar-api](https://hub.docker.com/r/rayyanhasan899/rahbar-api/tags), [rahbar-indexer](https://hub.docker.com/r/rayyanhasan899/rahbar-indexer/tags) and [rahbar-ui](https://hub.docker.com/r/rayyanhasan899/rahbar-ui/tags), tagged f6c702bfd976efb4a31222f3e914f81b2077da33. The following
 is the genuine real-corpus Ollama answer captured through Ingress (a shared cache
 hit), from source 4917e45 and run 42308165966:
 

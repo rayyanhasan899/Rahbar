@@ -46,13 +46,13 @@ reports, evidence and a corrected physical-page comment in a diagnostic YAML.
 | Strict production manifests, all 3image builds/Trivy gates | PASS | All28strictvalid; fullCI42308165966 success, fixableHIGH/CRITICAL gate | Scan intentionally uses --ignore-unfixed, not a claim of zero total CVEs |
 | Real golden baseline/results and regression gate | PASS | Genuine54f37ffbaseline preserved; final4917e45recall.846154/drop0, validity1, abstain1 | Eight of 15 final responses cited; other safe refusals disclosed |
 | Actual failed-then-fixed evaluation gate evidence | PASS | PR #3 abea020/run 42291331805 failedmust-abstain; 6698f78/run 42293007228 passed; paired screenshots/results; closedunmerged | Separate Sonar finding on demoPR not hidden |
-| Protected main with one genuine partner approval | BLOCKED | Strict quality +oneapproval/dismissstale/adminenforced; protectionJSON | AbdulMoez-24i-3048-SE-B must review final PR #2 head |
+| Protected main with one genuine partner approval | PASS | Strict quality +oneapproval/dismissstale/adminenforced; protectionJSON; AbdulMoez-24i-3048-SE-B approved PR #2 at 1a39dac on 7Nov | None |
 | SonarCloud check | PASS | Eight owner-approved private/loopbackHTTP findings accepted until10Nov; securityA | Actual reanalysis passed A ratings after raw502artifact was labelled .html.txt; scan remains on |
-| Reviewed merge and actual main-SHA CD/Hub release | BLOCKED | needs-gated least-privilege cd.yml; no direct main push | Requires genuine approval/passingmerge, then actualCD/registry verification |
-| README, architecture, corpus/pipeline/failure/seven answers/fourADRs/AI/LICENSE | PASS | Actual screenshot and measurements, code/line refs, accurate human/AI disclosure | Release links require actual CD |
+| Reviewed merge and actual main-SHA CD/Hub release | PASS | PR #2 merged as f6c702b with 25 checks passing; [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116) passed test, build-push and deploy; three f6c702b-tagged Docker Hub images | None |
+| README, architecture, corpus/pipeline/failure/seven answers/fourADRs/AI/LICENSE | PASS | Actual screenshot and measurements, code/line refs, accurate human/AI disclosure | Release links recorded after CD run 42341465116 |
 | Root submission checker | PASS | Current root:162pass/5 warnings/0fail; checker unchanged | Rerun final checkpoint; warnings explained in Day3report |
 | Clean checkout rehearsal | PASS | Isolated source imports/tests; real audit uses clean GitHub checkout +hashlockedinstall and actual deployment | No stale working-directory cache dependency claimed |
-| Classroom contents | BLOCKED | Repo and committed real results/baseline ready | Need actual successfulCD and three mainSHA-tag links; form not submitted |
+| Classroom contents | NOT VERIFIED | Repo, [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116), three f6c702b Docker Hub tag links and committed results/baseline are ready | Form not yet submitted |
 
 Local laptop: its real Job completed in6m46s, published646chunks and the same
 content fingerprint as the remote audit. All three API pods passed health and
@@ -67,7 +67,7 @@ Git: original remote retained; dev safely fast-forwarded to all five Person 2
 commits with original authorship, meaningful Day3 milestones pushed via dev/PR #2.
 No reset/clean/init/force/directmain push or invented partner approval.
 
-Current supported UI14b2333 builds, all three scans and fixture deployment pass;
-its full real audit is pending. SonarCloud reanalysis passes with A ratings. The
+Supported UI14b2333 builds, all three scans, fixture deployment and all eleven
+checks in real audit42326871487 passed. SonarCloud reanalysis passes with A ratings. The
 raw checker output is preserved as .out, so its quoted marker is not mistaken
 for an unfinished source stub; the checker itself remains unchanged.

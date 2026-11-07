@@ -41,6 +41,23 @@ from two CPUs to four for verification and accepted eight specifically reviewed
 private/loopback HTTP findings. The owner completed SonarCloud sign-in; Codex
 applied only those eight Accept decisions with a three-day review reopening date
 of 10November2026 and the scoped rationale. Scans and branch protection stayed on.
-The controlled gate-demonstration PR #3 was closed without merging. Genuine partner
-review of PR #2 remains a human action; Codex has not approved its own work or
-impersonated Person 2. Classroom has not been submitted.
+The controlled gate-demonstration PR #3 was closed without merging. PR #2 was
+later approved by AbdulMoez-24i-3048-SE-B and merged as f6c702b; Codex did not
+approve its own work or impersonate Person 2. Classroom has not been submitted.
+
+## Final documentation pass
+
+Claude (Anthropic), in a session requested by Moez on 7 November, checked the
+live PR #2 approval, CD run 42341465116 and Docker Hub tags, then updated the
+release status in README, REQUIREMENTS and the Day 3 report. It also corrected
+engineering-notes answer 5, which still quoted the earlier 4917e45 run (nine
+answers) instead of the committed results (eight). Moez approved each change.
+No code, manifest or workflow was changed.
+
+Rayyan subsequently requested Codex to review and merge PR #4. Codex inspected
+the full documentation diff and live CI, checked the committed eight-answer
+result against the earlier nine-answer result, and corrected runbook assumptions
+about WSL names, mounted filesystems, Kubernetes tool versions and exit137.
+It also reconciled remaining pending-status text with the completed real audit.
+The GitHub review on Rayyan's authorized account is agent-assisted, not a claim
+that Rayyan manually performed every review check.
