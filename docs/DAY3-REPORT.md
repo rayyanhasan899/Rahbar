@@ -1,8 +1,8 @@
 # Day 3 execution report
 
 7 November 2026, Asia/Karachi. Deadline: 8 November 2026, 23:59 PKT.
-This is a verification checkpoint, not a claim that the reviewed release has
-already shipped. The complete per-requirement record is REQUIREMENTS.md.
+The reviewed release has shipped: PR #2 merged as f6c702b and CD run
+42341465116 passed. The complete per-requirement record is REQUIREMENTS.md.
 
 ## Outcome and remaining release dependency
 
@@ -18,8 +18,8 @@ already shipped. The complete per-requirement record is REQUIREMENTS.md.
 | Three builds/scans | PASS at 4917e45 | All three passed the fixableHIGH/CRITICAL scan gate; UI EOL warning found in detailed review |
 | Supported final UI base | PASS for build/scan/fixture | Updated in14b2333 to digest-pinned nginx1.30.6/Alpine3.24; full real audit still running |
 | SonarCloud | PASS | Security/reliability/maintainabilityA after scoped owner-approved decisions and correct raw-evidence labelling |
-| Genuine partner approval | BLOCKED | PR #2 still needs an approving review from AbdulMoez-24i-3048-SE-B |
-| Main merge, successful CD and Hub SHA images | BLOCKED | Must follow passing reviewed merge; no pre-merge SHA is presented as a release |
+| Genuine partner approval | PASS | AbdulMoez-24i-3048-SE-B approved PR #2 at 1a39dac on 7 November |
+| Main merge, successful CD and Hub SHA images | PASS | Merged as f6c702b; [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116) passed; api/indexer/ui images tagged f6c702b on Docker Hub |
 | Classroom submission | NOT VERIFIED | Not submitted; user did not request form submission |
 
 The final measured run answered eight of fifteen questions with citations.
