@@ -1,0 +1,15 @@
+{
+  "pod": "api-764f4dc8f-pxjbs",
+  "ready": false,
+  "logs": "{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Started server process [1]\", \"request_id\": \"-\", \"color_message\": \"Started server process [\\u001b[36m%d\\u001b[0m]\"}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Waiting for application startup.\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"httpx\", \"msg\": \"HTTP Request: GET http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/rahbar-control \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"httpx\", \"msg\": \"HTTP Request: POST http://chroma:8000/api/v2/tenants/default_tenant/databases/default_database/collections/ecc4bfd8-de6f-4bb3-9cf1-7d9f338023e0/get \\\"HTTP/1.1 200 OK\\\"\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"ERROR\", \"logger\": \"rahbar.api\", \"msg\": \"index readiness conflict: embedding model mismatch: index=nomic-embed-text api=deliberately-wrong-model\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"rahbar.api\", \"msg\": \"api started\", \"request_id\": \"-\", \"retriever\": \"chroma\", \"llm_provider\": \"ollama-host\", \"embed_model\": \"deliberately-wrong-model\", \"top_k\": 5, \"relevance_floor\": 0.65, \"cache_threshold\": 0.75}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Application startup complete.\", \"request_id\": \"-\"}\n{\"ts\": \"2026-11-06T23:23:59Z\", \"level\": \"INFO\", \"logger\": \"uvicorn.error\", \"msg\": \"Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)\", \"request_id\": \"-\", \"color_message\": \"Uvicorn running on \\u001b[1m%s://%s:%d\\u001b[0m (Press CTRL+C to quit)\"}\n",
+  "restored_publication": {
+    "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27",
+    "active_collection": "rahbar-743f76853de446cd874f8e4c5a537610",
+    "embed_model": "nomic-embed-text",
+    "content_sha256": "6797a52afc6a6479d12004a3372b1da0e2fd0f1cd21c6af12837d9dd487b1f80",
+    "generation": "743f76853de446cd874f8e4c5a537610",
+    "dimension": 768,
+    "chunks": 646,
+    "count": 646
+  }
+}

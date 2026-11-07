@@ -3,17 +3,17 @@
 The baseline is a genuine first passing real-model run, not the fixture corpus
 and not a fabricated target. It was created explicitly by --update-baseline only
 after all absolute gates passed, in GitHub run 42294051804 at source
-54f37ff2ee954d70ac76ad8fd7716695654e0610. The final measurement from that same
-cluster is eval/results.json. Both contain 15 unchanged golden questions,
-recall@5 11/13 (0.8461538462), nine valid citations out of nine, and both
-must-abstain cases refused. Nine questions received grounded answers; four other
-answerable/injection questions safely declined or fell back. Citation membership
+54f37ff2ee954d70ac76ad8fd7716695654e0610. The latest final measurement from the corrected source-4917e45 audit
+42308165966 is eval/results.json; it compares against this preserved baseline. Both contain 15 unchanged golden questions,
+recall@5 11/13 (0.8461538462), valid citations for every cited answer, and both
+must-abstain cases refused. The baseline answered nine questions; the final source-4917e45 measurement
+answered eight. Other answerable/injection questions safely declined or fell back. Citation membership
 is not semantic entailment or a claim that all answerable questions were answered.
 
-The complete audit failed its cache-header assertion (the API correctly returns
+That first complete audit failed its cache-header assertion (the API correctly returns
 uppercase HIT/MISS). Its rollout restoration check also proved too weak: raw
-rollout-restored.html is a 502 page. Those runtime requirements remain unverified
-until the corrected rerun; passing golden metrics do not erase those failures.
+rollout-restored-502.html.txt is a 502 page. Those first-run runtime claims were not valid; the corrected rerun below
+subsequently verified them; passing golden metrics do not erase those failures.
 The raw report is preserved under docs/evidence/day3-audit-54f37ff.
 
 Model: llama3.2:3b, temperature 0.2; embeddings nomic-embed-text, 768 dimensions,
@@ -31,3 +31,8 @@ raising the shipped floor to 0.65. The next real run must compare to this genuin
 baseline without updating it. No relevance labels are changed. Results refer
 to the original runner path in their golden field; eval/golden.yaml is the same
 hashed input in this repository.
+
+The corrected audit 42308165966 passed all eleven runtime checks at shipped floor
+0.65, including live cutover, manual writer waiting and HTTP-200 exact-body rollback.
+Final recall drop is zero, citation validity 1.0, must-abstain failures zero. The
+baseline file was preserved, not updated to flatter the subsequent result.

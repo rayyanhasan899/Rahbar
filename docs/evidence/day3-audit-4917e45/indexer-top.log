@@ -1,0 +1,220 @@
+2026-11-06T23:09:35Z
+No resources found in rahbar namespace.
+2026-11-06T23:09:38Z
+error: metrics not available yet
+2026-11-06T23:09:41Z
+error: metrics not available yet
+2026-11-06T23:09:44Z
+error: metrics not available yet
+2026-11-06T23:09:47Z
+error: metrics not available yet
+2026-11-06T23:09:50Z
+error: metrics not available yet
+2026-11-06T23:09:53Z
+error: metrics not available yet
+2026-11-06T23:09:56Z
+error: metrics not available yet
+2026-11-06T23:09:59Z
+error: metrics not available yet
+2026-11-06T23:10:02Z
+error: metrics not available yet
+2026-11-06T23:10:05Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        131Mi           
+2026-11-06T23:10:09Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        131Mi           
+2026-11-06T23:10:12Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        131Mi           
+2026-11-06T23:10:15Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        131Mi           
+2026-11-06T23:10:18Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        131Mi           
+2026-11-06T23:10:21Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        152Mi           
+2026-11-06T23:10:24Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        152Mi           
+2026-11-06T23:10:27Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        152Mi           
+2026-11-06T23:10:30Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        152Mi           
+2026-11-06T23:10:33Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        152Mi           
+2026-11-06T23:10:36Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        142Mi           
+2026-11-06T23:10:39Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        142Mi           
+2026-11-06T23:10:42Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        142Mi           
+2026-11-06T23:10:45Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        142Mi           
+2026-11-06T23:10:48Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        142Mi           
+2026-11-06T23:10:51Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        160Mi           
+2026-11-06T23:10:54Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        160Mi           
+2026-11-06T23:10:57Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        160Mi           
+2026-11-06T23:11:01Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        160Mi           
+2026-11-06T23:11:04Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1000m        160Mi           
+2026-11-06T23:11:07Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   240m         143Mi           
+2026-11-06T23:11:10Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   240m         143Mi           
+2026-11-06T23:11:13Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   240m         143Mi           
+2026-11-06T23:11:16Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   240m         143Mi           
+2026-11-06T23:11:19Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   240m         143Mi           
+2026-11-06T23:11:22Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:25Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:28Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:31Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:34Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:37Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:40Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:44Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:47Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:50Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:53Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:56Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:11:59Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:12:02Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:12:05Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   2m           143Mi           
+2026-11-06T23:12:08Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:11Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:14Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:17Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:20Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:23Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:26Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:30Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:33Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:36Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:39Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:42Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:45Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:48Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:51Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:54Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:12:57Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:00Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:03Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:06Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:09Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:13Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:16Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:19Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:22Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:25Z
+POD             NAME      CPU(cores)   MEMORY(bytes)   
+indexer-pc8hv   indexer   1m           143Mi           
+2026-11-06T23:13:28Z
+error: Metrics not available for pod rahbar/indexer-pc8hv, age: 3m53.384592356s

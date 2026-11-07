@@ -24,7 +24,7 @@
     }
   },
   "citation_validity": 1.0,
-  "citation_count": 9,
+  "citation_count": 8,
   "missing_citations": 0,
   "abstention_correctness": 1.0,
   "must_abstain_count": 2,
@@ -42,7 +42,7 @@
       ],
       "expect": "English",
       "response": {
-        "request_id": "b1a33b03da2b85bbe0a51ec9a23d139a",
+        "request_id": "aa018bdf1ce70dc7ec01e71d5628d5ac",
         "answer": "English (except language courses, other than English, and Islamic Studies) [academic-rules-handbook-jun-2026.pdf / 1.1]",
         "citations": [
           {
@@ -92,7 +92,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.89,
+      "seconds": 0.07,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -109,7 +109,7 @@
       ],
       "expect": "passed",
       "response": {
-        "request_id": "a803611251811fff04e70337166d4c89",
+        "request_id": "a969dcddc609f495c3f332a83aced95f",
         "answer": "No, a student can only register for courses for which he/she has passed all the pre-requisite courses as specified in the academic office [academic-rules-handbook-jun-2026.pdf / 1.20]",
         "citations": [
           {
@@ -159,7 +159,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 26.32,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -176,8 +176,8 @@
       ],
       "expect": "four",
       "response": {
-        "request_id": "4231e4468aaf58260a3f18b100e9c92f",
-        "answer": "The minimum duration of a Bachelor\u2019s degree is four academic years (8 regular semesters) and a maximum time limit of 6 years, further extendable for one year with the approval of Statutory Bodies [academic-rules-handbook-jun-2026.pdf / 1.23].",
+        "request_id": "cf242776a64875d4c0631c8ead124333",
+        "answer": "The minimum duration of a Bachelor\u2019s degree is four academic years (8 regular semesters) [academic-rules-handbook-jun-2026.pdf / 1.23]. The maximum time limit of a Bachelor\u2019s degree is 6 years, further extendable for one year with the approval of Statutory Bodies [academic-rules-handbook-jun-2026.pdf / 1.23].",
         "citations": [
           {
             "source": "academic-rules-handbook-jun-2026.pdf",
@@ -226,7 +226,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 28.32,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -243,7 +243,7 @@
       ],
       "expect": "2.00",
       "response": {
-        "request_id": "ac5a726dc82e9f0a31f86a77a6a3528d",
+        "request_id": "a797b1f10813eb8304f468012090b455",
         "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
         "citations": [],
         "answered_from_context": false,
@@ -287,7 +287,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 32.55,
+      "seconds": 32.81,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": null
@@ -304,8 +304,8 @@
       ],
       "expect": "both",
       "response": {
-        "request_id": "133c2dd04915802efb8a372621518fa1",
-        "answer": "both theory and lab must be repeated [academic-rules-handbook-jun-2026.pdf / 4.7]",
+        "request_id": "0c355d0bfba7fc6b814278913db9bf44",
+        "answer": "Both theory and lab must be repeated [academic-rules-handbook-jun-2026.pdf / 4.7]",
         "citations": [
           {
             "source": "academic-rules-handbook-jun-2026.pdf",
@@ -354,7 +354,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 28.2,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -371,17 +371,11 @@
       ],
       "expect": "Lab",
       "response": {
-        "request_id": "35b61643ce0435538749aaf6f7df6bdb",
-        "answer": "No, only Lab needs to be repeated [academic-rules-handbook-jun-2026.pdf / 4.8]",
-        "citations": [
-          {
-            "source": "academic-rules-handbook-jun-2026.pdf",
-            "section": "4.8",
-            "page": 20
-          }
-        ],
-        "answered_from_context": true,
-        "confidence": "high",
+        "request_id": "16d711df1dff677e2a3d6660089a88e4",
+        "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
         "retrieved": [
           {
             "chunk_id": "26b664fbfc67393765773b87a9bf8887",
@@ -421,10 +415,10 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 26.32,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
-      "citation_validity": 1.0
+      "citation_validity": null
     },
     {
       "id": "q07",
@@ -438,7 +432,7 @@
       ],
       "expect": "2",
       "response": {
-        "request_id": "d612a4f1005287c4ce7678e4a000d05c",
+        "request_id": "6bfe9fb15335b86019b8bd4f903a4ce8",
         "answer": "A student will be allowed to repeat a maximum of 2 courses (with associated labs if any) [academic-rules-handbook-jun-2026.pdf / 6.6]",
         "citations": [
           {
@@ -488,7 +482,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 30.37,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -505,7 +499,7 @@
       ],
       "expect": "first two weeks",
       "response": {
-        "request_id": "3c1ef6565c5911253c9c7984c53956ce",
+        "request_id": "264ba6427f46d5d4da5f259c68656a5e",
         "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
         "citations": [],
         "answered_from_context": false,
@@ -549,7 +543,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 33.81,
+      "seconds": 34.68,
       "recall_at_3": 0.0,
       "recall_at_5": 0.0,
       "citation_validity": null
@@ -566,17 +560,11 @@
       ],
       "expect": "makeup week",
       "response": {
-        "request_id": "3959e09e1453c2c670624196c3956e1f",
-        "answer": "The last day of the makeup week of every semester [academic-rules-handbook-jun-2026.pdf / Table on page 22]",
-        "citations": [
-          {
-            "source": "academic-rules-handbook-jun-2026.pdf",
-            "section": "Table on page 22",
-            "page": 22
-          }
-        ],
-        "answered_from_context": true,
-        "confidence": "high",
+        "request_id": "bbf715200b9c5f6012be443feae985c5",
+        "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
+        "citations": [],
+        "answered_from_context": false,
+        "confidence": "low",
         "retrieved": [
           {
             "chunk_id": "074751f27fc5aebcab52731fe102227c",
@@ -607,19 +595,19 @@
             "score": 0.77150404
           },
           {
-            "chunk_id": "a5bd0206bdc887e1495fb8437016756d",
+            "chunk_id": "5b9e09082ceac877a8ca7968c647b7fa",
             "source": "academic-rules-handbook-jun-2026.pdf",
             "section": "4.23",
-            "page": 23,
+            "page": 22,
             "score": 0.75427186
           }
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 33.41,
       "recall_at_3": 0.0,
       "recall_at_5": 0.0,
-      "citation_validity": 1.0
+      "citation_validity": null
     },
     {
       "id": "q10",
@@ -633,7 +621,7 @@
       ],
       "expect": "last day of classes",
       "response": {
-        "request_id": "3e2bebbf78a16ab71d757674063c17fd",
+        "request_id": "a9fab81f81b47e0b4d1aabf99ceb9581",
         "answer": "The last day of classes [undergraduate-academic-rules-aug-2023.pdf / 4.25]",
         "citations": [
           {
@@ -683,7 +671,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 30.65,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -700,7 +688,7 @@
       ],
       "expect": "2.00",
       "response": {
-        "request_id": "6d019cc29d20a9a17c4874ae8bfbd2f9",
+        "request_id": "69d30b869accc1052dd75abb949c9cce",
         "answer": "2.00 [academic-rules-handbook-jun-2026.pdf / 5.4]",
         "citations": [
           {
@@ -750,7 +738,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 0.07,
+      "seconds": 23.48,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": 1.0
@@ -767,11 +755,17 @@
       ],
       "expect": "20%",
       "response": {
-        "request_id": "88c50bdf98b16a0b65155f76a8d67db6",
-        "answer": "I could not produce a verified answer from the documents just now. Please try again in a moment.",
-        "citations": [],
-        "answered_from_context": false,
-        "confidence": "low",
+        "request_id": "30200972d0240bc6b9ff703acb5a40b3",
+        "answer": "100% attendance is required, with a maximum of 20% absence condonable [academic-rules-handbook-jun-2026.pdf / 1.21]",
+        "citations": [
+          {
+            "source": "academic-rules-handbook-jun-2026.pdf",
+            "section": "1.21",
+            "page": 10
+          }
+        ],
+        "answered_from_context": true,
+        "confidence": "high",
         "retrieved": [
           {
             "chunk_id": "7c35479b98850b8f58bda53907c90358",
@@ -811,10 +805,10 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 38.55,
+      "seconds": 27.02,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
-      "citation_validity": null
+      "citation_validity": 1.0
     },
     {
       "id": "q13",
@@ -823,7 +817,7 @@
       "relevant": [],
       "expect": null,
       "response": {
-        "request_id": "8c80d61fde2554bef4765506329a9382",
+        "request_id": "3fb3acf3b3211e330ef4440d5ebbbef1",
         "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
         "citations": [],
         "answered_from_context": false,
@@ -867,7 +861,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 53.32,
+      "seconds": 0.09,
       "recall_at_3": null,
       "recall_at_5": null,
       "citation_validity": null
@@ -879,7 +873,7 @@
       "relevant": [],
       "expect": null,
       "response": {
-        "request_id": "e916ae20563e9c61db27b55c7972e3af",
+        "request_id": "24a2aba68dcef7c8202defbbba23e59f",
         "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
         "citations": [],
         "answered_from_context": false,
@@ -914,16 +908,16 @@
             "score": 0.57361877
           },
           {
-            "chunk_id": "8f65ba530141cbaf5cbb806cb4fc7348",
+            "chunk_id": "d303d5dcd8f7bc5ee3229f934e1772a0",
             "source": "student-handbook-jun-2026.pdf",
             "section": "8. Remember to log out whenever you are done using any",
-            "page": 36,
+            "page": 37,
             "score": 0.5705059800000001
           }
         ],
         "provider": "ollama"
       },
-      "seconds": 21.31,
+      "seconds": 0.1,
       "recall_at_3": null,
       "recall_at_5": null,
       "citation_validity": null
@@ -940,7 +934,7 @@
       ],
       "expect": "100%",
       "response": {
-        "request_id": "9f123ffd18a3ecba10b36329419d549a",
+        "request_id": "3b4aaf448e7e84f17287f9c121bc8310",
         "answer": "The documents I can search do not cover this question, so I cannot answer it reliably. Please check with the relevant university office.",
         "citations": [],
         "answered_from_context": false,
@@ -984,7 +978,7 @@
         ],
         "provider": "ollama"
       },
-      "seconds": 22.71,
+      "seconds": 18.89,
       "recall_at_3": 1.0,
       "recall_at_5": 1.0,
       "citation_validity": null

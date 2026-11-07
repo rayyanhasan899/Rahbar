@@ -1,8 +1,9 @@
 # ADR 0003: Answer pipeline, providers and the request contract
 
 ## Status
-Accepted for implementation · 6 November 2026. Thresholds and temperature are
-candidates until the measurements listed under Consequences are committed.
+Accepted; real runtime verified 7 November 2026. Relevance floor 0.65 and
+cache threshold 0.75 follow committed measurements. Temperature 0.2 is a
+deliberate low-variance setting, not a measured claim of superiority over zero.
 
 ## Context
 Sections 3.2 to 3.5 ask for a production query path: a pluggable provider, honest
@@ -30,9 +31,9 @@ hold up when the model is weak.
   data, inside BEGIN/END markers. Sentences in passages that read like instructions
   to an assistant are replaced before the model sees them. The patterns are kept
   narrow so real policy sentences survive.
-- **Temperature 0.2** (candidate). Extraction from evidence needs little variety;
-  a small model at exactly 0 tends to repeat itself. To be compared with 0.0 on
-  the golden set before submission.
+- **Temperature 0.2.** Factual JSON needs little variation, within the assignment
+  range of 0–0.3. This value was exercised by the real golden gate; no unperformed
+  temperature-zero comparison or claim that temperature fixes hallucination is made.
 - **Contract changes.** `AskRequest` gains an optional `history` (at most 10 turns,
   the API uses the last `MAX_HISTORY_TURNS`). Existing clients that send only
   `question` are unaffected. Cache state travels in the `X-Cache` response header
@@ -68,3 +69,9 @@ hold up when the model is weak.
   retrieval, citation and abstention mechanics, not answer wording.
 - Watch `rahbar_fallbacks_total` and `rahbar_generation_retries_total`: a rising
   rate means the model or prompt is struggling.
+
+Day 3 adds canonical model refusals, contradiction retry, sentence citation tags,
+per-entry expiry, directional intent guards and prompt/schema-sensitive cache
+namespaces. The real poisoned-index probe safely refused the planted instruction.
+The corrected audit proved generation-based invalidation and serialized writers
+without granting indexer-to-Redis access. See PIPELINE.md for measured tradeoffs.

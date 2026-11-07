@@ -1,6 +1,6 @@
 # ADR 0002: Structure first, measured lexical-token budgets
 
-Status: Measured Day 1 candidate: 700/100; final augmented-extraction validation remains.
+Status: Accepted 700/100 after fresh deployed-image measurements, 7 November 2026.
 
 ## Context
 Policy clauses, definitions and table rows are meaningful boundaries. Fixed
@@ -38,3 +38,9 @@ possible. Dedicated hybrid retrieval is Day 2/3 work only if exact-term
 measurements justify it; no benchmark labels are encoded in retrieval logic.
 
 Measured results: all three candidates achieved 11/13 recall@5. Chunk counts were 647, 565 and 536; amplification was 1.089832, 1.078163 and 1.061650. Choose 700/100 provisionally for lower duplication at equal measured recall.
+
+Fresh augmented-extraction run 42308165966 confirms equal 11/13 recall@5.
+The independently recorded fresh configurations contain 738/671/646 chunks and
+amplification 1.061133/1.047257/1.029494. Choose 700/100 for lowest duplication at
+equal measured recall. Historical Day 1 figures above describe the earlier profile;
+eval/chunk-experiments.json and PIPELINE.md hold the current measured profile.

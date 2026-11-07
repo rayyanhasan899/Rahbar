@@ -1,0 +1,4 @@
+{"ts": "2026-11-06T23:24:39Z", "logger": "rahbar.indexer", "request_id": "-", "msg": "writer waiting", "lock": "/locks/index.lock"}
+{"ts": "2026-11-06T23:28:08Z", "logger": "rahbar.indexer", "request_id": "-", "msg": "writer acquired", "lock": "/locks/index.lock", "wait_seconds": 208.441}
+{"ts": "2026-11-06T23:28:08Z", "logger": "rahbar.indexer", "request_id": "-", "msg": "manual probe entered writer critical section"}
+{"ts": "2026-11-06T23:28:08Z", "logger": "rahbar.indexer", "request_id": "-", "msg": "writer released", "lock": "/locks/index.lock"}

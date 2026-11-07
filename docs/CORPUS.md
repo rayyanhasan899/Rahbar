@@ -46,3 +46,14 @@ still requires human review. No claim is made that every table is lossless.
 Reproduce extraction with `python scripts/audit_corpus.py` after fetching.
 Cached extracts are ignored, contain third-party text, and are never submission
 artifacts. Regenerate them after changing extraction/cleaning rules.
+
+## Day 3 live-source and deployed-image audit
+
+Run 42294051804 re-fetched the selected public documents serially, verified all
+eight hashes and compared the snapshot to the committed manifest. The actual
+indexer image extracted and published 646 chunks at 700/100. A separate fresh
+extraction inside that same image produced the profile/fingerprint audit in
+docs/evidence/day3-audit-54f37ff/extraction-audit.json: Tesseract 5.3.0,
+Poppler 22.12.0 and pdfplumber 0.11.10. The six empty pages remain disclosed;
+OCR/table interpretation is not assumed lossless. Physical page counts and the
+pre-tuning golden source/section labels were not changed to fit retrieval.

@@ -1,7 +1,7 @@
 # Engineering notes
 
 These answers describe the inspected implementation and observed evidence.
-Cluster results still running are explicitly marked NOT VERIFIED; code locations
+Remaining cluster results are explicitly marked NOT VERIFIED; code locations
 refer to the Day 3 dev tree. This is agent-assisted work, not a claim of personal
 human debugging time.
 
@@ -14,7 +14,11 @@ api/app/main.py:46 performs a bounded read-only pin check. The Job holds
 writer_lock (indexer/pipeline/run.py:26,144), stages a new collection and publishes
 only after count validation (indexer/pipeline/store.py:33,53). Manual Jobs and the
 CronJob use the same shared PVC lock. ADR 0001 explains why Forbid alone is
-insufficient. Cluster writer-wait/cutover evidence: NOT VERIFIED pending real audit.
+insufficient. Actual source-54f37ff Job published 646 chunks independently of
+API startup (docs/evidence/day3-audit-54f37ff/indexer.log). The corrected audit (4917e45) then proved live cutover with 47 HTTP-200
+question probes, unchanged API template, a new generation at the same 646 count,
+a MISS across publication followed by HIT, and a manual writer waiting 208.441 s.
+See docs/evidence/day3-audit-4917e45/reindex.json and manual-lock.log.
 
 ## 2. Swapped liveness/readiness during a 90-second dependency outage
 
@@ -25,7 +29,10 @@ Swapping them would restart API containers after approximately three failed
 readiness path would continue routing requests to broken readers. Startup load
 would compound the outage. Correct readiness removes endpoints after its failure
 threshold; liveness preserves processes. Recovery restores endpoints without
-reindexing. Real outage/restart-count demonstration: NOT VERIFIED pending audit.
+reindexing. The real audit held Chroma down for at least 90 seconds: /healthz
+stayed 200, /readyz returned 503, API UID/restart counts were unchanged and
+readiness recovered. Evidence: docs/evidence/day3-audit-54f37ff/dependency-probes.json.
+The swapped configuration is a causal analysis; it was not actually deployed.
 
 ## 3. CPU HPA and generation latency
 
@@ -34,42 +41,61 @@ waits for Ollama over HTTP (api/app/providers/llm/ollama.py:32), so a saturated
 model can produce high latency while API CPU remains low. More API readers do
 not create model capacity. Requests in flight or p95 generation latency from
 rahbar_generation_seconds are better demand signals through a metrics adapter;
-model capacity must scale separately. Numeric HPA and `kubectl top` samples during a real
-request: NOT VERIFIED pending audit. No invented scale-out is reported.
+model capacity must scale separately. Four actual `kubectl top`/HPA snapshots
+during a real follow-up recorded 19%, 9%, 9%, 9% CPU utilization, below the 70%
+target; the final snapshot was numeric at 1%. The real follow-up was cited and
+answered by Ollama. Three distinct endpoint IPs were present. See
+docs/evidence/day3-audit-54f37ff/resources.json and metrics.txt. No scale-out
+is invented; this small observation supports the CPU-signal limitation.
 
 ## 4. Indexer memory and limit
 
-The real Job has a 1 GiB container limit (k8s/base/indexer-job.yaml:38). Extraction
-is page-at-a-time, closes pdfplumber page layouts, caps Tesseract threads and
-embeds in bounded batches. A local extraction process reached approximately
-180 MiB in an observed sample; that excludes separate OCR child processes and
-is not the Kubernetes indexer peak. The acceptance harness samples container
-memory throughout the real Job. Peak, margin and timestamped container samples:
-NOT VERIFIED until that artifact is inspected. An OOM kill conventionally exits
-137 with reason OOMKilled; the laptop's old API-server exit 137 had
-OOMKilled=false, so it is not evidence of an indexer OOM.
+The real Job has a 1 GiB (1024 MiB) container limit and 256 MiB request
+(k8s/base/indexer-job.yaml:35,38). Extraction closes PDF page layouts, limits
+Tesseract threads and embeds in bounded batches. The real container was sampled
+64 times, nominally every three seconds, during indexing. Highest observed memory
+was **203 MiB** at 21:22:55–21:23:07 UTC on 6 November (02:22:55–02:23:07 PKT on
+7 November); margin to the limit was **821 MiB**, about 80.2% of the limit.
+These are container samples including OCR children, not only a Python process.
+See docs/evidence/day3-audit-54f37ff/indexer-top.log:58 and indexer.log. A brief
+unsampled peak could be higher. The 1 GiB limit intentionally retains headroom
+for page rasterization; this corpus measurement does not establish arbitrary-PDF
+memory safety. The Job completed without an observed OOM.
+
+If cgroup memory exceeds its limit, Kubernetes reports reason OOMKilled and exit
+137; examine `kubectl describe pod` and container lastState, not just the number.
+No deliberate indexer OOM experiment was performed. The laptop's old API-server
+exit 137 had OOMKilled=false and is not indexer OOM evidence.
 
 ## 5. Recall by type
 
-The pre-table-augmentation Day 1 experiment (eval/chunk-experiments.json) measured
-11/13 recall@5 for all three configurations. Version questions were worst at
-50%, ordinary 87.5%, exact/injection 100%. q09's clause 4.25 was displaced by
-nearby 4.24/4.23; q08 retrieved equivalent handbook material outside the designated
-reference label. The labels predate retrieval and remain unchanged. Do not claim
-exact terms were worst merely because that is a plausible lecture example.
-Fresh extraction/configuration and final generation results: NOT VERIFIED pending
-the real audit, and must supersede this historical comparison before submission.
+The fresh real-corpus final measurement (eval/results.json, source 54f37ff)
+reports version questions worst at **50%**, ordinary **87.5%**, exact and
+injection **100%** recall@5. Overall is **11/13 = 84.6154%**, with absent-topic
+questions excluded from recall. The fresh three-configuration experiment agrees.
+q09's designated clause 4.25 loses its slot to nearby clauses/table sections;
+q08 retrieves equivalent handbook material outside its designated reference.
+For q09 the model can still answer from a table, but recall correctly does not
+rewrite the predeclared clause label to count that as a hit. The JSON retains
+per-question references for inspection. Exact terms were not worst in this small
+set. Nine questions received cited model answers; four non-mandatory cases safely
+refused/fell back. Retrieval recall and answer availability measure different
+things; 100% citation validity is not a claim of complete factual correctness.
 
 ## 6. Changed embedding pin with old index
 
 A new API checks the published pointer and collection model/dimension
-(api/app/retrieval/chroma.py:30,68). A mismatch logs an index readiness conflict
+(api/app/retrieval/chroma.py:27,65). A mismatch logs an index readiness conflict
 (api/app/main.py:49), /readyz returns 503, and retrieval refuses a mixed-model
 query. A ConfigMap edit alone does not replace an existing process environment;
 the demonstration restarts the deployment. maxSurge 1/maxUnavailable 0
 (k8s/base/api.yaml:88) allows old ready pods to serve while the new pod stays
 0/1. Restore the prior pin or publish an index made with the new pin. Actual
-conflict/recovery logs: NOT VERIFIED pending audit.
+conflict/recovery logs are in docs/evidence/day3-audit-54f37ff/pin-conflict.json:
+new pod api-7545dfdb7d-b8242 stayed unready and logged index=nomic-embed-text
+api=deliberately-wrong-model. Restoring the original configuration recovered the
+publication with 646 chunks and the original model. The audit waits for Running
+before reading the conflict logs, so ContainerCreating is not mistaken for failure.
 
 ## 7. A failure lasting more than an hour
 
@@ -93,3 +119,9 @@ committed excerpt is docs/evidence/day3-build-integrity-failure.txt. CI later
 built and scanned all three images successfully. This is an observed agent-run
 failure, not an invented hour of either partner's manual experience.
 
+The corrected full audit at source 4917e45 passed. Its initial Job had 66 memory
+samples, with highest observed 160 MiB (864 MiB limit margin); the earlier real
+run's 203 MiB remains the larger observed peak across these two runs. Rollback
+now verifies status 200 and exact original UI bytes, rather than absence of a
+demo marker in an error page. Source/comment-only documentation edits after this
+audit do not alter the tested application, pipeline or manifests.

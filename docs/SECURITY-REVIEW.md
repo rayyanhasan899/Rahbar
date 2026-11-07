@@ -50,3 +50,22 @@ sharing of the comment was unchecked. The original finding list and actual UI
 screenshot are retained. No other issue was accepted and no scan, policy or
 approval requirement was disabled. The automatic analysis must still rerun and
 pass; the acceptance operation alone is not a green CI claim.
+
+The security rating is now A after the eight approved HTTP decisions. A separate
+reliability finding identified missing HTML5 attributes in the archived nginx
+502 error page. This is immutable negative HTTP evidence, not application UI;
+it is now named rollout-restored-502.html.txt with unchanged response bytes.
+The actual audit defect was fixed by requiring status 200 and the original body
+hash after undo. No failed response was edited into a successful one.
+
+The final scan review found an EOL warning in the otherwise passing UI gate:
+old nginx1.28.0 used Alpine3.21.5, so vulnerability detection could be incomplete.
+The UI base is upgraded to official nginx/nginx-unprivileged1.30.6-alpine3.24,
+pinned to manifest digest
+sha256:44e74ca483234093081138b6d7b6f561d55557756a2deefc3a5056148defeb99.
+The official registry tag metadata was verified on7November2026 (last updated
+2November), including its active amd64 image. This is a real base-image change;
+new build/scan/Ingress and real-audit results are required before claiming the
+final image verified. Prior passing scans are scoped to their recorded source.
+Official sources: https://github.com/nginx/docker-nginx-unprivileged and
+https://hub.docker.com/v2/repositories/nginx/nginx-unprivileged/tags/1.30.6-alpine3.24

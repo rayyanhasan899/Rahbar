@@ -1,0 +1,242 @@
+[
+  {
+    "time": 1794007294.750276,
+    "probes": {
+      "/healthz": {
+        "code": 200,
+        "body": {
+          "status": "alive"
+        }
+      },
+      "/readyz": {
+        "code": 503,
+        "body": {
+          "status": "not ready",
+          "checks": {
+            "chroma": "timed out",
+            "redis": "reachable"
+          }
+        }
+      }
+    },
+    "endpoints": {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "annotations": {
+          "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-06T23:13:34Z"
+        },
+        "creationTimestamp": "2026-11-06T23:06:24Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "2158",
+        "uid": "4160a5ca-910a-458f-9b58-f342e5f5aee9"
+      },
+      "subsets": [
+        {
+          "addresses": [
+            {
+              "ip": "192.168.167.146",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-z9fpn",
+                "namespace": "rahbar",
+                "uid": "bc5ab176-38af-4196-9e07-cfa9cd11a512"
+              }
+            },
+            {
+              "ip": "192.168.167.147",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-nfsh5",
+                "namespace": "rahbar",
+                "uid": "39452139-d840-4b0d-9830-43d3dd510c13"
+              }
+            },
+            {
+              "ip": "192.168.167.148",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-9578p",
+                "namespace": "rahbar",
+                "uid": "93403a01-9ffc-4d20-93a5-978413048f5c"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 8000,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "time": 1794007327.4729764,
+    "probes": {
+      "/healthz": {
+        "code": 200,
+        "body": {
+          "status": "alive"
+        }
+      },
+      "/readyz": {
+        "code": 503,
+        "body": {
+          "status": "not ready",
+          "checks": {
+            "chroma": "timed out",
+            "redis": "reachable"
+          }
+        }
+      }
+    },
+    "endpoints": {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "annotations": {
+          "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-06T23:21:55Z"
+        },
+        "creationTimestamp": "2026-11-06T23:06:24Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "2965",
+        "uid": "4160a5ca-910a-458f-9b58-f342e5f5aee9"
+      },
+      "subsets": [
+        {
+          "notReadyAddresses": [
+            {
+              "ip": "192.168.167.146",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-z9fpn",
+                "namespace": "rahbar",
+                "uid": "bc5ab176-38af-4196-9e07-cfa9cd11a512"
+              }
+            },
+            {
+              "ip": "192.168.167.147",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-nfsh5",
+                "namespace": "rahbar",
+                "uid": "39452139-d840-4b0d-9830-43d3dd510c13"
+              }
+            },
+            {
+              "ip": "192.168.167.148",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-9578p",
+                "namespace": "rahbar",
+                "uid": "93403a01-9ffc-4d20-93a5-978413048f5c"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 8000,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "time": 1794007360.2286134,
+    "probes": {
+      "/healthz": {
+        "code": 200,
+        "body": {
+          "status": "alive"
+        }
+      },
+      "/readyz": {
+        "code": 503,
+        "body": {
+          "status": "not ready",
+          "checks": {
+            "chroma": "timed out",
+            "redis": "reachable"
+          }
+        }
+      }
+    },
+    "endpoints": {
+      "apiVersion": "v1",
+      "kind": "Endpoints",
+      "metadata": {
+        "annotations": {
+          "endpoints.kubernetes.io/last-change-trigger-time": "2026-11-06T23:21:55Z"
+        },
+        "creationTimestamp": "2026-11-06T23:06:24Z",
+        "labels": {
+          "endpoints.kubernetes.io/managed-by": "endpoint-controller"
+        },
+        "name": "api",
+        "namespace": "rahbar",
+        "resourceVersion": "2965",
+        "uid": "4160a5ca-910a-458f-9b58-f342e5f5aee9"
+      },
+      "subsets": [
+        {
+          "notReadyAddresses": [
+            {
+              "ip": "192.168.167.146",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-z9fpn",
+                "namespace": "rahbar",
+                "uid": "bc5ab176-38af-4196-9e07-cfa9cd11a512"
+              }
+            },
+            {
+              "ip": "192.168.167.147",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-nfsh5",
+                "namespace": "rahbar",
+                "uid": "39452139-d840-4b0d-9830-43d3dd510c13"
+              }
+            },
+            {
+              "ip": "192.168.167.148",
+              "nodeName": "rahbar-real-control-plane",
+              "targetRef": {
+                "kind": "Pod",
+                "name": "api-7574b8ddbb-9578p",
+                "namespace": "rahbar",
+                "uid": "93403a01-9ffc-4d20-93a5-978413048f5c"
+              }
+            }
+          ],
+          "ports": [
+            {
+              "port": 8000,
+              "protocol": "TCP"
+            }
+          ]
+        }
+      ]
+    }
+  }
+]

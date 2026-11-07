@@ -1,0 +1,446 @@
+{
+  "samples": [
+    {
+      "time": 1794007751.9709423,
+      "top": "POD                     NAME     CPU(cores)   MEMORY(bytes)   \napi-7574b8ddbb-5xgrv    api      3m           71Mi            \napi-7574b8ddbb-nfsh5    api      3m           78Mi            \napi-7574b8ddbb-z9fpn    api      3m           73Mi            \nchroma-0                chroma   2m           50Mi            \nredis-9c8f6cd5d-tdwlz   redis    7m           3Mi             \nui-6fc4877b88-m4bt8     ui       1m           2Mi             \n",
+      "hpa": {
+        "apiVersion": "autoscaling/v2",
+        "kind": "HorizontalPodAutoscaler",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"autoscaling/v2\",\"kind\":\"HorizontalPodAutoscaler\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"maxReplicas\":8,\"metrics\":[{\"resource\":{\"name\":\"cpu\",\"target\":{\"averageUtilization\":70,\"type\":\"Utilization\"}},\"type\":\"Resource\"}],\"minReplicas\":3,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"api\"}}}\n"
+          },
+          "creationTimestamp": "2026-11-06T23:13:29Z",
+          "name": "api",
+          "namespace": "rahbar",
+          "resourceVersion": "4005",
+          "uid": "4847aa7e-e47e-42c5-a988-4431ac5ee19a"
+        },
+        "spec": {
+          "maxReplicas": 8,
+          "metrics": [
+            {
+              "resource": {
+                "name": "cpu",
+                "target": {
+                  "averageUtilization": 70,
+                  "type": "Utilization"
+                }
+              },
+              "type": "Resource"
+            }
+          ],
+          "minReplicas": 3,
+          "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "api"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-11-06T23:13:44Z",
+              "message": "recommended size matches current size",
+              "reason": "ReadyForNewScale",
+              "status": "True",
+              "type": "AbleToScale"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:13:59Z",
+              "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+              "reason": "ValidMetricFound",
+              "status": "True",
+              "type": "ScalingActive"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:18:44Z",
+              "message": "the desired replica count is less than the minimum replica count",
+              "reason": "TooFewReplicas",
+              "status": "True",
+              "type": "ScalingLimited"
+            }
+          ],
+          "currentMetrics": [
+            {
+              "resource": {
+                "current": {
+                  "averageUtilization": 1,
+                  "averageValue": "3m"
+                },
+                "name": "cpu"
+              },
+              "type": "Resource"
+            }
+          ],
+          "currentReplicas": 3,
+          "desiredReplicas": 3
+        }
+      }
+    },
+    {
+      "time": 1794007757.0811653,
+      "top": "POD                     NAME     CPU(cores)   MEMORY(bytes)   \napi-7574b8ddbb-5xgrv    api      3m           71Mi            \napi-7574b8ddbb-nfsh5    api      3m           78Mi            \napi-7574b8ddbb-z9fpn    api      3m           73Mi            \nchroma-0                chroma   2m           50Mi            \nredis-9c8f6cd5d-tdwlz   redis    7m           3Mi             \nui-6fc4877b88-m4bt8     ui       1m           2Mi             \n",
+      "hpa": {
+        "apiVersion": "autoscaling/v2",
+        "kind": "HorizontalPodAutoscaler",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"autoscaling/v2\",\"kind\":\"HorizontalPodAutoscaler\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"maxReplicas\":8,\"metrics\":[{\"resource\":{\"name\":\"cpu\",\"target\":{\"averageUtilization\":70,\"type\":\"Utilization\"}},\"type\":\"Resource\"}],\"minReplicas\":3,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"api\"}}}\n"
+          },
+          "creationTimestamp": "2026-11-06T23:13:29Z",
+          "name": "api",
+          "namespace": "rahbar",
+          "resourceVersion": "4005",
+          "uid": "4847aa7e-e47e-42c5-a988-4431ac5ee19a"
+        },
+        "spec": {
+          "maxReplicas": 8,
+          "metrics": [
+            {
+              "resource": {
+                "name": "cpu",
+                "target": {
+                  "averageUtilization": 70,
+                  "type": "Utilization"
+                }
+              },
+              "type": "Resource"
+            }
+          ],
+          "minReplicas": 3,
+          "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "api"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-11-06T23:13:44Z",
+              "message": "recommended size matches current size",
+              "reason": "ReadyForNewScale",
+              "status": "True",
+              "type": "AbleToScale"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:13:59Z",
+              "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+              "reason": "ValidMetricFound",
+              "status": "True",
+              "type": "ScalingActive"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:18:44Z",
+              "message": "the desired replica count is less than the minimum replica count",
+              "reason": "TooFewReplicas",
+              "status": "True",
+              "type": "ScalingLimited"
+            }
+          ],
+          "currentMetrics": [
+            {
+              "resource": {
+                "current": {
+                  "averageUtilization": 1,
+                  "averageValue": "3m"
+                },
+                "name": "cpu"
+              },
+              "type": "Resource"
+            }
+          ],
+          "currentReplicas": 3,
+          "desiredReplicas": 3
+        }
+      }
+    },
+    {
+      "time": 1794007762.2086992,
+      "top": "POD                     NAME     CPU(cores)   MEMORY(bytes)   \napi-7574b8ddbb-5xgrv    api      6m           72Mi            \napi-7574b8ddbb-nfsh5    api      66m          78Mi            \napi-7574b8ddbb-z9fpn    api      5m           73Mi            \nchroma-0                chroma   3m           51Mi            \nredis-9c8f6cd5d-tdwlz   redis    6m           3Mi             \nui-6fc4877b88-m4bt8     ui       1m           2Mi             \n",
+      "hpa": {
+        "apiVersion": "autoscaling/v2",
+        "kind": "HorizontalPodAutoscaler",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"autoscaling/v2\",\"kind\":\"HorizontalPodAutoscaler\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"maxReplicas\":8,\"metrics\":[{\"resource\":{\"name\":\"cpu\",\"target\":{\"averageUtilization\":70,\"type\":\"Utilization\"}},\"type\":\"Resource\"}],\"minReplicas\":3,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"api\"}}}\n"
+          },
+          "creationTimestamp": "2026-11-06T23:13:29Z",
+          "name": "api",
+          "namespace": "rahbar",
+          "resourceVersion": "4005",
+          "uid": "4847aa7e-e47e-42c5-a988-4431ac5ee19a"
+        },
+        "spec": {
+          "maxReplicas": 8,
+          "metrics": [
+            {
+              "resource": {
+                "name": "cpu",
+                "target": {
+                  "averageUtilization": 70,
+                  "type": "Utilization"
+                }
+              },
+              "type": "Resource"
+            }
+          ],
+          "minReplicas": 3,
+          "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "api"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-11-06T23:13:44Z",
+              "message": "recommended size matches current size",
+              "reason": "ReadyForNewScale",
+              "status": "True",
+              "type": "AbleToScale"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:13:59Z",
+              "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+              "reason": "ValidMetricFound",
+              "status": "True",
+              "type": "ScalingActive"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:18:44Z",
+              "message": "the desired replica count is less than the minimum replica count",
+              "reason": "TooFewReplicas",
+              "status": "True",
+              "type": "ScalingLimited"
+            }
+          ],
+          "currentMetrics": [
+            {
+              "resource": {
+                "current": {
+                  "averageUtilization": 1,
+                  "averageValue": "3m"
+                },
+                "name": "cpu"
+              },
+              "type": "Resource"
+            }
+          ],
+          "currentReplicas": 3,
+          "desiredReplicas": 3
+        }
+      }
+    },
+    {
+      "time": 1794007767.3391364,
+      "top": "POD                     NAME     CPU(cores)   MEMORY(bytes)   \napi-7574b8ddbb-5xgrv    api      6m           72Mi            \napi-7574b8ddbb-nfsh5    api      66m          78Mi            \napi-7574b8ddbb-z9fpn    api      5m           73Mi            \nchroma-0                chroma   3m           51Mi            \nredis-9c8f6cd5d-tdwlz   redis    6m           3Mi             \nui-6fc4877b88-m4bt8     ui       1m           2Mi             \n",
+      "hpa": {
+        "apiVersion": "autoscaling/v2",
+        "kind": "HorizontalPodAutoscaler",
+        "metadata": {
+          "annotations": {
+            "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"autoscaling/v2\",\"kind\":\"HorizontalPodAutoscaler\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"maxReplicas\":8,\"metrics\":[{\"resource\":{\"name\":\"cpu\",\"target\":{\"averageUtilization\":70,\"type\":\"Utilization\"}},\"type\":\"Resource\"}],\"minReplicas\":3,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"api\"}}}\n"
+          },
+          "creationTimestamp": "2026-11-06T23:13:29Z",
+          "name": "api",
+          "namespace": "rahbar",
+          "resourceVersion": "4005",
+          "uid": "4847aa7e-e47e-42c5-a988-4431ac5ee19a"
+        },
+        "spec": {
+          "maxReplicas": 8,
+          "metrics": [
+            {
+              "resource": {
+                "name": "cpu",
+                "target": {
+                  "averageUtilization": 70,
+                  "type": "Utilization"
+                }
+              },
+              "type": "Resource"
+            }
+          ],
+          "minReplicas": 3,
+          "scaleTargetRef": {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "name": "api"
+          }
+        },
+        "status": {
+          "conditions": [
+            {
+              "lastTransitionTime": "2026-11-06T23:13:44Z",
+              "message": "recommended size matches current size",
+              "reason": "ReadyForNewScale",
+              "status": "True",
+              "type": "AbleToScale"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:13:59Z",
+              "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+              "reason": "ValidMetricFound",
+              "status": "True",
+              "type": "ScalingActive"
+            },
+            {
+              "lastTransitionTime": "2026-11-06T23:18:44Z",
+              "message": "the desired replica count is less than the minimum replica count",
+              "reason": "TooFewReplicas",
+              "status": "True",
+              "type": "ScalingLimited"
+            }
+          ],
+          "currentMetrics": [
+            {
+              "resource": {
+                "current": {
+                  "averageUtilization": 1,
+                  "averageValue": "3m"
+                },
+                "name": "cpu"
+              },
+              "type": "Resource"
+            }
+          ],
+          "currentReplicas": 3,
+          "desiredReplicas": 3
+        }
+      }
+    }
+  ],
+  "hpa": {
+    "apiVersion": "autoscaling/v2",
+    "kind": "HorizontalPodAutoscaler",
+    "metadata": {
+      "annotations": {
+        "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"autoscaling/v2\",\"kind\":\"HorizontalPodAutoscaler\",\"metadata\":{\"annotations\":{},\"name\":\"api\",\"namespace\":\"rahbar\"},\"spec\":{\"maxReplicas\":8,\"metrics\":[{\"resource\":{\"name\":\"cpu\",\"target\":{\"averageUtilization\":70,\"type\":\"Utilization\"}},\"type\":\"Resource\"}],\"minReplicas\":3,\"scaleTargetRef\":{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"name\":\"api\"}}}\n"
+      },
+      "creationTimestamp": "2026-11-06T23:13:29Z",
+      "name": "api",
+      "namespace": "rahbar",
+      "resourceVersion": "4050",
+      "uid": "4847aa7e-e47e-42c5-a988-4431ac5ee19a"
+    },
+    "spec": {
+      "maxReplicas": 8,
+      "metrics": [
+        {
+          "resource": {
+            "name": "cpu",
+            "target": {
+              "averageUtilization": 70,
+              "type": "Utilization"
+            }
+          },
+          "type": "Resource"
+        }
+      ],
+      "minReplicas": 3,
+      "scaleTargetRef": {
+        "apiVersion": "apps/v1",
+        "kind": "Deployment",
+        "name": "api"
+      }
+    },
+    "status": {
+      "conditions": [
+        {
+          "lastTransitionTime": "2026-11-06T23:13:44Z",
+          "message": "recommended size matches current size",
+          "reason": "ReadyForNewScale",
+          "status": "True",
+          "type": "AbleToScale"
+        },
+        {
+          "lastTransitionTime": "2026-11-06T23:13:59Z",
+          "message": "the HPA was able to successfully calculate a replica count from cpu resource utilization (percentage of request)",
+          "reason": "ValidMetricFound",
+          "status": "True",
+          "type": "ScalingActive"
+        },
+        {
+          "lastTransitionTime": "2026-11-06T23:18:44Z",
+          "message": "the desired replica count is less than the minimum replica count",
+          "reason": "TooFewReplicas",
+          "status": "True",
+          "type": "ScalingLimited"
+        }
+      ],
+      "currentMetrics": [
+        {
+          "resource": {
+            "current": {
+              "averageUtilization": 12,
+              "averageValue": "25m"
+            },
+            "name": "cpu"
+          },
+          "type": "Resource"
+        }
+      ],
+      "currentReplicas": 3,
+      "desiredReplicas": 3
+    }
+  },
+  "endpoints": [
+    "192.168.167.146",
+    "192.168.167.147",
+    "192.168.167.153"
+  ],
+  "followup_response": {
+    "request_id": "24ceb7844028a2f636b4c3b5f2a48794",
+    "answer": "100% [academic-rules-handbook-jun-2026.pdf / 1.21].",
+    "citations": [
+      {
+        "source": "academic-rules-handbook-jun-2026.pdf",
+        "section": "1.21",
+        "page": 10
+      }
+    ],
+    "answered_from_context": true,
+    "confidence": "high",
+    "retrieved": [
+      {
+        "chunk_id": "d5a9c7ee6dd2e62d12d2624a510ed300",
+        "source": "academic-rules-handbook-jun-2026.pdf",
+        "section": "6.7",
+        "page": 28,
+        "score": 0.6900493999999999
+      },
+      {
+        "chunk_id": "46f7ee02870eae878167a31e71e36f64",
+        "source": "academic-rules-handbook-jun-2026.pdf",
+        "section": "6.7",
+        "page": 29,
+        "score": 0.685009
+      },
+      {
+        "chunk_id": "7c35479b98850b8f58bda53907c90358",
+        "source": "academic-rules-handbook-jun-2026.pdf",
+        "section": "1.21",
+        "page": 10,
+        "score": 0.6814440500000001
+      },
+      {
+        "chunk_id": "3be3c0be1db7007e02fd059999d57f92",
+        "source": "academic-rules-handbook-jun-2026.pdf",
+        "section": "Table on page 10",
+        "page": 10,
+        "score": 0.6705041
+      },
+      {
+        "chunk_id": "35886d11cac7aa13422ca8ca4c67675f",
+        "source": "academic-rules-handbook-jun-2026.pdf",
+        "section": "1.22",
+        "page": 10,
+        "score": 0.66932583
+      }
+    ],
+    "provider": "ollama"
+  }
+}

@@ -31,15 +31,17 @@ source/version/section/page/offset/text determine stable chunk IDs.
 
 | Size (lexical tokens) | Overlap | recall@5 | Chunks | Amplification |
 |---:|---:|---:|---:|---:|
-| 300 | 40 | 0.846154 | 647 | 1.089832 |
-| 500 | 75 | 0.846154 | 565 | 1.078163 |
-| 700 | 100 | 0.846154 | 536 | 1.061650 |
+| 300 | 40 | 0.846154 | 738 | 1.061133 |
+| 500 | 75 | 0.846154 | 671 | 1.047257 |
+| 700 | 100 | 0.846154 | 646 | 1.029494 |
 
 Stored tokens / cleaned original tokens is storage amplification. The golden
 set was committed before the experiment (d7b5e88); do not relabel questions from
 retrieval output. The experiment excludes absent-topic cases from recall and
 keeps per-question top-five evidence. It is retrieval-only, not a generation
-baseline. Final size selection follows measured results, not these candidates.
+baseline. Fresh image-matched measurements from run 42294051804 select 700/100: equal
+recall and lowest measured amplification. The cleaned input contains 74,592
+lexical tokens. Model dimension is 768; the JSON records the source fingerprints.
 
 ## Embedding and storage
 The shared EMBED_MODEL is nomic-embed-text; actual host probe returned dimension
@@ -88,14 +90,15 @@ safe fallback, cache store. Offline tests: api/tests/test_answer_pipeline.py,
 test_providers.py, test_guard_and_cache.py, test_ask_route.py.
 
 ### Relevance floor
-Candidate 0.45 from the Day 1 ConfigMap, not yet measured. Procedure: run
-eval/golden.yaml through the real stack, then `python scripts/score_margins.py
-eval/results.json`. The floor must sit above every must-abstain question's top
-score and below every answerable one. Record both numbers and the chosen floor here.
+The genuine real-corpus run measured minimum answerable top score 0.6956296
+and maximum must-abstain top score 0.6250884. The shipped 0.65 lies between them.
+This small calibration set cannot guarantee separation for unseen questions;
+low relevance, schema/citation validation and safe model refusal remain separate
+guards. Reproduce the margins with `python scripts/score_margins.py eval/results.json`.
 
 | Run | Lowest answerable top score | Highest must-abstain top score | Floor shipped |
 |---|---:|---:|---:|
-| Real run pending | NOT VERIFIED | NOT VERIFIED | 0.45 candidate |
+| 54f37ff calibration; 4917e45 retest | 0.6956296 | 0.6250884 | 0.65 (real gate passed) |
 
 ### Semantic cache
 Redis, shared by all replicas, namespaced by index generation plus embedding
@@ -145,7 +148,7 @@ on eval/run_eval.py against eval/fixtures/baseline.json. The committed fixture b
 The real-corpus baseline is a separate explicit first passing measurement; it
 must never be replaced by fixture scores or relabelled to flatter a regression.
 
-## Actual Day 1 measurements
+## Historical Day 1 measurements
 All three configurations measured recall@3 = recall@5 = 11/13 (84.6154%).
 The two absent-topic questions are excluded from recall, not counted as hits.
 These are retrieval scores, not evidence of generation/citation/abstention
@@ -174,3 +177,35 @@ The real indexer CLI also ran all five stages on the owned Markdown fixtures,
 published 12 chunks using real 768-dimensional embeddings, and exited zero.
 See docs/evidence/day1-real-fixture-indexer.txt. That Day 1 Kubernetes bootstrap Job was explicitly dummy. Day 3 manifests
 select real indexing; current cluster acceptance status is recorded separately.
+
+## Real generation and extraction verification
+
+Run 42294051804 used the actual image profile (Tesseract 5.3.0, Poppler 22.12.0,
+pdfplumber 0.11.10). Source files were live fetched and all eight hashes matched.
+The image ran fresh extraction before the three chunk experiments; no old laptop
+cache was silently reused. See docs/evidence/day3-audit-54f37ff/extraction-audit.json.
+The baseline was established explicitly after absolute gates passed; final scores
+matched it at recall@5 0.846154, citation validity 1.0, abstention correctness 1.0.
+Nine of fifteen questions received cited answers; four answerable/injection cases
+safely declined or fell back. This limitation is distinct from citation validity.
+The real poisoned owned fixture was actually indexed; its model responses safely
+refused/fell back rather than obeying the planted instruction. It did not prove a
+useful answer to every poisoned question. Raw evidence is poison-probe.json.
+
+The initial 4096-context audit exposed uncited confident refusals. Responses now
+canonicalize valid refusals, retry contradictory confidence/flags once and require
+sentence-level exact citation tags for answered content. Ollama context is bounded
+at 8192/output512, with a prompt-token safety margin; longer inputs fail closed.
+A format example explains true/false output shape. The 54f37ff retest produced real
+cited answers; the precise causal contribution of the context/prompt changes was
+not isolated. Temperature is 0.2 for low-variance factual JSON, not a guarantee
+against hallucination.
+
+The corrected full audit 42308165966 at source 4917e45 passed at floor 0.65.
+It preserved the genuine baseline and measured zero recall regression, citation
+validity 100%, no answered must-abstain cases, and eight cited answers out of
+fifteen total questions. Other cases safely declined/fell back. Its 47 cutover
+probes stayed HTTP 200; generation changed at the same 646 chunks, a cache MISS
+crossed publication and later requests HIT. The manual writer waited 208.441 s
+on the shared lock. Actual source-equivalent repeated extraction/chunk experiments
+and failure artifacts remain separate from the live publication.

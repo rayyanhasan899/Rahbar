@@ -1,60 +1,67 @@
 # Day 3 requirement traceability
 
-Deadline: 8 November 2026, 23:59 PKT. The assignment PDF controls requirements.
-PASS is scoped to the evidence named here. A script or manifest alone does not
-prove live behavior. FAIL means an observed unsuccessful attempt; BLOCKED needs
-an external action; NOT VERIFIED means the required observation is still absent.
+Verification date: 7 November 2026, Asia/Karachi. Deadline: 8 November 2026,
+23:59 PKT. The assignment PDF controls requirements. PASS refers to observed
+behavior, FAIL to an unsuccessful observation, BLOCKED to an external dependency,
+and NOT VERIFIED to absent required evidence. Historical failures are retained.
 
-| Requirement | Status | Implementation and actual evidence | Remaining action |
+The corrected full real-corpus audit passed at source 4917e45 in
+[run 42308165966](https://github.com/rayyanhasan899/Rahbar/actions/runs/42308165966).
+Its eleven checks are all PASS. Evidence root: docs/evidence/day3-audit-4917e45.
+Code/manifests/workflows are unchanged since that source; subsequent edits are
+reports, evidence and a corrected physical-page comment in a diagnostic YAML.
+
+| Requirement | Status | Implementation, verification and evidence | Remaining dependency |
 |---|---|---|---|
-| Public corpus >=6 documents/40 pages; seven properties | PASS | Eight selected documents, six PDFs/194 physical pages; corpus/MANIFEST.md, docs/CORPUS.md, version-comparison.md, table/extraction audits | Human review of OCR/table limitations remains prudent |
-| URLs, hashes, versions, supersession; no third-party PDFs committed | PASS | Serial fetcher, sources.yaml, manifest; Day 3 PVC 8/8 hashes; remote live fetch 8/8 verified | Preserve source rights/exclusions |
-| Golden 8 ordinary/2 version/2 exact/2 abstain/1 injection before tuning | PASS | eval/golden.yaml originated in d7b5e88, independent source/section relevance labels unchanged | None |
-| Five stages, OCR, HTML/text/Markdown headings and metadata | PASS | indexer/pipeline; 19 offline tests; fresh local extraction log | Final deployed extraction profile audit still running |
-| Three fresh measured chunk configurations/amplification | NOT VERIFIED | Day 1 three real measurements retained in eval/chunk-experiments.json; augmented extraction requires fresh run | Inspect real-audit chunk artifact; replace historical results honestly |
-| Shared embedding pin/cosine/stable IDs/repeatable index | PASS | Same model/prefix protocol; Chroma 1.0.12 client/server; store/retrieval checks and tests | Runtime model digest/pin demonstration pending |
-| Staging/publication/no API-startup ingestion/serialized writers | PASS | Lock PVC, writer_lock, validated staged collection and generation pointer; multiprocess lock test | Manual/weekly overlap and live cutover observation NOT VERIFIED |
-| Current and explicit historical retrieval; turns | PASS | version_filter tests, retained response contract, bounded additive history | Real historical/follow-up answers NOT VERIFIED |
-| Shared semantic cache, exclusions/TTL/invalidation | PASS | Cache tests, 113 real embedding comparisons, 0.75 lowest tested zero guarded false hits | Cluster HIT/MISS across publication NOT VERIFIED |
-| Schema/one retry/fallback/grounding/citations/injection defense | PASS | Offline model-free tests; sentence attribution and citation checks; safe fallback | Real generation/poisoned-index probe NOT VERIFIED |
-| Real LLM fully supported, deliberate temperature | NOT VERIFIED | Ollama/hosted adapters, ConfigMap temperature and bounded timeouts; mocked provider tests | Real cited generation acceptance pending |
-| Observability/request IDs/JSON/retrieval/cache/tokens/metrics | PASS | API logging config, metrics and tests | Capture real runtime metrics pending |
-| Namespace/API x3/UI/Chroma STS volumeClaimTemplates/Redis PVC | PASS | Strict production manifests; real fixture CI cluster deployments | Real-corpus final runtime snapshot pending |
-| Job OnFailure/backoff; same weekly CronJob; four ClusterIP/Ingress | PASS | Base resources + completed real remote indexer; fixture CI Ingress | Verify full real audit report |
-| ConfigMap/safe excluded Secret placeholder/dedicated SAs | PASS | Manifests; no real secret committed or values read | None |
-| All probes/resources/nonroot/readonly/drop/token security | PASS | Manifests, offline health/startup tests, strict validation | Runtime acceptance and measured memory margin NOT VERIFIED |
-| Actual allowed networking/UI->Chroma denied | FAIL | Audit stopped on BusyBox short-name nslookup exit1 despite resolving the correct namespace address | Probe now uses full service DNS; policies unchanged; rerun required |
-| Bootstrap dependency/index/API order | PASS | scripts/deploy_local.py and e2e_cluster.sh; passing fixture CI, real indexer completed remotely | Clean-clone full real answer still NOT VERIFIED |
-| Pod persistence, >=3 endpoints, numeric HPA | PASS | Remote audit observed Chroma 646 chunks/same generation after deletion, Redis AOF marker, API replacement, three IPs and 2% numeric HPA | Full artifacts pending; live checkpoint is day3-real-audit-live-checkpoint.txt |
-| Reindex without API redeploy/outage, cache invalidation/writer wait | NOT VERIFIED | Real checks use generation, request probes and lock wait log | Inspect actual artifacts |
-| Wrong model => new pod 0/1/log/recovery | FAIL | Audit attempted pod logs while ContainerCreating | Wait for Running before reading conflict logs, then rerun; model guards unchanged |
-| maxSurge1/maxUnavailable0/preStop/grace/visible set-image+undo | PASS | Remote real audit observed a visible UI image update and successful undo to original response hash | Preserve final artifact/source SHA scope |
-| Repeated top, indexer peak/limit/margin | NOT VERIFIED | Real Job sampler and HPA measurements running; limit 1 GiB | Compute sampled peak/margin from artifact, state sampling limitation |
-| Four separately broken/restored stages | NOT VERIFIED | scripts/failure_experiments.py isolates A/B/C/E collections; labels unchanged | Actual observations required in FAILURE-ANALYSIS |
-| Offline lint/mypy/dependency/test/coverage>=60 | PASS | docs/evidence/day3-offline-verification.txt: API78, indexer19, evaluator8; app93.33%; Ruff/mypy/pip check pass | Rerun after material source edits |
-| Strict prod manifests, all builds, Trivy HIGH/CRITICAL | PASS | CI 42289780312 and 42289773751 all required jobs successful | Final reviewed head must pass again |
-| Real golden: recall drop<=0.05, citation>=0.95, all abstain | FAIL | First real audit rejected uncited high-confidence refusals; generation/gate did not pass | Canonical abstention, contradiction retry and context fixes under retest; no passing baseline invented |
-| Protected main/one partner approval/passing CI | BLOCKED | Required quality strict; one approval/dismiss stale; branch protection JSON | AbdulMoez-24i-3048-SE-B must review final head; no approval invented |
-| Intentional failed then fixed eval gate/disabled merge evidence | NOT VERIFIED | Isolated PR #3 changes only fixture floor; original golden/baseline preserved | Record failure, restore floor, prove pass, close unmerged |
-| SonarCloud security check | BLOCKED | Code/dependency findings fixed; eight scoped private/loopback HTTP findings remain | Pending user's narrow risk-acceptance decision; no scan disabled |
-| CD actually tests/publishes three main-SHA images/deploys Ingress | NOT VERIFIED | needs-gated least-privilege cd.yml implemented | Requires passing reviewed merge, then inspect actual CD and registry SHA |
-| README/architecture/corpus/pipeline/four ADRs/LICENSE/AI notes | NOT VERIFIED | Core documents updated to actual source; MIT and four ADRs present | Finish measured evidence, real screenshot, seven answers and report |
-| Root checker and clean checkout rehearsal | FAIL | Root checker found absent real baseline/results/failure evidence; checker unchanged | Complete substantive requirements and rerun; isolated worktree preserved |
-| Classroom contents | BLOCKED | Repository link exists; no form submitted | Final passing CD URL, SHA images and committed real baseline/results required |
+| Public corpus >=6 documents, >=40 pages, seven properties | PASS | Eight selected documents, six PDFs/194 pages; CORPUS.md, MANIFEST, version/table/extraction audits | OCR/table limitations disclosed |
+| URLs, source hashes, versions/supersession, polite serial fetch; no PDF commit | PASS | Live remote re-fetch and 8/8 pinned hashes, source inventory and tracked-file exclusion | None |
+| Changed version pair, image-only PDF, informative table, long definitions, exact and absent topics | PASS | 2023/2026 clause4.25, eight scanned startup-policy pages, grade-point/fee tables, AI definitions, original golden | No invented source availability |
+| Golden 8ordinary/2version/2exact/2abstain/1injection before tuning | PASS | Original d7b5e88 labels unchanged; golden SHA in experiments/provenance | Additional failure diagnostic kept separate |
+| Five indexing stages, PDF/OCR, HTML/text, aligned Markdown fixture headings | PASS | Real image ingestion completed; 19 offline tests; fresh image-matched extraction profile | Six empty pages disclosed |
+| Structure-aware lexical-token chunking/overlap/metadata | PASS | Source, section, starting physical page, version, superseded and stable IDs; tests and real queries | Lexical tokens differ from model tokens |
+| Three real chunk configurations/storage amplification | PASS | 300/40:738chunks/1.061133; 500/75:671/1.047257; 700/100:646/1.029494; each recall5=11/13 | 700/100 chosen at equal recall |
+| Same model/dimension, cosine, Chroma client/server1.0.12 | PASS | nomic768, recorded digest, collection/pointer pins and query prefixes | Model tags alone are not immutable bytes |
+| Safe repeat indexing, staged publication, serialized manual/weekly writers | PASS | Same646chunks/newgeneration; manual writer waited208.441s; writer/reindex logs | Old generations retained intentionally |
+| No API-startup ingestion and generation invalidation without indexer Redis | PASS | Read-only startup check; unchanged API template through cutover; MISS then HIT; policies unchanged | None |
+| Current and explicitly historical retrieval; turns | PASS | Version predicate tests, q09/q10 real answers, cited real follow-up in resources.json | Benchmark misses remain honest |
+| Shared semantic cache, exclusions, expiry and measured threshold | PASS | 113 real pairs, guarded falsehits3/1/0 at .65/.70/.75; .75 selected; entryTTL/intent tests | Small calibration set is not universal proof |
+| Schema/retry/fallback/relevance/grounding/citations/abstention | PASS | 80 API tests; canonical refusals; real golden validity100%, both absent topics refused | Five non-mandatory final questions declined/fell back |
+| Injection defense with actually indexed poisoned chunk | PASS | poison-probe.json records stored poison ID and real model refusal/fallback, no planted claim obeyed | Does not prove useful answer to every poisoned question |
+| Pluggable provider and deliberate low temperature | PASS | Real Ollama3B at0.2; optional HTTPS hosted adapter mocked; timeout/context safety | Hosted mode not independently live-tested |
+| Request/JSON logging, metrics, cache/retry/abstention/tokens | PASS | Runtime metrics.txt, JSON indexer/provider logs and tests | Logs do not establish semantic entailment |
+| Namespace, APIx3/UI, Chroma STS volumeClaimTemplates, RedisPVC | PASS | final-resources.json; persistence tests and actual three endpoints | None |
+| Four ClusterIP Services, / and /api Ingress, ConfigMap/Secret placeholder | PASS | Real network/Ingress200 and manifests; placeholder excluded, no actual secret values read | None |
+| OnFailure/backoff indexer Job; same weekly CronJob | PASS | Initial/reindex Jobs completed, weekly template image/args and shared lock | Weekly PVC snapshot is curated, not an automatic web crawler |
+| Dedicated SAs, tokenoff/nonroot/readonly/dropcap/resources | PASS | workload-security-summary.json checks every actual workload and init container | Writable mounts limited to required paths |
+| API startup/liveness/readiness, truthful dependency outage | PASS | >=90s Chroma outage: health200/ready503, unchanged restarts/UIDs, recovered | Swapped probes discussed causally, not falsely claimed deployed |
+| Enforced network allow paths, DNS/provider, UI->Chroma denied | PASS | network.json: correct service DNS; UI wget timed out to Chroma; all allowed paths connected | Backend/private-model HTTP accepted only in reviewed scope |
+| Correct initial dependency/index/API bootstrap | PASS | Clean remote checkout/images, verified PVC transfer, completed index then API rollout | Separate local laptop state below |
+| Pod deletion/persistence, >=3 endpoint IPs, numeric HPA | PASS | Chroma generation/count, Redis AOF marker and API replacement; resources.json | No invented scale-out |
+| Reindex without API rollout/outage, cache invalidation/serialization | PASS | 47 successfulHTTP200 probes, unchanged deploymenttemplate, newgeneration and writer wait | None |
+| Changed embedding model => new0/1, explicit logs, restored recovery | PASS | pin-conflict.json with deliberatewrongmodel and recovered646chunk publication | None |
+| maxSurge1/maxUnavailable0/preStop/grace, visible image set/undo | PASS | Corrected check requires HTTP200 and exact original hash; original/demo/restored HTML | Earlier502 false-positive retained as negative evidence |
+| Repeated top, indexer memory/limit/margin | PASS | Earlier64samples peak203Mi; final66samples peak160Mi; limit1024Mi, minimum observed margin821Mi | Sampling may miss brief peak |
+| Four separately broken and restored stages | PASS | A eightpages0chars->OCR; B recall84.62->23.08->84.62; C two-clause50->100%; E mixed versions->validfilter | Original golden top1/unfiltered recall unchanged, disclosed |
+| Offline lint/types/dependency/tests/coverage>=60 | PASS | API80/93.39%, indexer19, evaluator8; Ruff/mypy/pip check, source-isolated tests | Final report notes verification revision |
+| Strict production manifests, all3image builds/Trivy gates | PASS | All28strictvalid; fullCI42308165966 success, fixableHIGH/CRITICAL gate | Scan intentionally uses --ignore-unfixed, not a claim of zero total CVEs |
+| Real golden baseline/results and regression gate | PASS | Genuine54f37ffbaseline preserved; final4917e45recall.846154/drop0, validity1, abstain1 | Eight of15 final responses cited; other safe refusals disclosed |
+| Actual failed-then-fixed evaluation gate evidence | PASS | PR3 abea020/run42291331805 failedmust-abstain; 6698f78/run42293007228 passed; paired screenshots/results; closedunmerged | Separate Sonar finding on demoPR not hidden |
+| Protected main with one genuine partner approval | BLOCKED | Strict quality +oneapproval/dismissstale/adminenforced; protectionJSON | AbdulMoez-24i-3048-SE-B must review final PR2 head |
+| SonarCloud check | NOT VERIFIED | Eight owner-approved private/loopbackHTTP findings accepted until10Nov; securityA | Final reanalysis must pass after raw502artifact renamed .html.txt; scan remains on |
+| Reviewed merge and actual main-SHA CD/Hub release | BLOCKED | needs-gated least-privilege cd.yml; no direct main push | Requires genuine approval/passingmerge, then actualCD/registry verification |
+| README, architecture, corpus/pipeline/failure/seven answers/fourADRs/AI/LICENSE | PASS | Actual screenshot and measurements, code/line refs, accurate human/AI disclosure | Release links require actual CD |
+| Root submission checker | PASS | Current root:162pass/5warnings/0fail; checker unchanged | Rerun final checkpoint; warnings explained in Day3report |
+| Clean checkout rehearsal | PASS | Isolated source imports/tests; real audit uses clean GitHub checkout +hashlockedinstall and actual deployment | No stale working-directory cache dependency claimed |
+| Classroom contents | BLOCKED | Repo and committed real results/baseline ready | Need actual successfulCD and three mainSHA-tag links; form not submitted |
 
-Local infrastructure limitation: laptop Minikube repeatedly timed out with its
-2-CPU cap. A local real-model probe safely fell back after a model failure; the
-following Chroma bridge failed. These are not passing real-model evidence. A
-remote ephemeral real-corpus audit is running independently. A temporary local
-CPU-cap change is still pending authorization; the rejected Docker socket repair
-was not retried. Source files/user work were preserved.
+Local laptop: Docker/minikube data and earlier dummy evidence were preserved.
+The two-CPU node timed out; the owner approved a temporary increase to four,
+which must be restored after local verification. Local image loading has failed
+or stalled, so the laptop is not claimed to be the passing real-corpus cluster.
+The remote ephemeral cluster supplies the verified runtime evidence above.
+No rejected Docker socket repair was retried. Current local restoration/deployment
+outcome is recorded in the Day3 report, independently of the successful audit.
 
-Git workflow: original remote retained, dev fast-forwarded to all five Person 2
-commits with original authorship, meaningful Day 3 milestones pushed through dev,
-PR #2 open, no direct main push/reset/clean/force/init. User-author identity does
-not imply handwritten code; see AI-USAGE.md.
-
-The first real audit also observed dependency-free liveness 200, truthful readiness
-503 during a >=90-second Chroma outage, unchanged API restarts and recovery. The
-cache/cutover and real UI screenshot checks failed on uncited model output, so
-they are not complete. Source fixes are under verification.
+Git: original remote retained; dev safely fast-forwarded to all five Person2
+commits with original authorship, meaningful Day3 milestones pushed via dev/PR2.
+No reset/clean/init/force/directmain push or invented partner approval.

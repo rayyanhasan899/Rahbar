@@ -1,0 +1,105 @@
+2026-11-06T22:56:12.3456303Z Current runner version: '2.338.2'
+2026-11-06T22:56:12.3474398Z ##[group]Runner Image Provisioner
+2026-11-06T22:56:12.3475024Z Hosted Compute Agent
+2026-11-06T22:56:12.3475418Z Version: 20261028.624
+2026-11-06T22:56:12.3475903Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-06T22:56:12.3476364Z Build Date: 2026-10-28T21:51:42Z
+2026-11-06T22:56:12.3476831Z Worker ID: {01ca8dd0-2eca-4ebd-bbe1-ad1c198f4e49}
+2026-11-06T22:56:12.3477346Z Region: centralus
+2026-11-06T22:56:12.3477716Z Cloud: Azure
+2026-11-06T22:56:12.3478111Z ##[endgroup]
+2026-11-06T22:56:12.3478916Z ##[group]Operating System
+2026-11-06T22:56:12.3479298Z Ubuntu
+2026-11-06T22:56:12.3479877Z 24.04.5
+2026-11-06T22:56:12.3480223Z LTS
+2026-11-06T22:56:12.3480634Z ##[endgroup]
+2026-11-06T22:56:12.3480999Z ##[group]Runner Image
+2026-11-06T22:56:12.3481382Z Image: ubuntu-24.04
+2026-11-06T22:56:12.3481841Z Version: 20261101.360.1
+2026-11-06T22:56:12.3482642Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-06T22:56:12.3483625Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-06T22:56:12.3484212Z ##[endgroup]
+2026-11-06T22:56:12.3485004Z ##[group]GITHUB_TOKEN Permissions
+2026-11-06T22:56:12.3486224Z Contents: read
+2026-11-06T22:56:12.3486987Z Metadata: read
+2026-11-06T22:56:12.3487358Z ##[endgroup]
+2026-11-06T22:56:12.3488777Z Secret source: Actions
+2026-11-06T22:56:12.3489659Z Cache mode: write
+2026-11-06T22:56:12.3490141Z Prepare workflow directory
+2026-11-06T22:56:12.3709687Z Prepare all required actions
+2026-11-06T22:56:12.3743009Z Getting action download info
+2026-11-06T22:56:12.6233928Z Download action repository 'actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-11-06T22:56:13.0640250Z Complete job name: scan (ui)
+2026-11-06T22:56:13.1205689Z ##[group]Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+2026-11-06T22:56:13.1206298Z with:
+2026-11-06T22:56:13.1206549Z   name: image-ui
+2026-11-06T22:56:13.1206812Z   path: /tmp/images
+2026-11-06T22:56:13.1207090Z   merge-multiple: false
+2026-11-06T22:56:13.1207385Z   repository: rayyanhasan899/Rahbar
+2026-11-06T22:56:13.1207698Z   run-id: 42308165966
+2026-11-06T22:56:13.1208016Z ##[endgroup]
+2026-11-06T22:56:13.3587626Z Downloading single artifact
+2026-11-06T22:56:13.3702904Z (node:1992) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T22:56:13.3704160Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T22:56:13.5265642Z Preparing to download the following artifacts:
+2026-11-06T22:56:13.5266376Z - image-ui (ID: 13547256983, Size: 26424120, Expected Digest: sha256:ed223203cd458898429431079d96129f36e730446328a11fde0916b0a9df14e0)
+2026-11-06T22:56:13.6908062Z Redirecting to blob download url: https://productionresultssa8.blob.core.windows.net/actions-results/805a4e60-b984-85e7-a3db-a00b06397c5b/workflow-job-run-f31c1d4e-3a8e-5adf-8dc0-cfcb6a91e07f/artifacts/df9878af1b97306c013ffa9e8ace0b43306c09a8c7ffeaa9ffaffd8bba084bc4.zip
+2026-11-06T22:56:13.6910276Z Starting download of artifact to: /tmp/images
+2026-11-06T22:56:13.9266362Z (node:1992) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-06T22:56:15.1545194Z SHA256 digest of downloaded artifact is ed223203cd458898429431079d96129f36e730446328a11fde0916b0a9df14e0
+2026-11-06T22:56:15.1545790Z Artifact download completed successfully.
+2026-11-06T22:56:15.1546112Z Total of 1 artifact(s) downloaded
+2026-11-06T22:56:15.1550012Z Download artifact has finished successfully
+2026-11-06T22:56:15.1778068Z ##[group]Run gunzip -c /tmp/images/ui.tar.gz | docker load
+2026-11-06T22:56:15.1778414Z [36;1mgunzip -c /tmp/images/ui.tar.gz | docker load[0m
+2026-11-06T22:56:15.1798558Z shell: /usr/bin/bash -e {0}
+2026-11-06T22:56:15.1798975Z ##[endgroup]
+2026-11-06T22:56:18.3812970Z Loaded image: rahbar-ui:4917e45e331307c323a06653397e6d5193faab8f
+2026-11-06T22:56:18.3990742Z ##[group]Run docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb image --scanners vuln --ignore-unfixed --severity HIGH,CRITICAL --exit-code 1 rahbar-ui:4917e45e331307c323a06653397e6d5193faab8f
+2026-11-06T22:56:18.3991872Z [36;1mdocker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb image --scanners vuln --ignore-unfixed --severity HIGH,CRITICAL --exit-code 1 rahbar-ui:4917e45e331307c323a06653397e6d5193faab8f[0m
+2026-11-06T22:56:18.4010104Z shell: /usr/bin/bash -e {0}
+2026-11-06T22:56:18.4010294Z ##[endgroup]
+2026-11-06T22:56:18.4171804Z Unable to find image 'aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb' locally
+2026-11-06T22:56:18.8221191Z docker.io/aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb: Pulling from aquasec/trivy
+2026-11-06T22:56:18.9749234Z 7b229517ed22: Pulling fs layer
+2026-11-06T22:56:18.9752740Z 9f087194f4fe: Pulling fs layer
+2026-11-06T22:56:18.9753164Z d7953b8bb0ca: Pulling fs layer
+2026-11-06T22:56:18.9753404Z ac09fd37397a: Pulling fs layer
+2026-11-06T22:56:18.9753658Z ac09fd37397a: Waiting
+2026-11-06T22:56:19.2444974Z 7b229517ed22: Verifying Checksum
+2026-11-06T22:56:19.2460478Z 7b229517ed22: Download complete
+2026-11-06T22:56:19.2919776Z 9f087194f4fe: Verifying Checksum
+2026-11-06T22:56:19.2920166Z 9f087194f4fe: Download complete
+2026-11-06T22:56:19.3439595Z d7953b8bb0ca: Verifying Checksum
+2026-11-06T22:56:19.3440609Z d7953b8bb0ca: Download complete
+2026-11-06T22:56:19.3547880Z 7b229517ed22: Pull complete
+2026-11-06T22:56:19.3894984Z ac09fd37397a: Download complete
+2026-11-06T22:56:19.8426871Z 9f087194f4fe: Pull complete
+2026-11-06T22:56:21.2244853Z d7953b8bb0ca: Pull complete
+2026-11-06T22:56:21.2354564Z ac09fd37397a: Pull complete
+2026-11-06T22:56:21.2385666Z Digest: sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+2026-11-06T22:56:21.2394261Z Status: Downloaded newer image for aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+2026-11-06T22:56:21.4236050Z 2026-11-06T22:56:21Z	INFO	[vulndb] Need to update DB
+2026-11-06T22:56:21.4236587Z 2026-11-06T22:56:21Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-11-06T22:56:21.4237116Z 2026-11-06T22:56:21Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-06T22:56:25.6934158Z 11.68 MiB / 132.61 MiB [----->_______________________________________________________] 8.80% ? p/s ?47.55 MiB / 132.61 MiB [--------------------->______________________________________] 35.86% ? p/s ?84.01 MiB / 132.61 MiB [-------------------------------------->_____________________] 63.35% ? p/s ?120.96 MiB / 132.61 MiB [----------------------------------------->___] 91.21% 182.40 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 182.40 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 182.40 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 171.88 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 171.88 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 171.88 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 160.79 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 160.79 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 160.79 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 150.42 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 150.42 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 150.42 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 140.71 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 140.71 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 140.71 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 131.63 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [-----------------------------------------------] 100.00% 36.19 MiB p/s 3.9s2026-11-06T22:56:25Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-06T22:56:25.7968891Z 2026-11-06T22:56:25Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-06T22:56:34.8252021Z 2026-11-06T22:56:34Z	INFO	Detected OS	family="alpine" version="3.21.5"
+2026-11-06T22:56:34.8252469Z 2026-11-06T22:56:34Z	INFO	[alpine] Detecting vulnerabilities...	os_version="3.21" repository="3.21" pkg_num=68
+2026-11-06T22:56:34.8296712Z 2026-11-06T22:56:34Z	INFO	Number of language-specific files	num=0
+2026-11-06T22:56:34.8297749Z 2026-11-06T22:56:34Z	WARN	This OS version is no longer supported by the distribution	family="alpine" version="3.21.5"
+2026-11-06T22:56:34.8298692Z 2026-11-06T22:56:34Z	WARN	The vulnerability detection may be insufficient because security updates are not provided
+2026-11-06T22:56:34.8388283Z 
+2026-11-06T22:56:34.8388704Z Report Summary
+2026-11-06T22:56:34.8388900Z 
+2026-11-06T22:56:34.8470157Z ┌────────────────────────────────────────────────────────────────────┬────────┬─────────────────┐
+2026-11-06T22:56:34.8470828Z │                               Target                               │  Type  │ Vulnerabilities │
+2026-11-06T22:56:34.8471460Z ├────────────────────────────────────────────────────────────────────┼────────┼─────────────────┤
+2026-11-06T22:56:34.8472188Z │ rahbar-ui:4917e45e331307c323a06653397e6d5193faab8f (alpine 3.21.5) │ alpine │        0        │
+2026-11-06T22:56:34.8473095Z └────────────────────────────────────────────────────────────────────┴────────┴─────────────────┘
+2026-11-06T22:56:34.8473415Z Legend:
+2026-11-06T22:56:34.8473536Z - '-': Not scanned
+2026-11-06T22:56:34.8473704Z - '0': Clean (no security findings detected)
+2026-11-06T22:56:34.8473820Z 
+2026-11-06T22:56:35.0997782Z Cleaning up orphan processes
+2026-11-06T22:56:35.1271486Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/

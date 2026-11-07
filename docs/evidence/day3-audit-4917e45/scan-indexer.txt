@@ -1,0 +1,225 @@
+2026-11-06T22:56:12.7576074Z Current runner version: '2.338.2'
+2026-11-06T22:56:12.7597809Z ##[group]Runner Image Provisioner
+2026-11-06T22:56:12.7598539Z Hosted Compute Agent
+2026-11-06T22:56:12.7599110Z Version: 20261028.624
+2026-11-06T22:56:12.7599685Z Commit: 54898b74c23fde5556c9b3c3a2290865feef0dfe
+2026-11-06T22:56:12.7600277Z Build Date: 2026-10-28T21:51:42Z
+2026-11-06T22:56:12.7600913Z Worker ID: {728ec67b-4f24-4b2c-8391-4c7b3375f8ad}
+2026-11-06T22:56:12.7601504Z Region: westus3
+2026-11-06T22:56:12.7602018Z Cloud: Azure
+2026-11-06T22:56:12.7602578Z ##[endgroup]
+2026-11-06T22:56:12.7603860Z ##[group]Operating System
+2026-11-06T22:56:12.7604487Z Ubuntu
+2026-11-06T22:56:12.7604950Z 24.04.5
+2026-11-06T22:56:12.7605426Z LTS
+2026-11-06T22:56:12.7605933Z ##[endgroup]
+2026-11-06T22:56:12.7606415Z ##[group]Runner Image
+2026-11-06T22:56:12.7606984Z Image: ubuntu-24.04
+2026-11-06T22:56:12.7607481Z Version: 20261101.360.1
+2026-11-06T22:56:12.7608587Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261101.360/images/ubuntu/Ubuntu2404-Readme.md
+2026-11-06T22:56:12.7609851Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261101.360
+2026-11-06T22:56:12.7610691Z ##[endgroup]
+2026-11-06T22:56:12.7611681Z ##[group]GITHUB_TOKEN Permissions
+2026-11-06T22:56:12.7614037Z Contents: read
+2026-11-06T22:56:12.7614646Z Metadata: read
+2026-11-06T22:56:12.7615180Z ##[endgroup]
+2026-11-06T22:56:12.7617276Z Secret source: Actions
+2026-11-06T22:56:12.7618044Z Cache mode: write
+2026-11-06T22:56:12.7618750Z Prepare workflow directory
+2026-11-06T22:56:12.7890646Z Prepare all required actions
+2026-11-06T22:56:12.7945424Z Getting action download info
+2026-11-06T22:56:13.0847269Z Download action repository 'actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093' (SHA:d3f86a106a0bac45b974a628896c90dbdf5c8093)
+2026-11-06T22:56:13.8255591Z Complete job name: scan (indexer)
+2026-11-06T22:56:13.8958594Z ##[group]Run actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093
+2026-11-06T22:56:13.8959584Z with:
+2026-11-06T22:56:13.8959977Z   name: image-indexer
+2026-11-06T22:56:13.8960397Z   path: /tmp/images
+2026-11-06T22:56:13.8960814Z   merge-multiple: false
+2026-11-06T22:56:13.8961258Z   repository: rayyanhasan899/Rahbar
+2026-11-06T22:56:13.8961721Z   run-id: 42308165966
+2026-11-06T22:56:13.8962244Z ##[endgroup]
+2026-11-06T22:56:14.1280112Z Downloading single artifact
+2026-11-06T22:56:14.1404227Z (node:2003) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-11-06T22:56:14.1405632Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-06T22:56:14.3559316Z Preparing to download the following artifacts:
+2026-11-06T22:56:14.3561122Z - image-indexer (ID: 13546818869, Size: 147897197, Expected Digest: sha256:3d778a882b10c4588598f5012e632028a1c39059eb6e5c1bf1ff1f8fb31d3964)
+2026-11-06T22:56:14.6497480Z Redirecting to blob download url: https://productionresultssa8.blob.core.windows.net/actions-results/805a4e60-b984-85e7-a3db-a00b06397c5b/workflow-job-run-3bb5fd3b-7e13-5cd7-b2e1-4aebc22e8fd5/artifacts/47a861a7b1f152587aa2dd6ce8b6ce1f6094ae76c332a2ecbd8b7b7b5d3c87b5.zip
+2026-11-06T22:56:14.6499582Z Starting download of artifact to: /tmp/images
+2026-11-06T22:56:14.8947338Z (node:2003) [DEP0005] DeprecationWarning: Buffer() is deprecated due to security and usability issues. Please use the Buffer.alloc(), Buffer.allocUnsafe(), or Buffer.from() methods instead.
+2026-11-06T22:56:19.4596336Z SHA256 digest of downloaded artifact is 3d778a882b10c4588598f5012e632028a1c39059eb6e5c1bf1ff1f8fb31d3964
+2026-11-06T22:56:19.4597422Z Artifact download completed successfully.
+2026-11-06T22:56:19.4597894Z Total of 1 artifact(s) downloaded
+2026-11-06T22:56:19.4600859Z Download artifact has finished successfully
+2026-11-06T22:56:19.4816111Z ##[group]Run gunzip -c /tmp/images/indexer.tar.gz | docker load
+2026-11-06T22:56:19.4816613Z [36;1mgunzip -c /tmp/images/indexer.tar.gz | docker load[0m
+2026-11-06T22:56:19.4837877Z shell: /usr/bin/bash -e {0}
+2026-11-06T22:56:19.4838408Z ##[endgroup]
+2026-11-06T22:56:30.6476954Z Loaded image: rahbar-indexer:4917e45e331307c323a06653397e6d5193faab8f
+2026-11-06T22:56:30.6964944Z ##[group]Run docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb image --scanners vuln --ignore-unfixed --severity HIGH,CRITICAL --exit-code 1 rahbar-indexer:4917e45e331307c323a06653397e6d5193faab8f
+2026-11-06T22:56:30.6966498Z [36;1mdocker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb image --scanners vuln --ignore-unfixed --severity HIGH,CRITICAL --exit-code 1 rahbar-indexer:4917e45e331307c323a06653397e6d5193faab8f[0m
+2026-11-06T22:56:30.6984678Z shell: /usr/bin/bash -e {0}
+2026-11-06T22:56:30.6984935Z ##[endgroup]
+2026-11-06T22:56:30.7153680Z Unable to find image 'aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb' locally
+2026-11-06T22:56:31.3132983Z docker.io/aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb: Pulling from aquasec/trivy
+2026-11-06T22:56:31.5762220Z 7b229517ed22: Pulling fs layer
+2026-11-06T22:56:31.5762809Z 9f087194f4fe: Pulling fs layer
+2026-11-06T22:56:31.5763144Z d7953b8bb0ca: Pulling fs layer
+2026-11-06T22:56:31.5763521Z ac09fd37397a: Pulling fs layer
+2026-11-06T22:56:31.5763941Z ac09fd37397a: Waiting
+2026-11-06T22:56:31.7932031Z 7b229517ed22: Verifying Checksum
+2026-11-06T22:56:31.7933172Z 7b229517ed22: Download complete
+2026-11-06T22:56:31.7979698Z 9f087194f4fe: Verifying Checksum
+2026-11-06T22:56:31.7983331Z 9f087194f4fe: Download complete
+2026-11-06T22:56:31.9043976Z 7b229517ed22: Pull complete
+2026-11-06T22:56:31.9185016Z d7953b8bb0ca: Verifying Checksum
+2026-11-06T22:56:31.9185410Z d7953b8bb0ca: Download complete
+2026-11-06T22:56:32.0006497Z ac09fd37397a: Verifying Checksum
+2026-11-06T22:56:32.0006982Z ac09fd37397a: Download complete
+2026-11-06T22:56:32.3575561Z 9f087194f4fe: Pull complete
+2026-11-06T22:56:33.8141905Z d7953b8bb0ca: Pull complete
+2026-11-06T22:56:33.8226476Z ac09fd37397a: Pull complete
+2026-11-06T22:56:33.8359613Z Digest: sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+2026-11-06T22:56:33.8366619Z Status: Downloaded newer image for aquasec/trivy@sha256:8f6bb947dbc528902e11f2f5be52f7b519f6a39d5d148f41166f2040499768fb
+2026-11-06T22:56:34.0363303Z 2026-11-06T22:56:34Z	INFO	[vulndb] Need to update DB
+2026-11-06T22:56:34.0364043Z 2026-11-06T22:56:34Z	INFO	[vulndb] Downloading vulnerability DB...
+2026-11-06T22:56:34.0364512Z 2026-11-06T22:56:34Z	INFO	[vulndb] Downloading artifact...	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-06T22:56:39.0011890Z 46.00 MiB / 132.61 MiB [-------------------->_______________________________________] 34.69% ? p/s ?92.94 MiB / 132.61 MiB [------------------------------------------>_________________] 70.08% ? p/s ?132.61 MiB / 132.61 MiB [--------------------------------------------------------->] 100.00% ? p/s ?132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 144.35 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 144.35 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 144.35 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 135.04 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 135.04 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 135.04 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 126.33 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 126.33 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 126.33 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 118.18 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 118.18 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 118.18 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 110.55 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 110.55 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [------------------------------------------->] 100.00% 110.55 MiB p/s ETA 0s132.61 MiB / 132.61 MiB [-----------------------------------------------] 100.00% 38.88 MiB p/s 3.6s2026-11-06T22:56:38Z	INFO	[vulndb] Artifact successfully downloaded	repo="mirror.gcr.io/aquasec/trivy-db:2"
+2026-11-06T22:56:39.0958397Z 2026-11-06T22:56:39Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-06T22:56:49.6035625Z 2026-11-06T22:56:49Z	INFO	[python] Licenses acquired from one or more METADATA files may be subject to additional terms. Use `--debug` flag to see all affected packages.
+2026-11-06T22:56:49.7534598Z 2026-11-06T22:56:49Z	INFO	Detected OS	family="debian" version="12.15"
+2026-11-06T22:56:49.7535311Z 2026-11-06T22:56:49Z	INFO	[debian] Detecting vulnerabilities...	os_version="12" pkg_num=166
+2026-11-06T22:56:49.7695678Z 2026-11-06T22:56:49Z	INFO	Number of language-specific files	num=1
+2026-11-06T22:56:49.7697632Z 2026-11-06T22:56:49Z	INFO	[python-pkg] Detecting vulnerabilities...
+2026-11-06T22:56:49.7765734Z 2026-11-06T22:56:49Z	WARN	Using severities from other vendors for some vulnerabilities. Read https://trivy.dev/docs/v0.76/guide/scanner/vulnerability#severity-selection for details.
+2026-11-06T22:56:49.8283705Z 
+2026-11-06T22:56:49.8283876Z Report Summary
+2026-11-06T22:56:49.8284045Z 
+2026-11-06T22:56:49.8367281Z ┌──────────────────────────────────────────────────────────────────────────────────┬────────────┬─────────────────┐
+2026-11-06T22:56:49.8367997Z │                                      Target                                      │    Type    │ Vulnerabilities │
+2026-11-06T22:56:49.8368919Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8369555Z │ rahbar-indexer:4917e45e331307c323a06653397e6d5193faab8f (debian 12.15)           │   debian   │        0        │
+2026-11-06T22:56:49.8370181Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8370766Z │ usr/local/lib/python3.12/site-packages/PyYAML-6.0.2.dist-info/METADATA           │ python-pkg │        0        │
+2026-11-06T22:56:49.8371356Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8371914Z │ usr/local/lib/python3.12/site-packages/annotated_types-0.8.0.dist-info/METADATA  │ python-pkg │        0        │
+2026-11-06T22:56:49.8372501Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8373056Z │ usr/local/lib/python3.12/site-packages/anyio-4.16.0.dist-info/METADATA           │ python-pkg │        0        │
+2026-11-06T22:56:49.8376605Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8377530Z │ usr/local/lib/python3.12/site-packages/attrs-26.1.0.dist-info/METADATA           │ python-pkg │        0        │
+2026-11-06T22:56:49.8378526Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8379754Z │ usr/local/lib/python3.12/site-packages/backoff-2.2.1.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8381028Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8381915Z │ usr/local/lib/python3.12/site-packages/certifi-2026.10.23.dist-info/METADATA     │ python-pkg │        0        │
+2026-11-06T22:56:49.8383069Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8384224Z │ usr/local/lib/python3.12/site-packages/cffi-2.1.1.dist-info/METADATA             │ python-pkg │        0        │
+2026-11-06T22:56:49.8385257Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8386458Z │ usr/local/lib/python3.12/site-packages/charset_normalizer-3.5.2.dist-info/METAD- │ python-pkg │        0        │
+2026-11-06T22:56:49.8387680Z │ ATA                                                                              │            │                 │
+2026-11-06T22:56:49.8388907Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8389903Z │ usr/local/lib/python3.12/site-packages/chromadb_client-1.0.12.dist-info/METADATA │ python-pkg │        0        │
+2026-11-06T22:56:49.8390961Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8391826Z │ usr/local/lib/python3.12/site-packages/cryptography-50.0.2.dist-info/METADATA    │ python-pkg │        0        │
+2026-11-06T22:56:49.8392623Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8393326Z │ usr/local/lib/python3.12/site-packages/distro-1.9.0.dist-info/METADATA           │ python-pkg │        0        │
+2026-11-06T22:56:49.8394144Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8394854Z │ usr/local/lib/python3.12/site-packages/googleapis_common_protos-1.76.0.dist-inf- │ python-pkg │        0        │
+2026-11-06T22:56:49.8395572Z │ o/METADATA                                                                       │            │                 │
+2026-11-06T22:56:49.8396272Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8397653Z │ usr/local/lib/python3.12/site-packages/grpcio-1.85.1.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8398309Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8398967Z │ usr/local/lib/python3.12/site-packages/h11-0.16.0.dist-info/METADATA             │ python-pkg │        0        │
+2026-11-06T22:56:49.8399590Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8400190Z │ usr/local/lib/python3.12/site-packages/httpcore-1.0.9.dist-info/METADATA         │ python-pkg │        0        │
+2026-11-06T22:56:49.8400810Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8401393Z │ usr/local/lib/python3.12/site-packages/httpx-0.28.1.dist-info/METADATA           │ python-pkg │        0        │
+2026-11-06T22:56:49.8402059Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8402646Z │ usr/local/lib/python3.12/site-packages/idna-3.20.dist-info/METADATA              │ python-pkg │        0        │
+2026-11-06T22:56:49.8403265Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8404022Z │ usr/local/lib/python3.12/site-packages/jsonschema-4.26.0.dist-info/METADATA      │ python-pkg │        0        │
+2026-11-06T22:56:49.8404637Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8405235Z │ usr/local/lib/python3.12/site-packages/jsonschema_specifications-2025.9.1.dist-- │ python-pkg │        0        │
+2026-11-06T22:56:49.8405781Z │ info/METADATA                                                                    │            │                 │
+2026-11-06T22:56:49.8406575Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8407152Z │ usr/local/lib/python3.12/site-packages/numpy-2.5.4.dist-info/METADATA            │ python-pkg │        0        │
+2026-11-06T22:56:49.8407802Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8408389Z │ usr/local/lib/python3.12/site-packages/opentelemetry_api-1.45.2.dist-info/METAD- │ python-pkg │        0        │
+2026-11-06T22:56:49.8408903Z │ ATA                                                                              │            │                 │
+2026-11-06T22:56:49.8409393Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8409972Z │ usr/local/lib/python3.12/site-packages/opentelemetry_exporter_otlp_common-0.66b- │ python-pkg │        0        │
+2026-11-06T22:56:49.8410544Z │ 2.dist-info/METADATA                                                             │            │                 │
+2026-11-06T22:56:49.8411328Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8412094Z │ usr/local/lib/python3.12/site-packages/opentelemetry_exporter_otlp_proto_common- │ python-pkg │        0        │
+2026-11-06T22:56:49.8412923Z │ -1.45.2.dist-info/METADATA                                                       │            │                 │
+2026-11-06T22:56:49.8413472Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8414347Z │ usr/local/lib/python3.12/site-packages/opentelemetry_exporter_otlp_proto_grpc-1- │ python-pkg │        0        │
+2026-11-06T22:56:49.8414922Z │ .45.2.dist-info/METADATA                                                         │            │                 │
+2026-11-06T22:56:49.8415725Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8416311Z │ usr/local/lib/python3.12/site-packages/opentelemetry_proto-1.45.2.dist-info/MET- │ python-pkg │        0        │
+2026-11-06T22:56:49.8416851Z │ ADATA                                                                            │            │                 │
+2026-11-06T22:56:49.8417356Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8417943Z │ usr/local/lib/python3.12/site-packages/opentelemetry_sdk-1.45.2.dist-info/METAD- │ python-pkg │        0        │
+2026-11-06T22:56:49.8418455Z │ ATA                                                                              │            │                 │
+2026-11-06T22:56:49.8418959Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8419623Z │ usr/local/lib/python3.12/site-packages/opentelemetry_semantic_conventions-0.66b- │ python-pkg │        0        │
+2026-11-06T22:56:49.8420448Z │ 2.dist-info/METADATA                                                             │            │                 │
+2026-11-06T22:56:49.8421392Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8422198Z │ usr/local/lib/python3.12/site-packages/orjson-3.13.0.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8422908Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8424192Z │ usr/local/lib/python3.12/site-packages/overrides-7.7.0.dist-info/METADATA        │ python-pkg │        0        │
+2026-11-06T22:56:49.8424979Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8425853Z │ usr/local/lib/python3.12/site-packages/packaging-26.3.dist-info/METADATA         │ python-pkg │        0        │
+2026-11-06T22:56:49.8426615Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8427311Z │ usr/local/lib/python3.12/site-packages/pdf2image-1.17.0.dist-info/METADATA       │ python-pkg │        0        │
+2026-11-06T22:56:49.8428033Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8428724Z │ usr/local/lib/python3.12/site-packages/pdfminer_six-20260107.dist-info/METADATA  │ python-pkg │        0        │
+2026-11-06T22:56:49.8429449Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8430061Z │ usr/local/lib/python3.12/site-packages/pdfplumber-0.11.10.dist-info/METADATA     │ python-pkg │        0        │
+2026-11-06T22:56:49.8431086Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8431753Z │ usr/local/lib/python3.12/site-packages/pillow-13.0.0.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8432384Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8433229Z │ usr/local/lib/python3.12/site-packages/pip-25.0.1.dist-info/METADATA             │ python-pkg │        0        │
+2026-11-06T22:56:49.8434214Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8435020Z │ usr/local/lib/python3.12/site-packages/posthog-5.4.0.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8435874Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8436696Z │ usr/local/lib/python3.12/site-packages/protobuf-7.36.2.dist-info/METADATA        │ python-pkg │        0        │
+2026-11-06T22:56:49.8437497Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8438279Z │ usr/local/lib/python3.12/site-packages/pycparser-3.12.dist-info/METADATA         │ python-pkg │        0        │
+2026-11-06T22:56:49.8439145Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8439831Z │ usr/local/lib/python3.12/site-packages/pydantic-2.11.4.dist-info/METADATA        │ python-pkg │        0        │
+2026-11-06T22:56:49.8440565Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8441346Z │ usr/local/lib/python3.12/site-packages/pydantic_core-2.33.2.dist-info/METADATA   │ python-pkg │        0        │
+2026-11-06T22:56:49.8442444Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8443304Z │ usr/local/lib/python3.12/site-packages/pypdf-7.0.0.dist-info/METADATA            │ python-pkg │        0        │
+2026-11-06T22:56:49.8444223Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8444990Z │ usr/local/lib/python3.12/site-packages/pypdfium2-5.14.0.dist-info/METADATA       │ python-pkg │        0        │
+2026-11-06T22:56:49.8445801Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8446687Z │ usr/local/lib/python3.12/site-packages/pytesseract-0.3.13.dist-info/METADATA     │ python-pkg │        0        │
+2026-11-06T22:56:49.8447497Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8448403Z │ usr/local/lib/python3.12/site-packages/python_dateutil-4.0.0.dist-info/METADATA  │ python-pkg │        0        │
+2026-11-06T22:56:49.8449422Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8450464Z │ usr/local/lib/python3.12/site-packages/referencing-0.37.0.dist-info/METADATA     │ python-pkg │        0        │
+2026-11-06T22:56:49.8451566Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8452628Z │ usr/local/lib/python3.12/site-packages/requests-2.34.2.dist-info/METADATA        │ python-pkg │        0        │
+2026-11-06T22:56:49.8454095Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8455203Z │ usr/local/lib/python3.12/site-packages/rpds_py-2026.9.1.dist-info/METADATA       │ python-pkg │        0        │
+2026-11-06T22:56:49.8456859Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8458002Z │ usr/local/lib/python3.12/site-packages/six-1.17.0.dist-info/METADATA             │ python-pkg │        0        │
+2026-11-06T22:56:49.8458745Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8459518Z │ usr/local/lib/python3.12/site-packages/tenacity-9.2.1.dist-info/METADATA         │ python-pkg │        0        │
+2026-11-06T22:56:49.8460600Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8461304Z │ usr/local/lib/python3.12/site-packages/typing_extensions-4.16.0.dist-info/METAD- │ python-pkg │        0        │
+2026-11-06T22:56:49.8462020Z │ ATA                                                                              │            │                 │
+2026-11-06T22:56:49.8462897Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8468494Z │ usr/local/lib/python3.12/site-packages/typing_inspection-0.4.5.dist-info/METADA- │ python-pkg │        0        │
+2026-11-06T22:56:49.8469375Z │ TA                                                                               │            │                 │
+2026-11-06T22:56:49.8470120Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8470739Z │ usr/local/lib/python3.12/site-packages/tzdata-2026.6.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8471368Z ├──────────────────────────────────────────────────────────────────────────────────┼────────────┼─────────────────┤
+2026-11-06T22:56:49.8471965Z │ usr/local/lib/python3.12/site-packages/urllib3-2.8.0.dist-info/METADATA          │ python-pkg │        0        │
+2026-11-06T22:56:49.8472591Z └──────────────────────────────────────────────────────────────────────────────────┴────────────┴─────────────────┘
+2026-11-06T22:56:49.8472959Z Legend:
+2026-11-06T22:56:49.8473316Z - '-': Not scanned
+2026-11-06T22:56:49.8473535Z - '0': Clean (no security findings detected)
+2026-11-06T22:56:49.8474514Z 
+2026-11-06T22:56:50.0810127Z Cleaning up orphan processes
+2026-11-06T22:56:50.1226978Z ##[warning]Node.js 20 is deprecated. The following actions target Node.js 20 but are being forced to run on Node.js 24: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093. For more information see: https://github.blog/changelog/2025-09-19-deprecation-of-node-20-on-github-actions-runners/
