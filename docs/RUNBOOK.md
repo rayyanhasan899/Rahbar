@@ -2,11 +2,36 @@
 
 Windows laptop. Commands in `powershell` blocks go in PowerShell. Commands in `bash` blocks go in Ubuntu.
 
-Open Ubuntu **only** with:
+First list the installed distributions in PowerShell:
+```powershell
+wsl --list --verbose
+```
+Open the installed Ubuntu distribution by its exact name. This setup example uses
+`Ubuntu-24.04`; Rayyan's existing environment is named `Ubuntu`, so use
+`wsl -d Ubuntu` there. Do not replace a working distribution or project environment.
 ```powershell
 wsl -d Ubuntu-24.04
 ```
 A plain `wsl` may open Docker's internal Linux (prompt `-sh` and `#`, path `/mnt/host/c/...`). Nothing works there.
+
+## Already-prepared Rayyan laptop
+
+Use the existing environment rather than repeating initial installation. Start
+Docker Desktop and Ollama, open `wsl -d Ubuntu`, then:
+
+```bash
+cd '/mnt/d/RAYYAN/ASSIGNMENTS/Software Construction and Development/Assignment2/rahbar-starter'
+source .venv/rahbar-env.sh
+minikube start
+kubectl -n rahbar get pods
+kubectl -n ingress-nginx port-forward service/ingress-nginx-controller 18080:80
+```
+
+Keep the forward open and visit http://localhost:18080. The prepared cluster has
+a development-only localhost Ingress alias; fresh clusters below use rahbar.local.
+If port18080 is already forwarded, use the existing forward. The known model
+memory limitation can still produce safe fallbacks even with healthy API pods.
+The following installation and `~/Rahbar` commands are for a fresh environment.
 
 ---
 
@@ -16,9 +41,10 @@ A plain `wsl` may open Docker's internal Linux (prompt `-sh` and `#`, path `/mnt
 
 ```powershell
 wsl --install -d Ubuntu-24.04
-wsl --set-default Ubuntu-24.04
 ```
-Restart Windows if asked. Create the Linux username and password when prompted.
+Install only if no suitable Ubuntu environment already exists. Restart Windows
+if asked. Create the Linux username and password when prompted. Changing the
+default distribution is optional; the explicit `wsl -d` command does not need it.
 
 **Docker Desktop**
 1. Install it with the WSL 2 backend.
@@ -48,9 +74,9 @@ sudo apt update
 sudo apt install -y make git curl python3.12-venv
 
 cd /tmp
-curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+curl -fLO https://dl.k8s.io/release/v1.34.0/bin/linux/amd64/kubectl
 sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+curl -fLO https://storage.googleapis.com/minikube/releases/v1.37.0/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
 rm kubectl minikube-linux-amd64
 
@@ -61,12 +87,15 @@ kubectl version --client && minikube version && docker version
 
 ### 3. Code and Python environment
 
-The repo must live in `~`, not `/mnt/c/...` (venv creation fails there).
+For a fresh WSL installation, prefer the Linux filesystem under `~` for better
+performance and permissions. A venv failed under `/mnt/c` during one setup;
+that is not a universal prohibition on Windows-mounted paths. Rayyan's existing
+project on `D:` and its inspected `.venv/rahbar-env.sh` work and should be preserved.
 ```bash
 cd ~
 git clone https://github.com/rayyanhasan899/Rahbar.git
 cd Rahbar
-git checkout dev
+git checkout main
 make install PY=python3.12
 source .venv/bin/activate
 make test
@@ -84,7 +113,9 @@ python corpus/fetch.py --verify
 
 Docker Desktop and Ollama must be running first.
 ```bash
-make cluster MINIKUBE_MEMORY=4096 MINIKUBE_CPUS=2
+minikube start --driver=docker --cni=calico --memory=4096 --cpus=2 --kubernetes-version=v1.34.0
+minikube addons enable metrics-server
+minikube addons enable ingress
 ```
 Wait for it to finish. The "Verifying ingress addon" step takes several minutes. Then:
 ```bash
@@ -162,7 +193,8 @@ The bottom-left corner must say **WSL: Ubuntu-24.04**.
    ```powershell
    curl.exe http://localhost:11434/api/tags
    ```
-3. **PowerShell:** `wsl -d Ubuntu-24.04`
+3. **PowerShell:** open the installed Ubuntu distro by name (for example,
+   `wsl -d Ubuntu-24.04`; Rayyan's existing one is `wsl -d Ubuntu`).
 4. **Ubuntu:**
    ```bash
    cd ~/Rahbar
@@ -195,7 +227,7 @@ Do not redeploy or reindex. Do not run `make cluster` again.
 | `OLLAMA_HOST=0.0.0.0 ollama serve` fails in PowerShell | Use `setx OLLAMA_HOST 0.0.0.0`, then restart Ollama |
 | `ensurepip ... exit status 1` | The repo is on `/mnt/c`. Use `~/Rahbar` |
 | `docker: command not found` / `minikube ... PROVIDER_DOCKER_VERSION_EXIT_1` | Docker Desktop WSL Integration off. Enable it, reopen Ubuntu |
-| `localhost:8080 connection refused` from kubectl | No cluster exists yet. `make cluster` failed or has not been run |
+| `localhost:8080 connection refused` from kubectl | Inspect `kubectl config current-context` and `minikube status`; a missing/wrong kubeconfig can cause this even when a cluster exists |
 | Ingress step takes minutes | Normal. Check `kubectl get pods -A`; the controller goes `ContainerCreating` then `Running` |
 | `curl` from minikube to Ollama fails (exit 7) with `host.minikube.internal` | Use the IPv4 from `host.docker.internal` (step 7) |
 | Deploy script silent after `indexer-... created` | Normal. Indexing takes 7 to 30 minutes |
@@ -204,7 +236,7 @@ Do not redeploy or reindex. Do not run `make cluster` again.
 | Pod not ready | `kubectl -n rahbar describe pod <name>`, then `kubectl -n rahbar logs <name>` |
 | `<unknown>` in HPA | Wait about a minute for metrics-server |
 | Fallback answers instead of real ones | Known memory limit of this laptop. Quit other programs |
-| Indexer exit 137 | Out of memory. `kubectl -n rahbar top pods` |
+| Indexer exit 137 | SIGKILL, not proof of OOM. Inspect the terminated container's reason/exit code with `kubectl -n rahbar describe pod <name>` and events; confirm `OOMKilled` before diagnosing a memory limit. `kubectl top` only samples running usage |
 
 ---
 
