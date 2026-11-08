@@ -10,6 +10,26 @@ pages and genuinely changed 2023/2026 undergraduate policies. See
 both must-abstain cases refused). The full corrected real-corpus cluster audit passed. The reviewed main release
 shipped as f6c702b through [CD run 42341465116](https://github.com/rayyanhasan899/Rahbar/actions/runs/42341465116). See the requirement record.
 
+## Project overview
+
+Completed academic team project exploring document-grounded question answering
+and backend operations. Built with Python/FastAPI, Chroma, Redis, Ollama,
+Docker and Kubernetes. This is a university-policy assistant, not an official
+university service or a publicly hosted application.
+
+The engineering focus is a separate indexing pipeline, version-aware retrieval,
+cited answers with safe abstention, generation-aware caching, and repeatable
+container delivery. Human contributions and substantial AI assistance are
+recorded in [AI-USAGE](docs/AI-USAGE.md).
+
+### Start here
+
+- [Portfolio guide](docs/PORTFOLIO.md): capabilities, evidence and limitations.
+- [Architecture](ARCHITECTURE.md) and [pipeline](docs/PIPELINE.md): how data and requests move.
+- [Runbook](docs/RUNBOOK.md): environment preparation and cold-start recovery.
+- [Recorded evaluation](eval/results.json) and [requirement traceability](docs/REQUIREMENTS.md): measured outcomes and their scope.
+- [Failure analysis](docs/FAILURE-ANALYSIS.md): experiments, diagnosis and recovery.
+
 ## Architecture
 
 ```mermaid
@@ -39,7 +59,7 @@ container layers, two Ollama models and OCR intermediates.
 ```bash
 git clone https://github.com/rayyanhasan899/Rahbar.git
 cd Rahbar
-git checkout dev # use the reviewed main release after merge
+git checkout main # completed project; changes are reviewed through pull requests
 make install PY=python3.12
 source .venv/bin/activate
 make test
@@ -159,7 +179,7 @@ committed. See [LICENSE](LICENSE) and [AI disclosure](docs/AI-USAGE.md).
 On the prepared Windows laptop, a development-only localhost Ingress alias and
 loopback forward also expose the real UI at http://localhost:18080. No hosts file
 was edited. It currently uses the explicitly recorded pre-merge verification
-images and a real646-chunk index. API/readiness work, but the host model has hit
+images and a real 646-chunk index. API/readiness work, but the host model has hit
 a measured memory allocation failure; it returns safe fallbacks. The passing
 real-generation gate is from the separate larger-memory audit cluster, not a
-claim that this8GB laptop passed generation. See docs/DAY3-REPORT.md.
+claim that this 8 GB laptop passed generation. See docs/DAY3-REPORT.md.
