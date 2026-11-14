@@ -61,3 +61,12 @@ about WSL names, mounted filesystems, Kubernetes tool versions and exit137.
 It also reconciled remaining pending-status text with the completed real audit.
 The GitHub review on Rayyan's authorized account is agent-assisted, not a claim
 that Rayyan manually performed every review check.
+
+## Post-completion portfolio documentation
+
+On 8 November 2026, Rayyan reported the project completed and authorized a
+GitHub portfolio update. Codex added a portfolio evidence guide, improved README
+navigation and corrected the clean-clone branch instruction. Existing screenshot,
+evaluation results, authorship records, license and historical reports were
+preserved. This pass changed documentation only; it did not rerun the real-model
+audit or change application behavior, deployment settings or security controls.
