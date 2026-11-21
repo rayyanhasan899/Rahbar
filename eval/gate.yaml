@@ -1,0 +1,9 @@
+# Release gate thresholds (Part C2). The cluster reads the same keys from the
+# rahbar-gate ConfigMap (k8s/eval/gate-configmap.yaml); keep both equal.
+# A null value fails the gate on purpose: set it from the baseline run and write the
+# reason in the report.
+max_recall5_drop: 0.02          # recall@5 may fall at most 2 points below the baseline
+min_faithfulness: null          # set from the baseline faithfulness
+max_p95_latency_seconds: null   # set from the baseline p95 on this laptop
+abstention_not_below_baseline: true
+min_citation_validity: 0.95     # Assignment 2's gate value
