@@ -113,8 +113,9 @@ attempts flagged.
   `MIN_TEXT_CHARS`, `TRACE_DIR`.
 - `k8s/jobs/`: rollback Job, verify-only Job, a read-only data lake shell Pod
   (label `app: indexer` so the NetworkPolicy lets it read Chroma).
-- `k8s/candidate/ingest-job.yaml`: the ingestion Job using
-  `rahbar-config-candidate` (Moez creates that ConfigMap in `k8s/candidate/`).
+- The candidate ingestion Job is made by Moez's `scripts/release.py` from the `reindex`
+  CronJob template with `rahbar-config-candidate` swapped in: keep the CronJob's
+  containers reading their settings through `envFrom: configMapRef: rahbar-config`.
 - API Deployment mounts `traces-data` at `/traces`.
 - Keep `scripts/deploy_local.py` working: it picks the first `Job` in the base
   kustomization, so one-off Jobs stay outside `k8s/base`.

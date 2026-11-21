@@ -62,8 +62,8 @@ difference per metric. API seed: a `SEED` setting passed to Ollama `options.seed
   `max_recall5_drop`, `min_faithfulness`, `max_p95_latency_seconds`,
   `abstention_not_below_baseline`, `min_citation_validity`. Values chosen by a person.
 - `eval/gate.py --baseline --candidate --thresholds`: one line per rule, exit 0 or 1.
-- Candidate ConfigMap `k8s/candidate/configmap.yaml` (collection `rahbar-cand`, changed
-  chunking chosen by a person).
+- Candidate ConfigMap written by `scripts/release.py` to
+  `k8s/candidate/configmap-<name>.yaml` (changed chunking chosen by a person).
 
 ## E. Drift and coverage
 
@@ -82,8 +82,10 @@ difference per metric. API seed: a `SEED` setting passed to Ollama `options.seed
   the gate fails. `k8s/eval/`: the PVC, the gate ConfigMap, a results shell Pod.
 - NetworkPolicies: eval pods reach the API, Chroma and Ollama; the API and the
   candidate API accept them.
-- `k8s/candidate/`: `api-candidate` Deployment and Service, `eval-job-candidate.yaml`.
-- `scripts/release.sh`: candidate eval Job, then either stop (gate failed) or
-  `kubectl set env deployment/api CHROMA_COLLECTION=...` with a change-cause annotation
-  and `kubectl rollout status`; `--force` releases a known-bad candidate for the undo demo.
+- `k8s/candidate/api-candidate.yaml`: `api-candidate` Deployment and Service (the eval Job against it is rendered by `scripts/release.py` from `k8s/eval-job.yaml`).
+- `scripts/release.py candidate`: candidate ConfigMap copied from the live one, ingestion
+  Job from the CronJob template, `api-candidate` with the live image, eval Job against
+  it, gate result recorded on the Deployment. `promote`: change-cause annotation, then
+  `kubectl set env deployment/api CHROMA_COLLECTION=...` and `kubectl rollout status`;
+  `--force` releases a known-bad candidate for the undo demo.
 - F5: requests and limits from measured `kubectl top` values (manual measurement).

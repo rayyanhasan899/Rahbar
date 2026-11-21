@@ -1,0 +1,7 @@
+# Build context is the repository root; send only what the eval image copies.
+*
+!indexer/requirements.lock
+!eval/*.py
+!eval/*.yaml
+!eval/*.jsonl
+!eval/judge_prompt.txt

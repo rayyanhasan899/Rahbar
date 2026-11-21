@@ -155,6 +155,24 @@ cases are evaluated separately. The gate fails for recall drop greater than
 0.05, validity below 0.95, or any answered must-abstain case. Evaluator tests
 cover boundaries and empty sets.
 
+## Assignment 3: RAGOps commands per part
+
+Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster commands:
+[k8s/README.md](k8s/README.md).
+
+| Part | Command |
+|---|---|
+| A ingestion, verification, Batch B | to be added with Part A |
+| B golden set | `python eval/convert_golden.py`, then `python eval/golden_check.py` |
+| B offline suite | `python eval/suite.py --label <name> [--typos]`; on the cluster `kubectl apply -f k8s/eval-job.yaml` |
+| B stochasticity | `python eval/suite.py --compare <run1>.json <run2>.json` |
+| B judge agreement | `python eval/end_to_end.py --agreement <run>.json` |
+| C gate | `python eval/gate.py --baseline <a>.json --candidate <b>.json --thresholds eval/gate.yaml` |
+| C, F3 candidate and release | `python scripts/release.py candidate ...`, `python scripts/release.py promote ...` |
+| D traces | to be added with Part D |
+| E coverage | `python eval/coverage.py --threshold <t> --min-share <s>` |
+| F everything else | [k8s/README.md](k8s/README.md) |
+
 ## CI and release
 
 CI runs lint/types, offline coverage, strict production validation, three builds,

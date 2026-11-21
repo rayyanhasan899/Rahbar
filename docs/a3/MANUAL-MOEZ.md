@@ -34,8 +34,10 @@ Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
 - [ ] `python eval/golden_check.py` passes.
 - [ ] Before each suite run, empty the answer cache:
       `kubectl -n rahbar exec deploy/redis -- redis-cli FLUSHALL`.
-- [ ] Baseline run: `kubectl -n rahbar apply -f k8s/eval-job.yaml` with `LABEL=baseline`
-      (or locally `python eval/suite.py --label baseline` through a port-forward).
+- [ ] Baseline run: `kubectl apply -f k8s/eval/eval-results.yaml -f k8s/eval/gate-configmap.yaml`
+      once, then the eval Job (`k8s/README.md`); the first run becomes the baseline.
+      Locally instead: port-forward `svc/api` to 8000 and `svc/chroma` to 8001, then
+      `python eval/suite.py --label baseline`.
 - [ ] Hand-label 8+ answers into `eval/hand_labels.jsonl` before reading the judge's
       verdicts; then `python eval/end_to_end.py --agreement <result.json>`.
 - [ ] Second run with the same seed; `python eval/suite.py --compare A.json B.json`;
@@ -46,13 +48,13 @@ Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
 
 ## Part C
 
-- [ ] Choose the change (chunk size or overlap), set it in `k8s/candidate/configmap.yaml`.
+- [ ] Choose the change (chunk size or overlap) and justify it.
 - [ ] Choose and justify thresholds from the baseline numbers; write them into
-      `eval/gate.yaml` and `k8s/eval/gate-configmap.yaml`.
-- [ ] Build the candidate collection (Rayyan's candidate ingestion Job), apply
-      `k8s/candidate/api-candidate.yaml`, run `k8s/candidate/eval-job-candidate.yaml`.
-- [ ] A deliberately bad candidate (for example `CHUNK_SIZE=60`) that fails the gate, and
-      one that passes. Screenshots C. Release decision with reasons.
+      `eval/gate.yaml` and `k8s/eval/gate-configmap.yaml` (same values), apply the ConfigMap.
+- [ ] `python scripts/release.py candidate --name rahbar-cand --chunk-size <n> --chunk-overlap <m>`
+      (builds the collection, starts `api-candidate`, runs the eval Job, applies the gate).
+- [ ] A deliberately bad candidate (`--name rahbar-bad --chunk-size 60 --chunk-overlap 0`)
+      that fails the gate, and one that passes. Screenshots C. Release decision with reasons.
 
 ## Part E
 
@@ -67,8 +69,9 @@ Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
 
 - [ ] Gate ConfigMap edit changes the outcome without rebuilding:
       `kubectl -n rahbar edit configmap rahbar-gate`, re-run the eval Job (screenshot).
-- [ ] `scripts/release.sh` with a candidate stopped by the gate (never rolled out).
-- [ ] `scripts/release.sh --force` with a bad candidate, then
+- [ ] `scripts/release.py candidate` with a candidate stopped by the gate (never rolled out:
+      `kubectl rollout history deployment/api` unchanged).
+- [ ] `scripts/release.py promote --name rahbar-bad --force`, then
       `kubectl -n rahbar rollout undo deployment/api`, `kubectl rollout status`, one
       question, and its trace showing the previous collection and embedding digest.
 - [ ] F5: `kubectl top pod -n rahbar --containers` during an eval run and an ingestion run

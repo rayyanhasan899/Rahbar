@@ -47,9 +47,11 @@ images: ## build the three images and load them into minikube (needs yours: Dock
 	docker build --build-arg VCS_REF=$(TAG) -t rahbar-api:$(TAG) api
 	docker build --build-arg VCS_REF=$(TAG) -t rahbar-indexer:$(TAG) indexer
 	docker build --build-arg VCS_REF=$(TAG) -t rahbar-ui:$(TAG) ui
+	docker build --build-arg VCS_REF=$(TAG) -f eval/Dockerfile -t rahbar-eval:$(TAG) -t rahbar-eval:dev .
 	minikube image load rahbar-api:$(TAG)
 	minikube image load rahbar-indexer:$(TAG)
 	minikube image load rahbar-ui:$(TAG)
+	minikube image load rahbar-eval:dev
 
 apply: ## bootstrap real dependencies, transfer corpus, index, then roll out API/UI
 	"$(BIN)/python" scripts/deploy_local.py --tag $(TAG) $(if $(PROVIDER_CIDR),--provider-cidr $(PROVIDER_CIDR),)

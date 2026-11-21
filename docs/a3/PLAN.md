@@ -101,10 +101,13 @@ Rayyan's incremental store must keep that pointer field.
 
 The candidate is a chunking change, so it is a new collection: ConfigMap
 `rahbar-config-candidate` with `CHROMA_COLLECTION=rahbar-cand` and the changed
-`CHUNK_SIZE`/`CHUNK_OVERLAP`. Rayyan's ingestion Job builds it from that ConfigMap
-(`k8s/candidate/ingest-job.yaml`); Moez's `api-candidate` Deployment reads it. Release
-sets `CHROMA_COLLECTION` on the live `api` Deployment with `kubectl set env`, which
-rolls out; `kubectl rollout undo` brings the previous collection back.
+`CHUNK_SIZE`/`CHUNK_OVERLAP`. `scripts/release.py` builds it with a Job made from the
+`reindex` CronJob's own template, so whatever ingestion Rayyan's Part A ships is what
+builds the candidate; his code must therefore refuse to reuse a collection built with
+other settings, and must honour `CHROMA_COLLECTION`. The `api-candidate` Deployment reads
+that ConfigMap. Release sets `CHROMA_COLLECTION` on the live `api` Deployment with
+`kubectl set env`, which rolls out; `kubectl rollout undo` brings the previous
+collection back.
 
 ### 4. What the API and ingestion side must provide (Rayyan)
 
@@ -133,7 +136,7 @@ rolls out; `kubectl rollout undo` brings the previous collection back.
 | Update data lake | current/archive/quarantine, ledger | indexer/pipeline (Rayyan) | Rayyan |
 | Update retrieval sources | incremental chunk/embed/delete/archive | indexer/pipeline (Rayyan) | Rayyan |
 | Offline testing | three-level suite | eval/suite.py and its modules | Moez |
-| Live testing | traces, metrics, gated rollout | api (Rayyan), k8s/candidate, scripts/release.sh (Moez) | both |
+| Live testing | traces, metrics, gated rollout | api (Rayyan), k8s/candidate, scripts/release.py (Moez) | both |
 | Check coverage | live queries against the golden set | eval/coverage.py | Moez |
 
 The "what is missing" column is filled in after the runs.
