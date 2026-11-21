@@ -36,12 +36,17 @@ class OllamaProvider:
         history: Sequence[Turn] = (),
         feedback: str | None = None,
     ) -> Answer:
+        options: dict[str, float | int] = {
+            "temperature": self.settings.temperature, "num_ctx": 8192, "num_predict": 512,
+        }
+        if self.settings.seed is not None:
+            options["seed"] = self.settings.seed
         body = {
             "model": self.settings.llm_model,
             "messages": build_messages(question, passages, history, feedback),
             "format": ANSWER_SCHEMA,
             "stream": False,
-            "options": {"temperature": self.settings.temperature, "num_ctx": 8192, "num_predict": 512},
+            "options": options,
             "keep_alive": "1m",
         }
         start = time.perf_counter()

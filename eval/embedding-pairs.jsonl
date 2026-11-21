@@ -1,0 +1,30 @@
+{"id": "p01", "kind": "paraphrase", "a": "What is the minimum CGPA needed to graduate?", "b": "How high must my cumulative GPA be before I can get my degree?", "origin": "assistant-drafted"}
+{"id": "p02", "kind": "paraphrase", "a": "Can I take a course before passing its prerequisite?", "b": "Am I allowed to register for a class if I have not cleared the course it depends on?", "origin": "assistant-drafted"}
+{"id": "p03", "kind": "paraphrase", "a": "What attendance is required to sit the final exam?", "b": "How many classes must I attend to be allowed into the final examination?", "origin": "assistant-drafted"}
+{"id": "p04", "kind": "paraphrase", "a": "When is a student placed on academic warning?", "b": "What GPA puts me on academic probation warning?", "origin": "assistant-drafted"}
+{"id": "p05", "kind": "paraphrase", "a": "What is the longest time allowed to finish a bachelor's degree?", "b": "What is the maximum duration for completing a BS programme?", "origin": "assistant-drafted"}
+{"id": "p06", "kind": "paraphrase", "a": "If I fail the lab but pass the theory, what do I repeat?", "b": "Passing theory and failing its lab: which part must be taken again?", "origin": "assistant-drafted"}
+{"id": "p07", "kind": "paraphrase", "a": "How many courses with labs can I repeat in the summer semester?", "b": "What is the limit on repeating lab courses during summer?", "origin": "assistant-drafted"}
+{"id": "p08", "kind": "paraphrase", "a": "What is the deadline to withdraw from a course?", "b": "Until when can I drop a course with a W grade?", "origin": "assistant-drafted"}
+{"id": "p09", "kind": "paraphrase", "a": "Which language are lectures and exams conducted in?", "b": "What is the medium of instruction for most courses?", "origin": "assistant-drafted"}
+{"id": "p10", "kind": "paraphrase", "a": "Can a student improve a grade by repeating a course?", "b": "Does retaking a course replace my earlier grade?", "origin": "assistant-drafted"}
+{"id": "p11", "kind": "paraphrase", "a": "What happens if I am absent from the final exam?", "b": "What is the rule when a student misses the final examination?", "origin": "assistant-drafted"}
+{"id": "p12", "kind": "paraphrase", "a": "How is the semester GPA calculated?", "b": "What is the method for computing GPA for one semester?", "origin": "assistant-drafted"}
+{"id": "p13", "kind": "paraphrase", "a": "Who can condone a shortage of attendance?", "b": "Which official may excuse a student whose attendance is too low?", "origin": "assistant-drafted"}
+{"id": "p14", "kind": "paraphrase", "a": "What is the maximum credit hours I can take in a regular semester?", "b": "How many credit hours am I allowed to register for in a normal semester?", "origin": "assistant-drafted"}
+{"id": "p15", "kind": "paraphrase", "a": "Is cheating in an exam punished with an F grade?", "b": "Does the university give a failing grade for using unfair means in an exam?", "origin": "assistant-drafted"}
+{"id": "u01", "kind": "unrelated", "a": "What is the minimum CGPA needed to graduate?", "b": "The cafeteria opens at eight in the morning.", "origin": "assistant-drafted"}
+{"id": "u02", "kind": "unrelated", "a": "Can I take a course before passing its prerequisite?", "b": "Faculty start-ups must disclose their equity to the university.", "origin": "assistant-drafted"}
+{"id": "u03", "kind": "unrelated", "a": "What attendance is required to sit the final exam?", "b": "The annual report lists research grants received during the year.", "origin": "assistant-drafted"}
+{"id": "u04", "kind": "unrelated", "a": "When is a student placed on academic warning?", "b": "Bus routes change at the start of each semester.", "origin": "assistant-drafted"}
+{"id": "u05", "kind": "unrelated", "a": "What is the longest time allowed to finish a bachelor's degree?", "b": "Library books may be renewed twice.", "origin": "assistant-drafted"}
+{"id": "u06", "kind": "unrelated", "a": "If I fail the lab but pass the theory, what do I repeat?", "b": "The fee is paid through designated bank branches.", "origin": "assistant-drafted"}
+{"id": "u07", "kind": "unrelated", "a": "How many courses with labs can I repeat in the summer semester?", "b": "Wi-Fi passwords are reset by the IT helpdesk.", "origin": "assistant-drafted"}
+{"id": "u08", "kind": "unrelated", "a": "What is the deadline to withdraw from a course?", "b": "The sports complex closes at nine in the evening.", "origin": "assistant-drafted"}
+{"id": "u09", "kind": "unrelated", "a": "Which language are lectures and exams conducted in?", "b": "Hostel visitors may stay only in the common room.", "origin": "assistant-drafted"}
+{"id": "u10", "kind": "unrelated", "a": "Can a student improve a grade by repeating a course?", "b": "The university was established by a charter.", "origin": "assistant-drafted"}
+{"id": "u11", "kind": "unrelated", "a": "What happens if I am absent from the final exam?", "b": "Parking permits are issued by the security office.", "origin": "assistant-drafted"}
+{"id": "u12", "kind": "unrelated", "a": "How is the semester GPA calculated?", "b": "Societies need a faculty advisor to register.", "origin": "assistant-drafted"}
+{"id": "u13", "kind": "unrelated", "a": "Who can condone a shortage of attendance?", "b": "Convocation gowns are returned after the ceremony.", "origin": "assistant-drafted"}
+{"id": "u14", "kind": "unrelated", "a": "What is the maximum credit hours I can take in a regular semester?", "b": "The campus has solar panels on the library roof.", "origin": "assistant-drafted"}
+{"id": "u15", "kind": "unrelated", "a": "Is cheating in an exam punished with an F grade?", "b": "Alumni receive a newsletter twice a year.", "origin": "assistant-drafted"}

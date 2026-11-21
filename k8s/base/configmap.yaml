@@ -23,6 +23,7 @@ data:
   LLM_TIMEOUT: '110'
   MAX_HISTORY_TURNS: '3'
   TEMPERATURE: '0.2'
+  SEED: '42'
   CORPUS_DIR: /corpus
   OLLAMA_URL: http://host.minikube.internal:11434
   EMBED_BATCH_SIZE: '16'

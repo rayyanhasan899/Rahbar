@@ -44,12 +44,14 @@ class HostedProvider:
         history: Sequence[Turn] = (),
         feedback: str | None = None,
     ) -> Answer:
-        body = {
+        body: dict[str, object] = {
             "model": self.settings.llm_model,
             "messages": build_messages(question, passages, history, feedback),
             "temperature": self.settings.temperature,
             "response_format": {"type": "json_object"},
         }
+        if self.settings.seed is not None:
+            body["seed"] = self.settings.seed
         headers = {"Authorization": f"Bearer {self.settings.llm_api_key}"}
         start = time.perf_counter()
         try:
