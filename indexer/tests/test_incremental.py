@@ -380,6 +380,22 @@ class LifecycleTests(unittest.TestCase):
         alternate = self.root / "lake/current/candidate" / identifier("rules") / identifier("2026")
         self.assertNotEqual((alternate / "rules.md").read_bytes(), before)
 
+    def test_embedding_outage_preserves_live_index_and_four_check_diagnostics(self):
+        self.write()
+        self.run_ingest()
+        original = self.backend.active()
+        self.write(text="The changed rule requires a written extension request. " * 5)
+        self.embed = MagicMock(side_effect=ConnectionError("model unavailable"))
+        with self.assertRaises(ConnectionError):
+            self.run_ingest()
+        self.assertEqual(self.backend.active(), original)
+        reports = [load_json(path) for path in (self.root / "lake/reports").glob("*.json")]
+        failed = next(report for report in reports if "error" in report)
+        self.assertFalse(failed["published"])
+        self.assertEqual(failed["documents"][0]["outcome"], "interrupted")
+        self.assertEqual(set(failed["documents"][0]["checks"]),
+                         {"quality", "completeness", "recency", "uniqueness"})
+
 
 if __name__ == "__main__":
     unittest.main()

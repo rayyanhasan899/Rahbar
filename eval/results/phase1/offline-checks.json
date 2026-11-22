@@ -1,10 +1,10 @@
 {
-  "timestamp_utc": "2026-11-22T10:31:00.675582+00:00",
+  "timestamp_utc": "2026-11-22T10:39:50.342438+00:00",
   "python": "3.14.7",
   "platform": "Windows",
   "scope": "Offline tests only; fake vectors/Chroma/subprocess. Actual Markdown and owned corrupt-PDF extraction. No live model, Kubernetes or benchmark.",
   "command": "python -B .venv/phase1_evidence.py",
-  "tests_run": 34,
+  "tests_run": 35,
   "successful": true,
   "tests": [
     {
@@ -33,6 +33,10 @@
     },
     {
       "test": "test_incremental.LifecycleTests.test_deleted_document_has_no_current_orphan_chunks",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_embedding_outage_preserves_live_index_and_four_check_diagnostics",
       "status": "PASS"
     },
     {
@@ -154,7 +158,7 @@
     "indexer/pipeline/dummy.py": "f008b65a31199ef10fc94945965853c284dbbc8c4b535d01b180d744652ba12a",
     "indexer/pipeline/embed.py": "f79558a74b10b0b393ea3eb54e6b47c0d56d7bf118d846064be268743263e815",
     "indexer/pipeline/extract.py": "54f4d04808d146e70fece2c0762817fb9b4635c1b4129eb754be226a245b4a57",
-    "indexer/pipeline/incremental.py": "506ff69cc9b7007c349b2f0b3e729d76bf542ec418a6d8eb83f31c6bdc186279",
+    "indexer/pipeline/incremental.py": "9f4680e29befb395bfaf369ca936cec715f7fe2a8191520167c3f98fc9e1bf3b",
     "indexer/pipeline/models.py": "4acbf333e56c979b10c54c8521eacb7cc79a555cc67c970e6ab820692d3f67a9",
     "indexer/pipeline/rollback.py": "a94fd313395c62f443f9c1662a10f6b5ab96e4fec3e2d25d7b29766f47685aab",
     "indexer/pipeline/run.py": "56c0fa5456a4ceb253110294b36b0c3f8d7c3c59b799b23a4958ee63b4f6f905",
@@ -163,7 +167,7 @@
     "indexer/pipeline/verify.py": "b460267315b0b6e9e3b58fbf9f8ada4f96ed09b23a140c95a627efe08cd9ff46",
     "indexer/pipeline/wait.py": "14f75f86be95994b1f7dfdfb2549cfbc265b835099190b4e00640b93757c4275",
     "indexer/tests/test_corpus_transfer.py": "abf57def81b018c7c0df7181eb655cee2771e1025c8546071ce23df8757f27e1",
-    "indexer/tests/test_incremental.py": "2c82b546b263c0afaaf633496a61eb39f4a839607face5a3a53d6fc3d3773a71",
+    "indexer/tests/test_incremental.py": "f650d77d2197f28ec32ef1dfe1dd5b08746bb12a1398e57113ab278467b52a6c",
     "indexer/tests/test_manifest_paths.py": "81a82b00f767c3db3d5decf0c4046f27a85a5df0d8f4329bc792b63e4335f62f",
     "indexer/tests/test_pipeline.py": "4c1bf58486d9abb510a64ac616db5d3f49f672e631e7b82f126a22628132e8ca",
     "indexer/tests/test_starter_dummy.py": "53fa1974e51f54fd17f300d02757599c762d5c2aa7c106c2227f83832b86e29a",

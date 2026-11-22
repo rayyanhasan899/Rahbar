@@ -125,6 +125,9 @@ def ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
                        run_id, report, verify_only, pins)
     except Exception as exc:
         report["error"] = type(exc).__name__ + ": " + str(exc)
+        for row in report["documents"]:
+            if row["outcome"] == "pending":
+                row["outcome"] = "interrupted"
         raise
     finally:
         atomic_json(report_path, report)
@@ -164,7 +167,7 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
         key = identifier(family + "\0" + version)
         row: dict[str, Any] = {"source": item.source, "doc_id": family, "doc_key": key,
                "version": version, "title": str(meta.get("title", "")),
-               "outcome": "quarantined"}
+               "outcome": "pending"}
         report["documents"].append(row)
         raw, error, doc = b"", item.error, None
         if not error:
@@ -205,6 +208,9 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
             checks["completeness"] = check(False, "invalid document family identity")
         if key in verified:
             checks["uniqueness"] = check(False, "conflicting duplicate document key in input scopes")
+        # Retain all four results even if the shared embedding service fails next.
+        # Such infrastructure errors abort publication, rather than reject policy content.
+        row.update(checks=checks, sha256=sha)
         prelim = all(checks[k]["passed"] for k in ("quality", "completeness", "recency"))
         others = {**{k: r for k, r in documents.items() if r["status"] != "deleted"},
                   **verified}
@@ -236,6 +242,7 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
         row.update(checks=checks, sha256=sha, nearest_cosine=closest,
                    page_count=(cached or {}).get("page_count", len(doc.pages) if doc else 0))
         if not all(v["passed"] for v in checks.values()):
+            row["outcome"] = "quarantined"
             if cached is not None and not verify_only:
                 # Near-duplicate rejection must not cause repeated document embeddings.
                 cached["checks"] = checks
