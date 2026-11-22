@@ -1,5 +1,5 @@
 # Read-only data-lake inspection; never indexes on startup.
-apiVersion: batch/v1
+apiVersion: v1
 kind: Pod
 metadata:
   name: datalake-inspect

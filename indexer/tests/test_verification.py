@@ -62,7 +62,8 @@ class Collection:
         return len(self.rows)
 
     def get(self, limit, offset, include):
-        return {"metadatas": list(self.rows.values())[offset:offset + limit]}
+        return {"ids": list(self.rows)[offset:offset + limit],
+                "metadatas": list(self.rows.values())[offset:offset + limit]}
 
 
 class Client:

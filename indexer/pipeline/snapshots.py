@@ -31,6 +31,26 @@ class ChromaSnapshots:
             counts.update(str(m["doc_key"]) for m in page["metadatas"])
         return dict(counts)
 
+    def valid(self, ledger: dict) -> bool:
+        collection = self.client.get_collection(ledger["active_collection"])
+        expected = {cid: (key, record) for key, record in ledger["documents"].items()
+                    if record["status"] != "deleted" for cid in record["chunk_ids"]}
+        seen = set()
+        for start in range(0, collection.count(), 128):
+            page = collection.get(limit=128, offset=start, include=["metadatas"])
+            for cid, meta in zip(page["ids"], page["metadatas"]):
+                if cid not in expected:
+                    return False
+                key, record = expected[cid]
+                archived = record["status"] == "archived"
+                if (meta.get("doc_key") != key or meta.get("doc_id") != record["doc_id"]
+                        or meta.get("doc_sha256") != record["sha256"]
+                        or meta.get("archived") != archived
+                        or meta.get("superseded") != archived):
+                    return False
+                seen.add(cid)
+        return seen == set(expected) and collection.count() == len(expected)
+
     def publish(self, ledger: dict, rows: Iterable[dict]) -> None:
         collection = self.client.create_collection(ledger["active_collection"], metadata={
             "hnsw:space": "cosine", "embed_model": ledger["embed_model"],
@@ -60,6 +80,8 @@ class ChromaSnapshots:
             raise RuntimeError("staged per-document counts mismatch; active index retained")
         if collection.count() != ledger["chunks"]:
             raise RuntimeError("staged total count mismatch; active index retained")
+        if not self.valid(ledger):
+            raise RuntimeError("staged IDs/metadata mismatch; active index retained")
         meta = {k: ledger[k] for k in (
             "active_collection", "generation", "embed_model", "embed_model_digest",
             "dimension", "chunks", "content_sha256", "versions", "fingerprint",

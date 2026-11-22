@@ -16,7 +16,7 @@ def main() -> None:
         raise SystemExit("no published A3 ledger")
     actual = backend.counts(ledger["active_collection"])
     expected = {r["doc_key"]: r["chunks"] for r in document_counts(ledger) if r["chunks"]}
-    if actual != expected:
+    if actual != expected or not backend.valid(ledger):
         raise SystemExit("orphan/missing chunks: published store differs from ledger")
     print(json.dumps({"collection": ledger["active_collection"],
                       "generation": ledger["generation"], "orphan_chunks": 0,

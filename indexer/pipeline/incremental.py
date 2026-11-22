@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 from collections.abc import Callable, Iterable
+from collections import Counter
+from datetime import datetime, timezone
 import json
 from pathlib import Path
 import shutil
@@ -19,6 +21,7 @@ from .verify import check, cosine, initial_checks, version_order
 class Snapshots(Protocol):
     def active(self) -> dict[str, Any] | None: ...
     def counts(self, name: str) -> dict[str, int]: ...
+    def valid(self, ledger: dict) -> bool: ...
     def publish(self, ledger: dict, rows: Iterable[dict]) -> None: ...
 
 
@@ -107,6 +110,12 @@ def ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
     lake = Lake(settings.datalake_dir, settings.collection)
     run_id = uuid.uuid4().hex
     report: dict[str, Any] = {"run_id": run_id, "collection": settings.collection,
+                              "timestamp": datetime.now(timezone.utc).isoformat(),
+                              "settings": {"embed_model": settings.embed_model,
+                                           "embed_model_digest": model_digest,
+                                           "near_dup_threshold": settings.near_dup_threshold,
+                                           "document_embed_chars": settings.document_embed_chars,
+                                           "min_text_chars": settings.min_text_chars},
                               "verify_only": verify_only, "documents": [],
                               "document_embeddings": 0, "chunks_embedded": 0,
                               "published": False}
@@ -128,6 +137,9 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
             report: dict, verify_only: bool, pins: dict | None) -> dict:
     config = fingerprint(settings, model_digest)
     old = read_ledger(lake, backend)
+    legacy = backend.active() if old is None else None
+    if legacy and legacy.get("embed_model") != settings.embed_model:
+        raise ValueError("legacy model mismatch: select a new collection")
     if old and old["fingerprint"] != config:
         raise ValueError("model/digest/chunk configuration changed: select a new collection")
     documents = json.loads(json.dumps(old["documents"])) if old else {}
@@ -135,6 +147,12 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
     roots = list(dict.fromkeys(Path(p).resolve() for p in (
         settings.incoming_dirs or (settings.corpus_dir,))))
     inputs = discover_inputs(roots)
+    identities = Counter((str(i.metadata["doc_id"]), str(i.metadata["doc_version"]))
+                         for i in inputs if str(i.metadata["doc_version"]) != "unknown")
+    for item in inputs:
+        identity = (str(item.metadata["doc_id"]), str(item.metadata["doc_version"]))
+        if identities[identity] > 1:
+            item.error = "conflicting document identity across incoming files/scopes"
     seen_locations = {(i.scope, i.source) for i in inputs}
     scopes = {str(p) for p in roots}
     verified: dict[str, dict] = {}
@@ -258,7 +276,10 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
     for key, record in documents.items():
         if (record["scope"] in scopes and (record["scope"], record["source"]) not in seen_locations
                 and key not in verified):
-            record["status"] = "deleted"
+            superseded_now = any(r["doc_id"] == record["doc_id"] and
+                                 version_order(r["version"]) > version_order(record["version"])
+                                 for r in verified.values())
+            record["status"] = "archived" if superseded_now else "deleted"
     documents.update(verified)
     classify(documents, chosen_pins)
     for key, row in rows_by_key.items():
@@ -276,7 +297,7 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
     if old and documents == old["documents"] and chosen_pins == old.get("pins", {}):
         expected = {k: len(r["chunk_ids"]) for k, r in documents.items()
                     if r["status"] != "deleted" and r["chunk_ids"]}
-        if backend.counts(old["active_collection"]) == expected:
+        if backend.counts(old["active_collection"]) == expected and backend.valid(old):
             materialize(lake, old)  # Repairs a convenience-view write interrupted after publication.
             report["generation"] = old["generation"]
             return report
@@ -286,6 +307,8 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
     if not dimension:
         report["generation"] = ""
         return report
+    if legacy and legacy.get("dimension") != dimension:
+        raise ValueError("legacy dimension mismatch: select a new collection")
     ledger = {"schema": 1, "documents": documents, "pins": chosen_pins,
               "fingerprint": config, "embed_model": settings.embed_model,
               "embed_model_digest": model_digest, "dimension": dimension,

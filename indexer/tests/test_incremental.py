@@ -31,6 +31,12 @@ class MemorySnapshots:
     def counts(self, name):
         return dict(Counter(r["metadata"]["doc_key"] for r in self.collections[name]))
 
+    def valid(self, ledger):
+        rows = self.collections[ledger["active_collection"]]
+        expected = {cid for r in ledger["documents"].values() if r["status"] != "deleted"
+                    for cid in r["chunk_ids"]}
+        return {r.get("id") for r in rows} == expected
+
     def publish(self, ledger, rows):
         self.collections[ledger["active_collection"]] = list(rows)
         if self.fail:
@@ -322,6 +328,42 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(extractor.call_count, 1)
         self.assertEqual(first["documents"][0]["version"], "2026-01-01")
         self.assertEqual(first["generation"], second["generation"])
+
+    def test_equal_count_orphan_id_is_repaired_without_embedding(self):
+        self.write()
+        self.run_ingest()
+        self.backend.collections[self.ledger()["active_collection"]][0]["id"] = "orphan"
+        self.embed.calls.clear()
+        self.assertTrue(self.run_ingest()["published"])
+        self.assertEqual(self.embed.calls, [])
+
+    def test_conflicting_identity_in_two_scopes_preserves_last_verified_version(self):
+        self.write()
+        self.run_ingest()
+        original = self.ledger()["generation"]
+        other = self.root / "other"
+        other.mkdir()
+        (other / "conflict.md").write_bytes((self.incoming / "rules.md").read_bytes())
+        self.settings = replace(self.settings, incoming_dirs=(str(self.incoming), str(other)))
+        report = self.run_ingest()
+        self.assertTrue(all(r["outcome"] == "quarantined" for r in report["documents"]))
+        self.assertEqual(self.ledger()["generation"], original)
+
+    def test_new_version_replacing_old_filename_archives_instead_of_deleting_it(self):
+        self.write("old.md", version="2023")
+        self.run_ingest()
+        (self.incoming / "old.md").unlink()
+        self.write("new.md", version="2026", text="The revised rule permits two extensions. " * 5)
+        self.run_ingest()
+        self.assertEqual(self.ledger()["documents"][identifier("rules\0" + "2023")]
+                         ["status"], "archived")
+
+    def test_legacy_wrong_model_is_not_silently_reused(self):
+        self.backend.pointer = {"embed_model": "other-model", "dimension": 32}
+        self.write()
+        with self.assertRaisesRegex(ValueError, "legacy model mismatch"):
+            self.run_ingest()
+        self.assertEqual(self.embed.calls, [])
 
 
 if __name__ == "__main__":
