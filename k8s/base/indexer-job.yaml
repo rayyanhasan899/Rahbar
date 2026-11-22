@@ -37,6 +37,8 @@ spec:
             cpu: '1'
             memory: 1Gi
         volumeMounts:
+        - name: datalake
+          mountPath: /datalake
         - name: tmp
           mountPath: /tmp
         - name: indexer-lock
@@ -53,6 +55,9 @@ spec:
         - configMapRef:
             name: rahbar-config
       volumes:
+      - name: datalake
+        persistentVolumeClaim:
+          claimName: datalake-data
       - name: tmp
         emptyDir: {}
       - name: indexer-lock

@@ -131,3 +131,20 @@ manifests. eval algorithm/release code will not be rewritten. Fixture front matt
 may need additive title/doc_id/pages for verification; announce it before editing.
 Requests HM-01..HM-05 remain pending; no partner reply or human work is assumed.
 
+### 22 November 2026 - Rayyan - additive compatibility decisions
+CO-05 interpretation implemented for review: recency checks PASS when ordering and
+newer-version detection succeed, recording the selected active version. A successfully
+verified older version is ARCHIVED, not a failed input. Actual verification failures
+quarantine and never index. This satisfies four explicit check results without
+silently indexing a failed document or removing A2's explicit historical retrieval.
+CO-06: no golden question changed; default metadata marks archived=true and
+superseded=true, preserving current API filtering and explicit historical requests.
+No claim of Moez approval. His plan's fixed long-lived collection/delete-first
+algorithm is deliberately not adopted; safety rationale is in the lifecycle ADR.
+Shared edit notice: adding doc_id/title/pages to the three owned eval fixtures only,
+without changing their policy text, labels or any evaluation algorithm. Also adding
+family IDs to corpus sources/fetch metadata and --source/--dest transfer options.
+Baseline CI45010313761: lint/tests/manifests and three builds passed; unchanged UI
+image failed the vulnerability gate. e2e was skipped. The scan is not disabled;
+Moez's security/build follow-up remains separate from Phase1 ingestion correctness.
+
