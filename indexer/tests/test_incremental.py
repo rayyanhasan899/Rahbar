@@ -367,6 +367,19 @@ class LifecycleTests(unittest.TestCase):
             self.run_ingest()
         self.assertEqual(self.embed.calls, [])
 
+    def test_candidate_materialized_views_do_not_overwrite_live_collection(self):
+        self.write()
+        self.run_ingest()
+        live = self.root / "lake/current/test-index" / identifier("rules") / identifier("2026")
+        before = (live / "rules.md").read_bytes()
+        self.write(text="Candidate policy requires a different signed form. " * 5)
+        candidate = replace(self.settings, collection="candidate")
+        with redirect_stdout(io.StringIO()):
+            ingest(candidate, MemorySnapshots(), self.embed, extract, self.digest)
+        self.assertEqual((live / "rules.md").read_bytes(), before)
+        alternate = self.root / "lake/current/candidate" / identifier("rules") / identifier("2026")
+        self.assertNotEqual((alternate / "rules.md").read_bytes(), before)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,7 +1,11 @@
 # Assignment 3 delivery workspace
 
 Owner: Rayyan Hassan (GitHub rayyanhasan899).
-Prepared: 22 November 2026, Asia/Karachi. Status: planning only.
+Prepared: 22 November 2026, Asia/Karachi. Phase 1 implementation is on
+`codex/a3-phase-1`, draft [PR #6](https://github.com/rayyanhasan899/Rahbar/pull/6)
+to `dev2`. Current evidence, acceptance criteria and blockers are in the
+[Phase 1 report](phase-reports/PHASE-1-REPORT.md). The planning snapshots below
+describe the pre-implementation state; they are not current runtime evidence.
 
 ## Read in this order
 
@@ -13,8 +17,8 @@ Prepared: 22 November 2026, Asia/Karachi. Status: planning only.
    - [Phase 2: traceability and integration correctness](prompts/PHASE-2-IMPLEMENTATION-PROMPT.md)
    - [Phase 3: measured Kubernetes evidence and submission](prompts/PHASE-3-IMPLEMENTATION-PROMPT.md)
 
-Execute exactly one authorized phase per session. Creating these documents is not
-authorization to start Phase 1.
+Execute exactly one authorized phase per session. Phase 1 was explicitly authorized;
+Phase 2 and Phase 3 have not started.
 
 ## Source and branch warning
 
@@ -27,8 +31,8 @@ The PDF has five pages and no visible submission deadline. It controls requireme
 Local checkout: dev at 3665108dbfa063908fbd0bccb36daaa129397426.
 GitHub main: e92fbe77f5a43c76f7b9231dcb5bbc97fa638b0d.
 Partner's A3 work: dev2 at 3dff73646eaf17ee778a2512f1e1d51166a59ebe.
-The local checkout does not contain that A3 code. Inspect and reconcile the branch
-before implementation; do not rebuild Moez's existing modules from the old checkout.
+Those were planning-time observations. The Phase 1 branch was created from the listed
+dev2 head and preserves its five A3 commits. Re-inspect before subsequent phases.
 
 Partner's original plan is docs/a3/PLAN.md on dev2, with AI-TASKS-MOEZ.md,
 AI-TASKS-RAYYAN.md and both MANUAL files. Preserve these; this workspace supplements
@@ -42,8 +46,7 @@ commits/reviews. Preserve every original author's identity. Do not claim that
 automated writing or checking was independently handwritten or reviewed by a human.
 Keep the existing AI-USAGE disclosure accurate; do not remove it.
 
-No Git state or GitHub contents were changed in this planning phase. These documents
-are local until their first authorized documentation commit/push in implementation.
-COMMUNICATION.md is therefore a handoff ledger, not a live messaging connection.
-Moez can read/reply after it is published or Rayyan shares the files.
+The initial planning pass changed no Git state. Its documentation was subsequently
+published as authorized milestone `490ca5f`; Moez can read/reply through the feature
+branch/PR. COMMUNICATION.md remains a handoff ledger, not a live messaging connection.
 

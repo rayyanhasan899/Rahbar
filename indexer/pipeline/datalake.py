@@ -94,6 +94,7 @@ class Lake:
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{1,28}", collection):
             raise ValueError("collection prefix must be 2-29 safe characters (snapshot name limit)")
         self.root = Path(root).resolve()
+        self.collection = collection
         self.state = self.root / "state" / collection
         for folder in ("current", "archive", "quarantine", "reports", "objects", "cache"):
             (self.root / folder).mkdir(parents=True, exist_ok=True)

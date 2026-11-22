@@ -3,6 +3,10 @@
 Owner: Rayyan Hassan. Evidence date: 22 November 2026.
 This is an AI-assisted planning analysis, not a claim of handwritten implementation.
 
+This is the pre-implementation snapshot. Current Phase 1 status and requirement
+verification are maintained in [PHASE-1-REPORT.md](phase-reports/PHASE-1-REPORT.md);
+later work does not retroactively make the initial audit a measured passing run.
+
 ## Authority and scope
 
 The five-page Assignment_03.pdf is authoritative. Relevant headings are Instructions,

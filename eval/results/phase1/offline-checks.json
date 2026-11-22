@@ -1,0 +1,173 @@
+{
+  "timestamp_utc": "2026-11-22T10:31:00.675582+00:00",
+  "python": "3.14.7",
+  "platform": "Windows",
+  "scope": "Offline tests only; fake vectors/Chroma/subprocess. Actual Markdown and owned corrupt-PDF extraction. No live model, Kubernetes or benchmark.",
+  "command": "python -B .venv/phase1_evidence.py",
+  "tests_run": 34,
+  "successful": true,
+  "tests": [
+    {
+      "test": "test_incremental.LifecycleTests.test_bad_manifest_hash_does_not_replace_verified_content",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_candidate_materialized_views_do_not_overwrite_live_collection",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_changed_document_preserves_other_ids_and_vectors",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_conflicting_identity_in_two_scopes_preserves_last_verified_version",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_counts_repair_orphan_current_snapshot_without_reembedding",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_declared_superseded_input_stays_archived_even_without_newer_input",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_deleted_document_has_no_current_orphan_chunks",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_equal_count_orphan_id_is_repaired_without_embedding",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_exact_and_near_duplicates_are_quarantined",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_failed_publication_preserves_active_and_recovers_cached_vectors",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_invalid_change_preserves_last_verified_version",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_legacy_wrong_model_is_not_silently_reused",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_missing_scope_fails_without_deleting_current_documents",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_new_version_replacing_old_filename_archives_instead_of_deleting_it",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_owned_batch_generator_is_repeatable_and_all_inputs_get_four_checks",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_pdf_metadata_fallback_is_cached_and_not_extracted_again",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_recovery_uses_published_revision_not_interrupted_convenience_ledger",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_rejected_near_duplicate_also_reuses_its_document_embedding",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_same_collection_refuses_incompatible_chunking_or_model_artifact",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_scanning_another_scope_does_not_delete_original_batch",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_traversal_manifest_never_reads_outside_root",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_unchanged_run_skips_all_embedding_and_extraction",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_verify_only_never_publishes_or_writes_ledger",
+      "status": "PASS"
+    },
+    {
+      "test": "test_incremental.LifecycleTests.test_versions_archive_and_rollback_without_embedding",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.SnapshotAdapterTests.test_adapter_publishes_only_validated_bounded_snapshot",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.SnapshotAdapterTests.test_real_adapter_checks_document_counts_before_pointer",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.VerificationTests.test_garbled_short_and_failed_extraction_do_not_pass",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.VerificationTests.test_invalid_similarity_inputs_and_configuration_fail_closed",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.VerificationTests.test_missing_metadata_and_truncation_report_independent_reasons",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.VerificationTests.test_page_count_and_pdf_tail_checks",
+      "status": "PASS"
+    },
+    {
+      "test": "test_verification.VerificationTests.test_version_must_be_orderable",
+      "status": "PASS"
+    },
+    {
+      "test": "test_corpus_transfer.TransferTests.test_explicit_batch_stays_inside_selected_destination",
+      "status": "PASS"
+    },
+    {
+      "test": "test_corpus_transfer.TransferTests.test_invalid_destination_hash_and_source_are_rejected_before_cluster_calls",
+      "status": "PASS"
+    },
+    {
+      "test": "test_corpus_transfer.TransferTests.test_zero_argument_deployment_contract_ignores_callers_arguments",
+      "status": "PASS"
+    }
+  ],
+  "source_sha256": {
+    "indexer/pipeline/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "indexer/pipeline/chunk.py": "665e1b58d4e5f611dc6ffa2cbcb717e13642449318c68ad670f4b2c323782911",
+    "indexer/pipeline/clean.py": "02e97701e60531f54f78456ccac4eeb39240f445e7cdce8cd8f22123dd16973a",
+    "indexer/pipeline/config.py": "d7f4f378101fa8368323bb50a6f2b8acffdaf5a8e70178975f55d597979f30d0",
+    "indexer/pipeline/counts.py": "29a323d6fdb0c0e9cf81caf667b3c7c14c947f6795d485da3b33318da08ea1c1",
+    "indexer/pipeline/datalake.py": "47554dbc867d5c3bc83fc9a231cc3d8e6ca1789ea44f65a2d8242567268b976c",
+    "indexer/pipeline/dummy.py": "f008b65a31199ef10fc94945965853c284dbbc8c4b535d01b180d744652ba12a",
+    "indexer/pipeline/embed.py": "f79558a74b10b0b393ea3eb54e6b47c0d56d7bf118d846064be268743263e815",
+    "indexer/pipeline/extract.py": "54f4d04808d146e70fece2c0762817fb9b4635c1b4129eb754be226a245b4a57",
+    "indexer/pipeline/incremental.py": "506ff69cc9b7007c349b2f0b3e729d76bf542ec418a6d8eb83f31c6bdc186279",
+    "indexer/pipeline/models.py": "4acbf333e56c979b10c54c8521eacb7cc79a555cc67c970e6ab820692d3f67a9",
+    "indexer/pipeline/rollback.py": "a94fd313395c62f443f9c1662a10f6b5ab96e4fec3e2d25d7b29766f47685aab",
+    "indexer/pipeline/run.py": "56c0fa5456a4ceb253110294b36b0c3f8d7c3c59b799b23a4958ee63b4f6f905",
+    "indexer/pipeline/snapshots.py": "f7e742f093f32eb456c6dd58cbf1febaab691d5fbba6996842c75d23dfd33eea",
+    "indexer/pipeline/store.py": "efa8eadfe4e4fa5a83a479dc54e0aa05e1bd047f87c01d1e6a7b9990ddd95973",
+    "indexer/pipeline/verify.py": "b460267315b0b6e9e3b58fbf9f8ada4f96ed09b23a140c95a627efe08cd9ff46",
+    "indexer/pipeline/wait.py": "14f75f86be95994b1f7dfdfb2549cfbc265b835099190b4e00640b93757c4275",
+    "indexer/tests/test_corpus_transfer.py": "abf57def81b018c7c0df7181eb655cee2771e1025c8546071ce23df8757f27e1",
+    "indexer/tests/test_incremental.py": "2c82b546b263c0afaaf633496a61eb39f4a839607face5a3a53d6fc3d3773a71",
+    "indexer/tests/test_manifest_paths.py": "81a82b00f767c3db3d5decf0c4046f27a85a5df0d8f4329bc792b63e4335f62f",
+    "indexer/tests/test_pipeline.py": "4c1bf58486d9abb510a64ac616db5d3f49f672e631e7b82f126a22628132e8ca",
+    "indexer/tests/test_starter_dummy.py": "53fa1974e51f54fd17f300d02757599c762d5c2aa7c106c2227f83832b86e29a",
+    "indexer/tests/test_verification.py": "4c64b72d9ba1e901b562319f828e7ab8335bbfeadeff4868716d9e42c7f4f4d2",
+    "scripts/corpus_transfer.py": "607fb16895a41d846658aab23831f853fd4a80d60d3cd7dd63b99545fd61827e"
+  }
+}

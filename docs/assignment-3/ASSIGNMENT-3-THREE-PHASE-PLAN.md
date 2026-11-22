@@ -1,6 +1,8 @@
 # Assignment 3: exactly three implementation phases
 
 Owner: Rayyan Hassan. Prepared 22 November 2026. Planning only.
+Execution updates: [Phase 1 report](phase-reports/PHASE-1-REPORT.md) and
+[shared ledger](COMMUNICATION.md). This task catalogue remains the planning baseline.
 Read README.md, ASSIGNMENT-3-GAP-ANALYSIS.md and COMMUNICATION.md first.
 Official five-page Assignment_03.pdf controls; partner plans are proposals, not proof.
 

@@ -87,7 +87,7 @@ def materialize(lake: Lake, ledger: dict) -> None:
     for key, record in ledger["documents"].items():
         status = "current" if record["status"] == "active" else "archive"
         relative = Path(identifier(record["doc_id"])) / identifier(record["version"])
-        target = lake.root / status / relative
+        target = lake.root / status / lake.collection / relative
         if status == "archive":
             target = target / record["sha256"]
         target.mkdir(parents=True, exist_ok=True)
@@ -96,7 +96,7 @@ def materialize(lake: Lake, ledger: dict) -> None:
         atomic_json(target / "record.json", {**record, "doc_key": key,
                                             "generation": ledger["generation"]})
         if status == "archive":
-            previous_view = lake.root / "current" / relative
+            previous_view = lake.root / "current" / lake.collection / relative
             # Remove only this program's materialized view; immutable objects/revisions stay.
             if (previous_view / "record.json").exists():
                 for name in (record["source"], "record.json"):

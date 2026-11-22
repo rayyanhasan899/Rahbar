@@ -1,5 +1,10 @@
 # Day 3 requirement traceability
 
+This file records historical **Assignment 2** Day 3 evidence. Assignment 3 Phase 1
+changes code/manifests after that audit; its current requirement and acceptance
+record is [PHASE-1-REPORT.md](assignment-3/phase-reports/PHASE-1-REPORT.md).
+The statuses and deadline below are not claims about Assignment 3.
+
 Verification date: 7 November 2026, Asia/Karachi. Deadline: 8 November 2026,
 23:59 PKT. The assignment PDF controls requirements. PASS refers to observed
 behavior, FAIL to an unsuccessful observation, BLOCKED to an external dependency,

@@ -24,7 +24,7 @@ When simultaneous edits conflict, preserve both entries and resolve normally;
 never reset, force-push or overwrite another person's section.
 Do not attribute an entry or approval to Moez unless he actually supplied it.
 
-## Current verified state
+## Planning baseline (historical, before Phase 1)
 
 - Local dev: 3665108; untracked PROJECT_DOCUMENTATION.md must be preserved.
 - GitHub main: e92fbe7; GitHub dev2: 3dff736 (five A3 commits ahead).
@@ -35,6 +35,10 @@ Do not attribute an entry or approval to Moez unless he actually supplied it.
 - Full unit testing is blocked on Rayyan's current WSL startup error E_UNEXPECTED;
   do not replace the environment or call saved A2 test output a new pass.
 - These new planning documents do not change application code or represent a phase run.
+
+Current Phase 1 implementation/acceptance evidence is in
+[PHASE-1-REPORT.md](phase-reports/PHASE-1-REPORT.md) and the appended session log.
+The historical baseline above is not the current implementation status.
 
 ## Interface decisions to resolve before affected integration
 
@@ -169,3 +173,20 @@ HM-10 (Moez, PENDING): separately update/rebuild the pinned UI image, rerun all 
 and the blocked e2e suite. Do not suppress findings. Other scan matrix jobs may be
 cancelled by fail-fast; their cancellation is not a scan PASS.
 HM-01..HM-09 and CO-05/06/09 approvals remain pending; no reply is assumed.
+
+### 22 November 2026 - Rayyan - Phase 1 final verification and handoff
+Status: IMPLEMENTED; final checks running; Phase2/3 NOT STARTED.
+Collection-scoped current/archive views now prevent candidate overwrites; regression
+covered. ADR0005 and runbooks document safe publication, retention costs, recency/history
+interpretation, provisional threshold and actual remaining runtime proof.
+Local Windows offline evidence: eval/results/phase1/offline-checks.json, 34 PASS,
+Python3.14.7, fake vectors/store/cluster calls (not model or Kubernetes evidence).
+WSL subsequently recovered without host repair. Existing Python3.12 indexer suite
+now53 PASS; remaining local Ruff/types/API/eval/dependency checks are running.
+CI45012559308 at6e0edba: lint/types PASS, API81/indexer52/eval33 PASS,93.31% API
+coverage,31+3 strict manifests PASS,3 builds PASS; UI scan FAIL, other scans canceled,
+e2e skipped. Final collection-isolation test is the additional53rd indexer test.
+Git fetch confirms dev2 remains3dff736; no partner changes were overwritten. Existing
+PROJECT_DOCUMENTATION.md remains untracked and untouched. Scope/handoff docs updated;
+existing A2 measurements remain historical and must not be quoted as A3 reruns.
+Next: final check evidence and partner review. HM/CO requests remain unacknowledged.
