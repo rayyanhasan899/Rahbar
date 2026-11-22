@@ -219,7 +219,23 @@ def main() -> int:
     print("asking", len(golden), "questions at", args.api)
     rows = ask_all(services, golden)
     add_judgements(services, rows, args.judge_model, args.seed)
+    import hashlib
+    evidence = [r['response'].get('evidence', {}) for r in rows]
+    indexes = [e.get('collection', {}) for e in evidence]
+    pins = {json.dumps(i, sort_keys=True) for i in indexes}
+    if len(pins) != 1 or not indexes or not indexes[0].get('corpus_sha256'):
+        raise ValueError('missing or changing request-time index provenance; rerun after verified ingestion')
+    index = indexes[0]
+    if not evidence[0].get('embedding', {}).get('digest'):
+        raise ValueError('embedding digest missing')
+    provenance = {'golden_sha256': hashlib.sha256(args.golden.read_bytes()).hexdigest(),
+                  'pairs_sha256': hashlib.sha256(args.pairs.read_bytes()).hexdigest(),
+                  'seed': args.seed, 'corpus_sha256': index['corpus_sha256'],
+                  'embedding_digest': evidence[0]['embedding']['digest'],
+                  'judge_model': args.judge_model, 'index': index,
+                  'pipeline': evidence[0].get('pipeline', {})}
     result = {
+        "provenance": provenance,
         "label": args.label,
         "stamp": stamp(),
         "settings": {
@@ -250,7 +266,8 @@ def main() -> int:
     base = args.results_dir / f"suite-{result['stamp']}-{args.label}"
     base.with_suffix(".json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     base.with_suffix(".md").write_text(markdown(result), encoding="utf-8")
-    shutil.copyfile(base.with_suffix(".json"), args.results_dir / f"latest-{args.label}.json")
+    latest = "baseline-candidate" if args.label == "baseline" else args.label
+    shutil.copyfile(base.with_suffix(".json"), args.results_dir / f"latest-{latest}.json")
     print()
     print(markdown(result))
     print("written:", base.with_suffix(".json"))

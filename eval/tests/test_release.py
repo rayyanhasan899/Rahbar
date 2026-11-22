@@ -1,63 +1,171 @@
-"""scripts/release.py without a cluster: kubectl is replaced by a recorder."""
+"""Release configuration consistency using an isolated in-memory kubectl recorder."""
 
-import sys
-from argparse import Namespace
+import copy
+import importlib.util
+import json
 from pathlib import Path
-
+from argparse import Namespace
 import pytest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
-import release  # noqa: E402
+spec = importlib.util.spec_from_file_location(
+    "release", Path(__file__).resolve().parents[2] / "scripts/release.py"
+)
+release = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(release)
 
 
-def test_use_config_swaps_only_the_live_configmap():
-    pod = {"containers": [{"envFrom": [{"configMapRef": {"name": "rahbar-config"}},
-                                       {"secretRef": {"name": "rahbar-secret"}}]}],
-           "initContainers": [{"envFrom": [{"configMapRef": {"name": "rahbar-config"}}]}]}
-    release.use_config(pod, "rahbar-config-candidate")
-    assert pod["containers"][0]["envFrom"][0]["configMapRef"]["name"] == "rahbar-config-candidate"
-    assert pod["containers"][0]["envFrom"][1] == {"secretRef": {"name": "rahbar-secret"}}
-    assert pod["initContainers"][0]["envFrom"][0]["configMapRef"]["name"].endswith("candidate")
+def cluster(monkeypatch):
+    old = {"CHROMA_COLLECTION": "old", "CHUNK_SIZE": "400", "CHUNK_OVERLAP": "50"}
+    new = {**old, "CHROMA_COLLECTION": "cand", "CHUNK_SIZE": "700"}
+    config = release.immutable_config(new)
+    cfgname = config["metadata"]["name"]
 
+    def pod(name):
+        return {
+            "metadata": {},
+            "spec": {
+                "containers": [
+                    {"image": "api:sha", "envFrom": [{"configMapRef": {"name": name}}]}
+                ]
+            },
+        }
 
-def fake_cluster(monkeypatch, annotations):
-    calls = []
+    candidate = {"metadata": {"annotations": {}}, "spec": {"template": pod(cfgname)}}
+    index = {
+        "name": "cand",
+        "active_collection": "cand-g",
+        "generation": "g",
+        "fingerprint": "f",
+        "corpus_sha256": "c",
+        "embed_model_digest": "d",
+    }
+    receipt = {
+        "passed": True,
+        "provenance": {
+            "index": index,
+            "corpus_sha256": "c",
+            "embedding_digest": "d",
+            "release_config_sha256": release.digest(new),
+        },
+        **{
+            key: "a" * 64
+            for key in ("candidate_sha256", "baseline_sha256", "decision_sha256")
+        },
+    }
+    binding = {
+        "receipt": receipt,
+        "config": cfgname,
+        "config_sha256": release.digest(new),
+        "template_sha256": release.digest(candidate["spec"]["template"]),
+        "job_name": "eval-cand",
+        "job_uid": "uid",
+        "indexer_image": "indexer:new",
+    }
+    candidate["metadata"]["annotations"] = {
+        "rahbar/gate": "passed",
+        "rahbar/collection": "cand",
+        "rahbar/receipt": json.dumps(binding),
+    }
+    data = {
+        ("deployment", "api-candidate"): candidate,
+        ("deployment", "api"): {
+            "metadata": {},
+            "spec": {"template": pod("rahbar-config")},
+        },
+        ("configmap", "rahbar-config"): {
+            "metadata": {"name": "rahbar-config"},
+            "data": old,
+        },
+        ("configmap", cfgname): config,
+        ("job", "eval-cand"): {"metadata": {"uid": "uid"}, "status": {"succeeded": 1}},
+        ("jobs", ""): {"items": []},
+        ("cronjob", "reindex"): {
+            "metadata": {},
+            "spec": {
+                "suspend": False,
+                "jobTemplate": {"spec": {"template": pod("rahbar-config")}},
+            },
+        },
+    }
+    data[("cronjob", "reindex")]["spec"]["jobTemplate"]["spec"]["template"]["spec"][
+        "containers"
+    ][0]["image"] = "indexer:old"
+    mutations, history = [], []
 
-    def kubectl(*args, stdin=None, check=True):
-        calls.append(args)
+    def get(kind, name):
+        return copy.deepcopy(data[(kind, name)])
+
+    def merge(target, incoming):
+        for key, value in incoming.items():
+            if isinstance(value, dict):
+                merge(target.setdefault(key, {}), value)
+            else:
+                target[key] = copy.deepcopy(value)
+
+    def patch(kind, name, value):
+        mutations.append((kind, name, value))
+        if kind == "deployment":
+            history.append(copy.deepcopy(data[(kind, name)]["spec"]["template"]))
+        merge(data[(kind, name)], value)
+
+    def apply(obj):
+        data[("configmap", obj["metadata"]["name"])] = copy.deepcopy(obj)
+
+    def kubectl(*args, **kwargs):
+        if args[:2] == ("rollout", "undo"):
+            data[("deployment", "api")]["spec"]["template"] = history[-1]
         return ""
 
+    monkeypatch.setattr(release, "get", get)
+    monkeypatch.setattr(release, "patch", patch)
+    monkeypatch.setattr(release, "apply", apply)
     monkeypatch.setattr(release, "kubectl", kubectl)
-    deployment = {"metadata": {"annotations": annotations}}
-    monkeypatch.setattr(release, "get", lambda kind, name: deployment)
-    monkeypatch.setattr(release.subprocess, "run", lambda *a, **k: Namespace(returncode=0))
-    return calls
+    monkeypatch.setattr(release, "rollout", lambda: None)
+    monkeypatch.setattr(release, "index_state", lambda deployment: index)
+    return data, mutations
 
 
-def test_promote_refuses_a_candidate_whose_gate_failed(monkeypatch):
-    calls = fake_cluster(monkeypatch, {"rahbar/gate": "failed", "rahbar/collection": "cand"})
-    with pytest.raises(SystemExit, match="no passed gate"):
-        release.promote(Namespace(name="cand", force=False))
-    assert not any("set" in c for c in calls)
+def test_failed_or_stale_gate_does_not_mutate_live(monkeypatch):
+    data, mutations = cluster(monkeypatch)
+    data[("deployment", "api-candidate")]["metadata"]["annotations"]["rahbar/gate"] = (
+        "failed"
+    )
+    with pytest.raises(ValueError, match="no passed"):
+        release.promote(Namespace(name="cand"))
+    assert not mutations
 
 
-def test_promote_ignores_a_gate_recorded_for_another_collection(monkeypatch):
-    fake_cluster(monkeypatch, {"rahbar/gate": "passed", "rahbar/collection": "older"})
-    with pytest.raises(SystemExit):
-        release.promote(Namespace(name="cand", force=False))
+def test_changed_template_cannot_reuse_gate_receipt(monkeypatch):
+    data, mutations = cluster(monkeypatch)
+    data[("deployment", "api-candidate")]["spec"]["template"]["spec"]["containers"][0][
+        "image"
+    ] = "different:sha"
+    with pytest.raises(ValueError, match="template changed"):
+        release.promote(Namespace(name="cand"))
+    assert not mutations
 
 
-def test_promote_annotates_before_changing_the_collection(monkeypatch):
-    calls = fake_cluster(monkeypatch, {"rahbar/gate": "passed", "rahbar/collection": "cand"})
-    assert release.promote(Namespace(name="cand", force=False)) == 0
-    annotate = next(i for i, c in enumerate(calls) if c[0] == "annotate")
-    set_env = next(i for i, c in enumerate(calls) if c[0] == "set")
-    assert annotate < set_env
-    assert "CHROMA_COLLECTION=cand" in calls[set_env]
-    assert "kubernetes.io/change-cause=release cand (gate passed)" in calls[annotate]
+def test_promote_and_undo_keep_reader_and_writer_config_and_image_consistent(
+    monkeypatch,
+):
+    data, mutations = cluster(monkeypatch)
+    assert release.promote(Namespace(name="cand")) == 0
 
+    def selected(kind):
+        spec = (
+            data[("deployment", "api")]["spec"]["template"]["spec"]
+            if kind == "api"
+            else data[("cronjob", "reindex")]["spec"]["jobTemplate"]["spec"][
+                "template"
+            ]["spec"]
+        )
+        c = spec["containers"][0]
+        return c["envFrom"][0]["configMapRef"]["name"], c["image"]
 
-def test_forced_promote_records_why(monkeypatch):
-    calls = fake_cluster(monkeypatch, {"rahbar/gate": "failed", "rahbar/collection": "bad"})
-    release.promote(Namespace(name="bad", force=True))
-    assert any("forced, gate failed" in " ".join(c) for c in calls)
+    assert selected("api")[0] == selected("cron")[0]
+    assert selected("cron")[1] == "indexer:new"
+    assert not data[("cronjob", "reindex")]["spec"]["suspend"]
+    release.undo()
+    assert selected("api")[0] == selected("cron")[0]
+    assert selected("cron")[1] == "indexer:old"
+    assert data[("configmap", selected("api")[0])]["data"]["CHROMA_COLLECTION"] == "old"

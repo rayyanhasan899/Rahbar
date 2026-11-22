@@ -120,7 +120,8 @@ def reconstruct(record: dict) -> dict:
         if not isinstance(attempt.get("context"), list):
             raise ValueError("missing sanitized context for attempt " + str(index))
     response = record.get("response") or {}
-    if not attempts and response.get("answered_from_context") is True:
+    execution = evidence.get("execution") or {}
+    if not attempts and response.get("answered_from_context") is True and execution.get("kind") != "stub":
         raise ValueError("answered trace has no reconstructable model attempt")
     if attempts and evidence.get("prompt_sha256") is not None:
         if (evidence["prompt_sha256"] != attempts[-1]["prompt_sha256"]
@@ -131,11 +132,11 @@ def reconstruct(record: dict) -> dict:
         "origin_trace_id": evidence.get("trace_id", record["trace_id"]),
         "embedding": evidence.get("embedding"), "collection": evidence.get("collection"),
         "attempts": attempts,
-        "context": attempts[-1]["context"] if attempts else [],
+        "context": attempts[-1]["context"] if attempts else execution.get("context", []),
         "prompt": attempts[-1]["messages"] if attempts else None,
         "prompt_sha256": attempts[-1]["prompt_sha256"] if attempts else None,
         "hashes_verified": len(attempts),
-        "model_invocation": "recorded_original" if attempts else "none_recorded",
+        "model_invocation": "recorded_original" if attempts else execution.get("kind", "none_recorded"),
         "response": record.get("response"), "guardrails": record.get("guardrails"),
     }
 

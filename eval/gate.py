@@ -34,6 +34,8 @@ def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str
         missing = [k for k, v in nums.items() if v is None]
         if missing:
             out.append((name, False, "missing: " + ", ".join(missing)))
+        elif any(v is not None and (v < 0 or (name != "p95 latency" and v > 1)) for v in nums.values()):
+            out.append((name, False, "measurement or threshold outside valid range"))
         else:
             ok, detail = test(**nums)
             out.append((name, bool(ok), detail))
@@ -65,6 +67,18 @@ def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str
     return out
 
 
+
+def comparable(baseline: dict, candidate: dict) -> list[tuple[str, bool, str]]:
+    old, new = baseline.get('provenance', {}), candidate.get('provenance', {})
+    checks = []
+    for key in ('golden_sha256', 'pairs_sha256', 'seed', 'corpus_sha256', 'embedding_digest', 'judge_model'):
+        ok = key in old and old[key] is not None and old.get(key) == new.get(key)
+        checks.append(('comparable ' + key, ok, 'identical non-missing provenance required'))
+    checks.append(('comparable pipeline', bool(old.get('pipeline')) and old.get('pipeline') == new.get('pipeline'),
+                   'this release supports chunking-only changes; other changes need a reviewed comparison contract'))
+    return checks
+
+
 def main() -> int:
     env = os.environ.get
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -79,7 +93,7 @@ def main() -> int:
     baseline = json.loads(args.baseline.read_text(encoding="utf-8"))
     candidate = json.loads(args.candidate.read_text(encoding="utf-8"))
     thresholds = yaml.safe_load(args.thresholds.read_text(encoding="utf-8")) or {}
-    results = rules(baseline, candidate, thresholds)
+    results = rules(baseline, candidate, thresholds) + comparable(baseline, candidate)
     print("gate:", candidate["label"], "against", baseline["label"], "with", args.thresholds)
     for name, ok, detail in results:
         print("  PASS" if ok else "  FAIL", name.ljust(18), detail)

@@ -147,7 +147,9 @@ def _answer_question(
         if cache is not None and not history and not flagged and query_context is not None:
             query_vector, generation = query_context(query)
             vector = query_vector
+            cache_started = time.perf_counter()
             found = cache.lookup(generation, query_vector, query)
+            trace.stage("cache", cache_started)
             if found is not None:
                 cached, similarity = found
                 CACHE.labels(result="hit").inc()
@@ -171,6 +173,7 @@ def _answer_question(
         raise RetrievalUnavailable("retrieval is unavailable") from exc
     finally:
         RETRIEVAL_SECONDS.observe(time.perf_counter() - start)
+        trace.stage("retrieval", start)
 
     trace.record["retrieved"] = [{"rank": i, **safe(p.model_dump(), trace.secrets)} for i, p in enumerate(passages, 1)]
     trace.record["reranked_order"] = [p.chunk_id for p in passages]
