@@ -97,7 +97,9 @@ change only the ignored rollback rendering's args to `['--unpin','a3-demo-rules'
 create a new generated Job, wait, then count again. All ingestion/rollback Jobs use
 `INDEX_LOCK_PATH=/locks/index.lock`; read the actual ConfigMap value before running.
 Inspect reports/current/archive/quarantine on the read-only inspection Pod and copy
-them to an evidence folder (`kubectl cp ...`). Its data-lake mount is read-only;
+needed report JSON/logs to an evidence folder (`kubectl cp ...`). Keep third-party
+source PDFs, full extracted text and vector caches in ignored storage; do not commit
+whole real-corpus archive/quarantine directories. Its data-lake mount is read-only;
 it does not grant the indexer Redis access. Delete only that temporary inspection Pod
 after collecting evidence. Do not delete PVCs, old snapshots or the live cluster.
 

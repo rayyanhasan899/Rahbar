@@ -90,11 +90,11 @@ separately. Shared human review and the full security gate remain open.
 | AC13 T04 compatible transfer | test_corpus_transfer: zero-argument deploy caller, destination/tar/hash/path validation; no cluster calls in tests | PASS offline | Actual transfer/persistence proof |
 | AC14 F1/F2 manifest wiring | datalake PVC; Job/Cron mounts; standalone verify/rollback/inspection; production31 + standalone3 strict schemas valid | PASS static | PVC persistence/permissions on run host |
 | AC15 verification/count/rollback commands | run --verify-only; counts actual IDs/meta; rollback CLI; wrapper lock/config inspected and lifecycle tests | PASS offline | Real CLI/Job invocation evidence |
-| AC16 lint/types/tests/build | Local/CI command results below; no failing new-code checks remain in the verified revisions | PASS at recorded revisions | Final head confirmation recorded below |
+| AC16 lint/types/tests/build | Final implementation bef0283: Ruff/types,81 API/54 indexer/33 eval tests,93.31% coverage,31+3 schemas,3 builds and API/indexer scans PASS | PASS | UI full-quality blocker separately in AC20 |
 | AC17 docs/handoff/traceability | this report, ADR0005, architecture/corpus/pipeline/runbooks, communication ledger and AI disclosure | PASS | Moez reply and subsequent-phase updates |
 | AC18 shared interpretation/PR approval | CO-05/06/09 and HM-03/09 pending; PR6 is draft | BLOCKED | Moez must review actual diff and decisions |
 | AC19 real Part A / Kubernetes proof | no new live model/cluster run in this phase; Docker daemon unavailable | NOT VERIFIED | Phase3 run host, raw reports/logs/screenshots and measurements |
-| AC20 full CI/security | unchanged UI scan reports6 fixable findings; e2e skipped; other scans can be canceled by fail-fast | FAIL pre-existing | HM-10 separate UI fix, scans and e2e rerun |
+| AC20 full CI/security | unchanged UI scan reports6 fixable findings; final API/indexer scans PASS, e2e skipped and quality FAIL | FAIL pre-existing | HM-10 separate UI fix and full passing rerun |
 
 Acceptance register: 17 PASS (with the stated offline/static bounds), 1 BLOCKED,
 1 NOT VERIFIED, 1 pre-existing FAIL. This is a Phase 1 register, not a percentage
@@ -114,7 +114,7 @@ completion estimate for all Assignment 3 requirements.
 | CI | .github/workflows/ci.yml: additional strict standalone-ingestion-object validation only |
 | Current documentation | ARCHITECTURE.md, README.md, k8s/README.md, docs/CORPUS.md, PIPELINE.md, REQUIREMENTS.md, AI-USAGE.md; docs/adr/0005-verified-incremental-publication.md; assignment-3 status/handoff and this report |
 | Published planning baseline | docs/assignment-3/{README,ASSIGNMENT-3-GAP-ANALYSIS,ASSIGNMENT-3-THREE-PHASE-PLAN,COMMUNICATION}.md and three prompts |
-| Offline evidence | eval/results/phase1/offline-checks.json with native test names, results and source hashes; CI links below |
+| Verification evidence | eval/results/phase1/offline-checks.json with35 native test names/results/source hashes; ci-summary.json records the final implementation run/job URLs |
 
 No project files were deleted. No third-party downloads, credentials or private
 student data were committed. Batch B's two tiny malformed PDFs are owned generated
@@ -130,9 +130,11 @@ existing runner; no dependency installation or cluster repair was performed loca
 | Command / evidence | Actual result |
 |---|---|
 | `wsl -d Ubuntu -- bash -lc 'source .venv/rahbar-env.sh && cd indexer && python -m pytest tests -q'` | Initially WSL startup E_UNEXPECTED; later existing environment recovered without repair and all53 indexer tests PASS |
-| Native Python3.14.7 `-B -m unittest discover -s indexer/tests -p test_incremental.py -q` |24 PASS after final collection-view test |
+| Native Python3.14.7 `-B -m unittest discover -s indexer/tests -p test_incremental.py -q` |23 PASS before final view-isolation/outage cases; all25 lifecycle cases later passed in the harness below |
 | Same native command with test_verification.py / test_corpus_transfer.py |7 /3 PASS |
-| Native `python -B .venv/phase1_evidence.py` |34 PASS; committed offline-checks.json records exact test IDs/source hashes; helper is ignored local scratch |
+| Native `python -B .venv/phase1_evidence.py` |35 PASS after final outage fix; committed offline-checks.json records exact test IDs/source hashes; helper is ignored local scratch |
+| WSL existing Python3.12.3: `ruff check api indexer eval corpus scripts`; `(cd api && mypy app)`; `(cd indexer && mypy pipeline)` |PASS: Ruff,25 API files,17 pipeline files before the final outage-reporting change; final change is rechecked in CI |
+| Same WSL environment: API pytest with coverage; `python -m pytest -q eval/tests`; `python -m pip check` |81 API PASS,93.31% coverage,33 eval PASS; No broken requirements found. One existing Starlette/httpx deprecation warning; no dependency installed |
 | `kubectl kustomize k8s/overlays/prod` (installed Windows kubectl), YAML parse |31 resources, exactly one base Job named indexer; separate Jobs do not change deploy_local's first-Job selection |
 | CI `ruff check api indexer eval corpus scripts`; mypy app / pipeline |PASS in45012154398 and45012559308 |
 | CI `cd api && pytest -q --cov=app --cov-report=term-missing --cov-fail-under=60` |81 PASS;93.31% app coverage in both above runs |
@@ -156,7 +158,10 @@ Introduced and corrected during this phase: untyped YAML import/type inference i
 the new ledger path (CI45011465659), and the standalone inspection Pod incorrectly
 using batch/v1 (CI45011791121). Later lint and strict schema runs passed. Review also
 fixed chunking before near-duplicate rejection and collection-view collisions,
-with focused regression tests. No unresolved introduced test failure is hidden.
+with focused regression tests. Final review added outage diagnostics: model service
+failure retains the live index and four check results, marking the interrupted input
+as interrupted rather than claiming quarantine. No unresolved introduced test failure
+is hidden.
 
 Pre-existing: baseline45010313761 already failed the unchanged UI vulnerability gate.
 At45012154398 Trivy reported nginx1.30.6-r1, fixed1.30.7-r0, with four CRITICAL
@@ -179,7 +184,8 @@ Meaningful milestones pushed through Rayyan's authenticated account:
 490ca5f (shared scope/handoff), c978f0f (verified incremental pipeline), 9b4544d
 (rejected-analysis cache/types), 1fd8a65 (snapshot identities/archive semantics),
 6e0edba (transfer/snapshot tests and pre-chunk duplicate rejection).
-Final documentation/isolation milestone and check results are appended below.
+47c0d58 (collection-view isolation, lifecycle ADR/report) and bef0283 (outage diagnostics)
+were also pushed. Final check results/documentation-only evidence are appended below.
 Commit authorship is Rayyan's requested identity; actual code/test operator is Codex
 under his instruction, disclosed in AI-USAGE.md. Moez's existing contribution and
 original commit identities are preserved. No partner review was fabricated.
@@ -187,6 +193,31 @@ original commit identities are preserved. No partner review was fabricated.
 Draft [PR #6](https://github.com/rayyanhasan899/Rahbar/pull/6) targets `dev2`, not main.
 It is unmerged and the full quality gate is not green. No force-push, history rewrite,
 reset/clean/stash, remote change, main push or account-setting change was performed.
+
+## Final verification and repository state
+
+Final implementation revision: `bef028374a5ae7367a1b72f40c526e29005894b0`.
+[CI45013535692](https://github.com/rayyanhasan899/Rahbar/actions/runs/45013535692)
+completed: Ruff/both mypy PASS;81 API,54 indexer,33 eval tests PASS;93.31% app coverage;
+production31 and separate3 manifests strictly valid; all3 image builds PASS;
+API and indexer vulnerability scans PASS. The unchanged UI scan still fails with
+six findings (2 HIGH,4 CRITICAL), quality FAIL, e2e SKIPPED, real-audit intentionally
+not requested. `eval/results/phase1/ci-summary.json` preserves exact job states/URLs.
+The final code has no pending lint/test/build/schema result. This subsequent
+documentation/evidence-only update does not claim another rebuilt image/source SHA.
+
+Local WSL recovered and completed Python3.12.3 checks without changing its environment:
+Ruff, both mypy checks,53 pre-outage-fix indexer tests,81 API tests/93.31% coverage,
+33 eval tests and `python -m pip check` PASS. The final outage fix is covered by the
+54-test CI suite and35 native tests. Docker remains unavailable, so this recovery
+does not establish a working local cluster. No host/account repair was performed.
+
+`origin/dev2` was re-fetched and remained3dff736; main was not changed. PR6 remains
+draft/open against dev2, feature branch pushed, no partner approval recorded. Final
+`git diff --check` passes. The only excluded user work is the original untracked
+PROJECT_DOCUMENTATION.md; its observed SHA256 is
+889890d129f5874aa643dc863817634af617ffc7ff3302c9b93c135828eaf8e0.
+No meaningful work is left only in an unpublished code diff.
 
 ## Remaining work, owners and exact next action
 
