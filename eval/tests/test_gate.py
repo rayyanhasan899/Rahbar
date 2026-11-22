@@ -57,3 +57,22 @@ def test_missing_uncited_measurement_fails_closed():
     base = result(.8, .9, 20, 1., 1.)
     del base['end_to_end']['answered_without_citation']
     assert not all(ok for _, ok, _ in gate.rules(base, base, THRESHOLDS))
+
+def test_comparability_rejects_missing_or_different_corpus():
+    assert not all(ok for _, ok, _ in gate.comparable({}, {}))
+    provenance = {'golden_sha256': 'g', 'pairs_sha256': 'p', 'seed': 42,
+                  'corpus_sha256': 'c', 'embedding_digest': 'e', 'judge_model': 'j',
+                  'pipeline': {'seed': 42}}
+    assert all(ok for _, ok, _ in gate.comparable({'provenance': provenance}, {'provenance': provenance}))
+    changed = {**provenance, 'corpus_sha256': 'different'}
+    assert not all(ok for _, ok, _ in gate.comparable({'provenance': provenance}, {'provenance': changed}))
+
+
+def test_candidate_cannot_create_its_own_missing_baseline(tmp_path, monkeypatch):
+    import job
+    monkeypatch.setenv('RESULTS_DIR', str(tmp_path))
+    monkeypatch.setenv('LABEL', 'candidate')
+    monkeypatch.setenv('CREATE_BASELINE', 'true')
+    monkeypatch.setattr(job.subprocess, 'call', lambda *args: pytest.fail('should refuse before model calls'))
+    assert job.main() == 2
+    assert not (tmp_path / 'latest-baseline.json').exists()

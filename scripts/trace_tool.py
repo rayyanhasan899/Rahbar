@@ -75,7 +75,7 @@ def read_traces(paths: list[str] | None = None, stdin: TextIO | None = None) -> 
                     if value.get("logger") == "rahbar.trace":
                         raise ValueError(f"{source}:{number}: trace log is missing trace_id")
                     continue
-                record = {k: v for k, v in record.items() if k != "logger"}
+                record = {k: v for k, v in record.items() if k not in {"logger", "level", "msg", "request_id"}}
                 trace_id = record["trace_id"]
                 if not isinstance(trace_id, str) or not trace_id or len(trace_id) > 512:
                     raise ValueError(f"{source}:{number}: invalid trace_id")

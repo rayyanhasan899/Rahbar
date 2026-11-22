@@ -192,3 +192,49 @@ def test_summary_window_is_half_open_and_missing_stage_is_not_zero():
     assert report["queries"] == 1 and report["abstention_rate"] == 1
     assert "generate" not in report["latency_ms"]
     assert report["cache"]["bypass"] == 1
+
+
+def test_query_context_freezes_generation_across_publication():
+    from app.retrieval.chroma import ChromaRetriever
+    from unittest.mock import MagicMock
+    retriever = ChromaRetriever(Settings())
+    collection = MagicMock()
+    collection.query.return_value = {'ids': [[]], 'documents': [[]], 'metadatas': [[]], 'distances': [[]]}
+    retriever.active = MagicMock(return_value=(collection, {'dimension': 2, 'generation': 'original', 'versions': '2026'}))
+    retriever.embed = lambda question: [1., 0.]
+    trace = Trace(Settings())
+    token = current.set(trace)
+    try:
+        vector, generation = retriever.query_context('Current policy?')
+        retriever.retrieve('Current policy?', 5, vector)
+        assert generation == trace.record['collection']['generation'] == 'original'
+        assert retriever.active.call_count == 1
+    finally:
+        current.reset(token)
+
+
+def test_replaced_embedding_artifact_fails_before_embedding_transport():
+    from app.retrieval.chroma import ChromaRetriever
+    calls = []
+    def handler(request):
+        calls.append(request.method)
+        return httpx.Response(200, json={'models': [{'name': 'nomic-embed-text:latest', 'digest': 'b'*64}]})
+    trace = Trace(Settings())
+    trace.snapshot = (None, {'embed_model_digest': 'a'*64})
+    token = current.set(trace)
+    client = httpx.Client(transport=httpx.MockTransport(handler))
+    try:
+        with patch('app.retrieval.chroma.httpx.Client', return_value=client):
+            with pytest.raises(ValueError, match='digest mismatch'):
+                ChromaRetriever(Settings()).embed('Current policy?')
+        assert calls == ['GET']
+    finally:
+        current.reset(token)
+
+
+def test_stdout_envelope_and_persisted_trace_deduplicate(tmp_path):
+    record = {'trace_id': 'one', 'ts': '2026-11-22T10:00:00Z', 'cache': {'result': 'bypass'}}
+    (tmp_path / 'file.jsonl').write_text(json.dumps(record) + '\n')
+    stdout = {**record, 'logger': 'rahbar.trace', 'level': 'INFO', 'msg': 'query trace', 'request_id': 'one'}
+    (tmp_path / 'stdout.log').write_text(json.dumps(stdout) + '\n')
+    assert len(list(module('trace_tool').read_traces([str(tmp_path)]))) == 1

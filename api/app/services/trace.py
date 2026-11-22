@@ -85,7 +85,7 @@ class Trace:
     def evidence(self) -> dict:
         from ..providers.llm.prompt import SYSTEM, ANSWER_SCHEMA
         template = prompt_hash([{"system": SYSTEM, "schema": ANSWER_SCHEMA}])
-        return {k: self.record[k] for k in ("trace_id", "embedding", "collection", "attempts")} | {
+        return {k: self.record[k] for k in ("trace_id", "embedding", "collection", "attempts", "filters", "retrieved", "reranked_order", "guardrails")} | {
             "execution": self.record.get("execution"),
             "pipeline": {"top_k": self.settings.top_k,
                          "relevance_floor": self.settings.relevance_floor,

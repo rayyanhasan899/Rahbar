@@ -191,3 +191,10 @@ def test_compare_and_markdown():
     text = suite.markdown(a)
     assert "| component (retrieval) | ndcg_at_5 |" in text
     assert "| end-to-end | faithfulness |" in text
+
+def test_golden_preflight_precedes_network_calls(tmp_path, monkeypatch):
+    path = tmp_path / 'invalid.jsonl'
+    path.write_text('{"id":"invalid","question":"example"}\n')
+    monkeypatch.setattr(sys, 'argv', ['suite.py', '--golden', str(path)])
+    monkeypatch.setattr(suite, 'Services', lambda *args: pytest.fail('network initialized before validation'))
+    assert suite.main() == 2
