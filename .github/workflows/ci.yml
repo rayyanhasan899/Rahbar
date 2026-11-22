@@ -36,6 +36,8 @@ jobs:
     - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
     - run: bash scripts/install_kubeconform.sh
     - run: kubectl kustomize k8s/overlays/prod | .venv/tools/kubeconform -strict -summary -kubernetes-version 1.34.0
+    - name: Validate separate Phase 1 ingestion jobs
+      run: .venv/tools/kubeconform -strict -summary -kubernetes-version 1.34.0 k8s/jobs/
   build:
     runs-on: ubuntu-24.04
     needs:

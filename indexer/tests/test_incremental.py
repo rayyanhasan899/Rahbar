@@ -11,7 +11,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
-from unittest.mock import patch
+from unittest.mock import patch, MagicMock
 
 from pipeline.config import get_settings
 from pipeline.datalake import Lake, discover_inputs, identifier, load_json
@@ -286,6 +286,42 @@ class LifecycleTests(unittest.TestCase):
         result = self.run_ingest()
         self.assertEqual(self.ledger()["generation"], generation)
         self.assertFalse(result["documents"][0]["checks"]["completeness"]["passed"])
+
+    def test_rejected_near_duplicate_also_reuses_its_document_embedding(self):
+        self.write()
+        self.run_ingest()
+        vector = load_json(next((self.root / "lake/cache").glob("*.json")))["document_vector"]
+        self.write("near.md", "other", text="A close paraphrase requires written approval. " * 5)
+        self.embed = MagicMock(return_value=[vector])
+        result = self.run_ingest()
+        self.assertEqual(self.embed.call_count, 1)
+        self.assertTrue(any(r["outcome"] == "quarantined" for r in result["documents"]))
+        self.embed.reset_mock()
+        result = self.run_ingest()
+        self.embed.assert_not_called()
+        self.assertEqual(result["document_embeddings"], 0)
+
+    def test_declared_superseded_input_stays_archived_even_without_newer_input(self):
+        path = self.write()
+        path.write_text(path.read_text().replace("doc_id: rules", "superseded: true\ndoc_id: rules"))
+        self.run_ingest()
+        self.assertEqual(next(iter(self.ledger()["documents"].values()))["status"], "archived")
+        rollback(self.settings, self.backend, "rules", "2026", self.digest)
+        self.assertEqual(next(iter(self.ledger()["documents"].values()))["status"], "active")
+
+    def test_pdf_metadata_fallback_is_cached_and_not_extracted_again(self):
+        (self.incoming / "metadata.pdf").write_bytes(b"%PDF-1.7\nowned fake input\n%%EOF")
+        from pipeline.models import Document, Page
+        document = Document("metadata.pdf", "unknown", False,
+                            [Page("metadata.pdf", 1, "An embedded policy is readable. " * 5)],
+                            title="Embedded title", date="2026-01-01")
+        extractor = MagicMock(return_value=document)
+        with redirect_stdout(io.StringIO()):
+            first = ingest(self.settings, self.backend, self.embed, extractor, self.digest)
+            second = ingest(self.settings, self.backend, self.embed, extractor, self.digest)
+        self.assertEqual(extractor.call_count, 1)
+        self.assertEqual(first["documents"][0]["version"], "2026-01-01")
+        self.assertEqual(first["generation"], second["generation"])
 
 
 if __name__ == "__main__":

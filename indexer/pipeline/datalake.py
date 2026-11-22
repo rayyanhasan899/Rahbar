@@ -9,7 +9,7 @@ from pathlib import Path
 import re
 from typing import Any
 
-import yaml
+import yaml  # type: ignore[import-untyped]
 
 
 def digest(data: bytes) -> str:

@@ -73,7 +73,8 @@ def classify(documents: dict, pins: dict) -> None:
         selected = pins.get(family)
         if selected is not None and not any(r["version"] == selected for r in versions):
             raise ValueError("rollback pin does not name a verified version")
-        winner = selected or max((r["version"] for r in versions), key=version_order)
+        eligible = [r["version"] for r in versions if not r.get("declared_superseded", False)]
+        winner = selected or (max(eligible, key=version_order) if eligible else None)
         for record in versions:
             record["status"] = "active" if record["version"] == winner else "archived"
 
@@ -140,10 +141,10 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
     rows_by_key: dict[str, dict] = {}
     analyses: dict[str, dict] = {}
     for item in inputs:
-        meta = item.metadata
+        meta = dict(item.metadata)
         version, family = str(meta["doc_version"]), str(meta["doc_id"])
         key = identifier(family + "\0" + version)
-        row = {"source": item.source, "doc_id": family, "doc_key": key,
+        row: dict[str, Any] = {"source": item.source, "doc_id": family, "doc_key": key,
                "version": version, "title": str(meta.get("title", "")),
                "outcome": "quarantined"}
         report["documents"].append(row)
@@ -161,15 +162,24 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
         cached = None
         if not error and lake.cache(cache_key).exists():
             cached = load_json(lake.cache(cache_key))
+            meta.update(cached.get("resolved_metadata", {}))
             checks = cached["checks"]
         else:
             if not error:
                 try:
                     doc = clean(extract(str(item.path), version, False))
+                    if not meta.get("title") and doc.title:
+                        meta["title"] = doc.title
+                    if version == "unknown" and doc.date:
+                        meta["doc_version"] = doc.date
+                        doc.doc_version = doc.date
                 except Exception as exc:
                     error = "extraction failed: " + type(exc).__name__
             checks = initial_checks({**meta, "source": item.source}, doc, raw, error,
                                     settings.min_text_chars)
+        version = str(meta["doc_version"])
+        key = identifier(family + "\0" + version)
+        row.update(version=version, doc_key=key, title=str(meta.get("title", "")))
         checks = json.loads(json.dumps(checks))
         if meta.get("sha256") and meta["sha256"] != sha:
             checks["completeness"] = check(False, "manifest SHA256 differs from input bytes")
@@ -192,6 +202,8 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
                 pieces = chunk(doc, settings.chunk_size, settings.chunk_overlap)
                 cached = {"checks": checks, "document_vector": vector,
                           "page_count": len(doc.pages),
+                          "resolved_metadata": {"title": str(meta.get("title", "")),
+                                                "doc_version": version},
                           "chunks": [{"id": identifier(key + p.id), "text": p.text,
                                       "metadata": p.metadata()} for p in pieces]}
             for other_key, record in others.items():
@@ -208,6 +220,10 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
         row.update(checks=checks, sha256=sha, nearest_cosine=closest,
                    page_count=(cached or {}).get("page_count", len(doc.pages) if doc else 0))
         if not all(v["passed"] for v in checks.values()):
+            if cached is not None and not verify_only:
+                # Near-duplicate rejection must not cause repeated document embeddings.
+                cached["checks"] = checks
+                atomic_json(lake.cache(cache_key), cached)
             quarantine = lake.root / "quarantine" / run_id / identifier(item.scope + item.source)
             quarantine.mkdir(parents=True, exist_ok=True)
             if raw:
@@ -234,6 +250,7 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
             lake.blob(sha, item.source, raw)
         verified[key] = {"doc_id": family, "version": version, "source": item.source,
                          "scope": item.scope, "sha256": sha, "cache": cache_key,
+                         "declared_superseded": bool(meta.get("superseded", False)),
                          "chunk_ids": [c["id"] for c in cached["chunks"]], "status": "active"}
         rows_by_key[key] = row
         previous = documents.get(key)
