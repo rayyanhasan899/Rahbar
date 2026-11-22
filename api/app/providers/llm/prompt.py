@@ -87,7 +87,9 @@ def build_messages(
                 "Reply again with one JSON object that follows the rules.",
             }
         )
-    return messages
+    from ...services.trace import current, safe
+    trace = current.get()
+    return safe(messages, trace.secrets if trace else ())
 
 
 class ProviderOutputError(ValueError):

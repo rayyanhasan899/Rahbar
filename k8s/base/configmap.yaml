@@ -1,6 +1,8 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
+  TRACE_DIR: /traces
+  TRACE_MAX_FILE_BYTES: "104857600"
   name: rahbar-config
 data:
   RETRIEVER: chroma

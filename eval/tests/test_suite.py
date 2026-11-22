@@ -147,9 +147,13 @@ class FakeServices:
 
     def ask(self, question):
         self.asked.append(question)
+        import hashlib
+        messages = [{"role": "user", "content": "1.1 English is the medium."}]
+        hashed = hashlib.sha256(json.dumps(messages, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
         retrieved = [{"chunk_id": "c1", **A, "score": 0.8}]
         return ({"request_id": "t" + str(len(self.asked)), "answer": "Yes [rules.pdf / 1.1].",
-                 "answered_from_context": True, "citations": [A], "retrieved": retrieved},
+                 "answered_from_context": True, "citations": [A], "retrieved": retrieved,
+                 "evidence": {"attempts": [{"messages": messages, "prompt_sha256": hashed, "context": [{"text": "1.1 English is the medium."}]}]}},
                 0.5, "MISS")
 
     def chunk_texts(self, ids):

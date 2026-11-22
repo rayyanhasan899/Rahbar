@@ -9,7 +9,7 @@ Writes eval/results/suite-<UTC stamp>-<label>.json, the same name with .md (the 
 table) and latest-<label>.json. Every setting comes from a flag or an environment
 variable, so the Kubernetes Job (k8s/eval-job.yaml) runs the same code.
 
-Empty the answer cache before a run (redis-cli FLUSHALL); cached answers make latency
+Requests bypass the answer cache without clearing shared Redis; cached answers make latency
 and the stochasticity comparison meaningless, and the result counts them.
 """
 
@@ -92,13 +92,20 @@ def add_judgements(services: Services, rows: list[dict], model: str, seed: int) 
     for r in rows:
         if not r["response"].get("answered_from_context"):
             continue
-        ids = [x["chunk_id"] for x in r["response"].get("retrieved") or []]
-        texts = services.chunk_texts(ids)
-        r["judge"] = end_to_end.judge(
-            services, model, seed, r["question"], r["response"]["answer"],
-            [texts[i] for i in ids if i in texts],
-        )
-        r["judge"]["passages_found"] = sum(i in texts for i in ids)
+        import hashlib
+        evidence = r["response"].get("evidence") or {}
+        attempts = evidence.get("attempts") or []
+        if not attempts:
+            raise ValueError("answer lacks immutable request-time model evidence")
+        attempt = attempts[-1]
+        raw = json.dumps(attempt["messages"], sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        if hashlib.sha256(raw.encode()).hexdigest() != attempt["prompt_sha256"]:
+            raise ValueError("request-time prompt hash mismatch")
+        texts = [p["text"] for p in attempt["context"]]
+        r["judge"] = end_to_end.judge(services, model, seed, r["question"],
+                                       r["response"]["answer"], texts)
+        r["judge"]["passages_found"] = len(texts)
+
 
 
 def fmt(value) -> str:
@@ -203,6 +210,11 @@ def main() -> int:
         return 0
 
     golden = read_jsonl(args.golden)
+    from golden_check import problems
+    errors = problems(golden)
+    if errors:
+        print("Golden preflight failed:", *errors, sep="\n")
+        return 2
     services = Services(args.api, args.ollama, args.chroma, args.collection, args.host)
     print("asking", len(golden), "questions at", args.api)
     rows = ask_all(services, golden)
@@ -232,7 +244,7 @@ def main() -> int:
         result["component_typos"] = component(typo_rows)
         result["typo_rows"] = typo_rows
     if result["end_to_end"]["cache_hits"]:
-        print("WARNING:", result["end_to_end"]["cache_hits"], "cache hits; flush Redis first")
+        print("WARNING:", result["end_to_end"]["cache_hits"], "unexpected cache hits; check bypass header")
 
     args.results_dir.mkdir(parents=True, exist_ok=True)
     base = args.results_dir / f"suite-{result['stamp']}-{args.label}"

@@ -167,7 +167,7 @@ class Services:
 
     def ask(self, question: str) -> tuple[dict, float, str]:
         started = time.perf_counter()
-        response = self.http.post(f"{self.api}/api/ask", json={"question": question})
+        response = self.http.post(f"{self.api}/api/ask", json={"question": question}, headers={"X-Rahbar-Cache": "bypass"})
         seconds = time.perf_counter() - started
         response.raise_for_status()
         return response.json(), seconds, response.headers.get("X-Cache", "")

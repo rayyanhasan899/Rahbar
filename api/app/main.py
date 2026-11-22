@@ -70,6 +70,19 @@ app = FastAPI(title="RAHBAR API", lifespan=lifespan)
 async def request_context(request: Request, call_next):  # type: ignore[no-untyped-def]
     rid = request.headers.get("X-Request-ID") or uuid.uuid4().hex
     token = request_id_var.set(rid)
+    from .services.trace import Trace, current
+    trace = None
+    trace_token = None
+    if request.url.path == "/api/ask" and request.method == "POST":
+        trace = Trace(getattr(request.app.state, "settings", get_settings()))
+        try:
+            payload = await request.json()
+            if isinstance(payload, dict):
+                from .services.trace import safe
+                trace.record["query"] = safe(str(payload.get("question", ""))[:500], trace.secrets)
+        except ValueError:
+            trace.record["error"] = "MalformedJSON"
+        trace_token = current.set(trace)
     start = time.perf_counter()
     status = 500
     try:
@@ -87,6 +100,10 @@ async def request_context(request: Request, call_next):  # type: ignore[no-untyp
             log.info(
                 "request", extra={"path": path, "status": status, "ms": round(elapsed * 1000, 1)}
             )
+        if trace is not None:
+            trace.finish(status)
+        if trace_token is not None:
+            current.reset(trace_token)
         request_id_var.reset(token)
 
 

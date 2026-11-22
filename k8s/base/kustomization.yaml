@@ -26,3 +26,4 @@ resources:
 - networkpolicy.yaml
 - corpus-data.yaml
 - datalake-data.yaml
+- traces-data.yaml

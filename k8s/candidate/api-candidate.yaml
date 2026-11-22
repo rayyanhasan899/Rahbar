@@ -1,7 +1,3 @@
-# The candidate pipeline next to the live one (Part F3): its own Deployment, Service
-# and ConfigMap (rahbar-config-candidate, with its own CHROMA_COLLECTION). Not part of
-# the base: scripts/release.py applies it with the live API's image, so the only
-# difference from production is the configuration under test.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -46,6 +42,8 @@ spec:
         volumeMounts:
         - name: tmp
           mountPath: /tmp
+        - name: traces
+          mountPath: /traces
         ports:
         - containerPort: 8000
           name: http
@@ -86,6 +84,9 @@ spec:
       volumes:
       - name: tmp
         emptyDir: {}
+      - name: traces
+        persistentVolumeClaim:
+          claimName: traces-data
       terminationGracePeriodSeconds: 30
   strategy:
     type: RollingUpdate

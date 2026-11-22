@@ -56,6 +56,9 @@ class Settings:
     redis_port: int = 6379
 
     log_level: str = "INFO"
+    trace_dir: str = ""
+    trace_max_record_bytes: int = 2 * 1024 * 1024
+    trace_max_file_bytes: int = 100 * 1024 * 1024
 
 
 def get_settings() -> Settings:
@@ -83,4 +86,7 @@ def get_settings() -> Settings:
         redis_host=os.environ.get("REDIS_HOST", "redis"),
         redis_port=_int("REDIS_PORT", 6379),
         log_level=os.environ.get("LOG_LEVEL", "INFO"),
+        trace_dir=os.environ.get("TRACE_DIR", ""),
+        trace_max_record_bytes=_int("TRACE_MAX_RECORD_BYTES", 2 * 1024 * 1024),
+        trace_max_file_bytes=_int("TRACE_MAX_FILE_BYTES", 100 * 1024 * 1024),
     )

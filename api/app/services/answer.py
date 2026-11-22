@@ -29,6 +29,8 @@ from ..routes.metrics import ABSTENTIONS, CACHE, FALLBACKS, INJECTION, RETRIES, 
 from ..schemas import Answer, AskResponse, Passage, RetrievedRef, Turn
 from . import citations, guard
 from .cache import SemanticCache
+from .trace import Trace, current, safe
+from ..routes.metrics import TOP1, QUERY_OUTCOMES
 
 log = logging.getLogger("rahbar.answer")
 
@@ -69,14 +71,19 @@ def _generate(
     provider: LLMProvider,
 ) -> tuple[Answer, str | None]:
     """Up to two model calls. Returns the answer and a fallback reason, or None."""
+    trace = current.get()
     feedback: str | None = None
     for attempt in (1, 2):
         if attempt == 2:
             RETRIES.inc()
+            if trace is not None:
+                trace.action("citation_or_schema_retry", feedback=feedback)
         try:
             answer = provider.generate(question, passages, history, feedback)
         except ProviderUnavailable as exc:
             log.warning("provider unavailable", extra={"error": str(exc)})
+            if trace is not None:
+                trace.action("provider_unavailable")
             return _declined(FALLBACK), "unavailable"
         except ProviderOutputError as exc:
             feedback = f"it was not valid JSON for the schema ({exc})."
@@ -110,7 +117,7 @@ def _response(answer: Answer, passages: list[Passage], provider: LLMProvider) ->
     )
 
 
-def answer_question(
+def _answer_question(
     question: str,
     retriever: Retriever,
     provider: LLMProvider,
@@ -118,12 +125,19 @@ def answer_question(
     history: Sequence[Turn] = (),
     cache: SemanticCache | None = None,
 ) -> Result:
+    trace = current.get()
+    assert trace is not None
+    trace.record["query"] = safe(question, trace.secrets)
     history = list(history)[-settings.max_history_turns :] if settings.max_history_turns else []
     flagged = guard.looks_like_injection(question)
     if flagged:
         INJECTION.labels(where="question").inc()
     query = f"{history[-1].question}\n{question}" if history else question
 
+    trace.record["rewritten_query"] = safe(query, trace.secrets)
+    trace.record["guardrails"]["question_flagged"] = flagged
+    if flagged:
+        trace.action("question_injection_flagged")
     vector: list[float] | None = None
     generation = ""
     cache_state = "bypass"
@@ -144,10 +158,13 @@ def answer_question(
                     "answered_from_context": cached.answered_from_context,
                     "generation": generation,
                 })
-                response = cached.model_copy(update={"request_id": request_id_var.get()})
+                trace.record["cache"] = {"result": "hit", "similarity": similarity}
+                trace.record["provenance"] = cached.evidence
+                response = cached.model_copy(update={"request_id": trace.record["trace_id"]})
                 return Result(response, "hit")
             CACHE.labels(result="miss").inc()
             cache_state = "miss"
+            trace.record["cache"] = {"result": "miss"}
         passages = retriever.retrieve(query, k=settings.top_k, vector=vector)
     except Exception as exc:
         log.error("retrieval failed", extra={"error": f"{type(exc).__name__}: {exc}"})
@@ -155,13 +172,23 @@ def answer_question(
     finally:
         RETRIEVAL_SECONDS.observe(time.perf_counter() - start)
 
+    trace.record["retrieved"] = [{"rank": i, **safe(p.model_dump(), trace.secrets)} for i, p in enumerate(passages, 1)]
+    trace.record["reranked_order"] = [p.chunk_id for p in passages]
+    guard_start = time.perf_counter()
+    passages = [p.model_copy(update={"text": safe(p.text[:16000], trace.secrets)}) for p in passages]
     passages, removed = guard.neutralise(passages)
+    trace.record["guardrails"]["passages_neutralised"] = removed
+    if removed:
+        trace.action("neutralise_passage_instructions", sentences=removed)
+    trace.stage("guard", guard_start)
     if removed:
         INJECTION.labels(where="passage").inc(removed)
 
     top = max((p.score for p in passages), default=0.0)
+    TOP1.observe(top)
     fallback: str | None = None
     if not passages or top < settings.relevance_floor:
+        trace.action("below_relevance_floor", top_score=top, floor=settings.relevance_floor)
         answer = _declined(NOT_COVERED)
         ABSTENTIONS.labels(reason="below_floor").inc()
     else:
@@ -172,6 +199,7 @@ def answer_question(
             ABSTENTIONS.labels(reason="model").inc()
 
     response = _response(answer, passages, provider)
+    response = response.model_copy(update={"request_id": trace.record["trace_id"], "evidence": trace.evidence()})
     log.info(
         "answered",
         extra={
@@ -199,3 +227,26 @@ def answer_question(
     ):
         cache.store(generation, vector, question, response)
     return Result(response, cache_state)
+
+
+def answer_question(question: str, retriever: Retriever, provider: LLMProvider, settings: Settings,
+                    history: Sequence[Turn] = (), cache: SemanticCache | None = None) -> Result:
+    existing = current.get()
+    trace = existing or Trace(settings, question)
+    token = current.set(trace)
+    try:
+        result = _answer_question(question, retriever, provider, settings, history, cache)
+        trace.record["response"] = result.response.model_dump(exclude={"evidence"})
+        trace.record["citations"] = [c.model_dump() for c in result.response.citations]
+        QUERY_OUTCOMES.labels(outcome="answered" if result.response.answered_from_context else "abstained").inc()
+        return result
+    except Exception as exc:
+        trace.record["error"] = type(exc).__name__
+        QUERY_OUTCOMES.labels(outcome="error").inc()
+        if existing is None:
+            trace.finish(503)
+        raise
+    finally:
+        if existing is None:
+            trace.finish()
+        current.reset(token)

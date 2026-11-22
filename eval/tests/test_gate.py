@@ -12,7 +12,7 @@ import gate  # noqa: E402
 def result(recall5, faith, p95, abst, cites, label="x"):
     return {"label": label, "component": {"recall_at_5": recall5},
             "end_to_end": {"faithfulness": faith, "latency_p95_seconds": p95,
-                           "abstention_correctness": abst, "citation_validity": cites}}
+                           "abstention_correctness": abst, "citation_validity": cites, "answered_without_citation": 0}}
 
 
 THRESHOLDS = {"max_recall5_drop": 0.02, "min_faithfulness": 0.8,
@@ -44,4 +44,16 @@ def test_gate_fails_when_a_threshold_is_not_set():
     base = result(0.80, 0.9, 20, 1.0, 1.0)
     unset = {**THRESHOLDS, "min_faithfulness": None}
     failed = [name for name, ok, _ in gate.rules(base, base, unset) if not ok]
-    assert failed == ["faithfulness"]
+    assert set(failed) == {"faithfulness", "bounded min_faithfulness"}
+
+
+@pytest.mark.parametrize("value", [float('nan'), float('inf'), -1, 2])
+def test_nonfinite_and_out_of_range_thresholds_fail(value):
+    base = result(.8, .9, 20, 1., 1.)
+    assert not all(ok for _, ok, _ in gate.rules(base, base, {**THRESHOLDS, 'min_faithfulness': value}))
+
+
+def test_missing_uncited_measurement_fails_closed():
+    base = result(.8, .9, 20, 1., 1.)
+    del base['end_to_end']['answered_without_citation']
+    assert not all(ok for _, ok, _ in gate.rules(base, base, THRESHOLDS))

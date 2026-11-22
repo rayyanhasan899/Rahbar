@@ -30,6 +30,9 @@ def main() -> int:
         return code
     candidate = results / f"latest-{label}.json"
     baseline = results / "latest-baseline.json"
+    if not baseline.exists() and os.environ.get("CREATE_BASELINE") != "true":
+        print("Baseline missing: explicit CREATE_BASELINE=true is required")
+        return 2
     if not baseline.exists():
         # The first run on a fresh volume becomes the baseline; replace it on purpose
         # only (copy another result over latest-baseline.json and say why in the report).

@@ -211,3 +211,18 @@ Moez: review the published diff/contracts and address UI security separately. Ru
 live lifecycle/Jobs on the approved host in Phase3 and return original evidence.
 Rayyan's next authorized implementation prompt: PHASE-2-IMPLEMENTATION-PROMPT.md,
 after the Phase1 contract handoff. Phase2/3 have not started automatically.
+
+### 22 November 2026 - Rayyan - Phase 2 authorized while review is pending
+User explicitly authorized Phase2 without waiting for Moez's Phase1 handoff review.
+Branch codex/a3-phase-2 starts at Phase1 head8161605, preserving all earlier work;
+PROJECT_DOCUMENTATION.md stays untracked/excluded. No approval/merge is assumed.
+CO-07..11 shared-edit notice: implement request-scoped traces, exact sanitized model
+attempt evidence, cache provenance, bounded JSONL/tools/metrics and trace PVC wiring.
+Narrow eval/gate/release/CI fixes in the supplied Phase2 prompt are authorized;
+announce this before touching eval/ or release files. Golden human provenance remains
+honest; no automated question is marked handwritten or human-reviewed. Existing
+interfaces remain additive. Parallel implementation tasks share the same branch;
+only the root agent commits/pushes and coordinates overlapping files.
+Requests requiring approved host access, real measurements, genuine human labels,
+class paper/due date, and partner review remain assigned to Moez in HM records.
+Phase3 experiments/submission are not authorized by this turn.

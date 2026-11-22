@@ -11,6 +11,7 @@ measurement or an unset threshold fails, so the gate never passes by accident.
 from __future__ import annotations
 
 import argparse
+import math
 import json
 import os
 import sys
@@ -20,7 +21,7 @@ import yaml
 
 
 def number(value) -> float | None:
-    return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) else None
+    return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) else None
 
 
 def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str]]:
@@ -55,6 +56,12 @@ def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str
     rule("citation validity",
          {"floor": t.get("min_citation_validity"), "value": ce.get("citation_validity")},
          lambda floor, value: (value >= floor, f"candidate {value:.4f}, minimum {floor}"))
+    for key in ("max_recall5_drop", "min_faithfulness", "min_citation_validity"):
+        value = number(t.get(key))
+        out.append(("bounded " + key, value is not None and 0 <= value <= 1, "must be finite in [0,1]"))
+    latency = number(t.get("max_p95_latency_seconds"))
+    out.append(("positive latency limit", latency is not None and latency > 0, "finite positive seconds required"))
+    out.append(("no uncited answers", ce.get("answered_without_citation") == 0, "must explicitly measure zero uncited answers"))
     return out
 
 

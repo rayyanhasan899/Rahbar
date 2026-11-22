@@ -73,7 +73,7 @@ def intent(question: str) -> tuple[bool, tuple[tuple[str, str], ...]]:
 
 def namespace(generation: str, settings: Settings) -> str:
     parts = (
-        f"v3|{generation}|{settings.embed_model}|{settings.llm_provider}|{settings.llm_model}"
+        f"v4|{settings.seed}|{generation}|{settings.embed_model}|{settings.llm_provider}|{settings.llm_model}"
         f"|{settings.relevance_floor}|{settings.temperature}|{settings.top_k}"
         f"|{hashlib.sha256((SYSTEM + json.dumps(ANSWER_SCHEMA, sort_keys=True)).encode()).hexdigest()}"
     )

@@ -41,6 +41,8 @@ spec:
         volumeMounts:
         - name: tmp
           mountPath: /tmp
+        - name: traces
+          mountPath: /traces
         ports:
         - containerPort: 8000
           name: http
@@ -81,6 +83,9 @@ spec:
       volumes:
       - name: tmp
         emptyDir: {}
+      - name: traces
+        persistentVolumeClaim:
+          claimName: traces-data
       terminationGracePeriodSeconds: 30
   strategy:
     type: RollingUpdate
