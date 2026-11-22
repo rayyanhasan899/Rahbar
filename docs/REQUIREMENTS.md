@@ -78,3 +78,5 @@ raw checker output is preserved as .out, so its quoted marker is not mistaken
 for an unfinished source stub; the checker itself remains unchanged.
 
 Assignment3 Phase2 current trace/integration acceptance: docs/assignment-3/phase-reports/PHASE-2-REPORT.md. The A2 statuses above remain historical.
+
+Current A3 final-evidence status (35 requirements): eval/results/phase3/requirement-status.json and docs/assignment-3/phase-reports/PHASE-3-REPORT.md. Rayyan allocation closed; all remaining project actions assigned to Moez.

@@ -1,0 +1,292 @@
+{
+  "scope": "Official Assignment3 final evidence; code/offline success is not substituted for live or human proof",
+  "rayyan_project_allocation": "CLOSED by explicit user instruction; all outstanding project actions assigned to Moez",
+  "group_assignment_complete": false,
+  "statuses": {
+    "NOT VERIFIED": 11,
+    "BLOCKED": 23,
+    "PASS": 1
+  },
+  "requirements": [
+    {
+      "id": "A1",
+      "requirement": "Real verification report per document, four checks/quarantine",
+      "status": "NOT VERIFIED",
+      "evidence": "Phase1 code/tests; owned CI fixture indexer JSONL",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run real corpus/BatchB and retain all check reasons"
+    },
+    {
+      "id": "A2",
+      "requirement": "Unchanged0, changed-only, deleted no-orphan, archive/restore",
+      "status": "NOT VERIFIED",
+      "evidence": "Incremental/rollback tests and counts CLI",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Capture actual model-call counts, per-doc counts, rollback and persistence"
+    },
+    {
+      "id": "BatchB",
+      "requirement": ">=10 planted docs processed through A1/A2",
+      "status": "NOT VERIFIED",
+      "evidence": "13 owned documents/generated hashes committed",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run real BatchA/B Jobs and screenshot original reports"
+    },
+    {
+      "id": "B-golden",
+      "requirement": ">=25 questions/15 answerable/5 unanswerable/5 hard/8 hand/8 reviewed synthetic",
+      "status": "BLOCKED",
+      "evidence": "Current official set34 issues;25 synthetic drafts have only2 human-provenance issues",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Genuinely write8 human questions, review8 synthetic/source pages and merge final set"
+    },
+    {
+      "id": "B-module",
+      "requirement": "15+15 pairs/gap/time/determinism",
+      "status": "BLOCKED",
+      "evidence": "Suite/tooling and fake tests ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Finish genuine golden/labels and run real models on approved host"
+    },
+    {
+      "id": "B-retrieval",
+      "requirement": "recall3/5/MRR/nDCG5 and noise",
+      "status": "BLOCKED",
+      "evidence": "Suite/tooling and fake tests ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Finish genuine golden/labels and run real models on approved host"
+    },
+    {
+      "id": "B-e2e",
+      "requirement": "faithfulness/abstention/citations/latency and8 hand labels",
+      "status": "BLOCKED",
+      "evidence": "Suite/tooling and fake tests ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Finish genuine golden/labels and run real models on approved host"
+    },
+    {
+      "id": "B-stochasticity",
+      "requirement": "Two same-seed suites and metric differences",
+      "status": "BLOCKED",
+      "evidence": "Suite/tooling and fake tests ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Finish genuine golden/labels and run real models on approved host"
+    },
+    {
+      "id": "B-command",
+      "requirement": "Full one-command timestamped suite results",
+      "status": "BLOCKED",
+      "evidence": "Suite/tooling and fake tests ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Finish genuine golden/labels and run real models on approved host"
+    },
+    {
+      "id": "C1",
+      "requirement": "Comparable single pipeline change at all three levels",
+      "status": "BLOCKED",
+      "evidence": "Immutable provenance/config/receipt and fake release tests",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Measure actual baseline/candidate; capture fail/pass/rollout/undo and restored writer"
+    },
+    {
+      "id": "C2",
+      "requirement": "Justified finite gates: actual fail and pass",
+      "status": "BLOCKED",
+      "evidence": "Immutable provenance/config/receipt and fake release tests",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Measure actual baseline/candidate; capture fail/pass/rollout/undo and restored writer"
+    },
+    {
+      "id": "C3",
+      "requirement": "Kubernetes release and rollback",
+      "status": "BLOCKED",
+      "evidence": "Immutable provenance/config/receipt and fake release tests",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Measure actual baseline/candidate; capture fail/pass/rollout/undo and restored writer"
+    },
+    {
+      "id": "D1",
+      "requirement": "Complete per-query trace",
+      "status": "NOT VERIFIED",
+      "evidence": "Trace/provider tests and clearly labeled offline samples; fixture Kubernetes e2e passes",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Capture real model/cluster trace, reconstruction, metrics and injection action"
+    },
+    {
+      "id": "D2",
+      "requirement": "Exact prompt/context trace tool",
+      "status": "NOT VERIFIED",
+      "evidence": "Trace/provider tests and clearly labeled offline samples; fixture Kubernetes e2e passes",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Capture real model/cluster trace, reconstruction, metrics and injection action"
+    },
+    {
+      "id": "D3",
+      "requirement": "Distributions/rates/stage p95/window summary",
+      "status": "NOT VERIFIED",
+      "evidence": "Trace/provider tests and clearly labeled offline samples; fixture Kubernetes e2e passes",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Capture real model/cluster trace, reconstruction, metrics and injection action"
+    },
+    {
+      "id": "D4",
+      "requirement": "Injected BatchB rail action in trace",
+      "status": "NOT VERIFIED",
+      "evidence": "Trace/provider tests and clearly labeled offline samples; fixture Kubernetes e2e passes",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Capture real model/cluster trace, reconstruction, metrics and injection action"
+    },
+    {
+      "id": "D5",
+      "requirement": "Five-line trace-only root cause of actual B failure",
+      "status": "BLOCKED",
+      "evidence": "Diagnostic tooling ready; no real B failure supplied",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Use only a real B trace; write five evidence-grounded lines"
+    },
+    {
+      "id": "E1",
+      "requirement": ">=40 user-style queries, about28 in-domain and12 uncovered-topic",
+      "status": "PASS",
+      "evidence": "eval/live_queries.jsonl:40 synthetic simulated queries;28/12 intended split, no verbatim golden-draft copies",
+      "remaining_owner": "Delivered in final handoff",
+      "remaining_action": "Review intended topics; do not describe these as real production traffic"
+    },
+    {
+      "id": "E2",
+      "requirement": "Nearest-golden similarities/justified coverage/topics",
+      "status": "BLOCKED",
+      "evidence": "Coverage tool,40 queries and6 expansion candidates ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run actual model analysis, preserve revisions and measure before/after"
+    },
+    {
+      "id": "E3",
+      "requirement": "Suite after BatchB data drift",
+      "status": "BLOCKED",
+      "evidence": "Coverage tool,40 queries and6 expansion candidates ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run actual model analysis, preserve revisions and measure before/after"
+    },
+    {
+      "id": "E4",
+      "requirement": ">=6 new uncovered-topic questions and improved coverage/nonzero below threshold",
+      "status": "BLOCKED",
+      "evidence": "Coverage tool,40 queries and6 expansion candidates ready",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run actual model analysis, preserve revisions and measure before/after"
+    },
+    {
+      "id": "F1",
+      "requirement": "Group Kubernetes deployment and persistent data lake/archive/quarantine",
+      "status": "NOT VERIFIED",
+      "evidence": "41 strict schemas and owned fixture Kubernetes CI; group host unavailable",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run required real group-host proof and collect original logs/screenshots/resource samples"
+    },
+    {
+      "id": "F2",
+      "requirement": "Verified ingest/weekly Cron/eval Jobs/results PVC/gate-map change",
+      "status": "BLOCKED",
+      "evidence": "41 strict schemas and owned fixture Kubernetes CI; group host unavailable",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run required real group-host proof and collect original logs/screenshots/resource samples"
+    },
+    {
+      "id": "F3",
+      "requirement": "Separate staged deployment/service/index and coherent rollout/undo",
+      "status": "BLOCKED",
+      "evidence": "41 strict schemas and owned fixture Kubernetes CI; group host unavailable",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run required real group-host proof and collect original logs/screenshots/resource samples"
+    },
+    {
+      "id": "F4",
+      "requirement": "Stdout+volume trace/metrics forwarding",
+      "status": "NOT VERIFIED",
+      "evidence": "41 strict schemas and owned fixture Kubernetes CI; group host unavailable",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run required real group-host proof and collect original logs/screenshots/resource samples"
+    },
+    {
+      "id": "F5",
+      "requirement": "Measured resource requests/limits and margin",
+      "status": "BLOCKED",
+      "evidence": "41 strict schemas and owned fixture Kubernetes CI; group host unavailable",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Run required real group-host proof and collect original logs/screenshots/resource samples"
+    },
+    {
+      "id": "G1",
+      "requirement": "Figure3 stage/action/file/missing-work table",
+      "status": "NOT VERIFIED",
+      "evidence": "Eight-page editable, visually checked HANDOFF DRAFT",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Confirm class paper/identity; insert genuine run findings and review all final report content"
+    },
+    {
+      "id": "G2",
+      "requirement": "Five qualities/measure/threshold/evidence table",
+      "status": "NOT VERIFIED",
+      "evidence": "Eight-page editable, visually checked HANDOFF DRAFT",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Confirm class paper/identity; insert genuine run findings and review all final report content"
+    },
+    {
+      "id": "G3",
+      "requirement": "Actual A-F results and release decision",
+      "status": "BLOCKED",
+      "evidence": "Eight-page editable, visually checked HANDOFF DRAFT",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Confirm class paper/identity; insert genuine run findings and review all final report content"
+    },
+    {
+      "id": "G4",
+      "requirement": "Six findings-based short answers",
+      "status": "BLOCKED",
+      "evidence": "Eight-page editable, visually checked HANDOFF DRAFT",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Confirm class paper/identity; insert genuine run findings and review all final report content"
+    },
+    {
+      "id": "G5",
+      "requirement": "True contributions/AI statement and member identity",
+      "status": "BLOCKED",
+      "evidence": "Eight-page editable, visually checked HANDOFF DRAFT",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Confirm class paper/identity; insert genuine run findings and review all final report content"
+    },
+    {
+      "id": "S-repo",
+      "requirement": "Reviewed final repository and all result/trace/manifests",
+      "status": "BLOCKED",
+      "evidence": "Pushed feature branches/stacked PRs; draft/evidence pack",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Moez owns final review/merge/evidence/PDF/submission and demo coordination; both must personally attend/explain"
+    },
+    {
+      "id": "S-pdf",
+      "requirement": "Final <=8 main pages plus actual screenshot appendix",
+      "status": "BLOCKED",
+      "evidence": "Pushed feature branches/stacked PRs; draft/evidence pack",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Moez owns final review/merge/evidence/PDF/submission and demo coordination; both must personally attend/explain"
+    },
+    {
+      "id": "S-shots",
+      "requirement": "Own uncropped terminal A-F command/output screenshots",
+      "status": "BLOCKED",
+      "evidence": "Pushed feature branches/stacked PRs; draft/evidence pack",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Moez owns final review/merge/evidence/PDF/submission and demo coordination; both must personally attend/explain"
+    },
+    {
+      "id": "S-demo",
+      "requirement": "Clean group-cluster/unseen batch/eval/trace demo and both members explain",
+      "status": "BLOCKED",
+      "evidence": "Pushed feature branches/stacked PRs; draft/evidence pack",
+      "remaining_owner": "Moez / his agent",
+      "remaining_action": "Moez owns final review/merge/evidence/PDF/submission and demo coordination; both must personally attend/explain"
+    }
+  ]
+}

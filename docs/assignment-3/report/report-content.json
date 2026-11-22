@@ -124,7 +124,7 @@
     {
       "title": "G3. Results and release decision",
       "paragraphs": [
-        "Phase3 CI45033156542 at7be4cd5 passed all4 image builds and security scans, all41 strict resources and the Kubernetes fixture end-to-end test. Its189 unit tests and94.29% app coverage are software verification. The fixture uses real embedding/index infrastructure but explicit stub answer generation; it is not the real-corpus A3 PartB campaign. Fresh checks after dataset additions are recorded in PHASE-3-REPORT.md."
+        "Current Phase 3 CI run 45034420605 at source 3308c4c passed 191 unit tests (92 API, 55 indexer, 44 eval), with 94.29% app coverage. All four image builds and security scans, 41 strict resources, and the Kubernetes fixture end-to-end test passed. These are software/integration checks. The fixture uses real embedding/index infrastructure but explicit stub answer generation; it is not the real-corpus A3 Part B campaign. No mandatory human or real campaign result is inferred from this CI pass."
       ],
       "tables": [
         {

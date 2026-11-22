@@ -77,3 +77,5 @@ controlled chunking experiment without treating different cache/chunk IDs as dat
 drift. Legacy indexes must be reindexed before authoritative A3 evaluation. The
 current A3 golden set still needs genuine human origin/review and physical-page
 validation; no metadata or measured scores were fabricated to pass its checker.
+
+Phase3 independently inspected the cached current-rules PDF physical pages7,8,10 for25 synthetic golden drafts, with SHA-pinned source labels and no human-review claims. See eval/DATA-REVIEW-HANDOFF.md; existing final golden.jsonl is preserved pending genuine human work.

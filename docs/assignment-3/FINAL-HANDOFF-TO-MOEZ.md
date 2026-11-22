@@ -18,7 +18,7 @@ this file. All remaining project coordination to satisfy requirements belongs to
 
 1. Fetch the existing remote and preserve your own dirty/untracked files.
 2. Read this file, COMMUNICATION.md and phase-reports/PHASE-3-REPORT.md.
-3. Review PR6 (Phase1), PR7 (Phase2, stacked on Phase1) and the Phase3 PR. After each
+3. Review PR6 (Phase1), PR7 (Phase2, stacked on Phase1) and Phase3 [PR8](https://github.com/rayyanhasan899/Rahbar/pull/8). After each
    dependency lands, retarget the next to dev2. Use genuine review; no force/reset/
    main push or invented approval. The final feature branch contains all earlier work.
 4. Use the existing repository/locks and k8s/README.md. Do not follow historical
