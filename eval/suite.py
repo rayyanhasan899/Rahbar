@@ -226,6 +226,10 @@ def main() -> int:
     if len(pins) != 1 or not indexes or not indexes[0].get('corpus_sha256'):
         raise ValueError('missing or changing request-time index provenance; rerun after verified ingestion')
     index = indexes[0]
+    if any(e.get('pipeline', {}).get('seed') != args.seed for e in evidence):
+        raise ValueError('API SEED must equal suite seed; configure API before stochasticity measurements')
+    if len({json.dumps(e.get('pipeline'), sort_keys=True) for e in evidence}) != 1:
+        raise ValueError('pipeline configuration changed within evaluation run')
     if not evidence[0].get('embedding', {}).get('digest'):
         raise ValueError('embedding digest missing')
     provenance = {'golden_sha256': hashlib.sha256(args.golden.read_bytes()).hexdigest(),

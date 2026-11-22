@@ -51,6 +51,7 @@ images: ## build the three images and load them into minikube (needs yours: Dock
 	minikube image load rahbar-api:$(TAG)
 	minikube image load rahbar-indexer:$(TAG)
 	minikube image load rahbar-ui:$(TAG)
+	minikube image load rahbar-eval:$(TAG)
 	minikube image load rahbar-eval:dev
 
 apply: ## bootstrap real dependencies, transfer corpus, index, then roll out API/UI

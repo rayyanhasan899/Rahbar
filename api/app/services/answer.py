@@ -191,12 +191,15 @@ def _answer_question(
     TOP1.observe(top)
     fallback: str | None = None
     if not passages or top < settings.relevance_floor:
+        trace.record["guardrails"]["below_relevance_floor"] = True
         trace.action("below_relevance_floor", top_score=top, floor=settings.relevance_floor)
         answer = _declined(NOT_COVERED)
         ABSTENTIONS.labels(reason="below_floor").inc()
     else:
         answer, fallback = _generate(question, passages, history, provider)
         if fallback:
+            trace.record["guardrails"]["fallback"] = fallback
+            trace.action("fallback", reason=fallback)
             FALLBACKS.labels(reason=fallback).inc()
         elif not answer.answered_from_context:
             ABSTENTIONS.labels(reason="model").inc()

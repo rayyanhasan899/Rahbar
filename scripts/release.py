@@ -143,6 +143,12 @@ def evaluate(name: str, config: dict) -> tuple[bool, dict, dict]:
     pod = job["spec"]["template"]["spec"]
     use_config(pod, config)
     container = pod["containers"][0]
+    api_image = get("deployment", "api-candidate")["spec"]["template"]["spec"]["containers"][0]["image"]
+    repository, separator, tag = api_image.rpartition(":")
+    if not separator or not re.fullmatch(r"[a-f0-9]{40,64}", tag):
+        raise ValueError("candidate evaluation requires a source-SHA API image tag")
+    registry = repository.rsplit("/", 1)[0] + "/" if "/" in repository else ""
+    container["image"] = registry + "rahbar-eval:" + tag
     values = {"API_URL": "http://api-candidate:8000", "LABEL": name,
               "RELEASE_CONFIG_SHA256": digest(config["data"])}
     container["env"] = [v for v in container["env"] if v["name"] not in values]
