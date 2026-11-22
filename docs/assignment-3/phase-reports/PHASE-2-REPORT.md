@@ -82,7 +82,7 @@ PASS below is scoped to the stated offline/static behavior. Live claims are sepa
 | B exact judged evidence and cache/seed isolation | PASS offline | Suite evidence hash/preflight tests; no current-index judge reads; seed checks |
 | C gate/baseline/provenance safety | PASS offline | Numeric boundaries/missing levels/comparability/no-self-baseline tests |
 | F3 evaluated release and reader/writer undo | PASS offline | Fake kubectl state validates stale rejection and promote/undo config+image consistency |
-| CI four-image/standalone coverage | IMPLEMENTED | Final run/build/scan state appended below; no weakened gate |
+| CI four-image/standalone coverage | PASS code/static | All4 builds and all scan executions covered;41 strict objects; full quality/UI blocker separately below |
 | T08 valid golden/human provenance | BLOCKED | Current golden checker34 issues; human work/ground-truth pages pending |
 | D5 real trace-only five-line diagnosis | NOT VERIFIED | Tooling ready; real PartB failure trace/run must be supplied by Moez |
 | Live F2/F3/F4 demo and resource measurement | NOT VERIFIED | Approved Moez host, real Jobs/rollout/persistence/screenshots in Phase3 |
@@ -137,7 +137,9 @@ aeadb93,0b172bc,fd5d034,831f3b9,fed6949. All use Rayyan Hassan's requested ident
 actual assistance is disclosed. Moez's commits remain untouched. Draft PR7
 https://github.com/rayyanhasan899/Rahbar/pull/7 is stacked on codex/a3-phase-1 while
 PR6 awaits review. Retarget to dev2 after the dependency lands; never pretend the
-unmerged Phase1 was reviewed. No main push/merge/force/reset/clean or account changes.
+unmerged Phase1 was reviewed. No main push/merge/force/reset/clean or account changes. Later code milestones2b2e410
+(scan completion),ecc6c4a (range checks/evidence),215fd68 (module/noise generation pin)
+were also pushed.
 
 ## Limits, remaining actions and exact next step
 
@@ -176,3 +178,28 @@ Offline-only trace artifacts are under traces/phase2-offline and the correspondi
 summary under eval/results/phase2. They use fake retrieval/Redis and mocked HTTP;
 their real local timings must not be used as production/model measurements. Real
 cluster trace/release/screenshot/D5 evidence remains assigned to Moez in the ledger.
+
+## Final verified code and phase exit
+
+Final code revision215fd68fb074aeb33cd9a2c4e35e4ff6ddda168e.
+[CI45030554656](https://github.com/rayyanhasan899/Rahbar/actions/runs/45030554656)
+completed: Ruff/both mypy PASS;92 API+55 indexer+42 eval tests PASS (189 total);
+94.29% app coverage;32 production+9 standalone resources strictly valid; all4 image
+builds PASS; API/indexer/eval vulnerability scans PASS. UI scan remains FAIL with
+6 fixable findings (2 HIGH,4 CRITICAL), quality FAIL and e2e SKIPPED. real-audit was
+not requested. Exact run/job URLs/states: eval/results/phase2/ci-summary.json.
+No full passing-CI, live model/cluster or release-success claim is made.
+
+Offline reconstruction JSON is committed alongside the clearly labeled fake trace
+summary. Actual command `python -X utf8 scripts/trace_tool.py show
+97c75d6d8e7d4e21b2c24a48be37a13a traces/phase2-offline` exited0 and verified the
+stored prompt without reading Chroma/source files. These are unit-fixture artifacts.
+The subsequent final commit contains documentation/evidence only; no rebuilt image
+for that documentation SHA is claimed. All code is pushed. Only the original user
+PROJECT_DOCUMENTATION.md remains untracked. dev2 still3dff736; main unchanged.
+
+Phase2 code/offline acceptance is met with the explicit external bounds above.
+Full-quality/UI, real golden/human provenance, paper/partner review and live D5/F
+proof remain open and assigned in COMMUNICATION.md. No required external evidence
+is called complete. Phase3 has not begun. The next authorization is the Phase3
+prompt after the host/human entry conditions are available.
