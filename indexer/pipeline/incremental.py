@@ -217,13 +217,11 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
                 vector = embed([text[:settings.document_embed_chars]])[0]
                 report["document_embeddings"] += 1
                 cosine(vector, vector)  # validate finite, nonzero dimensions
-                pieces = chunk(doc, settings.chunk_size, settings.chunk_overlap)
                 cached = {"checks": checks, "document_vector": vector,
                           "page_count": len(doc.pages),
                           "resolved_metadata": {"title": str(meta.get("title", "")),
                                                 "doc_version": version},
-                          "chunks": [{"id": identifier(key + p.id), "text": p.text,
-                                      "metadata": p.metadata()} for p in pieces]}
+                          "chunks": []}
             for other_key, record in others.items():
                 if other_key == key or record["doc_id"] == family:
                     continue  # Legitimate policy versions are not duplicate families.
@@ -249,6 +247,14 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
             atomic_json(quarantine / "reason.json", row)
             continue
         assert cached is not None
+        if not cached["chunks"]:
+            # Uniqueness must pass before chunking. A previously rejected analysis
+            # can become eligible after its conflicting family is removed.
+            if doc is None:
+                doc = clean(extract(str(item.path), version, False))
+            cached["chunks"] = [{"id": identifier(key + p.id), "text": p.text,
+                                  "metadata": p.metadata()}
+                                 for p in chunk(doc, settings.chunk_size, settings.chunk_overlap)]
         if not cached["chunks"]:
             raise ValueError("verified document has no usable chunks")
         if "vector" not in cached["chunks"][0] and not verify_only:

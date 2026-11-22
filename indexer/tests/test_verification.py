@@ -51,8 +51,10 @@ class VerificationTests(unittest.TestCase):
 class Collection:
     def __init__(self):
         self.rows = {}
+        self.batch_sizes = []
 
     def add(self, ids, documents, metadatas, embeddings):
+        self.batch_sizes.append(len(ids))
         for key, meta in zip(ids, metadatas):
             if key in self.rows:
                 raise ValueError("duplicate chunk")
@@ -80,6 +82,30 @@ class Client:
 
 
 class SnapshotAdapterTests(unittest.TestCase):
+    def test_adapter_publishes_only_validated_bounded_snapshot(self):
+        client = Client()
+        with patch("pipeline.snapshots.get_client", return_value=client):
+            backend = ChromaSnapshots(get_settings())
+        record = {"chunk_ids": [str(i) for i in range(130)], "status": "archived",
+                  "doc_id": "policy", "sha256": "a" * 64}
+        ledger = {"active_collection": "snapshot", "embed_model": "model", "dimension": 2,
+                  "generation": "g", "embed_model_digest": "a" * 64, "fingerprint": "f",
+                  "documents": {"doc": record}, "chunks": 130, "content_sha256": "hash",
+                  "versions": "2026", "ledger_revision": "revision",
+                  "chunk_size": 100, "chunk_overlap": 10}
+        rows = [{"id": cid, "text": "Policy.", "vector": [1., 0.],
+                 "metadata": {"doc_key": "doc", "doc_id": "policy", "doc_sha256": "a" * 64,
+                              "archived": True, "superseded": True}}
+                for cid in record["chunk_ids"]]
+        backend.publish(ledger, rows)
+        self.assertEqual(client.collection.batch_sizes, [128, 2])
+        pointer = client.get_or_create_collection.return_value.upsert.call_args.kwargs
+        self.assertEqual(pointer["metadatas"][0]["active_collection"], "snapshot")
+        self.assertEqual(backend.counts("snapshot"), {"doc": 130})
+        # Equal counts do not excuse corrupted provenance or archive filtering.
+        client.collection.rows["0"]["archived"] = False
+        self.assertFalse(backend.valid(ledger))
+
     def test_real_adapter_checks_document_counts_before_pointer(self):
         client = Client()
         settings = get_settings()

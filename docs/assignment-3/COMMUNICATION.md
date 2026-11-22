@@ -2,7 +2,7 @@
 
 Project owner for this work: Rayyan Hassan / rayyanhasan899.
 Partner: Moez / AbdulMoez-24i-3048-SE-B.
-Created: 22 November 2026, Asia/Karachi. Status: PLAN PREPARED; NO IMPLEMENTATION.
+Created: 22 November 2026, Asia/Karachi. Status: PHASE 1 IMPLEMENTED; VERIFICATION IN PROGRESS.
 
 This is the shared ledger for Rayyan's automation and Moez/his agent. Read it at
 the start and update it at the end of every implementation session. It is a file,
@@ -148,3 +148,24 @@ Baseline CI45010313761: lint/tests/manifests and three builds passed; unchanged 
 image failed the vulnerability gate. e2e was skipped. The scan is not disabled;
 Moez's security/build follow-up remains separate from Phase1 ingestion correctness.
 
+
+### 22 November 2026 - Rayyan - Phase 1 verification update
+Status: IMPLEMENTED, offline checks passing; live Kubernetes NOT VERIFIED.
+Published branch codex/a3-phase-1 and draft PR #6 target dev2:
+https://github.com/rayyanhasan899/Rahbar/pull/6
+Milestones: 490ca5f, c978f0f, 9b4544d, 1fd8a65. All use Rayyan's requested identity;
+actual implementation/test execution is agent-assisted under Rayyan's direction.
+Shared CI change notice CO-11: added only strict validation of k8s/jobs/ to the
+existing manifests job. No evaluation/release algorithm, gate or labels changed.
+CI45012154398: Ruff, both mypy checks, API81/indexer48/eval33 tests and 93.31% API
+coverage PASS; production31 and standalone3 strict resources PASS; three builds PASS.
+Earlier introduced type errors and the inspection Pod's apiVersion were fixed and
+reverified. New transfer/snapshot adapter tests also pass locally. Uniqueness now
+finishes before chunking; failed near duplicates cannot reach chunking.
+UI scan remains FAIL on the unchanged nginx image: installed1.30.6-r1, fixed1.30.7-r0;
+CVE-2026-113425, CVE-2026-121810, CVE-2026-123007, CVE-2026-123633 (CRITICAL),
+CVE-2026-118899 and CVE-2026-123634 (HIGH), as reported by Trivy in that run.
+HM-10 (Moez, PENDING): separately update/rebuild the pinned UI image, rerun all scans
+and the blocked e2e suite. Do not suppress findings. Other scan matrix jobs may be
+cancelled by fail-fast; their cancellation is not a scan PASS.
+HM-01..HM-09 and CO-05/06/09 approvals remain pending; no reply is assumed.

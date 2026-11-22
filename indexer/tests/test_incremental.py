@@ -208,7 +208,9 @@ class LifecycleTests(unittest.TestCase):
                              + "Similar content is retained as a controlled duplicate. " * 4)
         self.embed = lambda texts: [load_json(next((self.root / "lake/cache").glob("*.json")))
                                    ["document_vector"] for _ in texts]
-        result = self.run_ingest()
+        with patch("pipeline.incremental.chunk", side_effect=AssertionError(
+                "a failed near duplicate must not reach chunking")):
+            result = self.run_ingest()
         self.assertTrue(any(not r["checks"]["uniqueness"]["passed"]
                             for r in result["documents"]))
 
