@@ -198,3 +198,13 @@ def test_golden_preflight_precedes_network_calls(tmp_path, monkeypatch):
     monkeypatch.setattr(sys, 'argv', ['suite.py', '--golden', str(path)])
     monkeypatch.setattr(suite, 'Services', lambda *args: pytest.fail('network initialized before validation'))
     assert suite.main() == 2
+
+
+def test_module_sampling_can_pin_the_request_time_generation(monkeypatch):
+    services = object.__new__(common.Services)
+    services._active = None
+    resolved = []
+    monkeypatch.setattr(services, '_collection_id', lambda name: resolved.append(name) or 'immutable-id')
+    services.pin_collection('served-generation')
+    assert services.active_collection() == 'immutable-id'
+    assert resolved == ['served-generation']

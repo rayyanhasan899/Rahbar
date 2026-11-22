@@ -226,6 +226,7 @@ def main() -> int:
     if len(pins) != 1 or not indexes or not indexes[0].get('corpus_sha256'):
         raise ValueError('missing or changing request-time index provenance; rerun after verified ingestion')
     index = indexes[0]
+    services.pin_collection(index["active_collection"])
     if any(e.get('pipeline', {}).get('seed') != args.seed for e in evidence):
         raise ValueError('API SEED must equal suite seed; configure API before stochasticity measurements')
     if len({json.dumps(e.get('pipeline'), sort_keys=True) for e in evidence}) != 1:
@@ -261,6 +262,8 @@ def main() -> int:
     if args.typos:
         print("asking again with seeded typos")
         typo_rows = ask_all(services, golden, typos_seed=args.seed)
+        if any(r["response"].get("evidence", {}).get("collection", {}).get("generation") != index["generation"] for r in typo_rows):
+            raise ValueError("index changed during noise comparison; run is not comparable")
         result["component_typos"] = component(typo_rows)
         result["typo_rows"] = typo_rows
     if result["end_to_end"]["cache_hits"]:

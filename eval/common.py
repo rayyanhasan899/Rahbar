@@ -219,6 +219,10 @@ class Services:
             self._active = self._collection_id(name)
         return self._active
 
+    def pin_collection(self, name: str) -> None:
+        """Sample the same immutable generation that served evaluation queries."""
+        self._active = self._collection_id(name)
+
     def chunk_texts(self, ids: list[str]) -> dict[str, str]:
         if not ids:
             return {}
