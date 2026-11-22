@@ -7,6 +7,9 @@ to `dev2`. Current evidence, acceptance criteria and blockers are in the
 [Phase 1 report](phase-reports/PHASE-1-REPORT.md). The planning snapshots below
 describe the pre-implementation state; they are not current runtime evidence.
 
+Current Phase 2 evidence and outstanding handoff: [Phase 2 report](phase-reports/PHASE-2-REPORT.md).
+Draft [PR #7](https://github.com/rayyanhasan899/Rahbar/pull/7) depends on unmerged Phase 1.
+
 ## Read in this order
 
 1. [Gap analysis](ASSIGNMENT-3-GAP-ANALYSIS.md): official requirements, current evidence, ownership and defects.
@@ -18,7 +21,7 @@ describe the pre-implementation state; they are not current runtime evidence.
    - [Phase 3: measured Kubernetes evidence and submission](prompts/PHASE-3-IMPLEMENTATION-PROMPT.md)
 
 Execute exactly one authorized phase per session. Phase 1 was explicitly authorized;
-Phase 2 and Phase 3 have not started.
+Phase 2 was separately authorized without waiting for partner review; Phase 3 has not started.
 
 ## Source and branch warning
 

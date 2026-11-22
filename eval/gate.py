@@ -93,7 +93,14 @@ def measured(result: dict) -> bool:
             if not isinstance(value, dict) or key not in value:
                 return False
             value = value[key]
-        if number(value) is None:
+        numeric = number(value)
+        if numeric is None:
+            return False
+        if path[-1] in {"recall_at_3", "recall_at_5", "mrr", "ndcg_at_5", "faithfulness", "citation_validity", "abstention_correctness"} and not 0 <= numeric <= 1:
+            return False
+        if path[-1] in {"ms_per_chunk_mean", "max_abs_difference", "latency_p95_seconds"} and numeric < 0:
+            return False
+        if path[-1] == "gap" and not -2 <= numeric <= 2:
             return False
     return True
 

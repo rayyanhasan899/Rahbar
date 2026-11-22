@@ -81,3 +81,14 @@ def test_candidate_cannot_create_its_own_missing_baseline(tmp_path, monkeypatch)
 def test_all_levels_are_required_for_release():
     assert gate.measured({}) is False
     assert gate.measured({'module': None, 'component': {'recall_at_5': 1}}) is False
+
+
+def test_measured_rate_values_cannot_exceed_one():
+    record = {'module': {'similarity': {'gap': .5}, 'speed': {'ms_per_chunk_mean': 2},
+                         'determinism': {'max_abs_difference': 0}},
+              'component': {'recall_at_3': 1, 'recall_at_5': 1, 'mrr': 1, 'ndcg_at_5': 1},
+              'end_to_end': {'faithfulness': 1, 'citation_validity': 1,
+                            'abstention_correctness': 1, 'latency_p95_seconds': 2}}
+    assert gate.measured(record)
+    record['component']['mrr'] = 2
+    assert not gate.measured(record)

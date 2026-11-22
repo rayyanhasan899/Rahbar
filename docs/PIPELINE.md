@@ -224,3 +224,15 @@ probes stayed HTTP 200; generation changed at the same 646 chunks, a cache MISS
 crossed publication and later requests HIT. The manual writer waited 208.441 s
 on the shared lock. Actual source-equivalent repeated extraction/chunk experiments
 and failure artifacts remain separate from the live publication.
+
+
+## Assignment 3 Phase 2 evidence contract
+
+AskResponse.evidence adds pinned collection/model provenance and actual sanitized
+provider message/context attempts; judges no longer reread mutable raw Chroma chunks.
+X-Rahbar-Cache:bypass isolates eval without clearing shared Redis; seed is part of
+cache identity and must agree between API and suite. Baselines require explicit
+creation and absolute gate passage. Gate comparisons currently support chunking-only
+changes on identical corpus/golden/pairs/model/query configuration. Trace tools use
+stored evidence, not a regenerated prompt. See ADR0006, the Phase2 report and k8s
+runbook for limits, commands and actual check results. No A2 metric above is an A3 run.

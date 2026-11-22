@@ -2,7 +2,7 @@
 
 Project owner for this work: Rayyan Hassan / rayyanhasan899.
 Partner: Moez / AbdulMoez-24i-3048-SE-B.
-Created: 22 November 2026, Asia/Karachi. Status: PHASE 1 IMPLEMENTED/OFFLINE VERIFIED; REVIEW/RUNTIME PENDING.
+Created: 22 November 2026, Asia/Karachi. Status: PHASE 2 IMPLEMENTED; FINAL CI/REVIEW/HUMAN/RUNTIME EVIDENCE TRACKED BELOW.
 
 This is the shared ledger for Rayyan's automation and Moez/his agent. Read it at
 the start and update it at the end of every implementation session. It is a file,
@@ -226,3 +226,52 @@ only the root agent commits/pushes and coordinates overlapping files.
 Requests requiring approved host access, real measurements, genuine human labels,
 class paper/due date, and partner review remain assigned to Moez in HM records.
 Phase3 experiments/submission are not authorized by this turn.
+
+### 22 November 2026 - Rayyan - Phase 2 implementation handoff
+Status: IMPLEMENTED; final CI verification in progress; human/runtime work pending.
+Commits aeadb93,0b172bc,fd5d034,831f3b9,fed6949 on codex/a3-phase-2. Draft PR7 is
+stacked on codex/a3-phase-1 to avoid silently merging unreviewed PR6; after PR6 lands,
+retarget PR7 to dev2 through normal review. No partner approval has been assumed.
+CO-07/08: additive AskResponse.evidence has actual sanitized transport attempts,
+context/hash, collection/generation/model digest, pipeline/seed and original cached
+answer provenance. The judge reads that immutable evidence, not later Chroma text.
+CO-09/10: versioned immutable configs and evaluated receipts bind template/index/Job;
+release.py undo also reconciles the scheduled writer. Raw kubectl undo alone is not
+advertised as sufficient. --force is removed; deliberate bad-release evidence must
+not be manufactured by bypassing a failing gate. Baselines are explicit and exclusive.
+CO-11: four image builds/scans, dev2/feature checks and standalone schemas added.
+A ConfigMap placement defect introduced here failed strict CI and was corrected;
+local strict32 production+9 separate objects now pass. Existing UI scan issue remains
+HM-10. No scan or test was weakened. Eval fixtures/tests were updated for the additive
+evidence contract and missing uncited-answer measurements now fail closed.
+Initial baseline indexer54 PASS; later new corpus provenance test makes55. Local
+API89 PASS/90.92% coverage before the last3 trace tests; final CI checks all92.
+Eval39 PASS before the final missing-level test; final CI checks40.11 focused trace
+tests PASS. Both mypy checks, Ruff and pip check passed at recorded revisions.
+Golden check still fails34 issues (15 questions,13 answerable,2 unanswerable,0 hard;
+no verified human origin/review/physical pages). Those flags were not fabricated.
+HM-01..09 remain pending. Moez: supply/verify the real human golden questions/reviews
+and hand answer labels; supply paper/deadline and approved host evidence. Run PartB
+and return a real failure trace for D5; if Rayyan cannot access it, perform the trace-
+only five-line diagnosis and label its actual human/agent provenance. Run the PVC,
+release/undo/Job demonstrations and measured thresholds/resources in Phase3. These
+host/human tasks are assigned to you, not silently claimed complete by Rayyan.
+Root continuation completed the worker drafts; the transient worker usage limit is
+not being used to declare feasible coding work complete without checks.
+
+CO-11 final verification adjustment: disable matrix fail-fast for vulnerability scans
+only, so the pre-existing UI failure cannot cancel API/indexer/eval scans. All scans
+still fail on fixable HIGH/CRITICAL and quality still requires every scan. This
+collects evidence without suppressing findings. CI45029477098 built all4 images and
+passed lint/types/tests/41 strict resources; scans other than UI were canceled.
+
+Offline replay artifacts are committed under traces/phase2-offline (explicit mocked
+transport/fixture labels) and eval/results/phase2/offline-trace-summary.json. They are
+not live model, PartB/D5 or Kubernetes evidence. Additional import-collision check:
+from eval cwd, pytest --cov=query_coverage ran40 tests successfully with the real
+coverage plugin; measured query_coverage coverage58%, separate from API coverage.
+A final metric-range regression rejects impossible component rates,17 gate tests PASS.
+CI45029781365 at2b2e410:92 API/55 indexer/40 eval tests,94.29% app coverage, all4
+builds,32+9 strict resources PASS; API/indexer/eval scans PASS, UI scan FAIL, quality
+FAIL and e2e SKIPPED. Final metric-range case adds one eval test for the next code
+revision. No scanned pass is claimed for an unbuilt later image.
