@@ -76,3 +76,8 @@ def test_candidate_cannot_create_its_own_missing_baseline(tmp_path, monkeypatch)
     monkeypatch.setattr(job.subprocess, 'call', lambda *args: pytest.fail('should refuse before model calls'))
     assert job.main() == 2
     assert not (tmp_path / 'latest-baseline.json').exists()
+
+
+def test_all_levels_are_required_for_release():
+    assert gate.measured({}) is False
+    assert gate.measured({'module': None, 'component': {'recall_at_5': 1}}) is False

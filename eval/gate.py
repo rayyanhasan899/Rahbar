@@ -79,6 +79,25 @@ def comparable(baseline: dict, candidate: dict) -> list[tuple[str, bool, str]]:
     return checks
 
 
+
+def measured(result: dict) -> bool:
+    paths = [('module', 'similarity', 'gap'), ('module', 'speed', 'ms_per_chunk_mean'),
+             ('module', 'determinism', 'max_abs_difference'),
+             ('component', 'recall_at_3'), ('component', 'recall_at_5'),
+             ('component', 'mrr'), ('component', 'ndcg_at_5'),
+             ('end_to_end', 'faithfulness'), ('end_to_end', 'citation_validity'),
+             ('end_to_end', 'abstention_correctness'), ('end_to_end', 'latency_p95_seconds')]
+    for path in paths:
+        value = result
+        for key in path:
+            if not isinstance(value, dict) or key not in value:
+                return False
+            value = value[key]
+        if number(value) is None:
+            return False
+    return True
+
+
 def main() -> int:
     env = os.environ.get
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
@@ -94,6 +113,7 @@ def main() -> int:
     candidate = json.loads(args.candidate.read_text(encoding="utf-8"))
     thresholds = yaml.safe_load(args.thresholds.read_text(encoding="utf-8")) or {}
     results = rules(baseline, candidate, thresholds) + comparable(baseline, candidate)
+    results.append(("all three levels measured", measured(baseline) and measured(candidate), "missing/nonfinite module/component measurements fail"))
     print("gate:", candidate["label"], "against", baseline["label"], "with", args.thresholds)
     for name, ok, detail in results:
         print("  PASS" if ok else "  FAIL", name.ljust(18), detail)
