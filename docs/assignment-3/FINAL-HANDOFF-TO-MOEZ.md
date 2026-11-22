@@ -141,3 +141,11 @@ under k8s/. Keep secrets/private text/downloaded third-party PDFs out of commits
 
 Final deliverables are the GitHub repository and FINAL report PDF with appendix,
 not the old A2 link checklist and not the current clearly marked handoff draft.
+
+
+Registry note for M04/M14: CI builds/scans do not publish A3 images. The default local
+make-images workflow loads all four SHA-tagged images. If you instead deploy a
+registry-prefixed API image, also publish/load the matching registry-prefixed eval
+image at that SAME source SHA, because release.py derives its name from the candidate
+API image. Verify any later CD using the actual merge SHA; old A2 tags are not A3
+release evidence. No new Docker Hub publication or main merge is claimed here.

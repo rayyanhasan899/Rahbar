@@ -153,3 +153,5 @@ drafts/evidence/report/handoff are pushed under Rayyan's account. Subsequent edi
 are documentation/evidence/PDF only and are not claimed as a rebuilt image SHA.
 main/dev2/remotes/settings/secrets/user work were preserved; no Classroom submission.
 Exact next action belongs to Moez: execute M01-M15; do not ask Rayyan for another prompt.
+
+Saved checker transcripts retain all command output content; only trailing blank lines were normalized for Git whitespace checks. The original captures remain in ignored .venv/phase3-ci. No checker/source logic, status or warning was altered.

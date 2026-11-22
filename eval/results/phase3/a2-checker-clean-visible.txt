@@ -211,4 +211,3 @@ J · docs
 No mechanical failures. This says nothing about your recall@k, your design, or your viva - go and re-read section 7.
 
 A lint, not the rubric. Passing it is necessary, not sufficient.
-

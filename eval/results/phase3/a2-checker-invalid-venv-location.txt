@@ -133,4 +133,3 @@ J · docs
 Fix the failures before submitting. Most map to an automatic deduction in section 8.
 
 A lint, not the rubric. Passing it is necessary, not sufficient.
-
