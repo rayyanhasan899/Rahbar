@@ -117,13 +117,15 @@ actual injection-defense proof belong to later authorized phases.
 ## Evaluation Job (Part F2)
 
 ```bash
-kubectl -n rahbar exec deploy/redis -- redis-cli FLUSHALL
+# Suite requests bypass cache via X-Rahbar-Cache; do not clear shared Redis.
 kubectl -n rahbar delete job eval --ignore-not-found
 kubectl apply -f k8s/eval-job.yaml
 kubectl -n rahbar wait --for=condition=complete job/eval --timeout=5400s; kubectl -n rahbar logs job/eval
 ```
 
-The first run on an empty `eval-results` volume is saved as `latest-baseline.json`.
+Baseline creation requires explicit `CREATE_BASELINE=true` and `LABEL=baseline` on
+the eval Job, an absent baseline, valid human-reviewed golden inputs and calibrated
+gate thresholds. Candidates never create their own baseline.
 The Job's exit status is the gate's. To show that a threshold change alters the
 outcome without a rebuild: `kubectl -n rahbar edit configmap rahbar-gate`, then delete
 and apply the Job again.
@@ -146,8 +148,8 @@ python scripts/release.py candidate --name rahbar-cand --chunk-size <n> --chunk-
 python scripts/release.py promote --name rahbar-cand
 # bad release demo, then reverse it
 python scripts/release.py candidate --name rahbar-bad --chunk-size 60 --chunk-overlap 0   # gate fails
-python scripts/release.py promote --name rahbar-bad --force
-kubectl -n rahbar rollout undo deployment/api
+python scripts/release.py promote --name rahbar-bad   # refuses a failed gate
+python scripts/release.py undo   # rollout undo, then matching writer reconciliation
 kubectl -n rahbar rollout status deployment/api
 kubectl -n rahbar rollout history deployment/api
 ```
@@ -165,3 +167,43 @@ back; the next trace shows it.
 | PVC `eval-results` | results and the baseline across Jobs |
 | Deployment and Service `api-candidate`, ConfigMap `rahbar-config-candidate` | the candidate pipeline beside the live one (staging) |
 | Deployment `api` rolling update | controlled release and rollback (`rollout status`, `rollout undo`) |
+
+
+## Phase 2 traces and release consistency
+
+API and candidate pods mount `traces-data` at `/traces`, non-root with existing fsGroup.
+This is a single-node ReadWriteOnce volume: co-location is required on multi-node
+clusters. Each pod has its own JSONL file; export before the default100MiB per-file
+budget is exhausted. Persistence failure increments `rahbar_trace_writes_total` and
+stdout records `persistence.error`; it does not abort the answer. Do not equate stdout
+success with persisted volume evidence. Inspect/copy only reviewed traces (they contain
+user questions and retrieved text); private reasoning/credentials are excluded.
+
+```bash
+kubectl -n rahbar logs deployment/api > .venv/api-logs.jsonl
+python scripts/trace_tool.py show REQUEST_ID .venv/api-logs.jsonl
+python scripts/trace_summary.py --since 2026-11-22T00:00:00Z --until 2026-11-23T00:00:00Z .venv/api-logs.jsonl
+kubectl -n rahbar port-forward service/api 8000:8000
+# GET http://localhost:8000/metrics
+```
+
+Replay uses immutable stored sanitized context and every actual transport payload,
+including retry feedback; it does not reread Chroma. Cache-hit records link original
+answer evidence without inventing a new model invocation. Stub execution is explicit.
+Summaries use UTC [since,until), observed stage samples, nearest-rank p50/p95, cache
+hit/(hit+miss), completed-boolean-answer abstention rate and separate error/bypass
+counts. D5 still needs a real PartB failure trace; these tools are not that diagnosis.
+
+The hardened release script freezes versioned immutable pipeline ConfigMaps and binds
+receipts to config/template/index generation/completed eval Job hashes. Promotion
+suspends the weekly writer and refuses active ingestion Jobs. It then rolls the API
+and reconciles the future writer's image/config before restoring its prior suspension
+state. Failure leaves the writer suspended for investigation. `release.py undo` runs
+Kubernetes undo and synchronizes the writer. After a raw `kubectl rollout undo`, run
+`python scripts/release.py reconcile --resume` before allowing scheduled indexing.
+The old `--force` bypass is removed; an unevaluated candidate cannot be released.
+Release comparison currently supports a chunking-only change with identical corpus,
+golden/pairs/seed/embedding/judge and other API configuration. Drift is a separate run.
+Evaluation uses the source-SHA eval image matching the candidate API, built/loaded
+by `make images TAG=$(git rev-parse HEAD)`. None of these run-host commands were
+executed against a live cluster by the Phase2 offline tests.

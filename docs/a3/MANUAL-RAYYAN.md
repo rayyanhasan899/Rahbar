@@ -1,3 +1,5 @@
+> FINAL OWNERSHIP UPDATE (22 November 2026): Rayyan has closed his project work allocation. All remaining tasks, including every historical Rayyan checklist item below, are assigned to Moez/his agent. See ../assignment-3/FINAL-HANDOFF-TO-MOEZ.md. This document is historical where it conflicts with that handoff/current runbook. Both members still must personally attend/explain.
+
 # Manual steps for Rayyan
 
 Your laptop does not host the cluster. You build and test Parts A and D with fakes,

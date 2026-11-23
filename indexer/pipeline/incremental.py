@@ -330,6 +330,7 @@ def _ingest(settings: IndexerSettings, backend: Snapshots, embed: Embedder,
               "chunk_size": settings.chunk_size, "chunk_overlap": settings.chunk_overlap,
               "chunks": sum(len(r["chunk_ids"]) for r in active_records),
               "content_sha256": digest(json.dumps(documents, sort_keys=True).encode()),
+              "corpus_sha256": digest(json.dumps(sorted((r["doc_id"], r["version"], r["sha256"], r["status"]) for r in documents.values() if r["status"] != "deleted"), sort_keys=True).encode()),
               "versions": "|".join(sorted({r["version"] for r in active_records}))}
     atomic_json(lake.revision(run_id), ledger)  # Must exist before the pointer can reference it.
     backend.publish(ledger, snapshot_rows(lake, documents))
@@ -364,6 +365,8 @@ def rollback(settings: IndexerSettings, backend: Snapshots, doc_id: str,
     ledger["chunks"] = sum(len(r["chunk_ids"]) for r in ledger["documents"].values()
                            if r["status"] != "deleted")
     ledger["content_sha256"] = digest(json.dumps(ledger["documents"], sort_keys=True).encode())
+    ledger["corpus_sha256"] = digest(json.dumps(sorted((r["doc_id"], r["version"], r["sha256"], r["status"]) for r in ledger["documents"].values() if r["status"] != "deleted"), sort_keys=True).encode())
+    ledger["versions"] = "|".join(sorted({r["version"] for r in ledger["documents"].values() if r["status"] != "deleted"}))
     atomic_json(lake.revision(run_id), ledger)
     backend.publish(ledger, snapshot_rows(lake, ledger["documents"]))
     materialize(lake, ledger)

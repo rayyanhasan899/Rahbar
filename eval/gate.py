@@ -11,6 +11,7 @@ measurement or an unset threshold fails, so the gate never passes by accident.
 from __future__ import annotations
 
 import argparse
+import math
 import json
 import os
 import sys
@@ -20,7 +21,7 @@ import yaml
 
 
 def number(value) -> float | None:
-    return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) else None
+    return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) else None
 
 
 def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str]]:
@@ -33,6 +34,8 @@ def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str
         missing = [k for k, v in nums.items() if v is None]
         if missing:
             out.append((name, False, "missing: " + ", ".join(missing)))
+        elif any(v is not None and (v < 0 or (name != "p95 latency" and v > 1)) for v in nums.values()):
+            out.append((name, False, "measurement or threshold outside valid range"))
         else:
             ok, detail = test(**nums)
             out.append((name, bool(ok), detail))
@@ -55,7 +58,51 @@ def rules(baseline: dict, candidate: dict, t: dict) -> list[tuple[str, bool, str
     rule("citation validity",
          {"floor": t.get("min_citation_validity"), "value": ce.get("citation_validity")},
          lambda floor, value: (value >= floor, f"candidate {value:.4f}, minimum {floor}"))
+    for key in ("max_recall5_drop", "min_faithfulness", "min_citation_validity"):
+        value = number(t.get(key))
+        out.append(("bounded " + key, value is not None and 0 <= value <= 1, "must be finite in [0,1]"))
+    latency = number(t.get("max_p95_latency_seconds"))
+    out.append(("positive latency limit", latency is not None and latency > 0, "finite positive seconds required"))
+    out.append(("no uncited answers", ce.get("answered_without_citation") == 0, "must explicitly measure zero uncited answers"))
     return out
+
+
+
+def comparable(baseline: dict, candidate: dict) -> list[tuple[str, bool, str]]:
+    old, new = baseline.get('provenance', {}), candidate.get('provenance', {})
+    checks = []
+    for key in ('golden_sha256', 'pairs_sha256', 'seed', 'corpus_sha256', 'embedding_digest', 'judge_model'):
+        ok = key in old and old[key] is not None and old.get(key) == new.get(key)
+        checks.append(('comparable ' + key, ok, 'identical non-missing provenance required'))
+    checks.append(('comparable pipeline', bool(old.get('pipeline')) and old.get('pipeline') == new.get('pipeline'),
+                   'this release supports chunking-only changes; other changes need a reviewed comparison contract'))
+    return checks
+
+
+
+def measured(result: dict) -> bool:
+    paths = [('module', 'similarity', 'gap'), ('module', 'speed', 'ms_per_chunk_mean'),
+             ('module', 'determinism', 'max_abs_difference'),
+             ('component', 'recall_at_3'), ('component', 'recall_at_5'),
+             ('component', 'mrr'), ('component', 'ndcg_at_5'),
+             ('end_to_end', 'faithfulness'), ('end_to_end', 'citation_validity'),
+             ('end_to_end', 'abstention_correctness'), ('end_to_end', 'latency_p95_seconds')]
+    for path in paths:
+        value = result
+        for key in path:
+            if not isinstance(value, dict) or key not in value:
+                return False
+            value = value[key]
+        numeric = number(value)
+        if numeric is None:
+            return False
+        if path[-1] in {"recall_at_3", "recall_at_5", "mrr", "ndcg_at_5", "faithfulness", "citation_validity", "abstention_correctness"} and not 0 <= numeric <= 1:
+            return False
+        if path[-1] in {"ms_per_chunk_mean", "max_abs_difference", "latency_p95_seconds"} and numeric < 0:
+            return False
+        if path[-1] == "gap" and not -2 <= numeric <= 2:
+            return False
+    return True
 
 
 def main() -> int:
@@ -72,7 +119,8 @@ def main() -> int:
     baseline = json.loads(args.baseline.read_text(encoding="utf-8"))
     candidate = json.loads(args.candidate.read_text(encoding="utf-8"))
     thresholds = yaml.safe_load(args.thresholds.read_text(encoding="utf-8")) or {}
-    results = rules(baseline, candidate, thresholds)
+    results = rules(baseline, candidate, thresholds) + comparable(baseline, candidate)
+    results.append(("all three levels measured", measured(baseline) and measured(candidate), "missing/nonfinite module/component measurements fail"))
     print("gate:", candidate["label"], "against", baseline["label"], "with", args.thresholds)
     for name, ok, detail in results:
         print("  PASS" if ok else "  FAIL", name.ljust(18), detail)

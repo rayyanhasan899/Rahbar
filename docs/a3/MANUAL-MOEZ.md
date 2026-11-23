@@ -1,3 +1,5 @@
+> FINAL OWNERSHIP UPDATE (22 November 2026): Rayyan has closed his project work allocation. All remaining tasks, including every historical Rayyan checklist item below, are assigned to Moez/his agent. See ../assignment-3/FINAL-HANDOFF-TO-MOEZ.md. This document is historical where it conflicts with that handoff/current runbook. Both members still must personally attend/explain.
+
 # Manual steps for Moez
 
 Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
@@ -33,9 +35,9 @@ Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
       page, fix wording, set `reviewed: true`, copy accepted ones into `golden.jsonl`.
 - [ ] `python eval/golden_check.py` passes.
 - [ ] Before each suite run, empty the answer cache:
-      `kubectl -n rahbar exec deploy/redis -- redis-cli FLUSHALL`.
+      Use the suite's X-Rahbar-Cache:bypass header; do not clear shared Redis..
 - [ ] Baseline run: `kubectl apply -f k8s/eval/eval-results.yaml -f k8s/eval/gate-configmap.yaml`
-      once, then the eval Job (`k8s/README.md`); the first run becomes the baseline.
+      once, then the eval Job (`k8s/README.md`); baseline creation is explicit and requires passing absolute gates; see the current runbook.
       Locally instead: port-forward `svc/api` to 8000 and `svc/chroma` to 8001, then
       `python eval/suite.py --label baseline`.
 - [ ] Hand-label 8+ answers into `eval/hand_labels.jsonl` before reading the judge's
@@ -71,7 +73,7 @@ Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
       `kubectl -n rahbar edit configmap rahbar-gate`, re-run the eval Job (screenshot).
 - [ ] `scripts/release.py candidate` with a candidate stopped by the gate (never rolled out:
       `kubectl rollout history deployment/api` unchanged).
-- [ ] `scripts/release.py promote --name rahbar-bad --force`, then
+- [ ] The removed --force command must not be used; prepare an approved isolated bad-release scenario, then
       `kubectl -n rahbar rollout undo deployment/api`, `kubectl rollout status`, one
       question, and its trace showing the previous collection and embedding digest.
 - [ ] F5: `kubectl top pod -n rahbar --containers` during an eval run and an ingestion run
@@ -87,6 +89,6 @@ Your laptop hosts everything: minikube, Ollama, every run, every screenshot.
 - [ ] Sections B, C, E, F; short answers (b), (d), (f) with Rayyan; G2 rows for
       monitorability, reliability, adaptability.
 - [ ] Contribution table and AI statement together.
-- [ ] Rehearse on a fresh `minikube delete && make cluster`, following only the README
+- [ ] Rehearse on a fresh a distinct approved disposable cluster (do not delete an existing cluster), following only the README
       and `k8s/README.md`.
 - [ ] Be able to explain Rayyan's verification, ledger and trace code.

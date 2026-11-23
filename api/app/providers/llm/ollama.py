@@ -49,6 +49,9 @@ class OllamaProvider:
             "options": options,
             "keep_alive": "1m",
         }
+        from ...services.trace import capture_attempt, current
+        from typing import cast
+        capture_attempt(cast(list[dict], body["messages"]), passages, self.name, options)
         start = time.perf_counter()
         try:
             response = self.client.post(
@@ -60,6 +63,9 @@ class OllamaProvider:
             raise ProviderUnavailable(f"ollama: {type(exc).__name__}: {exc}") from exc
         finally:
             GENERATION_SECONDS.labels(provider=self.name).observe(time.perf_counter() - start)
+            trace = current.get()
+            if trace is not None:
+                trace.stage("generate", start)
         try:
             prompt_tokens = max(0, int(data.get("prompt_eval_count") or 0))
             completion_tokens = max(0, int(data.get("eval_count") or 0))

@@ -1,0 +1,135 @@
+
+RAHBAR submission checker  ·  /mnt/d/RAYYAN/ASSIGNMENTS/Software Construction and Development/Assignment2/rahbar-starter/.venv/phase3-clean-3308c4c
+
+
+0 · starter kit
+    ok   no STARTER-TODO markers left
+    ok   no NotImplementedError stubs left in source
+
+A · structure
+    ok   README.md present
+    ok   .gitignore present
+    ok   docs/CORPUS.md present
+    ok   docs/PIPELINE.md present
+    ok   docs/FAILURE-ANALYSIS.md present
+    ok   docs/ENGINEERING-NOTES.md present
+    ok   docs/AI-USAGE.md present
+    ok   api/ present
+    ok   indexer/ present
+    ok   k8s/ present
+    ok   eval/ present
+    ok   ui/ present
+    ok   6 ADRs found
+    ok   an ADR names the indexer-as-Job decision
+    ok   44 evidence files
+    ok   2 workflow files
+
+A · git
+   warn  secret-shaped files in history, but all look like templates: k8s/base/secret.placeholder.yaml
+    ok   a secret pattern is gitignored
+    ok   corpus handled
+    ok   57 non-merge commits
+   warn  authorship: Rayyan Hassan 44(77%), AbdulMoez-24i-3048-SE-B 7(12%), Abdul Moez 5(8%), Syed Muhammad Rayyan Hassan 1(1%) - one partner wrote 12% of the commits
+    ok   96% of commits use conventional prefixes
+   warn  no dev branch - the two-branch model is required
+
+B · corpus
+    ok   8 corpus documents (0 committed, 8 listed in MANIFEST)
+    ok   MANIFEST carries SHA-256 checksums
+    ok   docs/CORPUS.md has substance
+    ok   CORPUS.md documents the scanned/OCR document
+    ok   CORPUS.md documents the table-bearing document
+    ok   CORPUS.md documents the two-version policy pair
+    ok   CORPUS.md documents the deliberately absent topic
+    ok   CORPUS.md documents exact-term content
+
+C · indexer
+   FAIL  no indexer Python source found
+
+D · api & pin
+   FAIL  no api Python source found
+
+G · kubernetes
+   FAIL  k8s/ contains no manifests
+
+H · evaluation
+    ok   15 golden questions
+    ok   must-abstain questions are marked in the golden set
+    ok   exact-term questions present
+    ok   an injection probe is in the golden set
+    ok   version-sensitive questions present
+    ok   eval/run_eval.py present
+    ok   recall@k is computed
+    ok   citation validity is measured
+    ok   abstention correctness is measured
+    ok   run_eval.py exits non-zero on failure
+    ok   eval/baseline.json committed
+    ok   baseline records a recall figure
+    ok   eval/results.json committed
+    ok   eval/fixtures/ present for CI
+    ok   docs/PIPELINE.md has substance
+    ok   PIPELINE.md contains a table (chunking configurations)
+    ok   storage amplification reported
+    ok   docs/FAILURE-ANALYSIS.md has substance
+    ok   6 of 6 failure stages discussed
+
+I · api image
+    ok   base pinned by digest: python:3.12.16-slim-bookworm
+    ok   non-root USER set
+    ok   exec-form CMD/ENTRYPOINT
+
+I · indexer image
+    ok   base pinned by digest: python:3.12.16-slim-bookworm
+    ok   non-root USER set
+    ok   exec-form CMD/ENTRYPOINT
+
+I · ui image
+    ok   base pinned by digest: nginx/nginx-unprivileged:1.30.7-alpine3.24
+    ok   non-root USER set
+    ok   exec-form CMD/ENTRYPOINT
+
+I · api/.dockerignore
+    ok   .git excluded
+    ok   __pycache__ excluded
+    ok   heavy directories excluded
+
+I · indexer/.dockerignore
+    ok   .git excluded
+    ok   __pycache__ excluded
+    ok   heavy directories excluded
+
+I · CI/CD
+   FAIL  no pytest step
+   FAIL  no Python linter step
+   FAIL  no kubeconform step - a broken manifest should fail in 20s, not on the cluster
+   FAIL  no Trivy scan step
+   FAIL  no kind/k3d job - the e2e eval job needs a real cluster
+   FAIL  no `kubectl rollout status` - the deploy does not wait
+   FAIL  no ${{ github.sha }} tag - no traceability and no rollback path
+   FAIL  no registry login step - use docker/login-action with a Docker Hub access token from GitHub Secrets
+   FAIL  no reference to the eval runner in CI - without it there is no regression gate
+   warn  CI never runs the indexer - the e2e job must index a fixture corpus first
+   FAIL  no `needs:` anywhere (-6) - you are publishing artifacts from untested code
+   warn  no least-privilege `permissions:` block on any workflow
+   warn  no secrets.* reference found
+   warn  actions are not pinned to a version or SHA
+
+I · tests
+   FAIL  no tests found
+
+J · docs
+    ok   README is 10678 characters
+    ok   architecture diagram or screenshot present
+    ok   CI badge present
+    ok   the exact apply order present
+    ok   cluster start instructions present
+    ok   API table present
+    ok   how to run the indexer present
+    ok   engineering notes have substance
+    ok   notes discuss the HPA signal question
+    ok   kubectl top output referenced
+
+74 passed · 7 warnings · 14 failures
+Fix the failures before submitting. Most map to an automatic deduction in section 8.
+
+A lint, not the rubric. Passing it is necessary, not sufficient.

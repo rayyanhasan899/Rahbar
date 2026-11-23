@@ -86,5 +86,7 @@ class ChromaSnapshots:
             "active_collection", "generation", "embed_model", "embed_model_digest",
             "dimension", "chunks", "content_sha256", "versions", "fingerprint",
             "ledger_revision", "chunk_size", "chunk_overlap")}
+        if "corpus_sha256" in ledger:
+            meta["corpus_sha256"] = ledger["corpus_sha256"]
         self.client.get_or_create_collection(self.settings.collection + "-control").upsert(
             ids=["active"], embeddings=[[1.0]], documents=["active index"], metadatas=[meta])

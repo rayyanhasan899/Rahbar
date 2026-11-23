@@ -157,6 +157,13 @@ cover boundaries and empty sets.
 
 ## Assignment 3: RAGOps commands per part
 
+Final ownership/status: [Moez handoff](docs/assignment-3/FINAL-HANDOFF-TO-MOEZ.md) and
+[Phase3 report](docs/assignment-3/phase-reports/PHASE-3-REPORT.md). Rayyan has closed
+his project work allocation; all remaining project tasks belong to Moez/his agent.
+The real A3 campaign/final PDF remain unverified; the clearly marked handoff draft
+is not a submission. Both members must still personally attend/explain.
+
+
 Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster commands:
 [k8s/README.md](k8s/README.md).
 
@@ -169,7 +176,7 @@ Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster comman
 | B judge agreement | `python eval/end_to_end.py --agreement <run>.json` |
 | C gate | `python eval/gate.py --baseline <a>.json --candidate <b>.json --thresholds eval/gate.yaml` |
 | C, F3 candidate and release | `python scripts/release.py candidate ...`, `python scripts/release.py promote ...` |
-| D traces | to be added with Part D |
+| D traces | `python scripts/trace_tool.py show <request_id> traces/`; `python scripts/trace_summary.py --since <ISO-time> --until <ISO-time> traces/` |
 | E coverage | `python eval/coverage.py --threshold <t> --min-share <s>` |
 | F everything else | [k8s/README.md](k8s/README.md) |
 

@@ -396,6 +396,18 @@ class LifecycleTests(unittest.TestCase):
         self.assertEqual(set(failed["documents"][0]["checks"]),
                          {"quality", "completeness", "recency", "uniqueness"})
 
+    def test_corpus_provenance_is_independent_of_chunk_configuration(self):
+        self.write()
+        self.run_ingest()
+        original = self.ledger()
+        candidate = replace(self.settings, collection="candidate", chunk_size=120)
+        backend = MemorySnapshots()
+        with redirect_stdout(io.StringIO()):
+            ingest(candidate, backend, self.embed, extract, self.digest)
+        ledger = read_ledger(Lake(candidate.datalake_dir, candidate.collection), backend)
+        self.assertEqual(original["corpus_sha256"], ledger["corpus_sha256"])
+        self.assertNotEqual(original["fingerprint"], ledger["fingerprint"])
+
 
 if __name__ == "__main__":
     unittest.main()

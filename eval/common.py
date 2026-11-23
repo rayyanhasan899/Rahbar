@@ -167,7 +167,7 @@ class Services:
 
     def ask(self, question: str) -> tuple[dict, float, str]:
         started = time.perf_counter()
-        response = self.http.post(f"{self.api}/api/ask", json={"question": question})
+        response = self.http.post(f"{self.api}/api/ask", json={"question": question}, headers={"X-Rahbar-Cache": "bypass"})
         seconds = time.perf_counter() - started
         response.raise_for_status()
         return response.json(), seconds, response.headers.get("X-Cache", "")
@@ -218,6 +218,10 @@ class Services:
             name = response.json()["metadatas"][0]["active_collection"]
             self._active = self._collection_id(name)
         return self._active
+
+    def pin_collection(self, name: str) -> None:
+        """Sample the same immutable generation that served evaluation queries."""
+        self._active = self._collection_id(name)
 
     def chunk_texts(self, ids: list[str]) -> dict[str, str]:
         if not ids:
