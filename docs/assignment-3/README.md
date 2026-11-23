@@ -10,6 +10,14 @@ describe the pre-implementation state; they are not current runtime evidence.
 Current Phase 2 evidence and outstanding handoff: [Phase 2 report](phase-reports/PHASE-2-REPORT.md).
 Draft [PR #7](https://github.com/rayyanhasan899/Rahbar/pull/7) depends on unmerged Phase 1.
 
+## Final handoff (current)
+
+Rayyan has closed his project work allocation and will not issue another prompt.
+[All remaining project actions now belong to Moez](FINAL-HANDOFF-TO-MOEZ.md).
+Read [Phase3 status/evidence](phase-reports/PHASE-3-REPORT.md), the report draft package
+and eval/DATA-REVIEW-HANDOFF.md before execution. Unmet requirements are not renamed
+complete by this ownership transfer.
+
 ## Read in this order
 
 1. [Gap analysis](ASSIGNMENT-3-GAP-ANALYSIS.md): official requirements, current evidence, ownership and defects.
@@ -21,7 +29,7 @@ Draft [PR #7](https://github.com/rayyanhasan899/Rahbar/pull/7) depends on unmerg
    - [Phase 3: measured Kubernetes evidence and submission](prompts/PHASE-3-IMPLEMENTATION-PROMPT.md)
 
 Execute exactly one authorized phase per session. Phase 1 was explicitly authorized;
-Phase 2 was separately authorized without waiting for partner review; Phase 3 has not started.
+Phase 2 was separately authorized without waiting for partner review; Phase 3 has now been authorized and available work completed; real campaign/final submission remain blocked.
 
 ## Source and branch warning
 

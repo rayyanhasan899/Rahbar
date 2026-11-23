@@ -1,4 +1,4 @@
-FROM nginx/nginx-unprivileged:1.30.6-alpine3.24@sha256:44e74ca483234093081138b6d7b6f561d55557756a2deefc3a5056148defeb99
+FROM nginx/nginx-unprivileged:1.30.7-alpine3.24@sha256:0c53a1f2890c3526bfd201440f0fd3970e5b78f80630f58284aad0d34b5ec7bd
 USER root
 RUN apk upgrade --no-cache
 COPY nginx.conf /etc/nginx/nginx.conf

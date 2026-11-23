@@ -1,0 +1,291 @@
+{
+  "status": "DRAFT - NOT SUBMISSION READY",
+  "pages": [
+    {
+      "title": "RAHBAR Assignment 03: RAGOps",
+      "paragraphs": [
+        "Group: Rayyan Hassan (requested account rayyanhasan899; legal name and roll number to be confirmed) and Moez (full name and roll number to be confirmed). Course CS4032, Fall 26. Prepared 22 November 2026.",
+        "Purpose: an editable final handoff draft covering G1-G5. This is not the submission PDF. No real A3 campaign, human question provenance, hand-labelled judge agreement, cluster screenshot appendix or group rehearsal has been verified here.",
+        "Rayyan has ended his contribution and requests no further project work. All outstanding project work is assigned to Moez/his agent. This is a responsibility transfer, not a claim that every assignment requirement is complete. Both students must still personally attend and explain the system.",
+        "Authority: the five-page Assignment_03.pdf supplied by the user. A2 is the preserved baseline. Exact classroom paper edition and A3 deadline remain unconfirmed. The accessible public arXiv record is the 2025 v1; the 2026 SSRN record could not be opened (403). Do not silently substitute editions.",
+        "Implementation: verified incremental ingestion; durable data lake; guarded query/citation/cache pipeline; request-time traces; evaluation/gate/coverage tools; Kubernetes Jobs, PVCs and controlled release configuration. Evidence lives in phase reports, eval/results/ and traces/."
+      ],
+      "after": [
+        "Moez must replace pending fields using real source/cluster evidence and append uncropped own-terminal screenshots before producing the final submission."
+      ]
+    },
+    {
+      "title": "G1. Lifecycle stage mapping",
+      "paragraphs": [
+        "Mapping follows the stage names explicitly listed in the official assignment. Confirm final Figure 3 alignment against the exact classroom paper."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Stage",
+            "Implemented action and file",
+            "Still missing"
+          ],
+          "widths": [
+            1,
+            2.8,
+            1.8
+          ],
+          "rows": [
+            [
+              "Ingest",
+              "Confined source/manifest discovery; pipeline/datalake.py, corpus/fetch.py",
+              "Live group-cluster run"
+            ],
+            [
+              "Verify",
+              "Four check reasons, persistent quarantine; pipeline/verify.py and incremental.py",
+              "Real Batch B report and calibrated near-duplicate margin"
+            ],
+            [
+              "Update data lake",
+              "Immutable blobs/revisions; collection-specific current/archive views; datalake.py",
+              "PVC survival proof"
+            ],
+            [
+              "Update retrieval sources",
+              "Cached embeddings, staged snapshots, stable IDs, counts, pin/unpin rollback; incremental.py/snapshots.py",
+              "Live unchanged/changed/deleted/restore counts"
+            ],
+            [
+              "Offline testing",
+              "Three-level suite, judge, gate; eval/suite.py, gate.py",
+              "Genuine golden/human labels and real measured runs"
+            ],
+            [
+              "Live testing",
+              "Trace/metrics, immutable candidate receipts; services/trace.py, scripts/release.py",
+              "Rollout/undo, real model traces and screenshots"
+            ],
+            [
+              "Check coverage",
+              "Nearest golden similarity and topics; eval/query_coverage.py",
+              "Measured E2/E4 before/after results"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "G2. Quality measures and thresholds",
+      "paragraphs": [
+        "Thresholds below are implementation contracts or explicitly pending calibration. They are not invented experimental results. No paper example is presented as a measured RAHBAR threshold."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Quality",
+            "Measure / threshold policy",
+            "Evidence / gap"
+          ],
+          "widths": [
+            1,
+            2.7,
+            2.1
+          ],
+          "rows": [
+            [
+              "Adaptability",
+              "Controlled chunking comparison on identical corpus/golden/model/query config; measured thresholds pending",
+              "Immutable config and provenance gates tested offline; candidate experiment pending"
+            ],
+            [
+              "Monitorability",
+              "Top-1 distribution, cache/abstention rates, observed stage p50/p95; thresholds pending",
+              "Prometheus histograms and summary tool; live window pending"
+            ],
+            [
+              "Observability",
+              "Trace every handled query, including errors/refusals/cache; expose persistence failure",
+              "Offline HTTP/provider tests; live kubectl logs/PVC/metrics proof pending"
+            ],
+            [
+              "Traceability",
+              "Exact sanitized messages/context and hash per actual attempt; original cache provenance",
+              "Replay/tamper/source-removal tests; live screenshot and D5 pending"
+            ],
+            [
+              "Reliability",
+              "Validate snapshot before pointer; zero unchanged embeddings; writer lock; maxUnavailable0; coherent undo",
+              "Fake/storage/release tests and strict schemas; real interruption, rollout and resource evidence pending"
+            ]
+          ]
+        }
+      ],
+      "after": [
+        "Provisional operational limits (not measurements): 2MiB per trace record, 100MiB per-pod file budget, single-node ReadWriteOnce volumes. Resource requests/limits require F5 measurements on the run host."
+      ]
+    },
+    {
+      "title": "G3. Results and release decision",
+      "paragraphs": [
+        "Current Phase 3 CI run 45034420605 at source 3308c4c passed 191 unit tests (92 API, 55 indexer, 44 eval), with 94.29% app coverage. All four image builds and security scans, 41 strict resources, and the Kubernetes fixture end-to-end test passed. These are software/integration checks. The fixture uses real embedding/index infrastructure but explicit stub answer generation; it is not the real-corpus A3 Part B campaign. No mandatory human or real campaign result is inferred from this CI pass."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Part",
+            "Real result required",
+            "Current status"
+          ],
+          "widths": [
+            0.6,
+            3.2,
+            1.6
+          ],
+          "rows": [
+            [
+              "A",
+              "Batch B four-check report; unchanged0; changed/deleted counts; archive/rollback",
+              "NOT VERIFIED"
+            ],
+            [
+              "B",
+              "Embedding means/gap/time/determinism; recall/MRR/nDCG/noise; judge/citations/abstention/p50/p95; two seeded runs",
+              "BLOCKED: final human-reviewed golden/labels"
+            ],
+            [
+              "C",
+              "One comparable change; justified gate fail/pass; controlled release and undo",
+              "NOT VERIFIED - no candidate approved for release"
+            ],
+            [
+              "D",
+              "Real trace/replay/window metrics/rail event; five-line trace-only diagnosis",
+              "Offline tooling verified; real evidence pending"
+            ],
+            [
+              "E",
+              "40-query coverage/topics, drift rerun, six-question expansion and measured improvement",
+              "Synthetic inputs prepared; results pending"
+            ],
+            [
+              "F",
+              "Local Kubernetes Jobs/PVC/threshold-edit/rollout/metrics/resources",
+              "Local endpoint unavailable; Moez host not accessible"
+            ]
+          ]
+        }
+      ],
+      "after": [
+        "Release decision: NO A3 RELEASE APPROVED. Software CI alone cannot approve an unmeasured candidate or replace the mandatory group-cluster demo."
+      ]
+    },
+    {
+      "title": "G4. Questions (a)-(c)",
+      "paragraphs": [
+        "(a) Which check caught most Batch B problems, and which problem was missed? PENDING real verification report. The owned fixture set plants exact/near duplicates, corrupt/truncated/missing/garbled input, a newer version and valid injected content. Do not rank checks from planted counts or fake-model unit results. Moez must cite actual per-check outcomes and an actual missed condition.",
+        "(b) Where did module metrics look good while component/end-to-end did not? PENDING paired real suite results. Preserve both seeded runs, noise deltas and negative outcomes. If no such divergence occurs, say so and cite the actual result files; do not manufacture a failure narrative.",
+        "(c) Archive or delete old versions, and what breaks if deleted? Design fact: previously accepted superseded versions are archived; default retrieval excludes superseded metadata while A2 explicit historical queries remain compatible. Pins restore a verified version using cached vectors. Deletions reconcile zero rows in the published generation; retired snapshots remain recovery/in-flight history.",
+        "Deleting all historical objects or retired snapshots prematurely would remove rollback bytes/vectors and could break in-flight evidence or historical replay. This is the design rationale in ADR0005, not a claim that the live rollback demonstration passed. CO-05/06 interpretation still needs partner/instructor review."
+      ]
+    },
+    {
+      "title": "G4. Questions (d)-(f)",
+      "paragraphs": [
+        "(d) Which suite metric is least trusted? Provisional engineering assessment: LLM-judge faithfulness depends on the chosen model/prompt and may disagree with humans. This is not a measured ranking. Moez must independently label at least8 answers before reading judge outputs, report agreement/disagreement and revise this answer using actual findings.",
+        "(e) Which paper idea was hardest, and what changed? Verified implementation trade-off: safe incremental publication retains immutable snapshots and copies unchanged vectors physically, while embedding only changed content. This protects a working index through failures but costs storage; automatic GC was not added. Do not claim personal hours or a paper-specific hardest experience until both members review the exact paper and actual run evidence.",
+        "(f) Which Kubernetes object carries which responsibility? API Deployment serves read-only queries; Chroma StatefulSet/PVC stores vectors; Redis Deployment/PVC caches guarded responses; ingestion Job is the writer; CronJob schedules it; shared lock PVC serializes manual/scheduled/rollback writers. Data-lake and trace PVCs persist artifacts. Eval Job writes results and fails when gate fails; gate ConfigMap changes thresholds without rebuilding. Candidate Deployment/Service stages a separate collection; rolling update and release.py undo synchronize live reader and future writer.",
+        "Manifest presence and fake kubectl tests are implementation evidence. F3/F4/F5 still require actual rollout/undo traces, persistent-volume checks and measured resource margins."
+      ]
+    },
+    {
+      "title": "G5. Contributions and AI disclosure",
+      "paragraphs": [
+        "Git authorship identifies commit metadata, not who personally typed code or operated a tool. The table distinguishes observed implementation from pending genuine human actions."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Owner / evidence",
+            "Actual work",
+            "Limits"
+          ],
+          "widths": [
+            1.4,
+            2.9,
+            1.5
+          ],
+          "rows": [
+            [
+              "Rayyan / codex/a3-phase-1 and phase-2 commits",
+              "Directed agent-assisted verification/incremental data lifecycle, Batch B, traces/tools, PVCs, integration hardening, offline tests/CI and documentation",
+              "Not independently handwritten; no human review or real measurements invented"
+            ],
+            [
+              "Moez / five dev2 A3 commits",
+              "Existing suite, gate, coverage and evaluation/candidate release scaffolding, preserved and narrowly integrated",
+              "Commit author alone does not prove manual implementation/AI operator"
+            ],
+            [
+              "Moez / final handoff",
+              "All remaining project data/review, host runs, screenshots, D5, final report, merges and submission preparation assigned here",
+              "Pending; no acceptance/completion assumed"
+            ],
+            [
+              "Both members / official requirement",
+              "Personally attend and explain every part at demo",
+              "Cannot be fulfilled by the agent or delegated attendance"
+            ]
+          ]
+        }
+      ],
+      "after": [
+        "AI statement (draft,3 lines): AI agents assisted Rayyan with analysis, implementation, tests and documentation; existing partner work was preserved.\nAll quoted numbers are linked to actual software checks; real A3 campaign values remain pending.\nHuman provenance, independent labels, screenshots and approvals are never inferred from generated content."
+      ]
+    },
+    {
+      "title": "Submission and evidence completion",
+      "paragraphs": [
+        "Moez owns every remaining project action after this final handoff. The final report must have at most8 main pages, both verified names/roll numbers on page1, actual A-F results, six findings-based answers and a genuine contribution/AI statement. Replace all draft/pending material only after the evidence exists."
+      ],
+      "tables": [
+        {
+          "headers": [
+            "Appendix label",
+            "Original uncropped own-terminal screenshot required"
+          ],
+          "widths": [
+            1,
+            4.3
+          ],
+          "rows": [
+            [
+              "A",
+              "Batch B report: pass/fail/reason for each check; unchanged second run with0 embeddings"
+            ],
+            [
+              "B",
+              "Evaluation summary containing all three levels"
+            ],
+            [
+              "C",
+              "Gate failure and gate passage"
+            ],
+            [
+              "D",
+              "Complete real trace; trace_tool command reconstructing exact prompt/context"
+            ],
+            [
+              "E",
+              "Coverage output before and after new golden questions"
+            ],
+            [
+              "F",
+              "Namespace objects/PVC/ConfigMaps/CronJob/Jobs; completed ingest/eval logs; ConfigMap-only gate outcome change; rollout status/undo plus restored trace"
+            ]
+          ]
+        }
+      ],
+      "after": [
+        "Commit genuine results under eval/results/, real trace samples/summaries under traces/, and every manifest under k8s/. Check privacy; do not commit third-party downloaded PDFs or secrets. Review PR6, then retarget/review PR7, then Phase3 PR; merge only passing reviewed work. Rehearse in a distinct approved disposable cluster, not by deleting existing cluster data.",
+        "Submit the repository URL and finalized report PDF with screenshot appendix. Classroom submission has not been authorized/executed by this session. Current handoff PDF contains no fabricated terminal screenshots and is explicitly NOT the final submission."
+      ]
+    }
+  ]
+}

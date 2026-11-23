@@ -157,6 +157,13 @@ cover boundaries and empty sets.
 
 ## Assignment 3: RAGOps commands per part
 
+Final ownership/status: [Moez handoff](docs/assignment-3/FINAL-HANDOFF-TO-MOEZ.md) and
+[Phase3 report](docs/assignment-3/phase-reports/PHASE-3-REPORT.md). Rayyan has closed
+his project work allocation; all remaining project tasks belong to Moez/his agent.
+The real A3 campaign/final PDF remain unverified; the clearly marked handoff draft
+is not a submission. Both members must still personally attend/explain.
+
+
 Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster commands:
 [k8s/README.md](k8s/README.md).
 

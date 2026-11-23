@@ -1,3 +1,5 @@
+> FINAL OWNERSHIP UPDATE (22 November 2026): Rayyan has closed his project work allocation. All remaining tasks, including every historical Rayyan checklist item below, are assigned to Moez/his agent. See ../assignment-3/FINAL-HANDOFF-TO-MOEZ.md. This document is historical where it conflicts with that handoff/current runbook. Both members still must personally attend/explain.
+
 # AI tasks for Rayyan: Parts A, D and the ingestion side of F
 
 Give this file and `docs/a3/PLAN.md` to the AI assistant. Branch `dev2`, one commit per
