@@ -19,7 +19,6 @@ import time
 from pathlib import Path
 
 from .config import IndexerSettings, get_settings
-from .models import Chunk
 
 
 @contextmanager
@@ -106,29 +105,23 @@ def discover(corpus_dir: str) -> list[tuple[Path, str, bool]]:
     return found
 
 
-def run_pipeline(settings: IndexerSettings) -> int:
-    from .chunk import chunk
-    from .clean import clean
+def run_pipeline(settings: IndexerSettings, verify_only: bool = False) -> int:
     from .embed import embed
+    from .embed import model_digest
     from .extract import extract
-    from .store import store
+    from .incremental import ingest
+    from .snapshots import ChromaSnapshots
 
-    documents = discover(settings.corpus_dir)
-    if not documents:
-        raise SystemExit(f"no documents found in {settings.corpus_dir}")
-    all_chunks: list[Chunk] = []
-    for path, doc_version, superseded in documents:
-        doc = clean(extract(str(path), doc_version, superseded))
-        pieces = chunk(doc, settings.chunk_size, settings.chunk_overlap)
-        log("chunked", source=path.name, chunks=len(pieces))
-        all_chunks.extend(pieces)
-    vectors = embed([c.text for c in all_chunks], settings)
-    return store(all_chunks, vectors, settings)
+    result = ingest(settings, ChromaSnapshots(settings), lambda texts: embed(texts, settings),
+                    extract, model_digest(settings), verify_only=verify_only)
+    return sum(r["chunks"] for r in result.get("counts", []))
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Build the RAHBAR index, then exit.")
-    parser.add_argument("--dummy", action="store_true", help="write three fake chunks")
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--dummy", action="store_true", help="write three fake chunks")
+    mode.add_argument("--verify-only", action="store_true", help="report without publishing")
     args = parser.parse_args()
     settings = get_settings()
     log(
@@ -148,7 +141,7 @@ def main() -> int:
 
                 count = write_dummy_index(settings, get_client(settings))
             else:
-                count = run_pipeline(settings)
+                count = run_pipeline(settings, verify_only=args.verify_only)
     except Exception as exc:
         log("indexer failed; previous active index retained", error=str(exc))
         return 1

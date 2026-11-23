@@ -1,0 +1,92 @@
+[
+  {
+    "file": "duplicate-1.md",
+    "doc_id": "a3-copy-one",
+    "sha256": "767cfecbf0f50685c82ccdf3b721f6472b63e5d58396091e3ff6ccab1d059e15",
+    "test_problem": "exact duplicate of Batch A"
+  },
+  {
+    "file": "duplicate-2.md",
+    "doc_id": "a3-copy-two",
+    "sha256": "767cfecbf0f50685c82ccdf3b721f6472b63e5d58396091e3ff6ccab1d059e15",
+    "test_problem": "exact duplicate of Batch A"
+  },
+  {
+    "file": "near-duplicate.md",
+    "doc_id": "a3-near",
+    "sha256": "72ee59ff7aa005081075ad96a2d61d56e2db98dc4635c2e8f06440a9c5ee4f9b",
+    "test_problem": "near duplicate; acceptance depends on measured embedding threshold"
+  },
+  {
+    "file": "truncated.pdf",
+    "doc_id": "a3-truncated",
+    "sha256": "b4aee21cdfe2335a690f70b5cc192964f492a2b736f8d6cc838a1f8007fa3c46",
+    "test_problem": "truncated PDF",
+    "title": "Truncated owned PDF",
+    "doc_version": "2026",
+    "pages": 1
+  },
+  {
+    "file": "corrupt.pdf",
+    "doc_id": "a3-corrupt",
+    "sha256": "58c96b514b147bd4055e73ab1986a9bc5ceb385c4a59873f045054c59a540dec",
+    "test_problem": "corrupt PDF",
+    "title": "Corrupt owned PDF",
+    "doc_version": "2026",
+    "pages": 1
+  },
+  {
+    "file": "truncated.txt",
+    "doc_id": "a3-cut-text",
+    "sha256": "9777734f752cc97df0d3f4d1bf1e460b87ee44fdfd83b31891324bf3b30a35ff",
+    "test_problem": "truncated text",
+    "title": "Truncated text",
+    "doc_version": "2026",
+    "pages": 1
+  },
+  {
+    "file": "missing-metadata.txt",
+    "doc_id": "a3-no-metadata",
+    "sha256": "9a93b9b047d5856e0c7006bab52dd4a62eb9a7ef66d82b8789b59e3c1d80c0d3",
+    "test_problem": "missing title and date/version"
+  },
+  {
+    "file": "garbled.txt",
+    "doc_id": "a3-garbled",
+    "sha256": "c18ebfabec5e035cdf9dd6896dfc0772d0d1111c7d75e2022ad19c221c5bca0c",
+    "test_problem": "garbled extraction",
+    "title": "Garbled owned text",
+    "doc_version": "2026",
+    "pages": 1
+  },
+  {
+    "file": "newer-policy.md",
+    "doc_id": "a3-demo-rules",
+    "sha256": "00b13b9c701deadf18f7c1896fda568a9e24e99a27ca1d159e419e1f026d3e74",
+    "test_problem": "newer accepted version archives the Batch A policy"
+  },
+  {
+    "file": "injected-policy.md",
+    "doc_id": "a3-injected",
+    "sha256": "6626dbfc3ed97364c723d4c3cd11c72f1c0ea0656cc3c1408f547263ac6a54ad",
+    "test_problem": "valid document with retrieval-time injected instruction"
+  },
+  {
+    "file": "clean-library.md",
+    "doc_id": "a3-library",
+    "sha256": "c9fb8fc4447e27d6f87f1d683a61e28931248a029d22b253c10eb04255711056",
+    "test_problem": "clean control"
+  },
+  {
+    "file": "clean-parking.md",
+    "doc_id": "a3-parking",
+    "sha256": "740722df7ed863326b264300b67c794efd37bcf90c05bd4f8e4ef786130984e9",
+    "test_problem": "clean control"
+  },
+  {
+    "file": "clean-sports.md",
+    "doc_id": "a3-sports",
+    "sha256": "194618ccddca3949b41ba22c25eac14bad573a74cc3f56bd26700bfa0314e5ae",
+    "test_problem": "clean control"
+  }
+]

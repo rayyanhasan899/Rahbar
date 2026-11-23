@@ -1,5 +1,20 @@
 # Indexing and evaluation pipeline
 
+## Assignment 3 Phase 1 extension
+
+The real runner now verifies quality, completeness, recency and uniqueness before
+chunking; failed inputs receive persistent quarantine/reasons. Content/config caches
+reuse document embeddings and accepted vectors, so unchanged reruns perform zero
+embedding calls and retain the generation. A durable per-collection ledger reconciles
+changed/deleted documents, archives superseded versions, supports pin/unpin rollback
+and validates published chunk IDs/provenance/counts. Staged snapshots preserve the
+existing control-pointer/cache contract; retired collections are explicit retained
+history. A data-lake PVC and separate verify/rollback/inspection objects are included.
+See [ADR 0005](adr/0005-verified-incremental-publication.md) and the
+[Phase 1 report](assignment-3/phase-reports/PHASE-1-REPORT.md) for exact contracts,
+heuristic limitations, actual tests/CI verification and pending live runs.
+The measured tables below are historical Assignment 2 evidence, not new A3 results.
+
 ## Extraction and cleaning
 PDF pages are processed individually. Pages with fewer than ten word characters
 are OCRed at 200 DPI, one rendered page at a time, with a 120-second OCR timeout.

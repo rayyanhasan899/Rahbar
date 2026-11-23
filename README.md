@@ -162,7 +162,7 @@ Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster comman
 
 | Part | Command |
 |---|---|
-| A ingestion, verification, Batch B | to be added with Part A |
+| A ingestion, verification, Batch B | `python corpus/generate_batch_b.py`; indexer `python -m pipeline.run [--verify-only]`, `python -m pipeline.counts`, `python -m pipeline.rollback --doc-id <id> --version <v>`; [Kubernetes order](k8s/README.md#verified-ingestion-lifecycle-part-a-ingestion-f1f2) |
 | B golden set | `python eval/convert_golden.py`, then `python eval/golden_check.py` |
 | B offline suite | `python eval/suite.py --label <name> [--typos]`; on the cluster `kubectl apply -f k8s/eval-job.yaml` |
 | B stochasticity | `python eval/suite.py --compare <run1>.json <run2>.json` |

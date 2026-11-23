@@ -1,6 +1,7 @@
 """Deliver hash-verified public documents to the indexer's PVC, not its image."""
 from __future__ import annotations
 import hashlib
+import argparse
 import json
 import os
 import subprocess
@@ -10,8 +11,11 @@ import re
 from pathlib import Path
 
 
-def main() -> None:
-    root = Path("corpus/raw").resolve()
+def main(source: Path = Path("corpus/raw"), dest: str = "") -> None:
+    root = source.resolve()
+    if dest and not re.fullmatch(r"[a-z][a-z0-9-]{0,50}", dest):
+        raise ValueError("--dest must be a single plain subfolder name")
+    destination = "/corpus" + ("/" + dest if dest else "")
     entries = json.loads((root / "_index.json").read_text())
     registry = os.environ.get("REGISTRY", "")
     image = f"{registry + '/' if registry else ''}rahbar-indexer:{os.environ.get('IMAGE_TAG', 'dev')}"
@@ -42,17 +46,23 @@ def main() -> None:
     }
     subprocess.run(["kubectl", "apply", "-f", "-"], input=json.dumps(pod), text=True, check=True)
     subprocess.run(["kubectl", "-n", "rahbar", "wait", "--for=condition=ready", "pod/corpus-transfer", "--timeout=180s"], check=True)
+    subprocess.run(["kubectl", "-n", "rahbar", "exec", "corpus-transfer", "--", "mkdir",
+                    "-p", destination], check=True)
     with tempfile.TemporaryFile() as stream:
         with tarfile.open(fileobj=stream, mode="w") as archive:
             archive.add(root / "_index.json", arcname="_index.json")
             for name, source in files:
                 archive.add(source, arcname=name)
         stream.seek(0)
-        subprocess.run(["kubectl", "-n", "rahbar", "exec", "-i", "corpus-transfer", "--", "tar", "xf", "-", "-C", "/corpus"], stdin=stream, check=True)
-    code = "import pathlib,json,hashlib; r=pathlib.Path('/corpus'); e=json.loads((r/'_index.json').read_text()); assert all(hashlib.sha256((r/x['file']).read_bytes()).hexdigest()==x['sha256'] for x in e); print('all PVC source hashes verified')"
-    subprocess.run(["kubectl", "-n", "rahbar", "exec", "corpus-transfer", "--", "python", "-c", code], check=True)
+        subprocess.run(["kubectl", "-n", "rahbar", "exec", "-i", "corpus-transfer", "--", "tar", "xf", "-", "-C", destination], stdin=stream, check=True)
+    code = "import pathlib,json,hashlib,sys; r=pathlib.Path(sys.argv[1]); e=json.loads((r/'_index.json').read_text()); assert all(hashlib.sha256((r/x['file']).read_bytes()).hexdigest()==x['sha256'] for x in e); print('all PVC source hashes verified')"
+    subprocess.run(["kubectl", "-n", "rahbar", "exec", "corpus-transfer", "--", "python", "-c", code, destination], check=True)
     subprocess.run(["kubectl", "-n", "rahbar", "delete", "pod/corpus-transfer", "--wait=true"], check=True)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, default=Path("corpus/raw"))
+    parser.add_argument("--dest", default="")
+    args = parser.parse_args()
+    main(args.source, args.dest)

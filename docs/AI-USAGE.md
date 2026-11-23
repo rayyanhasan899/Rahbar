@@ -1,5 +1,18 @@
 # AI assistance and actual authorship
 
+## Assignment 3 Phase 1 (22 November 2026)
+
+Rayyan explicitly directed and authorized Codex to implement his scoped A1/A2,
+owned Batch B and ingestion F work, with tests, documentation, commits and pushes.
+Codex performed that implementation and the recorded local/CI checks; the commits
+use Rayyan Hassan's requested identity, not a claim of independently handwritten
+code. Moez's five existing dev2 commits and eval/release implementation were retained.
+The three eval fixture changes add metadata only; no golden labels were rewritten.
+No partner approval, human-authored questions/labels, actual model similarity score,
+live Kubernetes run or class-paper review is invented. See the Phase 1 report and
+COMMUNICATION.md for unresolved partner/host actions. This is separate from the
+historical A2 evidence and does not declare Assignment 3 finished.
+
 | Tool | What it wrote or shaped | Actual human actions/review |
 |---|---|---|
 | OpenAI Codex desktop | Assignment analysis and roadmap; Day 1 pipeline, evaluator/tests, Docker/Kubernetes/CI scaffolding and documentation; executed verification and debugging | Rayyan supplied task scope, requested his author email, prepared additional laptop settings between turns, and approved Ollama connectivity. Code review/changes by either partner must be recorded after they happen. |

@@ -123,6 +123,8 @@ def fetch(force: bool) -> int:
                 entries.append(
                     {
                         **old,
+                        "title": doc["name"],
+                        "doc_id": doc.get("doc_id", slug(doc["name"])),
                         "doc_version": doc.get("doc_version", "unknown"),
                         "superseded": bool(doc.get("superseded", False)),
                     }
@@ -144,6 +146,8 @@ def fetch(force: bool) -> int:
                 entries.append(
                     {
                         "name": name,
+                        "title": name,
+                        "doc_id": doc.get("doc_id", slug(name)),
                         "url": url,
                         "file": file,
                         "bytes": len(response.content),
