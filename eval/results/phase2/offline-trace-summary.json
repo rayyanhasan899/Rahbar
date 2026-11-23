@@ -1,0 +1,89 @@
+{
+  "window": {
+    "since": null,
+    "until": null,
+    "boundaries": "[since,until) UTC"
+  },
+  "queries": 2,
+  "completed_answers": 2,
+  "errors": 0,
+  "unknown_outcomes": 0,
+  "abstained": 0,
+  "abstention_rate": 0.0,
+  "abstention_reasons": {},
+  "cache": {
+    "hit": 1,
+    "miss": 1,
+    "bypass": 0,
+    "unknown": 0,
+    "lookups": 2,
+    "hit_rate": 0.5
+  },
+  "injection": {
+    "flagged_queries": 1,
+    "question_flagged": 0,
+    "queries_with_neutralised_passages": 1,
+    "passage_neutralisations": 1,
+    "flagged_query_rate": 0.5
+  },
+  "top1_similarity": {
+    "count": 1,
+    "min": 0.7,
+    "max": 0.7,
+    "mean": 0.7,
+    "p50": 0.7,
+    "p95": 0.7,
+    "histogram": {
+      "[.5,.75)": 1
+    }
+  },
+  "latency_ms": {
+    "cache": {
+      "count": 2,
+      "min": 0.21323200000011866,
+      "max": 0.7954570000023864,
+      "mean": 0.5043445000012525,
+      "p50": 0.21323200000011866,
+      "p95": 0.7954570000023864
+    },
+    "generate": {
+      "count": 1,
+      "min": 3.812405000001462,
+      "max": 3.812405000001462,
+      "mean": 3.812405000001462,
+      "p50": 3.812405000001462,
+      "p95": 3.812405000001462
+    },
+    "guard": {
+      "count": 1,
+      "min": 0.06915000000162763,
+      "max": 0.06915000000162763,
+      "mean": 0.06915000000162763,
+      "p50": 0.06915000000162763,
+      "p95": 0.06915000000162763
+    },
+    "retrieval": {
+      "count": 2,
+      "min": 0.3917669999999873,
+      "max": 0.9006989999988946,
+      "mean": 0.646232999999441,
+      "p50": 0.3917669999999873,
+      "p95": 0.9006989999988946
+    },
+    "total": {
+      "count": 2,
+      "min": 1.0687040000014747,
+      "max": 9.223894999998095,
+      "mean": 5.146299499999785,
+      "p50": 1.0687040000014747,
+      "p95": 9.223894999998095
+    }
+  },
+  "aggregation": {
+    "abstention": "false / completed boolean answer outcomes; errors excluded",
+    "cache": "hit / (hit+miss); bypass and unknown excluded",
+    "injection": "flagged unique queries / all selected queries",
+    "percentiles": "nearest rank ceil(p*N), observed samples only",
+    "retrieval": "first retrieved row, not max(score); no cache-origin resampling"
+  }
+}

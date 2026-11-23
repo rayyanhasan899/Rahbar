@@ -7,6 +7,8 @@ from ..schemas import Passage
 import httpx
 import re
 from typing import Any
+import time
+from ..services.trace import current
 
 
 def version_filter(question: str, versions: str) -> dict[str, Any] | None:
@@ -84,7 +86,21 @@ class ChromaRetriever:
         return col, meta
 
     def embed(self, question: str) -> list[float]:
+        trace = current.get()
+        started = time.perf_counter()
         with httpx.Client(timeout=120) as client:
+            if trace is not None and trace.snapshot:
+                expected = trace.snapshot[1].get("embed_model_digest")
+                if expected:
+                    tags = client.get(self.settings.ollama_url.rstrip("/") + "/api/tags")
+                    tags.raise_for_status()
+                    model = self.settings.embed_model
+                    model = model if ":" in model.rsplit("/", 1)[-1] else model + ":latest"
+                    found = next((str(m.get("digest", "")).removeprefix("sha256:")
+                                  for m in tags.json()["models"] if m.get("name") == model
+                                  or m.get("model") == model), None)
+                    if found != expected:
+                        raise ValueError("embedding artifact digest mismatch; reindex a separate collection")
             response = client.post(
                 f"{self.settings.ollama_url.rstrip('/')}/api/embed",
                 json={
@@ -101,28 +117,47 @@ class ChromaRetriever:
                 },
             )
             response.raise_for_status()
+            if trace is not None:
+                trace.stage("embed", started)
             return [float(x) for x in response.json()["embeddings"][0]]
 
     def query_context(self, question: str) -> tuple[list[float], str]:
         """The question's embedding and the published index generation, for the cache."""
-        _, meta = self.active()
+        snapshot = self.active()
+        _, meta = snapshot
+        trace = current.get()
+        if trace is not None:
+            trace.snapshot = snapshot
+            trace.record["collection"] = {"name": self.settings.collection, **meta}
+            trace.record["embedding"] = {"model": self.settings.embed_model, "digest": meta.get("embed_model_digest")}
         return self.embed(question), str(meta["generation"])
 
     def retrieve(self, question: str, k: int, vector: list[float] | None = None) -> list[Passage]:
-        collection, meta = self.active()
+        trace = current.get()
+        collection, meta = trace.snapshot if trace is not None and trace.snapshot else self.active()
+        if trace is not None:
+            trace.snapshot = (collection, meta)
+        if trace is not None:
+            trace.record["collection"] = {"name": self.settings.collection, **meta}
+            trace.record["embedding"] = {"model": self.settings.embed_model, "digest": meta.get("embed_model_digest")}
         if vector is None:
             vector = self.embed(question)
         if len(vector) != meta["dimension"]:
             raise ValueError("query embedding dimension mismatch")
         where = version_filter(question, str(meta.get("versions", "")))
+        if trace is not None:
+            trace.record["filters"] = where
         if where is None:
             return []
+        started = time.perf_counter()
         hits = collection.query(
             query_embeddings=[vector],
             n_results=k,
             where=where,
             include=["documents", "metadatas", "distances"],
         )
+        if trace is not None:
+            trace.stage("search", started)
         return [
             Passage(
                 chunk_id=cid,
@@ -133,6 +168,8 @@ class ChromaRetriever:
                 page=m["page"],
                 doc_version=m.get("doc_version", "unknown"),
                 superseded=m.get("superseded", False),
+                doc_id=m.get("doc_id", "unknown"), doc_key=m.get("doc_key", ""),
+                archived=m.get("archived", False),
             )
             for cid, text, m, distance in zip(
                 hits["ids"][0], hits["documents"][0], hits["metadatas"][0], hits["distances"][0]

@@ -11,6 +11,13 @@ from prometheus_client import CONTENT_TYPE_LATEST, Counter, Histogram, generate_
 
 router = APIRouter()
 
+TOP1 = Histogram("rahbar_top1_similarity", "Observed top-1 cosine similarity",
+                 buckets=(-1, 0, .25, .5, .65, .75, .85, .95, 1))
+STAGE_SECONDS = Histogram("rahbar_stage_seconds", "Observed query stage time", ["stage"],
+                         buckets=(.001, .01, .05, .1, .5, 1, 5, 10, 30, 60, 120))
+QUERY_OUTCOMES = Counter("rahbar_query_outcomes_total", "Terminal query outcomes", ["outcome"])
+TRACE_WRITES = Counter("rahbar_trace_writes_total", "Trace persistence outcomes", ["result"])
+
 REQUESTS = Counter("rahbar_requests_total", "HTTP requests", ["path", "status"])
 LATENCY = Histogram(
     "rahbar_request_seconds",

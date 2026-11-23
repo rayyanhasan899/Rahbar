@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import coverage  # noqa: E402
+import query_coverage as coverage  # noqa: E402
 
 
 def test_coverage_share_and_topics():

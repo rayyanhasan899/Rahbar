@@ -147,9 +147,13 @@ class FakeServices:
 
     def ask(self, question):
         self.asked.append(question)
+        import hashlib
+        messages = [{"role": "user", "content": "1.1 English is the medium."}]
+        hashed = hashlib.sha256(json.dumps(messages, sort_keys=True, ensure_ascii=False, separators=(",", ":")).encode()).hexdigest()
         retrieved = [{"chunk_id": "c1", **A, "score": 0.8}]
         return ({"request_id": "t" + str(len(self.asked)), "answer": "Yes [rules.pdf / 1.1].",
-                 "answered_from_context": True, "citations": [A], "retrieved": retrieved},
+                 "answered_from_context": True, "citations": [A], "retrieved": retrieved,
+                 "evidence": {"attempts": [{"messages": messages, "prompt_sha256": hashed, "context": [{"text": "1.1 English is the medium."}]}]}},
                 0.5, "MISS")
 
     def chunk_texts(self, ids):
@@ -187,3 +191,20 @@ def test_compare_and_markdown():
     text = suite.markdown(a)
     assert "| component (retrieval) | ndcg_at_5 |" in text
     assert "| end-to-end | faithfulness |" in text
+
+def test_golden_preflight_precedes_network_calls(tmp_path, monkeypatch):
+    path = tmp_path / 'invalid.jsonl'
+    path.write_text('{"id":"invalid","question":"example"}\n')
+    monkeypatch.setattr(sys, 'argv', ['suite.py', '--golden', str(path)])
+    monkeypatch.setattr(suite, 'Services', lambda *args: pytest.fail('network initialized before validation'))
+    assert suite.main() == 2
+
+
+def test_module_sampling_can_pin_the_request_time_generation(monkeypatch):
+    services = object.__new__(common.Services)
+    services._active = None
+    resolved = []
+    monkeypatch.setattr(services, '_collection_id', lambda name: resolved.append(name) or 'immutable-id')
+    services.pin_collection('served-generation')
+    assert services.active_collection() == 'immutable-id'
+    assert resolved == ['served-generation']

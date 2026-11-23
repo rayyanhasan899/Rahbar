@@ -1,0 +1,17 @@
+.git
+.venv
+venv
+__pycache__
+*.pyc
+.pytest_cache
+.mypy_cache
+.ruff_cache
+corpus/raw
+eval/results
+traces
+docs/evidence
+.env
+.env.*
+*secret*.yaml
+kubeconfig
+PROJECT_DOCUMENTATION.md

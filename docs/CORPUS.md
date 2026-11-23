@@ -69,3 +69,11 @@ docs/evidence/day3-audit-54f37ff/extraction-audit.json: Tesseract 5.3.0,
 Poppler 22.12.0 and pdfplumber 0.11.10. The six empty pages remain disclosed;
 OCR/table interpretation is not assumed lossless. Physical page counts and the
 pre-tuning golden source/section labels were not changed to fit retrieval.
+
+
+Phase2 adds an independent corpus_sha256 (sorted family/version/bytes/status) to
+publication provenance, distinct from chunk/config fingerprints. This permits a
+controlled chunking experiment without treating different cache/chunk IDs as data
+drift. Legacy indexes must be reindexed before authoritative A3 evaluation. The
+current A3 golden set still needs genuine human origin/review and physical-page
+validation; no metadata or measured scores were fabricated to pass its checker.

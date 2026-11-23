@@ -5,8 +5,10 @@ content/config caches, collection-specific ledgers/views and rollback/count comm
 The active pointer and API/cache interfaces remain compatible. See
 [ADR 0005](docs/adr/0005-verified-incremental-publication.md) for publication ordering,
 archive/history interpretation and recovery; [Phase 1 report](docs/assignment-3/phase-reports/PHASE-1-REPORT.md)
-distinguishes implemented behavior from live Kubernetes proof. Query traces and
-related evaluation integration are subsequent phases, not implemented by this pass.
+distinguishes implemented behavior from live Kubernetes proof. Phase 2 adds request-local trace evidence, replay/summary tools, metrics and a traces
+PVC; exact-context evaluation and immutable release receipts synchronize reader/writer
+configurations through undo. See ADR0006 and the Phase2 report for actual verification
+and remaining human/runtime evidence. Phase3 demonstrations have not started.
 
 Ingress routes `/` to nginx and `/api` to three FastAPI readers. Redis provides
 shared persistent semantic caching; Chroma 1.0.12 is a one-replica StatefulSet

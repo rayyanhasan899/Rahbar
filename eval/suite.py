@@ -9,7 +9,7 @@ Writes eval/results/suite-<UTC stamp>-<label>.json, the same name with .md (the 
 table) and latest-<label>.json. Every setting comes from a flag or an environment
 variable, so the Kubernetes Job (k8s/eval-job.yaml) runs the same code.
 
-Empty the answer cache before a run (redis-cli FLUSHALL); cached answers make latency
+Requests bypass the answer cache without clearing shared Redis; cached answers make latency
 and the stochasticity comparison meaningless, and the result counts them.
 """
 
@@ -92,13 +92,20 @@ def add_judgements(services: Services, rows: list[dict], model: str, seed: int) 
     for r in rows:
         if not r["response"].get("answered_from_context"):
             continue
-        ids = [x["chunk_id"] for x in r["response"].get("retrieved") or []]
-        texts = services.chunk_texts(ids)
-        r["judge"] = end_to_end.judge(
-            services, model, seed, r["question"], r["response"]["answer"],
-            [texts[i] for i in ids if i in texts],
-        )
-        r["judge"]["passages_found"] = sum(i in texts for i in ids)
+        import hashlib
+        evidence = r["response"].get("evidence") or {}
+        attempts = evidence.get("attempts") or []
+        if not attempts:
+            raise ValueError("answer lacks immutable request-time model evidence")
+        attempt = attempts[-1]
+        raw = json.dumps(attempt["messages"], sort_keys=True, ensure_ascii=False, separators=(",", ":"))
+        if hashlib.sha256(raw.encode()).hexdigest() != attempt["prompt_sha256"]:
+            raise ValueError("request-time prompt hash mismatch")
+        texts = [p["text"] for p in attempt["context"]]
+        r["judge"] = end_to_end.judge(services, model, seed, r["question"],
+                                       r["response"]["answer"], texts)
+        r["judge"]["passages_found"] = len(texts)
+
 
 
 def fmt(value) -> str:
@@ -203,11 +210,37 @@ def main() -> int:
         return 0
 
     golden = read_jsonl(args.golden)
+    from golden_check import problems
+    errors = problems(golden)
+    if errors:
+        print("Golden preflight failed:", *errors, sep="\n")
+        return 2
     services = Services(args.api, args.ollama, args.chroma, args.collection, args.host)
     print("asking", len(golden), "questions at", args.api)
     rows = ask_all(services, golden)
     add_judgements(services, rows, args.judge_model, args.seed)
+    import hashlib
+    evidence = [r['response'].get('evidence', {}) for r in rows]
+    indexes = [e.get('collection', {}) for e in evidence]
+    pins = {json.dumps(i, sort_keys=True) for i in indexes}
+    if len(pins) != 1 or not indexes or not indexes[0].get('corpus_sha256'):
+        raise ValueError('missing or changing request-time index provenance; rerun after verified ingestion')
+    index = indexes[0]
+    services.pin_collection(index["active_collection"])
+    if any(e.get('pipeline', {}).get('seed') != args.seed for e in evidence):
+        raise ValueError('API SEED must equal suite seed; configure API before stochasticity measurements')
+    if len({json.dumps(e.get('pipeline'), sort_keys=True) for e in evidence}) != 1:
+        raise ValueError('pipeline configuration changed within evaluation run')
+    if not evidence[0].get('embedding', {}).get('digest'):
+        raise ValueError('embedding digest missing')
+    provenance = {'golden_sha256': hashlib.sha256(args.golden.read_bytes()).hexdigest(),
+                  'pairs_sha256': hashlib.sha256(args.pairs.read_bytes()).hexdigest(),
+                  'seed': args.seed, 'corpus_sha256': index['corpus_sha256'],
+                  'embedding_digest': evidence[0]['embedding']['digest'],
+                  'judge_model': args.judge_model, 'index': index,
+                  'pipeline': evidence[0].get('pipeline', {})}
     result = {
+        "provenance": provenance,
         "label": args.label,
         "stamp": stamp(),
         "settings": {
@@ -229,16 +262,19 @@ def main() -> int:
     if args.typos:
         print("asking again with seeded typos")
         typo_rows = ask_all(services, golden, typos_seed=args.seed)
+        if any(r["response"].get("evidence", {}).get("collection", {}).get("generation") != index["generation"] for r in typo_rows):
+            raise ValueError("index changed during noise comparison; run is not comparable")
         result["component_typos"] = component(typo_rows)
         result["typo_rows"] = typo_rows
     if result["end_to_end"]["cache_hits"]:
-        print("WARNING:", result["end_to_end"]["cache_hits"], "cache hits; flush Redis first")
+        print("WARNING:", result["end_to_end"]["cache_hits"], "unexpected cache hits; check bypass header")
 
     args.results_dir.mkdir(parents=True, exist_ok=True)
     base = args.results_dir / f"suite-{result['stamp']}-{args.label}"
     base.with_suffix(".json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     base.with_suffix(".md").write_text(markdown(result), encoding="utf-8")
-    shutil.copyfile(base.with_suffix(".json"), args.results_dir / f"latest-{args.label}.json")
+    latest = "baseline-candidate" if args.label == "baseline" else args.label
+    shutil.copyfile(base.with_suffix(".json"), args.results_dir / f"latest-{latest}.json")
     print()
     print(markdown(result))
     print("written:", base.with_suffix(".json"))

@@ -169,7 +169,7 @@ Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster comman
 | B judge agreement | `python eval/end_to_end.py --agreement <run>.json` |
 | C gate | `python eval/gate.py --baseline <a>.json --candidate <b>.json --thresholds eval/gate.yaml` |
 | C, F3 candidate and release | `python scripts/release.py candidate ...`, `python scripts/release.py promote ...` |
-| D traces | to be added with Part D |
+| D traces | `python scripts/trace_tool.py show <request_id> traces/`; `python scripts/trace_summary.py --since <ISO-time> --until <ISO-time> traces/` |
 | E coverage | `python eval/coverage.py --threshold <t> --min-share <s>` |
 | F everything else | [k8s/README.md](k8s/README.md) |
 
