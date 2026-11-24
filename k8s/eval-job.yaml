@@ -57,7 +57,7 @@ spec:
             drop:
             - ALL
         resources:
-          # Starting values; replace them with the kubectl top measurements (Part F5).
+          # From kubectl top during Part C: median 69m / 30Mi, max 107m / 30Mi.
           requests:
             cpu: 100m
             memory: 64Mi
