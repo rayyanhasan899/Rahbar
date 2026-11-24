@@ -1,0 +1,462 @@
+
+===== 0. stop the main cluster (minikube profile), data kept (12:29:05)
+* Stopping node "minikube"  ...
+* Powering off "minikube" via SSH ...
+* 1 node stopped.
+
+===== 1. clean clone (README: Clean clone and offline checks) (12:29:13)
+REHEARSAL NOTE: used dev2 at 65167a6; README says main
+python3.12 -m venv .venv
+"/home/abdul_moez/rahbar-rehearsal/Rahbar/.venv/bin/pip" install -q --upgrade pip
+"/home/abdul_moez/rahbar-rehearsal/Rahbar/.venv/bin/pip" install -q --require-hashes --only-binary=:all: -r requirements-dev.lock
+make test exit 0
+cd indexer && "/home/abdul_moez/rahbar-rehearsal/Rahbar/.venv/bin/pytest" -q
+.......................................................                  [100%]
+55 passed in 1.44s
+............................................                             [100%]
+44 passed in 0.17s
+
+===== 2. real corpus to first answer (12:29:56)
+"/home/abdul_moez/rahbar-rehearsal/Rahbar/.venv/bin/python" corpus/fetch.py
+  fetch   Undergraduate Academic Rules (Aug 2023)
+          undergraduate-academic-rules-aug-2023.pdf, 14,888,226 bytes
+  fetch   Academic Rules Handbook (Jun 2026)
+          academic-rules-handbook-jun-2026.pdf, 987,731 bytes
+  fetch   Prospectus 2026 - Academic Rules and Regulations
+          prospectus-2026-academic-rules-and-regulations.pdf, 7,066,767 bytes
+  fetch   Student Handbook (Jun 2026)
+          student-handbook-jun-2026.pdf, 1,980,275 bytes
+  fetch   Annual Report 2019-20
+          annual-report-2019-20.pdf, 891,216 bytes
+  fetch   Fee Structure page
+          fee-structure-page.html, 91,429 bytes
+  fetch   Grading page
+          grading-page.html, 95,673 bytes
+  fetch   Faculty Entrepreneurship and Technical Start-ups Policy
+    RemoteProtocolError; retrying in 4s (1/2)
+          faculty-entrepreneurship-and-technical-start-ups-policy.pdf, 3,872,809 bytes
+
+8 documents in corpus/raw, manifest written to corpus/MANIFEST.md
+  ok        undergraduate-academic-rules-aug-2023.pdf
+  ok        academic-rules-handbook-jun-2026.pdf
+  ok        prospectus-2026-academic-rules-and-regulations.pdf
+  ok        student-handbook-jun-2026.pdf
+  ok        annual-report-2019-20.pdf
+  ok        fee-structure-page.html
+  ok        grading-page.html
+  ok        faculty-entrepreneurship-and-technical-start-ups-policy.pdf
+
+8 of 8 match the manifest
+minikube start --driver=docker --cni=calico --memory=4096 --cpus=2
+* [rahbar-rehearsal] minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
+  - MINIKUBE_CPUS=2
+  - MINIKUBE_MEMORY=4096
+  - MINIKUBE_PROFILE=rahbar-rehearsal
+* Using the docker driver based on user configuration
+* Using Docker driver with root privileges
+! For an improved experience it's recommended to use Docker Engine instead of Docker Desktop.
+Docker Engine installation instructions: https://docs.docker.com/engine/install/#server
+* Starting "rahbar-rehearsal" primary control-plane node in "rahbar-rehearsal" cluster
+* Pulling base image v0.0.51 ...
+* Preparing Kubernetes v1.37.0 on containerd 2.3.4 ...
+* Configuring Calico (Container Networking Interface) ...
+* Verifying Kubernetes components...
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+* Enabled addons: storage-provisioner, default-storageclass
+* Done! kubectl is now configured to use "rahbar-rehearsal" cluster and "default" namespace by default
+minikube addons enable metrics-server
+* metrics-server is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+  - Using image registry.k8s.io/metrics-server/metrics-server:v0.9.0
+* The 'metrics-server' addon is enabled
+minikube addons enable ingress
+* ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+  - Using image registry.k8s.io/ingress-nginx/controller:v1.15.1
+* Verifying ingress addon...
+* The 'ingress' addon is enabled
+Waiting for deployment "ingress-nginx-controller" rollout to finish: 0 of 1 updated replicas are available...
+deployment "ingress-nginx-controller" successfully rolled out
+docker build --build-arg VCS_REF=65167a60ca7506abb6c767bca9269d9acd7c2dad -t rahbar-api:65167a60ca7506abb6c767bca9269d9acd7c2dad api
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 862B 0.0s done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#2 ...
+
+#3 [auth] library/python:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#2 DONE 1.6s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 136B done
+#4 DONE 0.0s
+
+#5 [stage-0 1/7] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#5 resolve docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df 0.0s done
+#5 DONE 0.1s
+
+#6 [internal] load build context
+#6 transferring context: 249.95kB 0.0s done
+#6 DONE 0.0s
+
+#7 [stage-0 2/7] WORKDIR /app
+#7 CACHED
+
+#8 [stage-0 3/7] RUN apt-get update && apt-get upgrade -y && rm -rf /var/lib/apt/lists/*
+#8 CACHED
+
+#9 [stage-0 4/7] COPY requirements.txt requirements.lock ./
+#9 CACHED
+
+#10 [stage-0 5/7] RUN --mount=type=cache,target=/root/.cache/pip PIP_NO_CACHE_DIR=off pip install --require-hashes --only-binary=:all: --timeout 120 --retries 3 -r requirements.lock && useradd --uid 10001 --create-home app
+#10 CACHED
+
+#11 [stage-0 6/7] COPY app ./app
+#11 DONE 0.2s
+
+#12 [stage-0 7/7] COPY logging.json ./logging.json
+#12 DONE 0.0s
+
+#13 exporting to image
+#13 exporting layers 0.1s done
+#13 exporting manifest sha256:a6c7f490d92d073f18401f71b1d4438c8bec0e768172eec1d9d323e0d8177398 0.0s done
+#13 exporting config sha256:9d0df26d4be024ed9d530f08acc81b097c252f768c8a8135b2c58bbb953f9b3d 0.0s done
+#13 exporting attestation manifest sha256:616effafdd66ca6066a05e7ee5e0bc739ccba12380350661da4b84225764dbf7 0.0s done
+#13 exporting manifest list sha256:8a2b652393d9c0d9054c8dec40b166d3713252ef9e27564ff4db51c345a7f072 0.0s done
+#13 naming to docker.io/library/rahbar-api:65167a60ca7506abb6c767bca9269d9acd7c2dad done
+#13 unpacking to docker.io/library/rahbar-api:65167a60ca7506abb6c767bca9269d9acd7c2dad 0.1s done
+#13 DONE 0.3s
+docker build --build-arg VCS_REF=65167a60ca7506abb6c767bca9269d9acd7c2dad -t rahbar-indexer:65167a60ca7506abb6c767bca9269d9acd7c2dad indexer
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 800B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#2 DONE 0.0s
+
+#3 [internal] load .dockerignore
+#3 transferring context: 136B done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 237.40kB done
+#4 DONE 0.0s
+
+#5 [stage-0 1/6] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#5 resolve docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df 0.0s done
+#5 DONE 0.0s
+
+#6 [stage-0 4/6] COPY requirements.txt requirements.lock ./
+#6 CACHED
+
+#7 [stage-0 2/6] RUN apt-get update && apt-get upgrade -y && apt-get install -y --no-install-recommends tesseract-ocr tesseract-ocr-eng poppler-utils && rm -rf /var/lib/apt/lists/*
+#7 CACHED
+
+#8 [stage-0 3/6] WORKDIR /app
+#8 CACHED
+
+#9 [stage-0 5/6] RUN --mount=type=cache,target=/root/.cache/pip PIP_NO_CACHE_DIR=off pip install --require-hashes --only-binary=:all: --timeout 120 --retries 3 -r requirements.lock && useradd --uid 10001 --create-home app
+#9 CACHED
+
+#10 [stage-0 6/6] COPY pipeline ./pipeline
+#10 DONE 0.0s
+
+#11 exporting to image
+#11 exporting layers 0.1s done
+#11 exporting manifest sha256:7698f9e61de447a2d42a7dab44b54b9fa6751d0f4c538b8386de96fdce8c86fd 0.0s done
+#11 exporting config sha256:fd8a7da420125cd07b3f5ce694a451bf66da55e1974b77a2ca813f40bcf57520 0.0s done
+#11 exporting attestation manifest sha256:cb0509451dd44afb1577bda7d850f5885be107e00e4defd0f30d34e63bb1917a 0.0s done
+#11 exporting manifest list sha256:4d635f2a194fa18f2668a9a1f122ae95155fb27deb15033d30b1acc918588f59
+#11 exporting manifest list sha256:4d635f2a194fa18f2668a9a1f122ae95155fb27deb15033d30b1acc918588f59 0.0s done
+#11 naming to docker.io/library/rahbar-indexer:65167a60ca7506abb6c767bca9269d9acd7c2dad done
+#11 unpacking to docker.io/library/rahbar-indexer:65167a60ca7506abb6c767bca9269d9acd7c2dad 0.0s done
+#11 DONE 0.2s
+docker build --build-arg VCS_REF=65167a60ca7506abb6c767bca9269d9acd7c2dad -t rahbar-ui:65167a60ca7506abb6c767bca9269d9acd7c2dad ui
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 570B done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/nginx/nginx-unprivileged:1.30.7-alpine3.24@sha256:0c53a1f2890c3526bfd201440f0fd3970e5b78f80630f58284aad0d34b5ec7bd
+#2 ...
+
+#3 [auth] nginx/nginx-unprivileged:pull token for registry-1.docker.io
+#3 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/nginx/nginx-unprivileged:1.30.7-alpine3.24@sha256:0c53a1f2890c3526bfd201440f0fd3970e5b78f80630f58284aad0d34b5ec7bd
+#2 DONE 2.3s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 136B done
+#4 DONE 0.0s
+
+#5 [1/5] FROM docker.io/nginx/nginx-unprivileged:1.30.7-alpine3.24@sha256:0c53a1f2890c3526bfd201440f0fd3970e5b78f80630f58284aad0d34b5ec7bd
+#5 resolve docker.io/nginx/nginx-unprivileged:1.30.7-alpine3.24@sha256:0c53a1f2890c3526bfd201440f0fd3970e5b78f80630f58284aad0d34b5ec7bd 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 10.98kB done
+#6 DONE 0.0s
+
+#7 [2/5] RUN apk upgrade --no-cache
+#7 CACHED
+
+#8 [3/5] COPY nginx.conf /etc/nginx/nginx.conf
+#8 CACHED
+
+#9 [4/5] COPY index.html /usr/share/nginx/html/index.html
+#9 CACHED
+
+#10 [5/5] RUN if [ "false" = "true" ]; then sed -i 's/RAHBAR/RAHBAR Rollout Demo/g' /usr/share/nginx/html/index.html; fi
+#10 DONE 0.5s
+
+#11 exporting to image
+#11 exporting layers 0.1s done
+#11 exporting manifest sha256:b8a133a5122a6ddac40e9215c76b8c7161876d98a4dc72a3b7905db8619d0bd3 0.0s done
+#11 exporting config sha256:27ca97d8f64c7211b7747b9bd63a7ef3b78e8b7d4c06c9d44f49da012f6bd7d5 0.0s done
+#11 exporting attestation manifest sha256:d5a600a9ca14877a894bb467a01426a1dc0eb9f5d329dd0cd2f8223d0eed1fce 0.0s done
+#11 exporting manifest list sha256:dbec9f6980683efcdf7e6976270ead1713add430e79a27641e70e142615f3394
+#11 exporting manifest list sha256:dbec9f6980683efcdf7e6976270ead1713add430e79a27641e70e142615f3394 0.0s done
+#11 naming to docker.io/library/rahbar-ui:65167a60ca7506abb6c767bca9269d9acd7c2dad done
+#11 unpacking to docker.io/library/rahbar-ui:65167a60ca7506abb6c767bca9269d9acd7c2dad 0.0s done
+#11 DONE 0.2s
+docker build --build-arg VCS_REF=65167a60ca7506abb6c767bca9269d9acd7c2dad -f eval/Dockerfile -t rahbar-eval:65167a60ca7506abb6c767bca9269d9acd7c2dad -t rahbar-eval:dev .
+#0 building with "default" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.09kB done
+#1 DONE 0.0s
+
+#2 [internal] load metadata for docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#2 DONE 0.0s
+
+#3 [1/5] FROM docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df
+#3 resolve docker.io/library/python:3.12.16-slim-bookworm@sha256:935c3c5b12357a7e10caa9c1e6ca5692344d97cf229832ef584be2cec9fc03df 0.0s done
+#3 DONE 0.0s
+
+#4 [internal] load build context
+#4 transferring context: 24B 0.1s
+#4 transferring context: 198.61kB 0.1s done
+#4 DONE 0.1s
+
+#5 [4/5] RUN pip install --require-hashes --only-binary=:all: --timeout 120 --retries 3 -r requirements.lock && useradd --uid 10001 --create-home app
+#5 CACHED
+
+#6 [2/5] WORKDIR /app
+#6 CACHED
+
+#7 [3/5] COPY indexer/requirements.lock ./requirements.lock
+#7 CACHED
+
+#8 [5/5] COPY eval/*.py eval/*.yaml eval/*.jsonl eval/judge_prompt.txt ./eval/
+#8 CACHED
+
+#9 exporting to image
+#9 exporting layers done
+#9 exporting manifest sha256:83f990f6c979d168ae1656bdb9572557e7fc9b13abb2fe0725c4da4a4efb2794 0.0s done
+#9 exporting config sha256:476f9d88f7f9d8c4288be481f2baf1e8cb274b1a27d990a937f1fd6dc9198694 0.0s done
+#9 exporting attestation manifest sha256:2bfe5c9b674322ce51573b6a3b5d8712d9818d361b9e2765afad0af821127ed2 0.0s done
+#9 exporting manifest list sha256:6a2559736340e9ee5e4781c84d02c8575619a9ef32f3892f54a17dd960fb863a 0.0s done
+#9 naming to docker.io/library/rahbar-eval:65167a60ca7506abb6c767bca9269d9acd7c2dad done
+#9 unpacking to docker.io/library/rahbar-eval:65167a60ca7506abb6c767bca9269d9acd7c2dad 0.0s done
+#9 naming to docker.io/library/rahbar-eval:dev done
+#9 unpacking to docker.io/library/rahbar-eval:dev 0.0s done
+#9 DONE 0.1s
+minikube image load rahbar-api:65167a60ca7506abb6c767bca9269d9acd7c2dad
+minikube image load rahbar-indexer:65167a60ca7506abb6c767bca9269d9acd7c2dad
+minikube image load rahbar-ui:65167a60ca7506abb6c767bca9269d9acd7c2dad
+minikube image load rahbar-eval:65167a60ca7506abb6c767bca9269d9acd7c2dad
+minikube image load rahbar-eval:dev
+REHEARSAL NOTE: README example MODEL_IP=192.168.65.254; this node resolves host.docker.internal to 192.168.65.254
+{"version":"0.40.17"}namespace/rahbar created
+serviceaccount/api created
+serviceaccount/chroma created
+serviceaccount/indexer created
+serviceaccount/redis created
+serviceaccount/ui created
+configmap/rahbar-config created
+service/api created
+service/chroma created
+service/redis created
+service/ui created
+persistentvolumeclaim/corpus-data created
+persistentvolumeclaim/datalake-data created
+persistentvolumeclaim/indexer-lock created
+persistentvolumeclaim/redis-data created
+persistentvolumeclaim/traces-data created
+deployment.apps/redis created
+statefulset.apps/chroma created
+ingress.networking.k8s.io/rahbar created
+networkpolicy.networking.k8s.io/allow-api created
+networkpolicy.networking.k8s.io/allow-api-candidate created
+networkpolicy.networking.k8s.io/allow-chroma created
+networkpolicy.networking.k8s.io/allow-eval created
+networkpolicy.networking.k8s.io/allow-indexer created
+networkpolicy.networking.k8s.io/allow-redis created
+networkpolicy.networking.k8s.io/allow-ui created
+networkpolicy.networking.k8s.io/default-deny created
+Waiting for 1 pods to be ready...
+partitioned roll out complete: 1 new pods have been updated...
+deployment "redis" successfully rolled out
+pod/corpus-transfer created
+pod/corpus-transfer condition met
+all PVC source hashes verified
+pod "corpus-transfer" deleted from rahbar namespace
+job.batch/indexer-65167a6-1795505744 created
+namespace/rahbar unchanged
+serviceaccount/api unchanged
+serviceaccount/chroma unchanged
+serviceaccount/indexer unchanged
+serviceaccount/redis unchanged
+serviceaccount/ui unchanged
+configmap/rahbar-config unchanged
+service/api unchanged
+service/chroma unchanged
+service/redis unchanged
+service/ui unchanged
+persistentvolumeclaim/corpus-data unchanged
+persistentvolumeclaim/datalake-data unchanged
+persistentvolumeclaim/indexer-lock unchanged
+persistentvolumeclaim/redis-data unchanged
+persistentvolumeclaim/traces-data unchanged
+deployment.apps/api created
+deployment.apps/redis unchanged
+deployment.apps/ui created
+statefulset.apps/chroma configured
+cronjob.batch/reindex created
+horizontalpodautoscaler.autoscaling/api created
+ingress.networking.k8s.io/rahbar unchanged
+networkpolicy.networking.k8s.io/allow-api configured
+networkpolicy.networking.k8s.io/allow-api-candidate configured
+networkpolicy.networking.k8s.io/allow-chroma configured
+networkpolicy.networking.k8s.io/allow-eval configured
+networkpolicy.networking.k8s.io/allow-indexer configured
+networkpolicy.networking.k8s.io/allow-redis configured
+networkpolicy.networking.k8s.io/allow-ui configured
+networkpolicy.networking.k8s.io/default-deny unchanged
+Waiting for deployment "api" rollout to finish: 0 of 3 updated replicas are available...
+Waiting for deployment "api" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "api" rollout to finish: 2 of 3 updated replicas are available...
+deployment "api" successfully rolled out
+deployment "ui" successfully rolled out
+Published by indexer-65167a6-1795505744; API reads it without ingesting at startup.
+
+===== 3. first answer through the Ingress (12:38:30)
+{"revision":"65167a60ca7506abb6c767bca9269d9acd7c2dad"}
+{"request_id":"d3dbc53aaac52512e8875fa24ac141a9","answer":"Six years [academic-rules-handbook-jun-2026.pdf / 1.23]","citations":[{"source":"academic-rules-handbook-jun-2026.pdf","section":"1.23","page":10}],"answered_from_context":true,"confidence":"high","retrieved":[{"chunk_id":"e6687bbc3f746b38759bd50532758956","source":"academic-rules-handbook-jun-2026.pdf","section":"1.23","page":10,"score":0
+
+
+===== 4. evaluation Job and baseline (k8s/README.md) (12:38:47)
+persistentvolumeclaim/eval-results created
+configmap/rahbar-gate created
+job.batch/eval created
+eval Job succeeded/failed: 1/
+| Level | Metric | Value |
+| module (embedding) | paraphrase mean cosine | 0.8239 |
+| module (embedding) | unrelated mean cosine | 0.5545 |
+| module (embedding) | gap | 0.2694 |
+| module (embedding) | ms per chunk (mean) | 18.4951 |
+| module (embedding) | determinism max abs difference | 0.0000 |
+| component (retrieval) | recall_at_3 | 0.8906 |
+| component (retrieval) | recall_at_5 | 0.9688 |
+| component (retrieval) | mrr | 0.8438 |
+| component (retrieval) | ndcg_at_5 | 0.8701 |
+| end-to-end | faithfulness | 0.3158 |
+| end-to-end | judged_answers | 19 |
+| end-to-end | abstention_correctness | 1.0000 |
+| end-to-end | false_abstention_rate | 0.4062 |
+| end-to-end | citation_validity | 1.0000 |
+| end-to-end | latency_p50_seconds | 1.8820 |
+| end-to-end | latency_p95_seconds | 4.5300 |
+| end-to-end | cache_hits | 0 |
+written: /results/suite-20261124T074042Z-baseline.json
+GATE PASSED
+RAHBAR_GATE_RECEIPT={"passed": true, "provenance": {"golden_sha256": "4f2a01b335557219241ea1ffc6ccaeaa382cfd7b297281abb8183cfa34917a6b", "pairs_sha256": "050087a9aa4828b1798f38888afe536e574f910bedc2c7f1b14bdc9923d5b86e", "seed": 42, "corpus_sha256": "1018f25a50ac47d1b33c6db434dcb14191d48ce986a59f3d8c56f6d698f7033d", "embedding_digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f", "judge_model": "llama3.2:3b", "index": {"name": "rahbar", "active_collection": "rahbar-8c52c1362a034ff89307640e92b8032a", "dimension": 768, "embed_model": "nomic-embed-text", "chunk_overlap": 100, "fingerprint": "14fafcbff6c87c3eb798e7e3fa9892d1fad25b667880699df603ce59892a92c4", "ledger_revision": "8c52c1362a034ff89307640e92b8032a", "versions": "2019-20|2022-05|2023-08|2026|2026-06|2026-27", "chunk_size": 700, "embed_model_digest": "0a109f422b47e3a30ba2b10eca18548e944e8a23073ee3f3e947efcf3c45e59f", "corpus_sha256": "1018f25a50ac47d1b33c6db434dcb14191d48ce986a59f3d8c56f6d698f7033d", "generation": "8c52c1362a034ff89307640e92b8032a", "chunks": 646, "content_sha256": "1415cb7c1c72ff969b7436c22b9ecb163d1ddfaf24974f183d5f1f8a81666be9"}, "pipeline": {"top_k": 5, "relevance_floor": 0.65, "provider": "ollama-host", "llm_model": "llama3.2:3b", "temperature": 0.2, "seed": 42, "prompt_template_sha256": "1cb04373bc7f34b7b079f4675db0d3b150e4204a9f8b8660fe1cf140f9bd2408"}, "release_config_sha256": null}, "config_sha256": null, "candidate_sha256": "493fd658e266e56fc5fd92480a7a9c8da2c462ef977f2ec3ae4278e048f8ce04", "baseline_sha256": "493fd658e266e56fc5fd92480a7a9c8da2c462ef977f2ec3ae4278e048f8ce04", "decision_sha256": "06fc48d806fcaceb18ff10f59512711bfc82bb6ff617199ed4c170219ed9d486"}
+NAME                                   READY   STATUS      RESTARTS   AGE
+pod/api-7d776848bd-7mm95               1/1     Running     0          2m29s
+pod/api-7d776848bd-bw8qc               1/1     Running     0          2m29s
+pod/api-7d776848bd-ptn8c               1/1     Running     0          2m29s
+pod/chroma-0                           1/1     Running     0          6m33s
+pod/eval-z8lf2                         0/1     Completed   0          2m7s
+pod/indexer-65167a6-1795505744-lvcqc   0/1     Completed   0          5m9s
+pod/redis-55db4cdf6b-xswbd             1/1     Running     0          6m33s
+pod/ui-7b947f877c-hcvqs                1/1     Running     0          2m29s
+
+NAME             TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)    AGE
+service/api      ClusterIP   10.98.108.67     <none>        8000/TCP   6m33s
+service/chroma   ClusterIP   10.99.44.141     <none>        8000/TCP   6m33s
+service/redis    ClusterIP   10.100.114.108   <none>        6379/TCP   6m33s
+service/ui       ClusterIP   10.105.224.199   <none>        8080/TCP   6m33s
+
+NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/api     3/3     3            3           2m29s
+deployment.apps/redis   1/1     1            1           6m33s
+deployment.apps/ui      1/1     1            1           2m29s
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/api-7d776848bd     3         3         3       2m29s
+replicaset.apps/redis-55db4cdf6b   1         1         1       6m33s
+replicaset.apps/ui-7b947f877c      1         1         1       2m29s
+
+NAME                      READY   AGE
+statefulset.apps/chroma   1/1     6m33s
+
+NAME                                      REFERENCE        TARGETS        MINPODS   MAXPODS   REPLICAS   AGE
+horizontalpodautoscaler.autoscaling/api   Deployment/api   cpu: 35%/70%   3         8         3          2m29s
+
+NAME                    SCHEDULE    TIMEZONE       SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+cronjob.batch/reindex   0 2 * * 0   Asia/Karachi   False     0        <none>          2m29s
+
+NAME                                   STATUS     COMPLETIONS   DURATION   AGE
+job.batch/eval                         Complete   1/1           2m6s       2m7s
+job.batch/indexer-65167a6-1795505744   Complete   1/1           2m36s      5m9s
+
+NAME                                         STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   VOLUMEATTRIBUTESCLASS   AGE
+NAME                     CPU(cores)   MEMORY(bytes)   
+api-7d776848bd-7mm95     6m           46Mi            
+api-7d776848bd-bw8qc     6m           147Mi           
+api-7d776848bd-ptn8c     41m          74Mi            
+chroma-0                 13m          52Mi            
+redis-55db4cdf6b-xswbd   15m          11Mi            
+ui-7b947f877c-hcvqs      1m           10Mi            
+
+===== cleanup: delete rahbar-rehearsal, start the main cluster again (12:40:54)
+* Deleting "rahbar-rehearsal" in docker ...
+* Deleting container "rahbar-rehearsal" ...
+* Removing /home/abdul_moez/.minikube/machines/rahbar-rehearsal ...
+* Removed all traces of the "rahbar-rehearsal" cluster.
+* minikube v1.39.0 on Ubuntu 24.04 (kvm/amd64)
+* Using the docker driver based on existing profile
+* Starting "minikube" primary control-plane node in "minikube" cluster
+* Pulling base image v0.0.51 ...
+* Preparing Kubernetes v1.37.0 on containerd 2.3.4 ...
+* Verifying Kubernetes components...
+  - Using image registry.k8s.io/metrics-server/metrics-server:v0.9.0
+  - Using image registry.k8s.io/ingress-nginx/controller:v1.15.1
+  - Using image gcr.io/k8s-minikube/storage-provisioner:v5
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+  - Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.9
+* Verifying ingress addon...
+* Enabled addons: metrics-server, storage-provisioner, ingress, default-storageclass
+* Done! kubectl is now configured to use "minikube" cluster and "default" namespace by default
+Switched to context "minikube".
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/api             4/4     4            4           16d
+deployment.apps/api-candidate   1/1     1            1           154m
+deployment.apps/redis           1/1     1            1           16d
+deployment.apps/ui              1/1     1            1           16d
+
+NAME                      READY   AGE
+statefulset.apps/chroma   1/1     16d
+REHEARSAL FINISHED: completed

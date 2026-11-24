@@ -418,7 +418,8 @@
         }
       ],
       "after": [
-        "Measured with kubectl top every few seconds during Part C. The indexer is CPU-bound at its 1-CPU limit; every other pod used far less than it reserved before."
+        "Measured with kubectl top every few seconds during Part C. The indexer is CPU-bound at its 1-CPU limit; every other pod used far less than it reserved before.",
+        "Rehearsal (M14): a fresh minikube profile built from a clean clone using only the READMEs first failed, because the base ConfigMap scanned Batch A/B folders that a fresh deploy never copies. After the fix (scope /corpus, Batch B as a documented step, deploy_local stops on a failed Job) it went from clone to a cited first answer and a passing baseline gate in 12 minutes (docs/evidence/a3/rehearsal.md)."
       ]
     },
     {
