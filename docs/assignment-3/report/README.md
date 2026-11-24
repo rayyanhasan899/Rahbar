@@ -6,8 +6,7 @@ of terminal screenshots for Parts A-F. Every number in it comes from the cluster
 
 Editable source: `report-content.json`. Renderer: `build_report.py` (ReportLab and Pillow).
 Run `python docs/assignment-3/report/build_report.py`. With `"status": "FINAL"` it writes
-`RAHBAR-A3-REPORT.pdf`; with the draft status it writes the earlier
-`RAHBAR-A3-HANDOFF-DRAFT.pdf`, which is kept only as history.
+`RAHBAR-A3-REPORT.pdf`; with the draft status it writes `RAHBAR-A3-HANDOFF-DRAFT.pdf`.
 
 The screenshots in `docs/evidence/a3/screenshots/` were captured from the VS Code terminal
 on the run host, cropped to the terminal panel, and had the screen-sharing indicator's

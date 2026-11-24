@@ -157,12 +157,10 @@ cover boundaries and empty sets.
 
 ## Assignment 3: RAGOps commands per part
 
-Final ownership/status: [Moez handoff](docs/assignment-3/FINAL-HANDOFF-TO-MOEZ.md) and
-[Phase3 report](docs/assignment-3/phase-reports/PHASE-3-REPORT.md). Rayyan has closed
-his project work allocation; all remaining project tasks belong to Moez/his agent.
-The real A3 campaign/final PDF remain unverified; the clearly marked handoff draft
-is not a submission. Both members must still personally attend/explain.
-
+Status: Parts A to F were run on the minikube cluster on 24 November 2026. The report is
+[docs/assignment-3/report/RAHBAR-A3-REPORT.pdf](docs/assignment-3/report/RAHBAR-A3-REPORT.pdf);
+results are in `eval/results/cluster/`, trace samples in `traces/a3-cluster/` and evidence
+in `docs/evidence/a3/`.
 
 Plan, split and host machine: [docs/a3/PLAN.md](docs/a3/PLAN.md). Cluster commands:
 [k8s/README.md](k8s/README.md).
