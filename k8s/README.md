@@ -62,7 +62,10 @@ Before adding any input scope it must exist. All configured roots are authoritat
 for deletion within that scope; an omitted root is preserved, not treated as empty.
 To test real-corpus integration later, use `/corpus,/corpus/batch-a,/corpus/batch-b`
 with a reviewed collection/config. The fictional collection alone is not the required
-real corpus. Jobs report four checks per document and persistent quarantine reasons.
+real corpus.
+Our Part A run used that scope on the live collection: after the two transfers above,
+`kubectl -n rahbar patch configmap rahbar-config --type merge -p '{"data":{"INCOMING_DIRS":"/corpus,/corpus/batch-a,/corpus/batch-b"}}'`,
+then `make index`. The base ConfigMap keeps `/corpus` so a fresh cluster indexes without the batches. Jobs report four checks per document and persistent quarantine reasons.
 Choose the real near-duplicate threshold using measured scores, not fake-test vectors.
 
 Prepare standalone objects with the exact built image and collection. This writes
