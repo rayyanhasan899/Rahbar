@@ -1,19 +1,14 @@
-# Report package - HANDOFF DRAFT ONLY
+# Assignment 3 report
 
-RAHBAR-A3-HANDOFF-DRAFT.pdf contains8 main pages. It covers G1-G5 with real software
-check evidence, design facts and explicitly pending real-experiment/human sections.
-No fake screenshot appendix or invented measurement has been added. It is not ready
-to submit. Moez now owns every remaining edit, result, review and submission action.
+`RAHBAR-A3-REPORT.pdf` is the submitted report: eight main pages (G1-G5) and an appendix
+of terminal screenshots for Parts A-F. Every number in it comes from the cluster runs in
+`eval/results/cluster/` and the evidence in `docs/evidence/a3/`.
 
-Editable source: report-content.json. Renderer: build_report.py (ReportLab4.4.9 used
-from the already bundled document runtime; no application dependency was added or
-installed). Run `python docs/assignment-3/report/build_report.py` in a ReportLab-capable
-Python environment. The renderer intentionally requires8 pages and the draft status;
-final submission assembly/review is a separate Moez task. Append only actual reviewed
-own-terminal screenshots, then reopen/render/inspect EVERY page. Keep <=8 MAIN pages;
-the genuine screenshot appendix is excluded from that limit.
+Editable source: `report-content.json`. Renderer: `build_report.py` (ReportLab and Pillow).
+Run `python docs/assignment-3/report/build_report.py`. With `"status": "FINAL"` it writes
+`RAHBAR-A3-REPORT.pdf`; with the draft status it writes the earlier
+`RAHBAR-A3-HANDOFF-DRAFT.pdf`, which is kept only as history.
 
-The first page deliberately does not guess full legal names/roll numbers. The G4
-findings-dependent answers are marked pending; factual architecture/design discussion
-is distinguished from unobserved experiments. The contribution/AI statement must be
-reviewed by the humans before finalizing. See ../FINAL-HANDOFF-TO-MOEZ.md.
+The screenshots in `docs/evidence/a3/screenshots/` were captured from the VS Code terminal
+on the run host, cropped to the terminal panel, and had the screen-sharing indicator's
+orange edge tint removed. Their text is unchanged.

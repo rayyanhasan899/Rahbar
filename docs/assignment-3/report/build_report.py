@@ -1,8 +1,10 @@
 """Render the eight-page report: the handoff draft, or the final version with the screenshot appendix."""
 from __future__ import annotations
+import io
 import json
 from pathlib import Path
 from xml.sax.saxutils import escape
+from PIL import Image as PILImage
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
@@ -61,8 +63,14 @@ def build() -> None:
     for shot in data.get('appendix', []):
         story.append(PageBreak())
         story.append(text(f"Appendix {shot['label']}. {shot['caption']}", 'title'))
-        picture = Image(str(ROOT / shot['path']))
-        scale = min((A4[0] - 80) / picture.imageWidth, (A4[1] - 160) / picture.imageHeight)
+        shot_image = PILImage.open(ROOT / shot['path'])
+        if shot_image.width > shot_image.height:
+            shot_image = shot_image.rotate(90, expand=True)
+        buffer = io.BytesIO()
+        shot_image.save(buffer, 'PNG')
+        buffer.seek(0)
+        picture = Image(buffer)
+        scale = min((A4[0] - 80) / picture.imageWidth, (A4[1] - 210) / picture.imageHeight)
         picture.drawWidth, picture.drawHeight = picture.imageWidth * scale, picture.imageHeight * scale
         story.append(picture)
     output = ROOT / ('RAHBAR-A3-REPORT.pdf' if final else 'RAHBAR-A3-HANDOFF-DRAFT.pdf')

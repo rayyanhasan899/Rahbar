@@ -1,5 +1,5 @@
 {
-  "status": "DRAFT - NOT SUBMISSION READY",
+  "status": "FINAL",
   "pages": [
     {
       "title": "RAHBAR Assignment 03: RAGOps",
@@ -501,7 +501,7 @@
         }
       ],
       "after": [
-        "AI statement: [to be written by Moez]"
+        "AI statement: We used AI assistants as tools: OpenAI Codex for parts of the phase 1-3 implementation, tests and documentation, and Anthropic Claude to script and run cluster steps, draft the six coverage questions and draft report text.\nThe decisions that shape the results were ours: the human-written golden questions, the 11 hand labels written before reading the judge, every threshold, the candidate choices and the release decisions. We reviewed every generated question against the PDF and merged generated code only after tests and CI passed.\nEvery number here comes from our own cluster runs and traces to a committed result file; we checked each against its source and take full responsibility for this submission."
       ],
       "paragraphs": []
     }
