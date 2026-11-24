@@ -504,5 +504,52 @@
       ],
       "paragraphs": []
     }
+  ],
+  "appendix": [
+    {
+      "label": "A",
+      "caption": "Batch A then Batch B verification report (per-file check outcome) and the unchanged run with 0 embeddings; live near-duplicate threshold and scope",
+      "path": "../../evidence/a3/screenshots/appendix-A.png"
+    },
+    {
+      "label": "B",
+      "caption": "Evaluation summary with all three levels (run 1) and run 2 for noise",
+      "path": "../../evidence/a3/screenshots/appendix-B.png"
+    },
+    {
+      "label": "C",
+      "caption": "Gate failures and the passing same-config candidate; promote and undo with rollout history",
+      "path": "../../evidence/a3/screenshots/appendix-C.png"
+    },
+    {
+      "label": "D",
+      "caption": "trace_tool replay of trace 9e048461 (h08, D5) and the injection rail event (D4)",
+      "path": "../../evidence/a3/screenshots/appendix-D.png"
+    },
+    {
+      "label": "E",
+      "caption": "Coverage before (23/40) and after (30/40) the six new golden questions",
+      "path": "../../evidence/a3/screenshots/appendix-E.png"
+    },
+    {
+      "label": "F1",
+      "caption": "kubectl get all,pvc,configmap,cronjob,job (part 1 of 3)",
+      "path": "../../evidence/a3/screenshots/appendix-F1.png"
+    },
+    {
+      "label": "F3",
+      "caption": "kubectl get all,pvc,configmap,cronjob,job (part 2 of 3): Jobs and PVCs",
+      "path": "../../evidence/a3/screenshots/appendix-F3.png"
+    },
+    {
+      "label": "F4",
+      "caption": "kubectl get all,pvc,configmap,cronjob,job (part 3 of 3): PVCs and ConfigMaps",
+      "path": "../../evidence/a3/screenshots/appendix-F4.png"
+    },
+    {
+      "label": "F2",
+      "caption": "Gate outcome changed by the rahbar-gate ConfigMap only; completed ingestion Job and eval Job logs",
+      "path": "../../evidence/a3/screenshots/appendix-F2.png"
+    }
   ]
 }
