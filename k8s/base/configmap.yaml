@@ -29,7 +29,7 @@ data:
   EMBED_BATCH_SIZE: '16'
   INDEX_LOCK_PATH: /locks/index.lock
   DATALAKE_DIR: /datalake
-  INCOMING_DIRS: '/corpus/batch-b'
+  INCOMING_DIRS: '/corpus,/corpus/batch-a,/corpus/batch-b'
   MIN_TEXT_CHARS: '64'
   NEAR_DUP_THRESHOLD: '0.95'
   DOCUMENT_EMBED_CHARS: '4000'
