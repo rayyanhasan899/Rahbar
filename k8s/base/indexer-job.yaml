@@ -31,11 +31,11 @@ spec:
             - ALL
         resources:
           requests:
-            cpu: 100m
-            memory: 256Mi
+            cpu: 500m
+            memory: 320Mi
           limits:
             cpu: '1'
-            memory: 1Gi
+            memory: 512Mi
         volumeMounts:
         - name: datalake
           mountPath: /datalake

@@ -35,11 +35,11 @@ spec:
           runAsGroup: 101
         resources:
           requests:
-            cpu: 50m
-            memory: 128Mi
+            cpu: 10m
+            memory: 16Mi
           limits:
-            cpu: 500m
-            memory: 512Mi
+            cpu: 50m
+            memory: 32Mi
         volumeMounts:
         - name: tmp
           mountPath: /tmp
