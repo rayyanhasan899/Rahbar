@@ -1,4 +1,4 @@
-"""Render the editable eight-page HANDOFF DRAFT, never a completed submission."""
+"""Render the eight-page report: the handoff draft, or the final version with the screenshot appendix."""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -6,15 +6,16 @@ from xml.sax.saxutils import escape
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
 from reportlab.lib.styles import ParagraphStyle
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak, Image
 
 ROOT = Path(__file__).resolve().parent
 
 
 def build() -> None:
     data = json.loads((ROOT / 'report-content.json').read_text(encoding='utf-8'))
-    if data.get('status') != 'DRAFT - NOT SUBMISSION READY' or len(data['pages']) != 8:
-        raise ValueError('This handoff renderer requires eight explicitly draft pages.')
+    final = data.get('status') == 'FINAL'
+    if not (final or data.get('status') == 'DRAFT - NOT SUBMISSION READY') or len(data['pages']) != 8:
+        raise ValueError('The report needs eight main pages and status FINAL or the draft status.')
     styles = {
         'title': ParagraphStyle('title', fontName='Helvetica-Bold', fontSize=18, leading=22, textColor=colors.HexColor('#153349'), spaceAfter=14),
         'body': ParagraphStyle('body', fontName='Helvetica', fontSize=9.5, leading=13, spaceAfter=9),
@@ -28,7 +29,8 @@ def build() -> None:
         if index:
             story.append(PageBreak())
         story.append(text(page['title'], 'title'))
-        story.append(text('DRAFT - NOT SUBMISSION READY'))
+        if not final:
+            story.append(text('DRAFT - NOT SUBMISSION READY'))
         for paragraph in page.get('paragraphs', []):
             story.append(text(paragraph))
         for block in page.get('tables', []):
@@ -51,13 +53,22 @@ def build() -> None:
         canvas.saveState()
         canvas.setFillColor(colors.HexColor('#9b3131'))
         canvas.setFont('Helvetica-Bold', 7)
-        canvas.drawString(40, 27, 'HANDOFF DRAFT | Live results, human provenance and screenshots pending | Do not submit')
+        if not final:
+            canvas.drawString(40, 27, 'HANDOFF DRAFT | Live results, human provenance and screenshots pending | Do not submit')
         canvas.setFillColor(colors.grey)
-        canvas.drawRightString(A4[0]-40, 16, f'{doc.page} / 8')
+        canvas.drawRightString(A4[0]-40, 16, f'{doc.page}' if final else f'{doc.page} / 8')
         canvas.restoreState()
-    output = ROOT / 'RAHBAR-A3-HANDOFF-DRAFT.pdf'
+    for shot in data.get('appendix', []):
+        story.append(PageBreak())
+        story.append(text(f"Appendix {shot['label']}. {shot['caption']}", 'title'))
+        picture = Image(str(ROOT / shot['path']))
+        scale = min((A4[0] - 80) / picture.imageWidth, (A4[1] - 160) / picture.imageHeight)
+        picture.drawWidth, picture.drawHeight = picture.imageWidth * scale, picture.imageHeight * scale
+        story.append(picture)
+    output = ROOT / ('RAHBAR-A3-REPORT.pdf' if final else 'RAHBAR-A3-HANDOFF-DRAFT.pdf')
     doc = SimpleDocTemplate(str(output), pagesize=A4, leftMargin=40, rightMargin=40, topMargin=35, bottomMargin=45,
-                            title='RAHBAR Assignment 03 - Handoff Draft', author='Rayyan Hassan')
+                            title='RAHBAR Assignment 03' if final else 'RAHBAR Assignment 03 - Handoff Draft',
+                            author='Abdul Moez Yousaf, Syed Rayyan Hassan' if final else 'Rayyan Hassan')
     doc.build(story, onFirstPage=footer, onLaterPages=footer)
     print(output)
 
