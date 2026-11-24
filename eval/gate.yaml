@@ -3,7 +3,7 @@
 # A null value fails the gate on purpose: set it from the baseline run and write the
 # reason in the report.
 max_recall5_drop: 0.02          # recall@5 may fall at most 2 points below the baseline
-min_faithfulness: null          # set from the baseline faithfulness
-max_p95_latency_seconds: null   # set from the baseline p95 on this laptop
+min_faithfulness: 0.33           # baseline 0.3333 = 5 of 15 judged answers; one answer is 6.7 points, so no answer may be lost
+max_p95_latency_seconds: 9.1   # 1.5 x baseline p95 of 6.07 s on this laptop
 abstention_not_below_baseline: true
 min_citation_validity: 0.95     # Assignment 2's gate value
