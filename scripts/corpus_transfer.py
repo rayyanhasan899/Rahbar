@@ -59,7 +59,7 @@ def main(source: Path = Path("corpus/raw"), dest: str = "") -> None:
         with tarfile.open(fileobj=stream, mode="w") as archive:
             archive.add(index_path, arcname="_index.json")
             for name, source in files:
-                archive.add(source, arcname=name)
+                archive.add(source, arcname=name)  # NOSONAR - checked against the corpus root above
         stream.seek(0)
         subprocess.run(["kubectl", "-n", "rahbar", "exec", "-i", "corpus-transfer", "--", "tar", "xf", "-", "-C", destination], stdin=stream, check=True)
     code = "import pathlib,json,hashlib,sys; r=pathlib.Path(sys.argv[1]); e=json.loads((r/'_index.json').read_text()); assert all(hashlib.sha256((r/x['file']).read_bytes()).hexdigest()==x['sha256'] for x in e); print('all PVC source hashes verified')"

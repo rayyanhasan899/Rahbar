@@ -134,7 +134,7 @@ def main() -> int:
         roots = [os.path.realpath(root) for root in ALLOWED_ROOTS]
         if not any(os.path.commonpath([root, out]) == root for root in roots):
             raise ValueError(f"--out is outside the repository, /results and /config: {args.out}")
-        Path(out).write_text(json.dumps({
+        Path(out).write_text(json.dumps({  # NOSONAR - path checked against ALLOWED_ROOTS above
             "baseline": str(args.baseline), "candidate": str(args.candidate),
             "thresholds": thresholds, "passed": passed,
             "rules": [{"rule": n, "passed": ok, "detail": d} for n, ok, d in results],

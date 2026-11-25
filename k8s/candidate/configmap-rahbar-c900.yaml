@@ -24,7 +24,7 @@ data:
   MAX_HISTORY_TURNS: '3'
   MIN_TEXT_CHARS: '64'
   NEAR_DUP_THRESHOLD: '0.95'
-  OLLAMA_URL: http://192.168.65.254:11434
+  OLLAMA_URL: http://192.168.65.254:11434  # NOSONAR - Docker Desktop host-only address, Ollama has no TLS
   REDIS_HOST: redis
   REDIS_PORT: '6379'
   RELEVANCE_FLOOR: '0.65'

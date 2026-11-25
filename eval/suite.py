@@ -284,8 +284,8 @@ def main() -> int:
     for target in (json_path, md_path, latest_path):
         if os.path.commonpath([root, target]) != root:
             raise ValueError(f"output file escapes the results directory: {target}")
-    Path(json_path).write_text(json.dumps(result, indent=2), encoding="utf-8")
-    Path(md_path).write_text(markdown(result), encoding="utf-8")
+    Path(json_path).write_text(json.dumps(result, indent=2), encoding="utf-8")  # NOSONAR - checked against results_dir above
+    Path(md_path).write_text(markdown(result), encoding="utf-8")  # NOSONAR - checked against results_dir above
     shutil.copyfile(json_path, latest_path)
     print()
     print(markdown(result))
