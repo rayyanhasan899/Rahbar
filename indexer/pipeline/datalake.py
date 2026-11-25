@@ -78,7 +78,7 @@ def discover_inputs(roots: list[Path]) -> list[Incoming]:
                         meta = {**front, **meta}
                     except (ValueError, yaml.YAMLError):
                         error = "invalid Markdown metadata"
-                heading = re.search(r"^#[ \t]+(.+)$", text, re.M)
+                heading = re.search(r"^#[ \t]+(\S.*)$", text, re.M)
                 if not meta.get("title") and heading:
                     meta["title"] = heading[1].strip()
             meta.setdefault("title", meta.get("name", ""))
