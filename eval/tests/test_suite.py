@@ -43,8 +43,10 @@ def test_page_or_section_match_but_never_another_source():
 
 def test_typos_are_deterministic_and_change_the_query():
     q = "What minimum cumulative GPA is required for graduation?"
-    assert common.with_typos(q, "q04", 42, rate=1.0) == common.with_typos(q, "q04", 42, rate=1.0)
-    assert common.with_typos(q, "q04", 42, rate=1.0) != q
+    first = common.with_typos(q, "q04", 42, rate=1.0)
+    second = common.with_typos(q, "q04", 42, rate=1.0)
+    assert first == second
+    assert first != q
     assert common.with_typos(q, "q04", 42, rate=0.0) == q
 
 

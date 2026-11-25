@@ -69,7 +69,7 @@ def discover_inputs(roots: list[Path]) -> list[Incoming]:
             meta = dict(entry)
             if not error and path.suffix.lower() == ".md" and path.is_file():
                 text = path.read_text(encoding="utf-8", errors="replace")
-                match = re.match(r"\A---\s*\n(.*?)\n---\s*\n", text, re.S)
+                match = re.match(r"\A---[ \t]*\n(.*?)\n---[ \t]*\n", text, re.S)
                 if match:
                     try:
                         front = yaml.safe_load(match[1])
@@ -78,7 +78,7 @@ def discover_inputs(roots: list[Path]) -> list[Incoming]:
                         meta = {**front, **meta}
                     except (ValueError, yaml.YAMLError):
                         error = "invalid Markdown metadata"
-                heading = re.search(r"^#\s+(.+)$", text, re.M)
+                heading = re.search(r"^#[ \t]+(.+)$", text, re.M)
                 if not meta.get("title") and heading:
                     meta["title"] = heading[1].strip()
             meta.setdefault("title", meta.get("name", ""))
