@@ -255,7 +255,7 @@
         }
       ],
       "after": [
-        "Golden set: 31 questions (15 written by us earlier, 8 more written by Moez, 8 synthetic drafts reviewed by hand; 26 answerable, 5 unanswerable). The baseline run reported 1140 ms per chunk against about 24 ms in other runs; Ollama had just loaded the embedding model, so we do not use that run's timing."
+        "Golden set: 31 questions (15 written by us earlier, 8 more written by Moez, 8 synthetic drafts reviewed by hand; 26 answerable, 5 unanswerable). Part E later added six questions, so eval/golden.jsonl now holds 37; the runs in this table used the 31. The baseline run reported 1140 ms per chunk against about 24 ms in other runs; Ollama had just loaded the embedding model, so we do not use that run's timing."
       ]
     },
     {
