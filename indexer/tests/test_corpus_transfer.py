@@ -26,6 +26,9 @@ class TransferTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.source = self.root / "corpus" / "raw"
         self.source.mkdir(parents=True)
+        allowed = patch.object(transfer.safe_paths, "ALLOWED_ROOTS", (*transfer.safe_paths.ALLOWED_ROOTS, self.root))
+        allowed.start()
+        self.addCleanup(allowed.stop)
         self.content = b"A complete owned document."
         (self.source / "rules.md").write_bytes(self.content)
         self.index = [{"file": "rules.md", "sha256": hashlib.sha256(self.content).hexdigest()}]

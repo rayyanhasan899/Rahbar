@@ -8,11 +8,15 @@ import subprocess
 import tarfile
 import tempfile
 import re
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import safe_paths  # noqa: E402
 
 
 def main(source: Path = Path("corpus/raw"), dest: str = "") -> None:
-    root = source.resolve()
+    root = safe_paths.confined(source)
     if dest and not re.fullmatch(r"[a-z][a-z0-9-]{0,50}", dest):
         raise ValueError("--dest must be a single plain subfolder name")
     destination = "/corpus" + ("/" + dest if dest else "")

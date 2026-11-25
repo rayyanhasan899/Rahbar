@@ -29,6 +29,7 @@ from common import (  # noqa: E402
     HERE,
     RESULTS,
     Services,
+    confined,
     mean,
     ndcg_at_k,
     read_jsonl,
@@ -202,14 +203,16 @@ def main() -> int:
     args = parser.parse_args()
 
     if args.compare:
-        a, b = (json.loads(p.read_text(encoding="utf-8")) for p in args.compare)
+        a, b = (json.loads(confined(p).read_text(encoding="utf-8")) for p in args.compare)
         head = [a["label"][:14].rjust(14), b["label"][:14].rjust(14), "diff".rjust(10)]
         print("metric".ljust(44), *head)
         for key, x, y, d in compare(a, b):
             print(key.ljust(44), fmt(x).rjust(14), fmt(y).rjust(14), fmt(d).rjust(10))
         return 0
 
-    golden = read_jsonl(args.golden)
+    golden_path, pairs_path = confined(args.golden), confined(args.pairs)
+    results_dir = confined(args.results_dir)
+    golden = read_jsonl(golden_path)
     from golden_check import problems
     errors = problems(golden)
     if errors:
@@ -233,8 +236,8 @@ def main() -> int:
         raise ValueError('pipeline configuration changed within evaluation run')
     if not evidence[0].get('embedding', {}).get('digest'):
         raise ValueError('embedding digest missing')
-    provenance = {'golden_sha256': hashlib.sha256(args.golden.read_bytes()).hexdigest(),
-                  'pairs_sha256': hashlib.sha256(args.pairs.read_bytes()).hexdigest(),
+    provenance = {'golden_sha256': hashlib.sha256(golden_path.read_bytes()).hexdigest(),
+                  'pairs_sha256': hashlib.sha256(pairs_path.read_bytes()).hexdigest(),
                   'seed': args.seed, 'corpus_sha256': index['corpus_sha256'],
                   'embedding_digest': evidence[0]['embedding']['digest'],
                   'judge_model': args.judge_model, 'index': index,
@@ -253,7 +256,7 @@ def main() -> int:
             "judge_model": args.judge_model,
         },
         "module": None if args.skip_module else module_embedding.run(
-            services, args.embed_model, args.pairs, args.chunk_sample, args.seed
+            services, args.embed_model, pairs_path, args.chunk_sample, args.seed
         ),
         "component": component(rows),
         "end_to_end": end_to_end.score(rows),
@@ -269,12 +272,12 @@ def main() -> int:
     if result["end_to_end"]["cache_hits"]:
         print("WARNING:", result["end_to_end"]["cache_hits"], "unexpected cache hits; check bypass header")
 
-    args.results_dir.mkdir(parents=True, exist_ok=True)
-    base = args.results_dir / f"suite-{result['stamp']}-{args.label}"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    base = results_dir / f"suite-{result['stamp']}-{args.label}"
     base.with_suffix(".json").write_text(json.dumps(result, indent=2), encoding="utf-8")
     base.with_suffix(".md").write_text(markdown(result), encoding="utf-8")
     latest = "baseline-candidate" if args.label == "baseline" else args.label
-    shutil.copyfile(base.with_suffix(".json"), args.results_dir / f"latest-{latest}.json")
+    shutil.copyfile(base.with_suffix(".json"), results_dir / f"latest-{latest}.json")
     print()
     print(markdown(result))
     print("written:", base.with_suffix(".json"))

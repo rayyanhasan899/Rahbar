@@ -198,6 +198,7 @@ def test_golden_preflight_precedes_network_calls(tmp_path, monkeypatch):
     path = tmp_path / 'invalid.jsonl'
     path.write_text('{"id":"invalid","question":"example"}\n')
     monkeypatch.setattr(sys, 'argv', ['suite.py', '--golden', str(path)])
+    monkeypatch.setattr(common, 'ALLOWED_ROOTS', (*common.ALLOWED_ROOTS, tmp_path))
     monkeypatch.setattr(suite, 'Services', lambda *args: pytest.fail('network initialized before validation'))
     assert suite.main() == 2
 

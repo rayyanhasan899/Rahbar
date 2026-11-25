@@ -22,7 +22,7 @@ from collections import Counter
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import HERE, RESULTS, Services, cosine, percentile, read_jsonl, stamp  # noqa: E402
+from common import HERE, RESULTS, Services, confined, cosine, percentile, read_jsonl, stamp  # noqa: E402
 
 STOP = set(
     "a an and are as at be by can do does for from how i if in is it my of on or the to "
@@ -113,14 +113,15 @@ def main() -> int:
     parser.add_argument("--results-dir", type=Path, default=Path(env("RESULTS_DIR", RESULTS)))
     parser.add_argument("--label", default="coverage")
     args = parser.parse_args()
-    live, golden = read_jsonl(args.live), read_jsonl(args.golden)
+    live, golden = read_jsonl(confined(args.live)), read_jsonl(confined(args.golden))
+    results_dir = confined(args.results_dir)
     services = Services("", args.ollama)
     live_vecs = services.embed([q["query"] for q in live], args.embed_model, "query")
     golden_vecs = services.embed([q["question"] for q in golden], args.embed_model, "query")
     result = analyse(live, golden, live_vecs, golden_vecs, args.threshold, args.group_threshold)
     result["label"], result["stamp"] = args.label, stamp()
-    args.results_dir.mkdir(parents=True, exist_ok=True)
-    out = args.results_dir / f"coverage-{result['stamp']}-{args.label}.json"
+    results_dir.mkdir(parents=True, exist_ok=True)
+    out = results_dir / f"coverage-{result['stamp']}-{args.label}.json"
     out.write_text(json.dumps(result, indent=2), encoding="utf-8")
     print("live queries:", result["live_queries"], "golden questions:", result["golden_questions"])
     print("coverage at threshold", args.threshold, ":", result["covered"], "/",

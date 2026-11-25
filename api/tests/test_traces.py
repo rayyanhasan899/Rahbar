@@ -89,7 +89,7 @@ def test_writer_failure_does_not_break_answer_and_error_is_observable(caplog):
     assert records[0].persistence["error"] == "OSError"
 
 
-def test_refusal_error_and_window_denominators(tmp_path):
+def test_refusal_error_and_window_denominators(tmp_path, monkeypatch):
     settings = Settings(trace_dir=str(tmp_path))
     from tests.fakes import ScriptedProvider
 
@@ -99,6 +99,7 @@ def test_refusal_error_and_window_denominators(tmp_path):
     with pytest.raises(RetrievalUnavailable):
         answer_question("Absent topic?", broken, ScriptedProvider(), settings)
     tool = module("trace_tool")
+    monkeypatch.setattr(tool.safe_paths, "ALLOWED_ROOTS", (*tool.safe_paths.ALLOWED_ROOTS, tmp_path))
     rows = list(tool.read_traces([str(tmp_path)]))
     summary = module("trace_summary").summarize(rows)
     assert summary["queries"] == 2 and summary["errors"] == 1
@@ -232,9 +233,11 @@ def test_replaced_embedding_artifact_fails_before_embedding_transport():
         current.reset(token)
 
 
-def test_stdout_envelope_and_persisted_trace_deduplicate(tmp_path):
+def test_stdout_envelope_and_persisted_trace_deduplicate(tmp_path, monkeypatch):
     record = {'trace_id': 'one', 'ts': '2026-11-22T10:00:00Z', 'cache': {'result': 'bypass'}}
     (tmp_path / 'file.jsonl').write_text(json.dumps(record) + '\n')
     stdout = {**record, 'logger': 'rahbar.trace', 'level': 'INFO', 'msg': 'query trace', 'request_id': 'one'}
     (tmp_path / 'stdout.log').write_text(json.dumps(stdout) + '\n')
-    assert len(list(module('trace_tool').read_traces([str(tmp_path)]))) == 1
+    tool = module('trace_tool')
+    monkeypatch.setattr(tool.safe_paths, 'ALLOWED_ROOTS', (*tool.safe_paths.ALLOWED_ROOTS, tmp_path))
+    assert len(list(tool.read_traces([str(tmp_path)]))) == 1

@@ -19,6 +19,9 @@ from pathlib import Path
 
 import yaml
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from common import confined  # noqa: E402
+
 
 def number(value) -> float | None:
     return float(value) if isinstance(value, (int, float)) and not isinstance(value, bool) and math.isfinite(value) else None
@@ -116,9 +119,9 @@ def main() -> int:
     args = parser.parse_args()
     if args.baseline is None or args.candidate is None:
         parser.error("--baseline and --candidate are required")
-    baseline = json.loads(args.baseline.read_text(encoding="utf-8"))
-    candidate = json.loads(args.candidate.read_text(encoding="utf-8"))
-    thresholds = yaml.safe_load(args.thresholds.read_text(encoding="utf-8")) or {}
+    baseline = json.loads(confined(args.baseline).read_text(encoding="utf-8"))
+    candidate = json.loads(confined(args.candidate).read_text(encoding="utf-8"))
+    thresholds = yaml.safe_load(confined(args.thresholds).read_text(encoding="utf-8")) or {}
     results = rules(baseline, candidate, thresholds) + comparable(baseline, candidate)
     results.append(("all three levels measured", measured(baseline) and measured(candidate), "missing/nonfinite module/component measurements fail"))
     print("gate:", candidate["label"], "against", baseline["label"], "with", args.thresholds)
@@ -127,7 +130,7 @@ def main() -> int:
     passed = all(ok for _, ok, _ in results)
     print("GATE PASSED" if passed else "GATE FAILED")
     if args.out:
-        args.out.write_text(json.dumps({
+        confined(args.out).write_text(json.dumps({
             "baseline": str(args.baseline), "candidate": str(args.candidate),
             "thresholds": thresholds, "passed": passed,
             "rules": [{"rule": n, "passed": ok, "detail": d} for n, ok, d in results],

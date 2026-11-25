@@ -17,9 +17,18 @@ from typing import Any
 
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE / "results"
+ALLOWED_ROOTS = (HERE.parent, Path("/results"), Path("/config"))
 
 
 # files ---------------------------------------------------------------------------
+
+def confined(path: Path | str) -> Path:
+    resolved = Path(path).resolve()
+    for root in ALLOWED_ROOTS:
+        if resolved.is_relative_to(root.resolve()):
+            return resolved
+    raise ValueError(f"path is outside the repository, /results and /config: {path}")
+
 
 def read_jsonl(path: Path) -> list[dict]:
     rows = []

@@ -14,6 +14,11 @@ from pathlib import Path
 import sys
 from typing import Any, Iterator, TextIO
 
+try:
+    from . import safe_paths
+except ImportError:
+    import safe_paths
+
 MAX_LINE_BYTES = 8 * 1024 * 1024
 MAX_RECORDS = 100_000
 
@@ -46,7 +51,7 @@ def read_traces(paths: list[str] | None = None, stdin: TextIO | None = None) -> 
                 raise ValueError("stdin may only be supplied once")
             sources.append(None)
             continue
-        path = Path(name)
+        path = safe_paths.confined(name)
         if path.is_dir():
             sources.extend(sorted({*path.rglob("*.jsonl"), *path.rglob("*.log")}))
         elif path.is_file():
