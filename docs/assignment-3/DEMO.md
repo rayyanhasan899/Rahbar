@@ -28,7 +28,8 @@ Sections 5 to 7 cover the questions examiners are likely to ask after that.
    ```
 4. Load two helper functions. Paste them once per terminal.
    ```bash
-   kubectl -n rahbar port-forward service/api 18000:8000 > /tmp/pf.log 2>&1 &
+   mkdir -p .venv/demo
+   kubectl -n rahbar port-forward service/api 18000:8000 > .venv/demo/pf.log 2>&1 &
 
    ask() {   # ask <trace-id> "<question>"
      curl -s -H 'Content-Type: application/json' -H "X-Request-ID: $1" -H 'X-Rahbar-Cache: bypass' \
@@ -37,8 +38,8 @@ Sections 5 to 7 cover the questions examiners are likely to ask after that.
    }
 
    trace() { # trace <trace-id>
-     kubectl -n rahbar logs -l app=api --tail=-1 --max-log-requests=10 | grep '^{' > /tmp/api.jsonl
-     grep "$1" /tmp/api.jsonl | grep '"query trace"' | head -1 | python -m json.tool
+     kubectl -n rahbar logs -l app=api --tail=-1 --max-log-requests=10 | grep '^{' > .venv/demo/api.jsonl
+     grep "$1" .venv/demo/api.jsonl | grep '"query trace"' | head -1 | python -m json.tool
    }
    ```
    - `X-Request-ID` becomes the trace id, so you choose the id and know it in advance.
@@ -90,8 +91,8 @@ editor needed:
 ```bash
 # strict: the gate must now fail
 kubectl -n rahbar get configmap rahbar-gate -o jsonpath='{.data.gate\.yaml}' \
-  | sed 's/^min_faithfulness: 0.30/min_faithfulness: 0.90/' > /tmp/gate.yaml
-kubectl -n rahbar create configmap rahbar-gate --from-file=gate.yaml=/tmp/gate.yaml \
+  | sed 's/^min_faithfulness: 0.30/min_faithfulness: 0.90/' > .venv/demo/gate.yaml
+kubectl -n rahbar create configmap rahbar-gate --from-file=gate.yaml=.venv/demo/gate.yaml \
   --dry-run=client -o yaml | kubectl apply -f -
 kubectl -n rahbar delete job eval --ignore-not-found && kubectl apply -f k8s/eval-job.yaml
 kubectl -n rahbar wait --for=condition=failed job/eval --timeout=5400s
@@ -114,7 +115,7 @@ This fails on recall@5: 0.9231 against 0.9615, a drop larger than the 0.02 allow
 ```bash
 ask d1-demo "What is the maximum percentage of absences the HoD can condone?"
 trace d1-demo
-python scripts/trace_tool.py show d1-demo /tmp/api.jsonl
+python scripts/trace_tool.py show d1-demo .venv/demo/api.jsonl
 ```
 - `trace` prints the full record. Point out:
   - `collection` and `embedding` (model and digest)
@@ -135,7 +136,7 @@ trace d4-demo | grep -A8 guardrails
 
 **Summary over a time window (D3):**
 ```bash
-python scripts/trace_summary.py --since "$(date -u +%Y-%m-%dT00:00:00Z)" /tmp/api.jsonl
+python scripts/trace_summary.py --since "$(date -u +%Y-%m-%dT00:00:00Z)" .venv/demo/api.jsonl
 ```
 
 **Backup if the cluster misbehaves.** The committed samples work offline:
@@ -176,8 +177,8 @@ This is h08, the D5 case: a citation retry, then an abstention.
      -p '{"data":{"INCOMING_DIRS":"/corpus,/corpus/batch-a,/corpus/batch-b,/corpus/demo-batch"}}'
    kubectl -n rahbar create job --from=cronjob/reindex demo-ingest-1
    kubectl -n rahbar wait --for=condition=complete job/demo-ingest-1 --timeout=1800s
-   kubectl -n rahbar logs job/demo-ingest-1 -c indexer > /tmp/ingest.log
-   python .a3-run/summarize_ingest.py /tmp/ingest.log
+   kubectl -n rahbar logs job/demo-ingest-1 -c indexer > .venv/demo/ingest.log
+   python .a3-run/summarize_ingest.py .venv/demo/ingest.log
    ```
    Point out:
    - The four checks for each file (quality, completeness, recency, uniqueness), and the reason
@@ -194,8 +195,8 @@ This is h08, the D5 case: a citation retry, then an abstention.
    ```bash
    kubectl -n rahbar create job --from=cronjob/reindex demo-ingest-2
    kubectl -n rahbar wait --for=condition=complete job/demo-ingest-2 --timeout=1800s
-   kubectl -n rahbar logs job/demo-ingest-2 -c indexer > /tmp/ingest2.log
-   python .a3-run/summarize_ingest.py /tmp/ingest2.log
+   kubectl -n rahbar logs job/demo-ingest-2 -c indexer > .venv/demo/ingest2.log
+   python .a3-run/summarize_ingest.py .venv/demo/ingest2.log
    ```
 
 `.a3-run/` is a local helper folder and is not in the repository. If it is missing, read the log
@@ -211,13 +212,13 @@ kubectl -n rahbar get deploy api-candidate -o jsonpath='{.metadata.annotations}'
 
 python scripts/release.py promote --name rahbar-same
 kubectl -n rahbar rollout status deployment/api
-kubectl -n rahbar port-forward service/api 18000:8000 > /tmp/pf.log 2>&1 &
+kubectl -n rahbar port-forward service/api 18000:8000 > .venv/demo/pf.log 2>&1 &
 ask f3-promoted "What is the maximum percentage of absences the HoD can condone?"
 trace f3-promoted | grep '"collection"'          # rahbar-same-...
 
 python scripts/release.py undo                   # suspends the writer, rollout undo, reconcile
 kubectl -n rahbar rollout history deployment/api
-kubectl -n rahbar port-forward service/api 18000:8000 > /tmp/pf.log 2>&1 &
+kubectl -n rahbar port-forward service/api 18000:8000 > .venv/demo/pf.log 2>&1 &
 ask f3-undone "What is the maximum percentage of absences the HoD can condone?"
 trace f3-undone | grep '"collection"'            # rahbar-3615c46d... (previous)
 ```
@@ -232,9 +233,9 @@ trace f3-undone | grep '"collection"'            # rahbar-3615c46d... (previous)
 
 ```bash
 OLL=http://$(ip route show default | awk '{print $3}'):11434
-git show 8fffecb~1:eval/golden.jsonl > /tmp/golden-before.jsonl
-python eval/query_coverage.py --threshold 0.70 --min-share 0.85 --label before --golden /tmp/golden-before.jsonl --ollama $OLL --results-dir /tmp/cov
-python eval/query_coverage.py --threshold 0.70 --min-share 0.85 --label after  --golden eval/golden.jsonl      --ollama $OLL --results-dir /tmp/cov
+git show 8fffecb~1:eval/golden.jsonl > .venv/demo/golden-before.jsonl
+python eval/query_coverage.py --threshold 0.70 --min-share 0.85 --label before --golden .venv/demo/golden-before.jsonl --ollama $OLL --results-dir .venv/demo/cov
+python eval/query_coverage.py --threshold 0.70 --min-share 0.85 --label after  --golden eval/golden.jsonl      --ollama $OLL --results-dir .venv/demo/cov
 ```
 Before: 23 of 40 covered (31 golden questions). After the six added questions: 30 of 40 (37). Both
 results are still below the 85% target, and the report says so.
