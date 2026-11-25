@@ -35,9 +35,11 @@ spec:
           requests:
             cpu: 100m
             memory: 256Mi
+            ephemeral-storage: 256Mi
           limits:
             cpu: '1'
             memory: 1Gi
+            ephemeral-storage: 1Gi
         volumeMounts:
         - name: datalake
           mountPath: /datalake
@@ -94,6 +96,8 @@ spec:
           requests:
             cpu: 10m
             memory: 32Mi
+            ephemeral-storage: 32Mi
           limits:
             cpu: 100m
             memory: 64Mi
+            ephemeral-storage: 64Mi

@@ -35,9 +35,11 @@ spec:
       requests:
         cpu: 10m
         memory: 32Mi
+        ephemeral-storage: 64Mi
       limits:
         cpu: 100m
         memory: 64Mi
+        ephemeral-storage: 256Mi
     volumeMounts:
     - name: results
       mountPath: /results
