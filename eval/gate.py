@@ -20,7 +20,7 @@ from pathlib import Path
 import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import confined  # noqa: E402
+from common import ALLOWED_ROOTS, confined  # noqa: E402
 
 
 def number(value) -> float | None:
@@ -130,7 +130,11 @@ def main() -> int:
     passed = all(ok for _, ok, _ in results)
     print("GATE PASSED" if passed else "GATE FAILED")
     if args.out:
-        confined(args.out).write_text(json.dumps({
+        out = os.path.realpath(args.out)
+        roots = [os.path.realpath(root) for root in ALLOWED_ROOTS]
+        if not any(os.path.commonpath([root, out]) == root for root in roots):
+            raise ValueError(f"--out is outside the repository, /results and /config: {args.out}")
+        Path(out).write_text(json.dumps({
             "baseline": str(args.baseline), "candidate": str(args.candidate),
             "thresholds": thresholds, "passed": passed,
             "rules": [{"rule": n, "passed": ok, "detail": d} for n, ok, d in results],

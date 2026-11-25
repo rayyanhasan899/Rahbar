@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import random
 import time
 import zlib
@@ -23,10 +24,11 @@ ALLOWED_ROOTS = (HERE.parent, Path("/results"), Path("/config"))
 # files ---------------------------------------------------------------------------
 
 def confined(path: Path | str) -> Path:
-    resolved = Path(path).resolve()
+    resolved = os.path.realpath(path)
     for root in ALLOWED_ROOTS:
-        if resolved.is_relative_to(root.resolve()):
-            return resolved
+        base = os.path.realpath(root)
+        if os.path.commonpath([base, resolved]) == base:
+            return Path(resolved)
     raise ValueError(f"path is outside the repository, /results and /config: {path}")
 
 

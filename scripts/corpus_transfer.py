@@ -20,7 +20,10 @@ def main(source: Path = Path("corpus/raw"), dest: str = "") -> None:
     if dest and not re.fullmatch(r"[a-z][a-z0-9-]{0,50}", dest):
         raise ValueError("--dest must be a single plain subfolder name")
     destination = "/corpus" + ("/" + dest if dest else "")
-    entries = json.loads((root / "_index.json").read_text())
+    index_path = os.path.realpath(root / "_index.json")
+    if os.path.commonpath([str(root), index_path]) != str(root):
+        raise ValueError("corpus index escapes the selected corpus directory")
+    entries = json.loads(Path(index_path).read_text())
     registry = os.environ.get("REGISTRY", "")
     image = f"{registry + '/' if registry else ''}rahbar-indexer:{os.environ.get('IMAGE_TAG', 'dev')}"
     files = []
@@ -54,7 +57,7 @@ def main(source: Path = Path("corpus/raw"), dest: str = "") -> None:
                     "-p", destination], check=True)
     with tempfile.TemporaryFile() as stream:
         with tarfile.open(fileobj=stream, mode="w") as archive:
-            archive.add(root / "_index.json", arcname="_index.json")
+            archive.add(index_path, arcname="_index.json")
             for name, source in files:
                 archive.add(source, arcname=name)
         stream.seek(0)

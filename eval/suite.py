@@ -18,6 +18,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -201,6 +202,8 @@ def main() -> int:
     parser.add_argument("--skip-module", action="store_true")
     parser.add_argument("--chunk-sample", type=int, default=48)
     args = parser.parse_args()
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", args.label):
+        parser.error("--label may only contain letters, digits, '.', '_' and '-'")
 
     if args.compare:
         a, b = (json.loads(confined(p).read_text(encoding="utf-8")) for p in args.compare)
@@ -274,13 +277,19 @@ def main() -> int:
 
     results_dir.mkdir(parents=True, exist_ok=True)
     base = results_dir / f"suite-{result['stamp']}-{args.label}"
-    base.with_suffix(".json").write_text(json.dumps(result, indent=2), encoding="utf-8")
-    base.with_suffix(".md").write_text(markdown(result), encoding="utf-8")
     latest = "baseline-candidate" if args.label == "baseline" else args.label
-    shutil.copyfile(base.with_suffix(".json"), results_dir / f"latest-{latest}.json")
+    root = os.path.realpath(results_dir)
+    json_path, md_path, latest_path = (os.path.realpath(p) for p in (
+        base.with_suffix(".json"), base.with_suffix(".md"), results_dir / f"latest-{latest}.json"))
+    for target in (json_path, md_path, latest_path):
+        if os.path.commonpath([root, target]) != root:
+            raise ValueError(f"output file escapes the results directory: {target}")
+    Path(json_path).write_text(json.dumps(result, indent=2), encoding="utf-8")
+    Path(md_path).write_text(markdown(result), encoding="utf-8")
+    shutil.copyfile(json_path, latest_path)
     print()
     print(markdown(result))
-    print("written:", base.with_suffix(".json"))
+    print("written:", json_path)
     return 0
 
 
