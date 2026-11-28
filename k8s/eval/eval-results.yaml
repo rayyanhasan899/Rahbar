@@ -1,0 +1,12 @@
+# Suite results, gate decisions and the baseline (latest-baseline.json) survive Jobs.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: eval-results
+  namespace: rahbar
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 256Mi

@@ -1,0 +1,68 @@
+# Read-only data-lake inspection; never indexes on startup.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: datalake-inspect
+  namespace: rahbar
+  labels:
+    app: indexer
+spec:
+  serviceAccountName: indexer
+  automountServiceAccountToken: false
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: indexer
+    image: rahbar-indexer:dev
+    imagePullPolicy: IfNotPresent
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+        - ALL
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+        ephemeral-storage: 256Mi
+      limits:
+        cpu: '1'
+        memory: 1Gi
+        ephemeral-storage: 1Gi
+    volumeMounts:
+    - name: datalake
+      mountPath: /datalake
+      readOnly: true
+    - name: tmp
+      mountPath: /tmp
+    - name: indexer-lock
+      mountPath: /locks
+    - name: corpus
+      mountPath: /corpus
+      readOnly: true
+    args: []
+    command:
+    - sleep
+    - '1800'
+    envFrom:
+    - configMapRef:
+        name: rahbar-config
+  volumes:
+  - name: datalake
+    persistentVolumeClaim:
+      claimName: datalake-data
+  - name: tmp
+    emptyDir: {}
+  - name: indexer-lock
+    persistentVolumeClaim:
+      claimName: indexer-lock
+  - name: corpus
+    persistentVolumeClaim:
+      claimName: corpus-data
+  restartPolicy: Never

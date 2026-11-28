@@ -43,6 +43,14 @@ def extract(path: str, doc_version: str, superseded: bool) -> Document:
         from pdf2image import convert_from_path
 
         with pdfplumber.open(file) as pdf:
+            if isinstance(pdf.metadata, dict):
+                title = pdf.metadata.get("Title")
+                if isinstance(title, str):
+                    doc.title = title.strip()
+                created = str(pdf.metadata.get("CreationDate", ""))
+                match = re.match(r"(?:D:)?(\d{4})(\d{2})(\d{2})", created)
+                if match:
+                    doc.date = "-".join(match.groups())
             for number, page in enumerate(pdf.pages, 1):
                 text = page.extract_text(layout=False) or ""
                 if len(page.edges) >= 4:

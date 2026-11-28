@@ -1,5 +1,10 @@
 # Day 3 requirement traceability
 
+This file records historical **Assignment 2** Day 3 evidence. Assignment 3 Phase 1
+changes code/manifests after that audit; its current requirement and acceptance
+record is [PHASE-1-REPORT.md](assignment-3/phase-reports/PHASE-1-REPORT.md).
+The statuses and deadline below are not claims about Assignment 3.
+
 Verification date: 7 November 2026, Asia/Karachi. Deadline: 8 November 2026,
 23:59 PKT. The assignment PDF controls requirements. PASS refers to observed
 behavior, FAIL to an unsuccessful observation, BLOCKED to an external dependency,
@@ -71,3 +76,7 @@ Supported UI14b2333 builds, all three scans, fixture deployment and all eleven
 checks in real audit42326871487 passed. SonarCloud reanalysis passes with A ratings. The
 raw checker output is preserved as .out, so its quoted marker is not mistaken
 for an unfinished source stub; the checker itself remains unchanged.
+
+Assignment3 Phase2 current trace/integration acceptance: docs/assignment-3/phase-reports/PHASE-2-REPORT.md. The A2 statuses above remain historical.
+
+Current A3 final-evidence status (35 requirements): eval/results/phase3/requirement-status.json and docs/assignment-3/phase-reports/PHASE-3-REPORT.md. Rayyan allocation closed; all remaining project actions assigned to Moez.

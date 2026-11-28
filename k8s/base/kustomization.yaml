@@ -25,3 +25,5 @@ resources:
 - hpa.yaml
 - networkpolicy.yaml
 - corpus-data.yaml
+- datalake-data.yaml
+- traces-data.yaml

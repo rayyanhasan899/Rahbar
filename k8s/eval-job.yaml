@@ -1,0 +1,85 @@
+# Part B suite plus the Part C gate as a Job (Part F2):
+#   kubectl -n rahbar delete job eval --ignore-not-found
+#   kubectl -n rahbar exec deploy/redis -- redis-cli FLUSHALL     # no cached answers
+#   kubectl apply -f k8s/eval-job.yaml
+#   kubectl -n rahbar wait --for=condition=complete job/eval --timeout=3600s
+#   kubectl -n rahbar logs job/eval
+# Needs k8s/eval/ applied first (results PVC, gate ConfigMap). The Job fails when the
+# gate fails (backoffLimit 0, so a failed gate is never retried into a pass).
+# scripts/release.py renders the same manifest against the candidate API.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: eval
+  namespace: rahbar
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 5400
+  template:
+    metadata:
+      labels:
+        app: eval
+    spec:
+      automountServiceAccountToken: false
+      restartPolicy: Never
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: eval
+        image: rahbar-eval:dev
+        imagePullPolicy: IfNotPresent
+        command: [python, eval/job.py]
+        envFrom:
+        - configMapRef:
+            name: rahbar-config
+        env:
+        - name: LABEL
+          value: live
+        - name: API_URL
+          value: http://api:8000
+        - name: CHROMA_URL
+          value: http://chroma:8000
+        - name: RESULTS_DIR
+          value: /results
+        - name: GATE_FILE
+          value: /config/gate.yaml
+        - name: SUITE_ARGS
+          value: ''
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          # From kubectl top during Part C: median 69m / 30Mi, max 107m / 30Mi.
+          requests:
+            cpu: 100m
+            memory: 64Mi
+            ephemeral-storage: 64Mi
+          limits:
+            cpu: 250m
+            memory: 128Mi
+            ephemeral-storage: 256Mi
+        volumeMounts:
+        - name: results
+          mountPath: /results
+        - name: gate
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+      volumes:
+      - name: results
+        persistentVolumeClaim:
+          claimName: eval-results
+      - name: gate
+        configMap:
+          name: rahbar-gate
+      - name: tmp
+        emptyDir: {}

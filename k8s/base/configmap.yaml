@@ -23,8 +23,16 @@ data:
   LLM_TIMEOUT: '110'
   MAX_HISTORY_TURNS: '3'
   TEMPERATURE: '0.2'
+  SEED: '42'
   CORPUS_DIR: /corpus
   OLLAMA_URL: http://host.minikube.internal:11434
   EMBED_BATCH_SIZE: '16'
   INDEX_LOCK_PATH: /locks/index.lock
+  DATALAKE_DIR: /datalake
+  INCOMING_DIRS: '/corpus'
+  MIN_TEXT_CHARS: '64'
+  NEAR_DUP_THRESHOLD: '0.95'
+  DOCUMENT_EMBED_CHARS: '4000'
   ANONYMIZED_TELEMETRY: 'False'
+  TRACE_DIR: /traces
+  TRACE_MAX_FILE_BYTES: '104857600'

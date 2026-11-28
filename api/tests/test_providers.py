@@ -142,3 +142,17 @@ def test_malformed_usage_is_retriable_output_error_not_an_unhandled_exception():
     provider = HostedProvider(Settings(hosted_base_url="https://api.example/v1"), client=client)
     with pytest.raises(ProviderOutputError, match="usage envelope"):
         provider.generate("Q?", [POLICY])
+
+
+
+def test_ollama_sends_the_seed_only_when_set():
+    for seed, expected in ((None, False), (42, True)):
+        seen = {}
+
+        def handler(request: httpx.Request) -> httpx.Response:
+            seen["body"] = json.loads(request.content)
+            return httpx.Response(200, json={"message": {"content": ANSWER_JSON}})
+
+        OllamaProvider(Settings(seed=seed), client=client_for(handler)).generate("Q?", [POLICY])
+        assert ("seed" in seen["body"]["options"]) is expected
+        assert seen["body"]["options"].get("seed") == seed

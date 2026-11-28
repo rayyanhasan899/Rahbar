@@ -44,13 +44,18 @@ class HostedProvider:
         history: Sequence[Turn] = (),
         feedback: str | None = None,
     ) -> Answer:
-        body = {
+        body: dict[str, object] = {
             "model": self.settings.llm_model,
             "messages": build_messages(question, passages, history, feedback),
             "temperature": self.settings.temperature,
             "response_format": {"type": "json_object"},
         }
+        if self.settings.seed is not None:
+            body["seed"] = self.settings.seed
         headers = {"Authorization": f"Bearer {self.settings.llm_api_key}"}
+        from ...services.trace import capture_attempt, current
+        from typing import cast
+        capture_attempt(cast(list[dict], body["messages"]), passages, self.name, {"temperature": self.settings.temperature, "seed": self.settings.seed})
         start = time.perf_counter()
         try:
             response = self.client.post(
@@ -68,6 +73,9 @@ class HostedProvider:
             raise ProviderUnavailable(f"hosted: {type(exc).__name__}") from exc
         finally:
             GENERATION_SECONDS.labels(provider=self.name).observe(time.perf_counter() - start)
+            trace = current.get()
+            if trace is not None:
+                trace.stage("generate", start)
         try:
             usage = data.get("usage") or {}
             prompt_tokens = max(0, int(usage.get("prompt_tokens") or 0))

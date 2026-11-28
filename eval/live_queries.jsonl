@@ -1,0 +1,40 @@
+{"id": "live-01", "query": "Is my Islamiat paper necessarily written in English?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-02", "query": "Do Fall classes begin around August or January?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-03", "query": "When does Spring normally wrap up?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-04", "query": "Are final exam weeks included in the sixteen teaching weeks?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-05", "query": "My timetable says one theory credit. How much contact time is that?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-06", "query": "Does a lab credit usually take three contact hours?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-07", "query": "Who can approve moving a cancelled lecture?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-08", "query": "Can a teacher change our timetable without the academic office?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-09", "query": "What does a course listed as three plus one mean?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-10", "query": "How much absence may the department excuse if I am ill?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-11", "query": "Could lack of attendance stop me sitting the final?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-12", "query": "Can a 1.9 cumulative GPA satisfy graduation?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-13", "query": "How many regular semesters is a bachelor degree planned for?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-14", "query": "Who can authorize extending a degree after six years?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-15", "query": "I cleared theory but failed the lab. Must I retake theory again?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-16", "query": "Theory and lab are linked but only theory failed. What must I retake?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-17", "query": "Can I sign up for a course while its prerequisite is still failed?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-18", "query": "How many lab courses can I resit during the summer?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-19", "query": "What cumulative GPA leads to an academic warning?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-20", "query": "I need to leave a course. How late may I withdraw under the 2026 rules?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-21", "query": "Did the withdrawal cutoff differ in the 2023 handbook?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-22", "query": "Can I adjust registration after the first week of term?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-23", "query": "Is semester GPA the same as cumulative GPA?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-24", "query": "What do the letter grades FA and W mean?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-25", "query": "Which office publishes our official class schedule?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-26", "query": "Where do the rules describe acceptable use of generative AI?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-27", "query": "How are academic dishonesty violations handled?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-28", "query": "What are the ordinary credit ranges for theory classes and labs?", "origin": "synthetic", "expected_topic": "academic policy", "intended_domain": "in_domain"}
+{"id": "live-29", "query": "My Android phone cannot join campus Wi-Fi; which settings should I enter?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-30", "query": "Where is the IT portal option for a forgotten wireless-network password?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-31", "query": "Which DNS address belongs in my home router configuration?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-32", "query": "What are the safe steps for replacing my laptop battery?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-33", "query": "Will it rain in Islamabad tomorrow?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-34", "query": "Can you give me a vegetable curry recipe?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-35", "query": "Which viscosity of engine oil should I buy for my car?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-36", "query": "How can I install an HTTPS certificate in Kubernetes Ingress?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-37", "query": "Can I recover photos I deleted from my mobile phone?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-38", "query": "How are tie-breaks calculated in chess tournaments?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-39", "query": "How can I enable two-factor login on my private email account?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}
+{"id": "live-40", "query": "Which documents do I need for a Japanese tourist visa?", "origin": "synthetic", "expected_topic": "outside selected academic corpus", "intended_domain": "uncovered"}

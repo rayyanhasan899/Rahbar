@@ -1,5 +1,15 @@
 # RAHBAR architecture
 
+Assignment 3 Phase 1 adds verified incremental ingestion, a persistent data-lake PVC,
+content/config caches, collection-specific ledgers/views and rollback/count commands.
+The active pointer and API/cache interfaces remain compatible. See
+[ADR 0005](docs/adr/0005-verified-incremental-publication.md) for publication ordering,
+archive/history interpretation and recovery; [Phase 1 report](docs/assignment-3/phase-reports/PHASE-1-REPORT.md)
+distinguishes implemented behavior from live Kubernetes proof. Phase 2 adds request-local trace evidence, replay/summary tools, metrics and a traces
+PVC; exact-context evaluation and immutable release receipts synchronize reader/writer
+configurations through undo. See ADR0006 and the Phase2 report for actual verification
+and remaining human/runtime evidence. Phase3 demonstrations have not started.
+
 Ingress routes `/` to nginx and `/api` to three FastAPI readers. Redis provides
 shared persistent semantic caching; Chroma 1.0.12 is a one-replica StatefulSet
 with volumeClaimTemplates for stable identity/storage. Redis uses an AOF-backed
@@ -48,5 +58,5 @@ generation, cache, retries, abstention, tokens and injection flags.
 Bootstrap creates dependencies, transfers verified sources, completes indexing,
 then waits for API/UI. Fixture CI uses real embeddings and an explicit stub
 provider. The separate real audit uses public policies and real Ollama. CD tests,
-publishes and deploys the actual merged main SHA. See the four ADRs for decisions
+publishes and deploys the actual merged main SHA. See the ADRs for decisions
 and requirement records for what has actually been demonstrated.

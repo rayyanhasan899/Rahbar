@@ -1,18 +1,29 @@
 """Deliver hash-verified public documents to the indexer's PVC, not its image."""
 from __future__ import annotations
 import hashlib
+import argparse
 import json
 import os
 import subprocess
 import tarfile
 import tempfile
 import re
+import sys
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import safe_paths  # noqa: E402
 
-def main() -> None:
-    root = Path("corpus/raw").resolve()
-    entries = json.loads((root / "_index.json").read_text())
+
+def main(source: Path = Path("corpus/raw"), dest: str = "") -> None:
+    root = safe_paths.confined(source)
+    if dest and not re.fullmatch(r"[a-z][a-z0-9-]{0,50}", dest):
+        raise ValueError("--dest must be a single plain subfolder name")
+    destination = "/corpus" + ("/" + dest if dest else "")
+    index_path = os.path.realpath(root / "_index.json")
+    if os.path.commonpath([str(root), index_path]) != str(root):
+        raise ValueError("corpus index escapes the selected corpus directory")
+    entries = json.loads(Path(index_path).read_text())
     registry = os.environ.get("REGISTRY", "")
     image = f"{registry + '/' if registry else ''}rahbar-indexer:{os.environ.get('IMAGE_TAG', 'dev')}"
     files = []
@@ -42,17 +53,23 @@ def main() -> None:
     }
     subprocess.run(["kubectl", "apply", "-f", "-"], input=json.dumps(pod), text=True, check=True)
     subprocess.run(["kubectl", "-n", "rahbar", "wait", "--for=condition=ready", "pod/corpus-transfer", "--timeout=180s"], check=True)
+    subprocess.run(["kubectl", "-n", "rahbar", "exec", "corpus-transfer", "--", "mkdir",
+                    "-p", destination], check=True)
     with tempfile.TemporaryFile() as stream:
         with tarfile.open(fileobj=stream, mode="w") as archive:
-            archive.add(root / "_index.json", arcname="_index.json")
+            archive.add(index_path, arcname="_index.json")
             for name, source in files:
-                archive.add(source, arcname=name)
+                archive.add(source, arcname=name)  # NOSONAR - checked against the corpus root above
         stream.seek(0)
-        subprocess.run(["kubectl", "-n", "rahbar", "exec", "-i", "corpus-transfer", "--", "tar", "xf", "-", "-C", "/corpus"], stdin=stream, check=True)
-    code = "import pathlib,json,hashlib; r=pathlib.Path('/corpus'); e=json.loads((r/'_index.json').read_text()); assert all(hashlib.sha256((r/x['file']).read_bytes()).hexdigest()==x['sha256'] for x in e); print('all PVC source hashes verified')"
-    subprocess.run(["kubectl", "-n", "rahbar", "exec", "corpus-transfer", "--", "python", "-c", code], check=True)
+        subprocess.run(["kubectl", "-n", "rahbar", "exec", "-i", "corpus-transfer", "--", "tar", "xf", "-", "-C", destination], stdin=stream, check=True)
+    code = "import pathlib,json,hashlib,sys; r=pathlib.Path(sys.argv[1]); e=json.loads((r/'_index.json').read_text()); assert all(hashlib.sha256((r/x['file']).read_bytes()).hexdigest()==x['sha256'] for x in e); print('all PVC source hashes verified')"
+    subprocess.run(["kubectl", "-n", "rahbar", "exec", "corpus-transfer", "--", "python", "-c", code, destination], check=True)
     subprocess.run(["kubectl", "-n", "rahbar", "delete", "pod/corpus-transfer", "--wait=true"], check=True)
 
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--source", type=Path, default=Path("corpus/raw"))
+    parser.add_argument("--dest", default="")
+    args = parser.parse_args()
+    main(args.source, args.dest)

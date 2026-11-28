@@ -1,0 +1,18 @@
+{
+  "source_sha": "7be4cd598b299c6423b1444ac8026335a2c6fd99",
+  "scope": "Kubernetes owned fixture; answer provider explicitly stubbed; not real A3 B campaign",
+  "deployments": [
+    {
+      "name": "api",
+      "images": [
+        "rahbar-api:7be4cd598b299c6423b1444ac8026335a2c6fd99"
+      ]
+    },
+    {
+      "name": "ui",
+      "images": [
+        "rahbar-ui:7be4cd598b299c6423b1444ac8026335a2c6fd99"
+      ]
+    }
+  ]
+}

@@ -2,8 +2,25 @@
 
 from __future__ import annotations
 import math
+import re
 import httpx
 from .config import IndexerSettings
+
+
+def model_digest(settings: IndexerSettings) -> str:
+    """Pin the actual installed embedding artifact, not only a mutable model name."""
+    with httpx.Client(timeout=httpx.Timeout(15, connect=5)) as client:
+        response = client.get(settings.ollama_url.rstrip("/") + "/api/tags")
+        response.raise_for_status()
+        requested = settings.embed_model
+        if ":" not in requested.rsplit("/", 1)[-1]:
+            requested += ":latest"
+        for model in response.json()["models"]:
+            if model.get("name") == requested or model.get("model") == requested:
+                value = str(model.get("digest", "")).removeprefix("sha256:")
+                if re.fullmatch(r"[0-9a-f]{64}", value):
+                    return value
+        raise ValueError("installed embedding artifact digest is missing")
 
 
 def embed(

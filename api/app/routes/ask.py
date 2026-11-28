@@ -20,7 +20,7 @@ def ask(body: AskRequest, request: Request, response: Response) -> AskResponse:
             state.provider,
             state.settings,
             history=body.history,
-            cache=getattr(state, "cache", None),
+            cache=None if request.headers.get("X-Rahbar-Cache", "").lower() == "bypass" else getattr(state, "cache", None),
         )
     except RetrievalUnavailable as exc:
         raise HTTPException(status_code=503, detail=str(exc)) from exc

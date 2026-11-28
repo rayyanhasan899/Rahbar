@@ -1,0 +1,49 @@
+# Copy evaluation results to the repository:
+#   kubectl apply -f k8s/eval/results-shell.yaml
+#   kubectl -n rahbar wait --for=condition=ready pod/eval-results-shell
+#   kubectl -n rahbar cp eval-results-shell:/results eval/results/cluster
+#   kubectl -n rahbar delete pod eval-results-shell
+apiVersion: v1
+kind: Pod
+metadata:
+  name: eval-results-shell
+  namespace: rahbar
+  labels:
+    app: eval-shell
+spec:
+  automountServiceAccountToken: false
+  restartPolicy: Never
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+  - name: shell
+    image: rahbar-eval:dev
+    imagePullPolicy: IfNotPresent
+    command: [sleep, '3600']
+    securityContext:
+      allowPrivilegeEscalation: false
+      readOnlyRootFilesystem: true
+      capabilities:
+        drop:
+        - ALL
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+        ephemeral-storage: 64Mi
+      limits:
+        cpu: 100m
+        memory: 64Mi
+        ephemeral-storage: 256Mi
+    volumeMounts:
+    - name: results
+      mountPath: /results
+  volumes:
+  - name: results
+    persistentVolumeClaim:
+      claimName: eval-results

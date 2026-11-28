@@ -1,5 +1,20 @@
 # Indexing and evaluation pipeline
 
+## Assignment 3 Phase 1 extension
+
+The real runner now verifies quality, completeness, recency and uniqueness before
+chunking; failed inputs receive persistent quarantine/reasons. Content/config caches
+reuse document embeddings and accepted vectors, so unchanged reruns perform zero
+embedding calls and retain the generation. A durable per-collection ledger reconciles
+changed/deleted documents, archives superseded versions, supports pin/unpin rollback
+and validates published chunk IDs/provenance/counts. Staged snapshots preserve the
+existing control-pointer/cache contract; retired collections are explicit retained
+history. A data-lake PVC and separate verify/rollback/inspection objects are included.
+See [ADR 0005](adr/0005-verified-incremental-publication.md) and the
+[Phase 1 report](assignment-3/phase-reports/PHASE-1-REPORT.md) for exact contracts,
+heuristic limitations, actual tests/CI verification and pending live runs.
+The measured tables below are historical Assignment 2 evidence, not new A3 results.
+
 ## Extraction and cleaning
 PDF pages are processed individually. Pages with fewer than ten word characters
 are OCRed at 200 DPI, one rendered page at a time, with a 120-second OCR timeout.
@@ -209,3 +224,15 @@ probes stayed HTTP 200; generation changed at the same 646 chunks, a cache MISS
 crossed publication and later requests HIT. The manual writer waited 208.441 s
 on the shared lock. Actual source-equivalent repeated extraction/chunk experiments
 and failure artifacts remain separate from the live publication.
+
+
+## Assignment 3 Phase 2 evidence contract
+
+AskResponse.evidence adds pinned collection/model provenance and actual sanitized
+provider message/context attempts; judges no longer reread mutable raw Chroma chunks.
+X-Rahbar-Cache:bypass isolates eval without clearing shared Redis; seed is part of
+cache identity and must agree between API and suite. Baselines require explicit
+creation and absolute gate passage. Gate comparisons currently support chunking-only
+changes on identical corpus/golden/pairs/model/query configuration. Trace tools use
+stored evidence, not a regenerated prompt. See ADR0006, the Phase2 report and k8s
+runbook for limits, commands and actual check results. No A2 metric above is an A3 run.

@@ -35,6 +35,9 @@ class Passage(BaseModel):
     page: int | None = None
     doc_version: str = "unknown"
     superseded: bool = False
+    doc_id: str = "unknown"
+    doc_key: str = ""
+    archived: bool = False
     score: float = Field(description="Similarity, higher is closer (1 - cosine distance).")
 
 
@@ -72,3 +75,4 @@ class AskResponse(BaseModel):
     confidence: Literal["high", "medium", "low"]
     retrieved: list[RetrievedRef]
     provider: str
+    evidence: dict = Field(default_factory=dict, description="Immutable sanitized request-time evidence")

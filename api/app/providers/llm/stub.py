@@ -22,6 +22,10 @@ class StubProvider:
         history: Sequence[Turn] = (),
         feedback: str | None = None,
     ) -> Answer:
+        from ...services.trace import current
+        trace = current.get()
+        if trace is not None:
+            trace.record["execution"] = {"kind": "stub", "context": [p.model_dump() for p in passages]}
         if not passages:
             return Answer(
                 reasoning="stub: nothing was retrieved",

@@ -36,6 +36,7 @@ class Settings:
     # Retrieval and generation
     top_k: int = 5
     temperature: float = 0.2
+    seed: int | None = None  # SEED: fixed sampling seed for repeatable evaluation runs
     llm_model: str = "llama3.2:3b"
     ollama_url: str = "http://host.minikube.internal:11434"
     hosted_base_url: str = ""  # e.g. an OpenAI-compatible endpoint
@@ -55,6 +56,9 @@ class Settings:
     redis_port: int = 6379
 
     log_level: str = "INFO"
+    trace_dir: str = ""
+    trace_max_record_bytes: int = 2 * 1024 * 1024
+    trace_max_file_bytes: int = 100 * 1024 * 1024
 
 
 def get_settings() -> Settings:
@@ -67,6 +71,7 @@ def get_settings() -> Settings:
         collection=os.environ.get("CHROMA_COLLECTION", "rahbar"),
         top_k=_int("TOP_K", 5),
         temperature=_float("TEMPERATURE", 0.2),
+        seed=int(os.environ["SEED"]) if os.environ.get("SEED", "").strip() else None,
         llm_model=os.environ.get("LLM_MODEL", "llama3.2:3b"),
         ollama_url=os.environ.get("OLLAMA_URL", "http://host.minikube.internal:11434"),
         hosted_base_url=os.environ.get("HOSTED_BASE_URL", ""),
@@ -81,4 +86,7 @@ def get_settings() -> Settings:
         redis_host=os.environ.get("REDIS_HOST", "redis"),
         redis_port=_int("REDIS_PORT", 6379),
         log_level=os.environ.get("LOG_LEVEL", "INFO"),
+        trace_dir=os.environ.get("TRACE_DIR", ""),
+        trace_max_record_bytes=_int("TRACE_MAX_RECORD_BYTES", 2 * 1024 * 1024),
+        trace_max_file_bytes=_int("TRACE_MAX_FILE_BYTES", 100 * 1024 * 1024),
     )

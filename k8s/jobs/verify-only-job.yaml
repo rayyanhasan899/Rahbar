@@ -1,0 +1,100 @@
+# Use kubectl create -f; shares the normal writer lock and data-lake PVC.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: verify-only-
+  namespace: rahbar
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 1800
+  template:
+    metadata:
+      labels:
+        app: indexer
+    spec:
+      serviceAccountName: indexer
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+      - name: indexer
+        image: rahbar-indexer:dev
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 100m
+            memory: 256Mi
+            ephemeral-storage: 256Mi
+          limits:
+            cpu: '1'
+            memory: 1Gi
+            ephemeral-storage: 1Gi
+        volumeMounts:
+        - name: datalake
+          mountPath: /datalake
+        - name: tmp
+          mountPath: /tmp
+        - name: indexer-lock
+          mountPath: /locks
+        - name: corpus
+          mountPath: /corpus
+          readOnly: true
+        args:
+        - --verify-only
+        command:
+        - python
+        - -m
+        - pipeline.run
+        envFrom:
+        - configMapRef:
+            name: rahbar-config
+      volumes:
+      - name: datalake
+        persistentVolumeClaim:
+          claimName: datalake-data
+      - name: tmp
+        emptyDir: {}
+      - name: indexer-lock
+        persistentVolumeClaim:
+          claimName: indexer-lock
+      - name: corpus
+        persistentVolumeClaim:
+          claimName: corpus-data
+      restartPolicy: OnFailure
+      initContainers:
+      - name: wait-chroma
+        image: rahbar-indexer:dev
+        imagePullPolicy: IfNotPresent
+        command:
+        - python
+        - -m
+        - pipeline.wait
+        envFrom:
+        - configMapRef:
+            name: rahbar-config
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+            ephemeral-storage: 32Mi
+          limits:
+            cpu: 100m
+            memory: 64Mi
+            ephemeral-storage: 64Mi

@@ -1,5 +1,8 @@
 ---
 source: academic-rules-2026.md
+title: Margalla Institute academic rules 2026
+doc_id: fixture-academic-rules
+pages: 1
 doc_version: 2026
 superseded: false
 ---

@@ -1,0 +1,104 @@
+{
+  "baseline": "/results/latest-baseline.json",
+  "candidate": "/results/latest-rahbar-c900.json",
+  "thresholds": {
+    "max_recall5_drop": 0.02,
+    "min_faithfulness": 0.33,
+    "max_p95_latency_seconds": 9.1,
+    "abstention_not_below_baseline": true,
+    "min_citation_validity": 0.95
+  },
+  "passed": false,
+  "rules": [
+    {
+      "rule": "recall@5",
+      "passed": true,
+      "detail": "candidate 0.9615 vs baseline 0.9615, allowed drop 0.02"
+    },
+    {
+      "rule": "faithfulness",
+      "passed": false,
+      "detail": "candidate 0.2143, minimum 0.33"
+    },
+    {
+      "rule": "p95 latency",
+      "passed": true,
+      "detail": "candidate 5.83 s, maximum 9.1 s"
+    },
+    {
+      "rule": "abstention",
+      "passed": true,
+      "detail": "candidate 1.0000 vs baseline 1.0000"
+    },
+    {
+      "rule": "citation validity",
+      "passed": true,
+      "detail": "candidate 1.0000, minimum 0.95"
+    },
+    {
+      "rule": "bounded max_recall5_drop",
+      "passed": true,
+      "detail": "must be finite in [0,1]"
+    },
+    {
+      "rule": "bounded min_faithfulness",
+      "passed": true,
+      "detail": "must be finite in [0,1]"
+    },
+    {
+      "rule": "bounded min_citation_validity",
+      "passed": true,
+      "detail": "must be finite in [0,1]"
+    },
+    {
+      "rule": "positive latency limit",
+      "passed": true,
+      "detail": "finite positive seconds required"
+    },
+    {
+      "rule": "no uncited answers",
+      "passed": true,
+      "detail": "must explicitly measure zero uncited answers"
+    },
+    {
+      "rule": "comparable golden_sha256",
+      "passed": true,
+      "detail": "identical non-missing provenance required"
+    },
+    {
+      "rule": "comparable pairs_sha256",
+      "passed": true,
+      "detail": "identical non-missing provenance required"
+    },
+    {
+      "rule": "comparable seed",
+      "passed": true,
+      "detail": "identical non-missing provenance required"
+    },
+    {
+      "rule": "comparable corpus_sha256",
+      "passed": true,
+      "detail": "identical non-missing provenance required"
+    },
+    {
+      "rule": "comparable embedding_digest",
+      "passed": true,
+      "detail": "identical non-missing provenance required"
+    },
+    {
+      "rule": "comparable judge_model",
+      "passed": true,
+      "detail": "identical non-missing provenance required"
+    },
+    {
+      "rule": "comparable pipeline",
+      "passed": true,
+      "detail": "this release supports chunking-only changes; other changes need a reviewed comparison contract"
+    },
+    {
+      "rule": "all three levels measured",
+      "passed": true,
+      "detail": "missing/nonfinite module/component measurements fail"
+    }
+  ]
+}

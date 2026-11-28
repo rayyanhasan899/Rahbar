@@ -1,0 +1,22 @@
+{
+  "labelled": 11,
+  "agreement": 0.2727272727272727,
+  "confusion_human_by_judge": {
+    "supported": {
+      "supported": 3,
+      "partial": 0,
+      "unsupported": 8
+    },
+    "partial": {
+      "supported": 0,
+      "partial": 0,
+      "unsupported": 0
+    },
+    "unsupported": {
+      "supported": 0,
+      "partial": 0,
+      "unsupported": 0
+    }
+  },
+  "unmatched_labels": []
+}

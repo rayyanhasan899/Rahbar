@@ -1,0 +1,41 @@
+# Immutable pipeline version generated from the selected live config.
+apiVersion: v1
+data:
+  ANONYMIZED_TELEMETRY: 'False'
+  CACHE_ENABLED: 'true'
+  CACHE_MAX_ENTRIES: '500'
+  CACHE_THRESHOLD: '0.75'
+  CACHE_TTL: '86400'
+  CHROMA_COLLECTION: rahbar-c700
+  CHROMA_HOST: chroma
+  CHROMA_PORT: '8000'
+  CHUNK_OVERLAP: '200'
+  CHUNK_SIZE: '700'
+  CORPUS_DIR: /corpus
+  DATALAKE_DIR: /datalake
+  DOCUMENT_EMBED_CHARS: '4000'
+  EMBED_BATCH_SIZE: '16'
+  EMBED_MODEL: nomic-embed-text
+  INCOMING_DIRS: /corpus,/corpus/batch-a,/corpus/batch-b
+  INDEX_LOCK_PATH: /locks/index.lock
+  LLM_MODEL: llama3.2:3b
+  LLM_PROVIDER: ollama-host
+  LLM_TIMEOUT: '110'
+  MAX_HISTORY_TURNS: '3'
+  MIN_TEXT_CHARS: '64'
+  NEAR_DUP_THRESHOLD: '0.95'
+  OLLAMA_URL: http://192.168.65.254:11434  # NOSONAR - Docker Desktop host-only address, Ollama has no TLS
+  REDIS_HOST: redis
+  REDIS_PORT: '6379'
+  RELEVANCE_FLOOR: '0.65'
+  RETRIEVER: chroma
+  SEED: '42'
+  TEMPERATURE: '0.2'
+  TOP_K: '5'
+  TRACE_DIR: /traces
+  TRACE_MAX_FILE_BYTES: '104857600'
+immutable: true
+kind: ConfigMap
+metadata:
+  name: rahbar-cfg-3d85b46ce5942bc345a3
+  namespace: rahbar
