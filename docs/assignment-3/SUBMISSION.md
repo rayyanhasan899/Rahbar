@@ -32,5 +32,5 @@ Due 28 November 2026, 11:59 PM.
 | Golden set (37 questions) and gate thresholds | `eval/golden.jsonl`, `eval/gate.yaml`, `k8s/eval/gate-configmap.yaml` |
 | Evaluation results | `eval/results/cluster/` (suites, gate runs, coverage) |
 | Trace samples | `traces/a3-cluster/` |
-| Screenshot sources | `docs/evidence/a3/` |
+| Screenshots in the report appendix | `docs/evidence/a3/screenshots/full/` (other evidence in `docs/evidence/a3/`) |
 | Commands for each part (A to F) | `README.md`, section "Assignment 3: RAGOps commands per part" |
