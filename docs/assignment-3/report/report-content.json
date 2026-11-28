@@ -538,6 +538,11 @@
       "path": "../../evidence/a3/screenshots/appendix-F1.png"
     },
     {
+      "label": "F2",
+      "caption": "Gate outcome changed by the rahbar-gate ConfigMap only; completed ingestion Job and eval Job logs",
+      "path": "../../evidence/a3/screenshots/appendix-F2.png"
+    },
+    {
       "label": "F3",
       "caption": "kubectl get all,pvc,configmap,cronjob,job (part 2 of 3): Jobs and PVCs",
       "path": "../../evidence/a3/screenshots/appendix-F3.png"
@@ -546,11 +551,6 @@
       "label": "F4",
       "caption": "kubectl get all,pvc,configmap,cronjob,job (part 3 of 3): PVCs and ConfigMaps",
       "path": "../../evidence/a3/screenshots/appendix-F4.png"
-    },
-    {
-      "label": "F2",
-      "caption": "Gate outcome changed by the rahbar-gate ConfigMap only; completed ingestion Job and eval Job logs",
-      "path": "../../evidence/a3/screenshots/appendix-F2.png"
     }
   ]
 }
