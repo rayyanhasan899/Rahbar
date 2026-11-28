@@ -3,8 +3,24 @@
   "pages": [
     {
       "title": "RAHBAR Assignment 03: RAGOps",
+      "group": {
+        "members": [
+          [
+            "Abdul Moez Yousaf",
+            "24i-3048"
+          ],
+          [
+            "Syed Rayyan Hassan",
+            "24i-3000"
+          ]
+        ],
+        "lines": [
+          "CS4032, Fall 2026",
+          "Due 28 November 2026, 11:59 PM",
+          "Repository branch dev2"
+        ]
+      },
       "paragraphs": [
-        "Group: Abdul Moez Yousaf (24i-3048) and Syed Rayyan Hassan (24i-3000). Course CS4032, Fall 2026. Due 28 November 2026, 11:59 PM. Repository branch dev2.",
         "RAHBAR answers questions about FAST-NUCES academic rules with citations. Assignment 2 built the FastAPI + Chroma + Redis + Ollama pipeline on Kubernetes. Assignment 3 adds the RAGOps loop: verified incremental ingestion into a data lake, a three-level evaluation suite, a release gate, request-time traces, query-coverage analysis and Kubernetes Jobs for each step.",
         "All numbers in this report come from one local minikube cluster on a Windows laptop (WSL2, 7.6 GB RAM) with Ollama on the host: nomic-embed-text for embeddings and llama3.2:3b for generation and judging. Raw results are in eval/results/cluster/, evidence in docs/evidence/a3/, and the screenshots are in the appendix."
       ],
@@ -475,27 +491,27 @@
           "rows": [
             [
               "A",
-              "Batch B verification report and the second run with 0 embeddings"
+              "Batch B verification report and the unchanged run with 0 chunks embedded"
             ],
             [
               "B",
               "Evaluation summary with all three levels"
             ],
             [
-              "C",
-              "Gate failure and gate pass; promote and undo"
+              "C2",
+              "Release gate failing and passing"
             ],
             [
-              "D",
-              "Trace and trace_tool output for h08; injection rail event"
+              "D1/D2",
+              "Full trace record and trace_tool rebuilding the prompt for a trace id"
             ],
             [
               "E",
               "Coverage before and after the six new golden questions"
             ],
             [
-              "F",
-              "kubectl get all,pvc,configmap,cronjob,job; ingestion and eval Job logs; ConfigMap-only gate change"
+              "F1-F3",
+              "kubectl get all,pvc,configmap,cronjob,job; ingestion and eval Job logs; gate outcome changed by a ConfigMap edit; rollout status, rollout undo and a trace showing the previous collection and embedding"
             ]
           ]
         }
@@ -509,48 +525,97 @@
   "appendix": [
     {
       "label": "A",
-      "caption": "Batch A then Batch B verification report (per-file check outcome) and the unchanged run with 0 embeddings; live near-duplicate threshold and scope",
-      "path": "../../evidence/a3/screenshots/appendix-A.png"
+      "caption": "A1 and A2: verification report for Batch A and Batch B (outcome and reason for each of the four checks per file) from a second ingestion run on the unchanged corpus, which embeds 0 chunks",
+      "paths": [
+        "../../evidence/a3/screenshots/full/A-115238.png"
+      ]
     },
     {
       "label": "B",
-      "caption": "Evaluation summary with all three levels (run 1) and run 2 for noise",
-      "path": "../../evidence/a3/screenshots/appendix-B.png"
+      "caption": "Evaluation summary with all three levels (module, component, end-to-end), run as the eval Job",
+      "paths": [
+        "../../evidence/a3/screenshots/full/B-135213.png",
+        "../../evidence/a3/screenshots/full/B-135217.png"
+      ]
     },
     {
-      "label": "C",
-      "caption": "Gate failures and the passing same-config candidate; promote and undo with rollout history",
-      "path": "../../evidence/a3/screenshots/appendix-C.png"
+      "label": "C2",
+      "caption": "Release gate failing (rahbar-bad, recall@5 drop) and passing (rahbar-same)",
+      "paths": [
+        "../../evidence/a3/screenshots/full/C-142842.png",
+        "../../evidence/a3/screenshots/full/C-142852.png"
+      ]
     },
     {
-      "label": "D",
-      "caption": "trace_tool replay of trace 9e048461 (h08, D5) and the injection rail event (D4)",
-      "path": "../../evidence/a3/screenshots/appendix-D.png"
+      "label": "D1/D2",
+      "caption": "trace_tool show for trace 9e048461 (h08): the full trace record and the rebuilt prompt and context, with the guardrail actions at the end",
+      "paths": [
+        "../../evidence/a3/screenshots/full/D-144452.png",
+        "../../evidence/a3/screenshots/full/D-144456.png",
+        "../../evidence/a3/screenshots/full/D-144503.png",
+        "../../evidence/a3/screenshots/full/D-144508.png",
+        "../../evidence/a3/screenshots/full/D-144517.png",
+        "../../evidence/a3/screenshots/full/D-144524.png",
+        "../../evidence/a3/screenshots/full/D-144530.png",
+        "../../evidence/a3/screenshots/full/D-144538.png",
+        "../../evidence/a3/screenshots/full/D-144542.png",
+        "../../evidence/a3/screenshots/full/D-144546.png",
+        "../../evidence/a3/screenshots/full/D-144550.png",
+        "../../evidence/a3/screenshots/full/D-144554.png",
+        "../../evidence/a3/screenshots/full/D-144557.png"
+      ]
     },
     {
       "label": "E",
-      "caption": "Coverage before (23/40) and after (30/40) the six new golden questions",
-      "path": "../../evidence/a3/screenshots/appendix-E.png"
+      "caption": "Query coverage before (23/40) and after (30/40) the six new golden questions, with the uncovered queries grouped by topic",
+      "paths": [
+        "../../evidence/a3/screenshots/full/E-144640.png",
+        "../../evidence/a3/screenshots/full/E-144642.png"
+      ]
     },
     {
       "label": "F1",
-      "caption": "kubectl get all,pvc,configmap,cronjob,job (part 1 of 3)",
-      "path": "../../evidence/a3/screenshots/appendix-F1.png"
+      "caption": "kubectl get all,pvc,configmap,cronjob,job for the rahbar namespace",
+      "paths": [
+        "../../evidence/a3/screenshots/full/F-all-144749.png",
+        "../../evidence/a3/screenshots/full/F-all-144755.png",
+        "../../evidence/a3/screenshots/full/F-all-144757.png"
+      ]
     },
     {
-      "label": "F2",
-      "caption": "Gate outcome changed by the rahbar-gate ConfigMap only; completed ingestion Job and eval Job logs",
-      "path": "../../evidence/a3/screenshots/appendix-F2.png"
+      "label": "F2 (ingestion)",
+      "caption": "Logs of a completed ingestion Job (a3-unchanged-1125): writer lock, verification report, chunks_embedded 0",
+      "paths": [
+        "../../evidence/a3/screenshots/full/F-ingest-123012.png",
+        "../../evidence/a3/screenshots/full/F-ingest-123021.png"
+      ]
+    },
+    {
+      "label": "F2 (gate)",
+      "caption": "Gate thresholds in the rahbar-gate ConfigMap; min_faithfulness raised to 0.90 with no image rebuild, the eval Job fails the gate and ends Failed; threshold restored to 0.30",
+      "paths": [
+        "../../evidence/a3/screenshots/full/F-gate-135339.png",
+        "../../evidence/a3/screenshots/full/F-gate-191536.png",
+        "../../evidence/a3/screenshots/full/F-gate-191723.png",
+        "../../evidence/a3/screenshots/full/F-gate-191735.png",
+        "../../evidence/a3/screenshots/full/F-gate-191737.png",
+        "../../evidence/a3/screenshots/full/F-gate-141341.png"
+      ]
     },
     {
       "label": "F3",
-      "caption": "kubectl get all,pvc,configmap,cronjob,job (part 2 of 3): Jobs and PVCs",
-      "path": "../../evidence/a3/screenshots/appendix-F3.png"
-    },
-    {
-      "label": "F4",
-      "caption": "kubectl get all,pvc,configmap,cronjob,job (part 3 of 3): PVCs and ConfigMaps",
-      "path": "../../evidence/a3/screenshots/appendix-F4.png"
+      "caption": "Promotion of rahbar-same with kubectl rollout status, then kubectl rollout undo with rollout status and history; the trace for f3-undone shows the previous collection (rahbar-3615c46d...) and embedding digest",
+      "paths": [
+        "../../evidence/a3/screenshots/full/F-rollout-191945.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192048.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192053.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192056.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192059.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192102.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192106.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192110.png",
+        "../../evidence/a3/screenshots/full/F-rollout-192113.png"
+      ]
     }
   ]
 }
